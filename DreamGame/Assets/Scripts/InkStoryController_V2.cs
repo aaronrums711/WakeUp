@@ -32,10 +32,7 @@ public class InkStoryController_V2 : MonoBehaviour
 	private string fullRefreshTag = "fullrefresh";
 	private bool playerShouldWait = false;
 	private bool partnerShouldWait = false;
-	private string firstSpeaker;  //this will be the FIRST person to speak in a conversation before a choice is given.  For example, in the very first set of choices, the partner is the firstSpeaker. 
-								  //before using this, the player's text would always show first, even if the player was meant to be responding to a question from the partner. 
-								  //currently, this logic DOES NOT support multiple back and forths between the two speakers before a choice is given.  
-								  //given value in CheckTags() and nulled out in ChooseStoryChoice() so that it can be given a new value
+	private string firstSpeaker;  //first person to speak between each selection
 	[SerializeField] private bool isTesting = false;
 	private bool playerShouldRefresh;
 	private bool partnerShouldRefresh;	
@@ -69,12 +66,6 @@ public class InkStoryController_V2 : MonoBehaviour
 		CreateMasterTextList();
     }
 
-    void Update()
-    {
-        
-    }
-	
-	
 	private string CheckTags()
 	{
 		//set speaker
@@ -106,7 +97,6 @@ public class InkStoryController_V2 : MonoBehaviour
 	{
 		story.ChooseChoiceIndex(choice.index);
 		wipeTextAndButtons();
-		// ParseStoryText();
 		CreateMasterTextList();
 		firstSpeaker = "";
 	}
@@ -126,101 +116,6 @@ public class InkStoryController_V2 : MonoBehaviour
 		}
 	}
 	
-	void ParseStoryText()
-	{
-		string player = "";
-		string other = "";
-		playerTextList = new List<string>();
-		partnerTextList = new List<string>();
-		while (story.canContinue)
-		{
-			string textChunk = story.Continue();
-			CheckTags();
-			if (speaker == playerTag)
-			{
-				player += textChunk;
-				if (playerShouldWait) //logic: we need to add the textChunk to the latest list item, THEN create another blank item, so the pause will//happen AFTER the text with #wait tag is displayed
-				{
-					if (playerTextList.Count == 0)
-					{
-						playerTextList.Add(textChunk);
-						playerTextList.Add("");
-					}
-					else if (playerTextList.Count > 0)
-					{
-						int max = playerTextList.Count;
-						playerTextList[max-1] += textChunk;
-						playerTextList.Add("");
-					}
-					playerShouldWait = false;
-				}
-				else  //logic: if list.count = 0, set the 0th item.  If list.count>0, then add the textChunk to the LATEST item in the list this is good if there are MULTIPLE waits within one person's uninterupted speech. 
-				{
-					if (playerTextList.Count == 0)
-					{
-						playerTextList.Add(textChunk);
-					}
-					else if (playerTextList.Count > 0)
-					{
-						int max = playerTextList.Count;
-						playerTextList[max-1] += textChunk;
-					}
-				}
-				if (insertNewLine)
-				{
-					player += "\n";
-					int max = playerTextList.Count;
-					playerTextList[max-1] += "\n";
-					insertNewLine = false;
-				}
-			}
-			else if (speaker == partnerTag)
-			{
-				other += textChunk;
-				if (partnerShouldWait)
-				{
-					if (partnerTextList.Count == 0)
-					{
-						partnerTextList.Add(textChunk);
-						partnerTextList.Add("");
-					}
-					else if (partnerTextList.Count > 0)
-					{
-						int max = partnerTextList.Count;
-						partnerTextList[max-1] += textChunk;
-						partnerTextList.Add("");
-					}
-					partnerShouldWait = false;
-				}
-				else   
-				{
-					if (partnerTextList.Count == 0)
-					{
-						partnerTextList.Add(textChunk);
-					}
-					else if (partnerTextList.Count > 0)
-					{
-						int max = partnerTextList.Count;
-						partnerTextList[max-1] += textChunk;
-					}
-				}
-				if (insertNewLine)
-				{
-					other += "\n";
-					int max = partnerTextList.Count;
-					partnerTextList[max-1] += "\n";
-					insertNewLine = false;
-				}
-			}
-			else
-			{
-				print("text displayed through debug, something is wrong, there may be no partner OR speaker tag" + story.Continue());
-			}
-		}
-		StartCoroutine(DisplayLoop());
-	}
-
-	
 	private void wipeTextAndButtons()
 	{
 		playerTextDisplay.DeleteAllText();
@@ -232,101 +127,6 @@ public class InkStoryController_V2 : MonoBehaviour
 		}
 	}
 	
-	private IEnumerator DisplayLoop()  //params may be options for this new version...
-	{
-		if (firstSpeaker == playerTag)
-		{
-			for (int i = 0; i <= playerTextList.Count - 1; i++)
-			{
-				yield return StartCoroutine(playerTextDisplay.TextLetterByLetter(playerTextList[i], textDisplaySpeed ));
-				yield return new WaitForSeconds(waitTime);
-				if (playerShouldRefresh)
-				{
-					playerTextDisplay.DeleteAllText();
-					playerShouldRefresh = false;
-				}
-			}
-
-			yield return new WaitForSeconds(timeBetweenSpeakers);
-		
-			for (int i = 0; i <= partnerTextList.Count - 1; i++)
-			{
-				yield return StartCoroutine(partnerTextDisplay.TextLetterByLetter(partnerTextList[i], textDisplaySpeed));
-				yield return new WaitForSeconds(waitTime);
-				if (partnerShouldRefresh)
-				{
-					partnerTextDisplay.DeleteAllText();
-					partnerShouldRefresh = false;
-				}
-			}
-		}
-		else if (firstSpeaker == partnerTag)
-		{
-			for (int i = 0; i <= partnerTextList.Count - 1; i++)
-			{
-				yield return StartCoroutine(partnerTextDisplay.TextLetterByLetter(partnerTextList[i], textDisplaySpeed));
-				yield return new WaitForSeconds(waitTime);
-				if (partnerShouldRefresh)
-				{
-					partnerTextDisplay.DeleteAllText();
-					partnerShouldRefresh = false;
-				}
-			}
-
-			yield return new WaitForSeconds(timeBetweenSpeakers);
-		
-			for (int i = 0; i <= playerTextList.Count - 1; i++)
-			{
-				yield return StartCoroutine(playerTextDisplay.TextLetterByLetter(playerTextList[i], textDisplaySpeed));
-				yield return new WaitForSeconds(waitTime);
-				if (playerShouldRefresh)
-				{
-					playerTextDisplay.DeleteAllText();
-					playerShouldRefresh = false;
-				}
-			}
-		}
-		else { print("something is wrong in the DisplayLoop function, or with the firstSpeaker assignment logic");}
-
-		DisplayChoices();
-	}
-	
-
-
-	//initial attempt at displaying partner and player text.  This worked, but couldn't handle pauses within one person's speech.
-	// private IEnumerator DisplayDelay(string text1, string text2, float delay = 1f)  //the last param syntax means that its optional, and 2f is used if nothing else is passed in
-	// {
-	// 	yield return StartCoroutine(playerTextDisplay.TextLetterByLetter(text1));
-	// 	yield return new WaitForSeconds(delay);
-	// 	yield return StartCoroutine(partnerTextDisplay.TextLetterByLetter(text2));  
-	// 	playerShouldWait = false;
-	// 	yield return new WaitForSeconds(delay/2);
-	// 	DisplayChoices();
-	// }
-	
-	/**
-	7/7/21
-		okay, third iteration of this.  Now I want it to be able to correctly display a back and forth conversation between
-		two speakers, even if there isn't a choice.  Currently, it cannot do this, and instead it just displays all the text 
-		from one speaker 1, then all the text from speaker 2, then the choice, even if it's written as Speaker 1, speaker 2, speaker 1
-		speaker 2, choice.  
-
-		logic can be as follows:
-			one master list is created that is then passed into the actual display method. 
-			this list contains one element for each chunk of story text for each speaker. 
-			so....
-				speaker 1: hey
-				speaker 2: hello!
-				speaker 1: how are you?
-				speaker 2: great!
-			would contain 4 elements
-
-			only the firstSpeaker needs to be used in logic, because after that the text in the list will just 
-			be displayed alternating until there is no elements left. 
-
-			so if firstSpeaker = speaker 2, then we know to display the first element as speaker 2, then the secondd as speaker 1,
-			then the third as speaker 2 and so on. 
-	**/
 	public void CreateMasterTextList()
 	{
 		int counter = 0;  //this is used to make the dictionary keys unique.  it essentially counts the unique speech chunks per speaker until there is a choice
@@ -343,27 +143,6 @@ public class InkStoryController_V2 : MonoBehaviour
 			previousSpeaker = (string.IsNullOrEmpty(currentSpeaker)) ? speaker : currentSpeaker;
 			currentSpeaker = speaker;  
 
-			if (masterTextList.Count == 0) {masterTextList.Add("");} //no matter what, if it's the first piece of text, add an element
-
-			if(currentSpeaker == previousSpeaker) //add to the latest element
-			{
-				int max = masterTextList.Count;
-				masterTextList[max-1] += textChunk;
-			}
-			
-			else if(currentSpeaker != previousSpeaker) //create a new element and add to that
-			{
-				masterTextList.Add("");
-				int max = masterTextList.Count;
-				masterTextList[max-1] += textChunk;
-			}
-
-			///////////////dictionary part/////////////////////
-			/**
-			logic: I think we can keep the previous/current speaker logic...
-					so if the currentSpeaker != previousSpeaker, make a new element, else add it to the latest element
-					however, we also need to add a new element if there is a player/partnerShouldWait = true;
-			**/
 			if (masterTextDict.Count == 0) //adding an empty element for the first iteration
 			{
 				masterTextDict.Add(currentSpeaker+ counter.ToString(), "");
@@ -459,43 +238,9 @@ public class InkStoryController_V2 : MonoBehaviour
 			}
 
 		StartCoroutine(DisplayTextFromMasterDict());
-
-		//calls the old logic using the list
-		// if (firstSpeaker == playerTag)
-		// {
-		// 	StartCoroutine(DisplayTextFromMasterList(playerTextDisplay, partnerTextDisplay));
-		// }
-		// else if (firstSpeaker == partnerTag)
-		// {
-		// 	StartCoroutine(DisplayTextFromMasterList(partnerTextDisplay, playerTextDisplay));
-		// }
-		
 	}
 
-	public IEnumerator DisplayTextFromMasterList(TextDisplay firstTextDisplay, TextDisplay secondTextDisplay)
-	{
-		
-		for (int i = 0; i <= masterTextList.Count - 1; i++)
-			{	//+10 is arbitrary, we are just doing it so we don't have to deal with 0%2 or 1%2.  Any even number + 10 is still even, any odd number + 10 is still odd
-				if((i + 10)%2 == 0) 
-				{	
-					string newLineString ="";
-					if (i >= 2) {newLineString = "\n \n";}
-					
-					yield return StartCoroutine(firstTextDisplay.TextLetterByLetter(newLineString + masterTextList[i], textDisplaySpeed));
-					yield return new WaitForSeconds(timeBetweenSpeakers);
-				}
-				else if((i + 10)%2 == 1)
-				{
-					string newLineString ="";
-					if (i >= 2) {newLineString = "\n \n";}
-					yield return StartCoroutine(secondTextDisplay.TextLetterByLetter(newLineString + masterTextList[i], textDisplaySpeed));
-					yield return new WaitForSeconds(timeBetweenSpeakers);
-				} 
-			}
 
-		DisplayChoices();
-	}
 
 	public IEnumerator DisplayTextFromMasterDict()
 	{
