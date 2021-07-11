@@ -11,11 +11,6 @@ public class InkStoryController_V2 : MonoBehaviour
 {
 	//Config
 	private bool insertNewLine = false;
-	private List<string> playerTextList;
-	private List<string> partnerTextList;
-
-	private List<string> masterTextList;
-
 	[SerializeField]private float timeBetweenSpeakers= 1.5f;
 	[SerializeField]private float waitTime = 2f;
 	[Tooltip("smaller number = faster text")]  [Range(0.05f, 0.0001f)]
@@ -41,7 +36,6 @@ public class InkStoryController_V2 : MonoBehaviour
 	//Cached Component References
 	public TextAsset inkJSON;
 	private Story story;
-	[SerializeField] private Text textPrefab;
 	[SerializeField] private Button buttonPrefab;
 	[SerializeField] private TextDisplay playerTextDisplay;
 	[SerializeField] private TextDisplay partnerTextDisplay;
@@ -62,8 +56,7 @@ public class InkStoryController_V2 : MonoBehaviour
     {
 	    story = new Story(inkJSON.text);
 	    wipeTextAndButtons();
-	    // ParseStoryText();
-		CreateMasterTextList();
+		ParseStoryToDict();
     }
 
 	private string CheckTags()
@@ -92,12 +85,11 @@ public class InkStoryController_V2 : MonoBehaviour
 	}
 	
 
-	
 	void ChooseStoryChoice(Choice choice)
 	{
 		story.ChooseChoiceIndex(choice.index);
 		wipeTextAndButtons();
-		CreateMasterTextList();
+		ParseStoryToDict();
 		firstSpeaker = "";
 	}
 	
@@ -127,10 +119,9 @@ public class InkStoryController_V2 : MonoBehaviour
 		}
 	}
 	
-	public void CreateMasterTextList()
+	public void ParseStoryToDict()
 	{
 		int counter = 0;  //this is used to make the dictionary keys unique.  it essentially counts the unique speech chunks per speaker until there is a choice
-		masterTextList = new List<string>();
 		masterTextDict = new OrderedDictionary();
 		string currentSpeaker = "";
 		string previousSpeaker = "";
@@ -231,11 +222,12 @@ public class InkStoryController_V2 : MonoBehaviour
 			}
 		}
 
-		print("dictionary output below:");
-		foreach (DictionaryEntry de in masterTextDict)
-			{
-				print("key: " +de.Key.ToString()    + "  value: " + de.Value.ToString());
-			}
+		//uncomment this to see the final masterTextDict output
+		// print("dictionary output below:");
+		// foreach (DictionaryEntry de in masterTextDict)
+		// 	{
+		// 		print("key: " +de.Key.ToString()    + "  value: " + de.Value.ToString());
+		// 	}
 
 		StartCoroutine(DisplayTextFromMasterDict());
 	}

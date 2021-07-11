@@ -764,9 +764,8 @@ MonoBehaviour:
   timeBetweenSpeakers: 1.5
   waitTime: 2
   textDisplaySpeed: 0.05
-  isTesting: 0
+  isTesting: 1
   inkJSON: {fileID: 4900000, guid: 906a248f3a9248845931273e8279de2e, type: 3}
-  textPrefab: {fileID: 4774691407687344935, guid: 3e0c2ebf15c6a214f94474c46470bee9, type: 3}
   buttonPrefab: {fileID: 2822730707730094499, guid: 511eb556cca5fe340b2b908aabcf66f2, type: 3}
   playerTextDisplay: {fileID: 1414485479}
   partnerTextDisplay: {fileID: 1187089259}
