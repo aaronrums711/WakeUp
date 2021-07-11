@@ -325,8 +325,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textSpeed: 0.03
-  textSoundClip: {fileID: 0}
-  textPrefab: {fileID: 0}
+  textSoundClip: {fileID: 8300000, guid: fc184b8dc25614b458053694a56c72eb, type: 3}
+  textPrefab: {fileID: 4774691407687344935, guid: 3e0c2ebf15c6a214f94474c46470bee9, type: 3}
 --- !u!1 &1243147620
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,7 +507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textSpeed: 0.03
-  textSoundClip: {fileID: 0}
+  textSoundClip: {fileID: 8300000, guid: 01e86b13134e47c44ab8f2b880db1378, type: 3}
   textPrefab: {fileID: 4774691407687344935, guid: 3e0c2ebf15c6a214f94474c46470bee9, type: 3}
 --- !u!1 &1661811373
 GameObject:
