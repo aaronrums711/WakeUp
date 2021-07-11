@@ -49,11 +49,9 @@ public class InkStoryController_V2 : MonoBehaviour
 	[SerializeField] private TextDisplay playerTextDisplay;
 	[SerializeField] private TextDisplay partnerTextDisplay;
 	[SerializeField] private Canvas buttonCanvas;
-	private GameObject garbage;
-	
+
 	void Awake()
 	{
-		garbage = GameObject.Find("Garbage");
 		speaker = playerTag;
 		if (isTesting)
 		{
@@ -234,7 +232,6 @@ public class InkStoryController_V2 : MonoBehaviour
 		}
 	}
 	
-	//UPON RETURN: add functionality here to look at the XXShouldRefresh variables and delete text if they are true, then set them back to false. 
 	private IEnumerator DisplayLoop()  //params may be options for this new version...
 	{
 		if (firstSpeaker == playerTag)
