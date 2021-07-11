@@ -7,7 +7,7 @@ using Ink.Runtime;
 using UnityEngine.UI;
 
 
-public class InkStoryController_V2 : MonoBehaviour
+public class InkStoryController_V3 : MonoBehaviour
 {
 	//Config
 	private bool insertNewLine = false;
@@ -40,6 +40,15 @@ public class InkStoryController_V2 : MonoBehaviour
 	[SerializeField] private TextDisplay playerTextDisplay;
 	[SerializeField] private TextDisplay partnerTextDisplay;
 	[SerializeField] private Canvas buttonCanvas;
+
+
+
+	/*****
+	this script runs in a logical loop.  each  method in turn calls another method.  The main calls are as follows
+	Start() ->   
+		ParseStoryToDict()   ->  DisplayTextFromMasterDict()   ->   DisplayChoices()   ->  ChooseStoryChoice()  ->  ParseStoryToDict()
+	****/
+
 
 	void Awake()
 	{
@@ -232,8 +241,6 @@ public class InkStoryController_V2 : MonoBehaviour
 		StartCoroutine(DisplayTextFromMasterDict());
 	}
 
-
-
 	public IEnumerator DisplayTextFromMasterDict()
 	{
 		//the below logic for new line string basically adds two new lines after the first chunk that a person speaks
@@ -265,10 +272,6 @@ public class InkStoryController_V2 : MonoBehaviour
 				if (de.Value.ToString().Contains(refreshTextTag)) {partnerTextDisplay.DeleteAllText();}
 			}
 		}
-
 		DisplayChoices();
-		
 	}
-
-
 }
