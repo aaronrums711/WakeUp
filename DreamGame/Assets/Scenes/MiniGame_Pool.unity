@@ -258,7 +258,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 435625066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.22, z: 0}
+  m_LocalPosition: {x: 0, y: 0.87, z: 0}
   m_LocalScale: {x: 0.24003299, y: 0.33732083, z: 1}
   m_Children: []
   m_Father: {fileID: 1525015783}
@@ -718,13 +718,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1230843822}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2017, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.011693528, w: 0.99993163}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5965, y: 0.5965, z: 0.5965}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -1.34}
 --- !u!58 &1230843825
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -750,6 +750,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1525015783}
+  - component: {fileID: 1525015784}
   m_Layer: 0
   m_Name: PoolStick
   m_TagString: Untagged
@@ -764,15 +765,40 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525015782}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.49, y: -0.15957, z: 0}
-  m_LocalScale: {x: 0.75993, y: 0.99740815, z: 0.75993}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 2, y: 0, z: 0}
+  m_LocalScale: {x: 0.75992996, y: 0.9974081, z: 0.75992996}
   m_Children:
   - {fileID: 1948859667}
   - {fileID: 435625067}
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!114 &1525015784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525015782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e9c12cec8db04b44a299a5673b53ed3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseColor: {r: 0, g: 0, b: 0, a: 0}
+  targetColor: {r: 0, g: 0, b: 0, a: 0}
+  completionPercent: 0.04
+  displayHeight: 0
+  displayWidth: 0
+  orderInLevel: 1
+  rateOfDecay: 0
+  isActive: 0
+  isFrozen: 0
+  isComplete: 0
+  numActiveGames: 0
+  target: {fileID: 1230843822}
+  rotationSpeed: 4.27
 --- !u!1 &1768439552
 GameObject:
   m_ObjectHideFlags: 0
@@ -832,7 +858,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1948859666}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3426, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.21591122, y: 1.4134071, z: 1}
   m_Children: []
   m_Father: {fileID: 1525015783}
