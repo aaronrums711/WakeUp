@@ -23,7 +23,7 @@ public class MiniGame : MonoBehaviour
     public float rateOfDecay;
 
     //with space at position 0, now any game can just use keysToPlay[orderInLevel]  to get the key that game is using
-    string [] keysToPlay = {"space", "r", "i", "v", "m" };
+    public string [] keysToPlay = {"space", "r", "i", "v", "m" };
 
 
     //////////////////////////State

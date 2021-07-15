@@ -7,14 +7,22 @@ public class PoolStick : MiniGame
     public GameObject target;
     private float angle = 20; //controls speed. this is arbitrary, since we are using rotationSpeed to control it as well. 
     public float rotationSpeed;
+    public float drawBackSpeed;
 
     void Start()
     {
-        
+        orderInLevel = 1;
     }
 
     void Update()
     {
-        transform.RotateAround(target.transform.position, Vector3.forward, angle * Time.deltaTime * rotationSpeed);
+        if (!Input.GetKey(keysToPlay[orderInLevel]))
+        {
+            transform.RotateAround(target.transform.position, Vector3.forward, angle * Time.deltaTime * rotationSpeed);
+        }
+        else if (Input.GetKey(keysToPlay[orderInLevel]))
+        {
+            transform.Translate(Vector2.down * Time.deltaTime * drawBackSpeed);
+        }
     }
 }

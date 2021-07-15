@@ -793,12 +793,19 @@ MonoBehaviour:
   displayWidth: 0
   orderInLevel: 1
   rateOfDecay: 0
+  keysToPlay:
+  - space
+  - r
+  - i
+  - v
+  - m
   isActive: 0
   isFrozen: 0
   isComplete: 0
   numActiveGames: 0
   target: {fileID: 1230843822}
   rotationSpeed: 4.27
+  drawBackSpeed: 1
 --- !u!1 &1768439552
 GameObject:
   m_ObjectHideFlags: 0
