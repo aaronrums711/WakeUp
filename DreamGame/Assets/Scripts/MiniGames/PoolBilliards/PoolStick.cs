@@ -12,6 +12,8 @@ public class PoolStick : MiniGame
     public float drawBackSpeed;
     public float hitSpeed = 10;
     private float pullBackDistance;
+    private Vector3 startingPos;
+    private Quaternion startingRot;
 
     //////////////////////////////State
     public bool isDrawingBack = false;
@@ -25,6 +27,8 @@ public class PoolStick : MiniGame
 
     void Start()
     {
+        startingPos = this.transform.position;
+        startingRot = this.transform.rotation;
         orderInLevel = 1;
         thisRB = GetComponent<Rigidbody2D>();
     }
@@ -63,18 +67,29 @@ public class PoolStick : MiniGame
 
     public void CueHit()
     {
-        thisRB.velocity = Vector2.up + new Vector2(0, hitSpeed * pullBackDistance);
+
+        thisRB.AddForce(transform.up * (hitSpeed+ (pullBackDistance + 1)), ForceMode2D.Impulse);
+        print(thisRB.velocity);
         //push stick forward, hitting ball.  speed will use pull back distance. 
         //stick will draw back slightly after hit.
         //stick will fade away
         //stick will reappear when ball stops moving. 
+        StartCoroutine(ResetStickPos());
     }
 
-    void OnCollisionEnter2D(Collision other)
+    void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.name == "Ball")
         {
             thisRB.velocity = Vector2.zero;
         }
+    }
+
+    private IEnumerator ResetStickPos()
+    {
+        yield return new WaitForSeconds(3);
+        this.transform.position = ball.transform.position + new Vector3(2,0,0);
+        this.transform.rotation = startingRot;
+        isDrawingBack = false;
     }
 }
