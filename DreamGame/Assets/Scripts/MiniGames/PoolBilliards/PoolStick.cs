@@ -21,6 +21,7 @@ public class PoolStick : MiniGame
     //////////////////////////////Cached Component References
     public GameObject ball;
     public Rigidbody2D thisRB;
+    [SerializeField] private Collider2D cueCollider; //VGIU
 
 
 
@@ -70,7 +71,6 @@ public class PoolStick : MiniGame
 
         thisRB.AddForce(transform.up * (hitSpeed+ (pullBackDistance + 1)), ForceMode2D.Impulse);
         print(thisRB.velocity);
-        //push stick forward, hitting ball.  speed will use pull back distance. 
         //stick will draw back slightly after hit.
         //stick will fade away
         //stick will reappear when ball stops moving. 
@@ -82,6 +82,8 @@ public class PoolStick : MiniGame
         if (other.gameObject.name == "Ball")
         {
             thisRB.velocity = Vector2.zero;
+            thisRB.angularVelocity = 0;
+            cueCollider.enabled = false;
         }
     }
 
@@ -91,5 +93,6 @@ public class PoolStick : MiniGame
         this.transform.position = ball.transform.position + new Vector3(2,0,0);
         this.transform.rotation = startingRot;
         isDrawingBack = false;
+        cueCollider.enabled = true;
     }
 }
