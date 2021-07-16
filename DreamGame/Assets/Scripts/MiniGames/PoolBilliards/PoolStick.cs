@@ -21,11 +21,10 @@ public class PoolStick : MonoBehaviour
     public bool isDrawingBack = false;
 
     //////////////////////////////Cached Component References
-    public BilliardsBall ball;
+    public CueBall ball; //VGIU
     public Rigidbody2D thisRB;
     [SerializeField] private Collider2D cueCollider; //VGIU
     public MiniGame parentMiniGame;
-    public SpriteRenderer testSR;
     
 
 
@@ -37,8 +36,6 @@ public class PoolStick : MonoBehaviour
         startingRot = this.transform.rotation;
         orderInLevel = 1;
         thisRB = GetComponent<Rigidbody2D>();
-
-        StartCoroutine(FadeOut(testSR, 2f));
     }
 
     void Update()
@@ -66,25 +63,18 @@ public class PoolStick : MonoBehaviour
             pullBackDistance = Vector2.Distance(new Vector2(transform.position.x, transform.position.y),pullBackStartPos);
             yield return null;
         }
-
-      
         CueHit();
     }
 
-
     public void CueHit()
     {
-
         thisRB.AddForce(transform.up * (hitSpeed+ (pullBackDistance + 1)), ForceMode2D.Impulse);
-        //stick will draw back slightly after hit.
-        //stick will fade away
-        //stick will reappear when ball stops moving. 
-        
+        //this will always hit the ball (and it must).  from the OnCollEnter from that collision, ResetStickPos() is called
     }
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.name == "Ball")
+        if (other.gameObject.TryGetComponent(out CueBall ball))
         {
             thisRB.velocity = Vector2.zero;
             thisRB.angularVelocity = 0;
@@ -95,42 +85,41 @@ public class PoolStick : MonoBehaviour
 
     private IEnumerator ResetStickPos()
     {
+        //fade out
         for (int i = 0; i < this.transform.childCount; i++)
         {
-            StartCoroutine(FadeOut(this.transform.GetChild(i).GetComponent<SpriteRenderer>(), 1f));
+            StartCoroutine(FadeOut(this.transform.GetChild(i).GetComponent<SpriteRenderer>(), 0.5f, 1,0));
         }
 
         while (ball.thisRB.velocity.sqrMagnitude > ball.clampPoint) //keep yielding one frame until the ball stops, THEN set the stick position
         {
             yield return null;
         }
-        // yield return new WaitForSeconds(3);
         this.transform.position = ball.transform.position + new Vector3(2,0,0);
         this.transform.rotation = startingRot;
 
+        //fade in 
         for (int i = 0; i < this.transform.childCount; i++)
         {
-            this.transform.GetChild(i).GetComponent<SpriteRenderer>().color = resetColor;
+            StartCoroutine(FadeOut(this.transform.GetChild(i).GetComponent<SpriteRenderer>(), 0.5f, 0,1));
         }
         
         isDrawingBack = false;
         cueCollider.enabled = true;
     }
 
-        ///UPON RETURN: figure out why this isn't working. it's currently getting called in Start for testing purposes. 
-    private IEnumerator FadeOut(SpriteRenderer sr, float totalTime)
+    private IEnumerator FadeOut(SpriteRenderer sr, float totalTime, float startAlpha, float endAlpha)
     {
-        print("fade coroutine called");
-        print("starting a value: " + sr.color.a);
-        float endTime = Time.time + totalTime;
+        float elapsed = 0f;
         Color newColor = sr.color;
-        while(sr.color.a <= 0.01f)
+        while(elapsed <= totalTime)
         {
-            newColor.a = Mathf.Lerp(1f,0f, Time.time/endTime);
+            newColor.a = Mathf.Lerp(startAlpha,endAlpha, elapsed/totalTime);
             sr.color = newColor;
+            elapsed+=Time.deltaTime;
             yield return null;
-            print(sr.color.a);
         }
+
     }
 
 }
