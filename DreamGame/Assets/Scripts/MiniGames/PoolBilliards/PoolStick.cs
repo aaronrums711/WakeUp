@@ -15,6 +15,7 @@ public class PoolStick : MonoBehaviour
     private Vector3 startingPos;
     private Quaternion startingRot;
     public int orderInLevel;   //change this back to use the mini game value, just doing this now to avoid error
+    private Color resetColor = Color.white;
 
     //////////////////////////////State
     public bool isDrawingBack = false;
@@ -24,17 +25,20 @@ public class PoolStick : MonoBehaviour
     public Rigidbody2D thisRB;
     [SerializeField] private Collider2D cueCollider; //VGIU
     public MiniGame parentMiniGame;
+    public SpriteRenderer testSR;
+    
 
 
 
     void Start()
     {
         parentMiniGame = GetComponentInParent<MiniGame>();
-        if (parentMiniGame != null) {print("you've got the right mini game: " + parentMiniGame.name);}
         startingPos = this.transform.position;
         startingRot = this.transform.rotation;
         orderInLevel = 1;
         thisRB = GetComponent<Rigidbody2D>();
+
+        StartCoroutine(FadeOut(testSR, 2f));
     }
 
     void Update()
@@ -63,7 +67,6 @@ public class PoolStick : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("final pull back distance: " + pullBackDistance);
       
         CueHit();
     }
@@ -73,7 +76,6 @@ public class PoolStick : MonoBehaviour
     {
 
         thisRB.AddForce(transform.up * (hitSpeed+ (pullBackDistance + 1)), ForceMode2D.Impulse);
-        print(thisRB.velocity);
         //stick will draw back slightly after hit.
         //stick will fade away
         //stick will reappear when ball stops moving. 
@@ -93,6 +95,11 @@ public class PoolStick : MonoBehaviour
 
     private IEnumerator ResetStickPos()
     {
+        for (int i = 0; i < this.transform.childCount; i++)
+        {
+            StartCoroutine(FadeOut(this.transform.GetChild(i).GetComponent<SpriteRenderer>(), 1f));
+        }
+
         while (ball.thisRB.velocity.sqrMagnitude > ball.clampPoint) //keep yielding one frame until the ball stops, THEN set the stick position
         {
             yield return null;
@@ -100,8 +107,30 @@ public class PoolStick : MonoBehaviour
         // yield return new WaitForSeconds(3);
         this.transform.position = ball.transform.position + new Vector3(2,0,0);
         this.transform.rotation = startingRot;
+
+        for (int i = 0; i < this.transform.childCount; i++)
+        {
+            this.transform.GetChild(i).GetComponent<SpriteRenderer>().color = resetColor;
+        }
+        
         isDrawingBack = false;
         cueCollider.enabled = true;
+    }
+
+        ///UPON RETURN: figure out why this isn't working. it's currently getting called in Start for testing purposes. 
+    private IEnumerator FadeOut(SpriteRenderer sr, float totalTime)
+    {
+        print("fade coroutine called");
+        print("starting a value: " + sr.color.a);
+        float endTime = Time.time + totalTime;
+        Color newColor = sr.color;
+        while(sr.color.a <= 0.01f)
+        {
+            newColor.a = Mathf.Lerp(1f,0f, Time.time/endTime);
+            sr.color = newColor;
+            yield return null;
+            print(sr.color.a);
+        }
     }
 
 }
