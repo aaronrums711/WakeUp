@@ -24,7 +24,7 @@ public class MiniGame : MonoBehaviour
 
     //with space at position 0, now any game can just use keysToPlay[orderInLevel]  to get the key that game is using
     public string [] keysToPlay = {"space", "r", "i", "v", "m" };
-
+    public string keyForThisGame;
 
     //////////////////////////State
     public bool isActive;
@@ -32,7 +32,10 @@ public class MiniGame : MonoBehaviour
     public bool isComplete;
     public int numActiveGames;
 
-
+    void Start()
+    {
+        keyForThisGame = keysToPlay[orderInLevel];  //orderInLevel will eventually be set by a manager class. For now, VGIU
+    }
 
     public void StopGame()
     {

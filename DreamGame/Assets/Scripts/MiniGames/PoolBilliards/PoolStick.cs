@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolStick : MiniGame
+public class PoolStick : MonoBehaviour
 {
 
 
@@ -14,6 +14,7 @@ public class PoolStick : MiniGame
     private float pullBackDistance;
     private Vector3 startingPos;
     private Quaternion startingRot;
+    public int orderInLevel;   //change this back to use the mini game value, just doing this now to avoid error
 
     //////////////////////////////State
     public bool isDrawingBack = false;
@@ -22,12 +23,14 @@ public class PoolStick : MiniGame
     public GameObject ball;
     public Rigidbody2D thisRB;
     [SerializeField] private Collider2D cueCollider; //VGIU
-
+    public MiniGame parentMiniGame;
 
 
 
     void Start()
     {
+        parentMiniGame = GetComponentInParent<MiniGame>();
+        if (parentMiniGame != null) {print("you've got the right mini game: " + parentMiniGame.name);}
         startingPos = this.transform.position;
         startingRot = this.transform.rotation;
         orderInLevel = 1;
@@ -36,11 +39,11 @@ public class PoolStick : MiniGame
 
     void Update()
     {
-        if (!Input.GetKey(keysToPlay[orderInLevel])  && isDrawingBack == false)
+        if (!Input.GetKey(parentMiniGame.keyForThisGame)  && isDrawingBack == false)
         {
             transform.RotateAround(ball.transform.position, Vector3.forward, angle * Time.deltaTime * rotationSpeed);
         }
-        else if (Input.GetKeyDown(keysToPlay[orderInLevel]))
+        else if (Input.GetKeyDown(parentMiniGame.keyForThisGame))
         {
             StartCoroutine(InitiatePullBack());
         }
@@ -53,7 +56,7 @@ public class PoolStick : MiniGame
         Vector2 pullBackStartPos = this.transform.position;
         pullBackDistance = Vector2.Distance(new Vector2(transform.position.x, transform.position.y),pullBackStartPos);
 
-        while(Input.GetKey(keysToPlay[orderInLevel]) && pullBackDistance < maxPullBackDistance)  
+        while(Input.GetKey(parentMiniGame.keyForThisGame) && pullBackDistance < maxPullBackDistance)  
         {
             transform.Translate(Vector2.down  * Time.deltaTime * drawBackSpeed);
             pullBackDistance = Vector2.Distance(new Vector2(transform.position.x, transform.position.y),pullBackStartPos);
