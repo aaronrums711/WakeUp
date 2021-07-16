@@ -20,7 +20,7 @@ public class PoolStick : MonoBehaviour
     public bool isDrawingBack = false;
 
     //////////////////////////////Cached Component References
-    public GameObject ball;
+    public BilliardsBall ball;
     public Rigidbody2D thisRB;
     [SerializeField] private Collider2D cueCollider; //VGIU
     public MiniGame parentMiniGame;
@@ -77,7 +77,7 @@ public class PoolStick : MonoBehaviour
         //stick will draw back slightly after hit.
         //stick will fade away
         //stick will reappear when ball stops moving. 
-        StartCoroutine(ResetStickPos());
+        
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -87,12 +87,17 @@ public class PoolStick : MonoBehaviour
             thisRB.velocity = Vector2.zero;
             thisRB.angularVelocity = 0;
             cueCollider.enabled = false;
+            StartCoroutine(ResetStickPos());
         }
     }
 
     private IEnumerator ResetStickPos()
     {
-        yield return new WaitForSeconds(3);
+        while (ball.thisRB.velocity.sqrMagnitude > ball.clampPoint) //keep yielding one frame until the ball stops, THEN set the stick position
+        {
+            yield return null;
+        }
+        // yield return new WaitForSeconds(3);
         this.transform.position = ball.transform.position + new Vector3(2,0,0);
         this.transform.rotation = startingRot;
         isDrawingBack = false;

@@ -30,7 +30,7 @@ public class MiniGame : MonoBehaviour
     public bool isActive;
     public bool isFrozen;
     public bool isComplete;
-    public int numActiveGames;
+    public static int numActiveGames;
 
     void Start()
     {

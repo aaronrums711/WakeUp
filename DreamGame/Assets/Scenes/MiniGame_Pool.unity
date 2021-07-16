@@ -502,7 +502,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -654,6 +654,7 @@ GameObject:
   - component: {fileID: 1230843823}
   - component: {fileID: 1230843825}
   - component: {fileID: 1230843826}
+  - component: {fileID: 1230843827}
   m_Layer: 8
   m_Name: Ball
   m_TagString: Untagged
@@ -763,6 +764,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &1230843827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230843822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec5eda1805a3a7f4d8919a9e51393ce6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clampPoint: 0.206
+  thisRB: {fileID: 0}
 --- !u!1 &1270297150
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,7 +841,6 @@ MonoBehaviour:
   isActive: 0
   isFrozen: 0
   isComplete: 0
-  numActiveGames: 0
 --- !u!1 &1525015782
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,7 +892,7 @@ MonoBehaviour:
   hitSpeed: 100
   orderInLevel: 1
   isDrawingBack: 0
-  ball: {fileID: 1230843822}
+  ball: {fileID: 1230843827}
   thisRB: {fileID: 0}
   cueCollider: {fileID: 435625069}
   parentMiniGame: {fileID: 0}
