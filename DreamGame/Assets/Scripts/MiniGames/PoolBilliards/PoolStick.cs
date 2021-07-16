@@ -123,3 +123,9 @@ public class PoolStick : MonoBehaviour
     }
 
 }
+
+
+/*****
+UPON RETURN: when it gets hit, get the target ball to get slightly bigger then shrink quickly until it dissappears
+
+******/
