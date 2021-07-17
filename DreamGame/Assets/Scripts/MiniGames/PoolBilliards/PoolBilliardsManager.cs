@@ -66,5 +66,5 @@ public class PoolBilliardsManager : MiniGameElement
         //need to search for a spot somehow, then spawn the target ball at that spot.  
     }
 
-    ///UPON RETURN: find a way to randomly spawn targets within the play area 
+    ///UPON RETURN: find a way to randomly spawn targets within the play area .  I think the AttemptToSpawnTargets method is good 
 }
