@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CueBall : MonoBehaviour
+public class CueBall : MiniGameElement
 {
 
     //////////////////////////////Config

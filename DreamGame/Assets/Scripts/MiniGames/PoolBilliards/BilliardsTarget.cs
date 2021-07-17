@@ -20,7 +20,10 @@ public class BilliardsTarget : MiniGameElement
     //////////////////////////////Cached Component References
     private Transform thisTransform;
 
-
+    void Start()
+    {
+        thisTransform = GetComponent<Transform>();
+    }
 
 
     void OnCollisionEnter2D(Collision2D other)    

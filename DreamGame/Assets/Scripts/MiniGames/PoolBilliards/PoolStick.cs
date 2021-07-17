@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolStick : MonoBehaviour
+public class PoolStick : MiniGameElement
 {
 
 
@@ -24,7 +24,7 @@ public class PoolStick : MonoBehaviour
     public CueBall ball; //VGIU
     public Rigidbody2D thisRB;
     [SerializeField] private Collider2D cueCollider; //VGIU
-    public MiniGame parentMiniGame;
+ 
     
 
 
