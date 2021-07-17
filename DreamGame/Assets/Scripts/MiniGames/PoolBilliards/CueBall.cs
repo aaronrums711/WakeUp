@@ -25,7 +25,7 @@ public class CueBall : MonoBehaviour
         ClampVelocity();
     }
 
-    public void ClampVelocity()
+    public void ClampVelocity() //all this does is set the velocity to zero instead of waiting for it to go to 0 natuarlly.  the poolstick the velocity to reappear. 
     {
         if (thisRB.velocity.sqrMagnitude <= clampPoint)
         {

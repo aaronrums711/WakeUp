@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class BilliardsTarget : MonoBehaviour
+public class BilliardsTarget : MiniGameElement
 {
     
     //////////////////////////////Config
@@ -19,14 +19,8 @@ public class BilliardsTarget : MonoBehaviour
 
     //////////////////////////////Cached Component References
     private Transform thisTransform;
-    private MiniGame parentMiniGame;
 
-    void Start()
-    {
-        thisTransform = GetComponent<Transform>();
-        parentMiniGame = GetComponentInParent<MiniGame>();
 
-    }
 
 
     void OnCollisionEnter2D(Collision2D other)    
@@ -51,4 +45,5 @@ public class BilliardsTarget : MonoBehaviour
         trans.localScale = Vector3.zero;
         Destroy(this.gameObject);
     }
+
 }
