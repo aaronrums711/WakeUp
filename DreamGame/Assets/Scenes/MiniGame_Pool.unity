@@ -146,13 +146,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 208760035}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.09049552, y: -3.6440027, z: 5.8774285}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 230725409}
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_Father: {fileID: 1270297151}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &230725408
 GameObject:
@@ -182,7 +182,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 230725408}
   m_LocalRotation: {x: -0, y: -0, z: -0.011693528, w: 0.99993163}
-  m_LocalPosition: {x: -1.18, y: 5.47, z: -5.8774285}
+  m_LocalPosition: {x: -0.93, y: 2.15, z: 0}
   m_LocalScale: {x: 0.5965, y: 0.5965, z: 0.5965}
   m_Children: []
   m_Father: {fileID: 208760036}
@@ -200,6 +200,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 746c73727914b4b49ad0cff14d18c5c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalTime: 1
+  growShrinkSplit: 0.297
+  rate: 0.043
 --- !u!50 &230725411
 Rigidbody2D:
   serializedVersion: 4
@@ -974,6 +977,7 @@ Transform:
   - {fileID: 1768439553}
   - {fileID: 1525015783}
   - {fileID: 1230843824}
+  - {fileID: 208760036}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

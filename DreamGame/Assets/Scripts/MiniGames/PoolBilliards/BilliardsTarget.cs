@@ -19,10 +19,13 @@ public class BilliardsTarget : MonoBehaviour
 
     //////////////////////////////Cached Component References
     private Transform thisTransform;
+    private MiniGame parentMiniGame;
 
     void Start()
     {
         thisTransform = GetComponent<Transform>();
+        parentMiniGame = GetComponentInParent<MiniGame>();
+
     }
 
 
@@ -35,7 +38,7 @@ public class BilliardsTarget : MonoBehaviour
         }
     }
 
-    public IEnumerator Shrink(Transform trans, float rate) //growShrinkSplit should be between 0 and 1, and indicates the percent of time that object will grow before it shrinks to nothing
+    public IEnumerator Shrink(Transform trans, float rate) 
     {
 
         Vector3 changeVector = new Vector3(rate, rate, rate);
@@ -46,6 +49,6 @@ public class BilliardsTarget : MonoBehaviour
         }
         //in case it's not perfect, at the end of the loops just set scale to 0
         trans.localScale = Vector3.zero;
-
+        Destroy(this.gameObject);
     }
 }
