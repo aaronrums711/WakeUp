@@ -39,11 +39,16 @@ public class PoolBilliardsManager : MiniGameElement
     //this makes it likely that at least one ball will spawn,  but unlikely for all of them up to the max to spawn
 
     //attempt to spawn for each missing ball up to the max.  the chance of getting one to spawn decreases with each.  
+    //however, if there are Max-1 balls in play, then there should be a slim chance of spawning another one, since there are already others to hit
     private void AttemptToSpawnTargets()
     {
-        float spawnChance= 0.5f;
+        if (targetsInPlay == maxTargetsAllowed) {return;}
+
+        int attempts = maxTargetsAllowed-targetsInPlay;
+
+        float spawnChance= 1f * (attempts/maxTargetsAllowed);  //if there's Max-1 targets in play, there will only be a 20% chance of spawning another
         float spawnChanceReduction = 0.1f;
-        for (int i=maxTargetsAllowed-targetsInPlay; i>=0; i--)
+        for (int i=attempts; i>=0; i--)
         {
             float chance = UnityEngine.Random.Range(0f, 1f);
             if (chance > spawnChance)
@@ -60,4 +65,6 @@ public class PoolBilliardsManager : MiniGameElement
         return;
         //need to search for a spot somehow, then spawn the target ball at that spot.  
     }
+
+    ///UPON RETURN: find a way to randomly spawn targets within the play area 
 }
