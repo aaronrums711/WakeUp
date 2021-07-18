@@ -90,6 +90,13 @@ public class PoolBilliardsManager : MiniGameElement
         // print("maxX: " + maxX);
         // print("minY: " + minY);
         // print("minX: " + minX);
+        
+        //UPON RETURN: need to do another check here to make sure the final position isn't too close to the cueBall. 
+        //if it is, run SearchForLocation() again.  
+        //not sure if it's necessary for the targert balls not to be touching eachother...probably is. 
+        //could just get the distance between the targetBallLocation and all the other target balls AND the cue ball. 
+        //if any of those distances is < some threshold, then it's too close and we run it again. 
+
         return targetBallLocation;
 
     }
