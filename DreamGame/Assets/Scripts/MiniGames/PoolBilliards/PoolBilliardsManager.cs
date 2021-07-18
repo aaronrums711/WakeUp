@@ -113,4 +113,11 @@ public class PoolBilliardsManager : MiniGameElement
         return finalTargetBallLocation;
 
     }
+
+    ///UPON RETURN:
+    ///the spawning functionality is working properly.  However, unity froze and crashed just now, which is usually because of an infinite while loop
+    ///try testing it out a few more times...if that turns out to be the problem, maybe after a certain amount of iterations, just break.  
+    ///then we need to add a case to handle this in the SpawnTargets method.  
+    
+    ///I guess it's possible that all the balls could have been in such a position that there were not viable spots...
 }
