@@ -13,13 +13,17 @@ public class BilliardsTarget : MiniGameElement
 
     //////////////////////////////State
     private bool isHit = false;
+    private float initialScale;  //used in grow method
 
     //////////////////////////////Cached Component References
     private Transform thisTransform;
 
     void Start()
     {
+        initialScale = this.transform.localScale.x;
         thisTransform = GetComponent<Transform>();
+        this.transform.localScale = Vector3.zero;
+        StartCoroutine(Grow(this.transform, rate));
     }
 
 
@@ -45,5 +49,20 @@ public class BilliardsTarget : MiniGameElement
         trans.localScale = Vector3.zero;
         Destroy(this.gameObject);
     }
+
+       public IEnumerator Grow(Transform trans, float rate) 
+    {
+        Vector3 changeVector = new Vector3(rate, rate, rate);
+        while(trans.localScale.x <= initialScale)
+        {
+            trans.localScale += changeVector;
+            yield return null;
+        }
+        //in case it's not perfect, at the end of the loops just set scale to initial scale
+        trans.localScale = new Vector3(initialScale, initialScale, initialScale);
+       ;
+    }
+
+
 
 }

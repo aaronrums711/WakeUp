@@ -40,6 +40,7 @@ public class PoolBilliardsManager : MiniGameElement
     [ContextMenu("attempt to spawn target")]
     private void AttemptToSpawnTargets()
     {
+        int targetsToSpawn = 0;
         if (targetsInPlay == maxTargetsAllowed) {return;}
 
         float attempts = maxTargetsAllowed-targetsInPlay;
@@ -52,15 +53,21 @@ public class PoolBilliardsManager : MiniGameElement
             print("spawn attempt: " + chance);
             if (chance < spawnChance)
             {
-                SpawnTarget();
+                // SpawnTarget();
+                targetsToSpawn++;
             }
             spawnChance -= spawnChanceReduction;
         }
+        StartCoroutine(SpawnTargets(targetsToSpawn));
     }
 
-    private void SpawnTarget()
+    private IEnumerator SpawnTargets(int iterations)
     {
-        Instantiate(targetBallPrefab, SearchForLocation(), Quaternion.identity, targetBallParent);
+        for(int i =0; i< iterations; i++)
+        {
+            Instantiate(targetBallPrefab, SearchForLocation(), Quaternion.identity, targetBallParent);
+            yield return new WaitForSeconds(0.5f);
+        }
         GetTargetCount();
     }
 
