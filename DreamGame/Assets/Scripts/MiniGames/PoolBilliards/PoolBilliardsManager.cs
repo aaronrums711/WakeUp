@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 //this class is mostly just responsible for respawning targets.  There needs to be enough targets at a time so that the player 
 //always has something to aim at.  
@@ -35,10 +36,6 @@ public class PoolBilliardsManager : MiniGameElement
     {
         targetsInPlay = parentMiniGame.transform.GetComponentsInChildren<BilliardsTarget>().Length;
     }
-
-    //UPON RETURN: create a method to spawn target balls periodically.  
-    //delete the old layers and create new ones.  I think I like the idea of target balls being able to knock out other target balls, 
-    //so that layer should be able to collide with itself. 
 
     [ContextMenu("attempt to spawn target")]
     private void AttemptToSpawnTargets()
@@ -85,19 +82,27 @@ public class PoolBilliardsManager : MiniGameElement
             else if(testX < minX) {minX = testX+targetLocationPadding;}
         }
 
-        Vector3 targetBallLocation = new Vector3(Random.Range(minY, maxY), Random.Range(minX, maxX));
-        // print("maxY: " + maxY);
-        // print("maxX: " + maxX);
-        // print("minY: " + minY);
-        // print("minX: " + minX);
-        
-        //UPON RETURN: need to do another check here to make sure the final position isn't too close to the cueBall. 
-        //if it is, run SearchForLocation() again.  
-        //not sure if it's necessary for the targert balls not to be touching eachother...probably is. 
-        //could just get the distance between the targetBallLocation and all the other target balls AND the cue ball. 
-        //if any of those distances is < some threshold, then it's too close and we run it again. 
+    
+        Vector3 finalTargetBallLocation = new Vector3(1000,1000,1000);
+        List<float> distances = new List<float>();
 
-        return targetBallLocation;
+        while(finalTargetBallLocation.x == 1000)
+        {
+            Vector3 targetBallLocation = new Vector3(Random.Range(minY, maxY), Random.Range(minX, maxX));
+            
+            foreach (BilliardsTarget target in parentMiniGame.transform.GetComponentsInChildren<BilliardsTarget>())
+            {   ///get other target ball distances
+                distances.Add(Vector3.Distance(targetBallLocation, target.transform.position));
+            }
+            //get cueball distance
+            distances.Add(Vector3.Distance(targetBallLocation, parentMiniGame.transform.GetComponentInChildren<CueBall>().transform.position));
+
+            if (distances.Min() >0.5)
+            {
+                finalTargetBallLocation = targetBallLocation;
+            }
+        }
+        return finalTargetBallLocation;
 
     }
 }

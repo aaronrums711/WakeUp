@@ -8,9 +8,6 @@ public class BilliardsTarget : MiniGameElement
     
     //////////////////////////////Config
     public float totalTime;
-    
-    [Range(0.1f, 0.9f)] public float growShrinkSplit;
-
     [Range(0.001f, 0.9f)] public float rate;
 
 
