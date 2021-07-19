@@ -134,7 +134,7 @@ public class PoolBilliardsManager : MiniGameElement
     }
 
     ///UPON RETURN:
-    // test out how to call the spawn method...I think it can be on a long timer, but also get called another way
+    // test out how to call the spawn method...I think it can be on a long timer (maybe 10s), but also get called another way
 
 
 }
