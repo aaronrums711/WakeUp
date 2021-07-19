@@ -12,7 +12,7 @@ public class BilliardsTarget : MiniGameElement
 
 
     //////////////////////////////State
-    private bool isHit = false;
+    public bool isHit = false;
     private float initialScale;  //used in grow method
 
     //////////////////////////////Cached Component References
@@ -34,6 +34,8 @@ public class BilliardsTarget : MiniGameElement
             if (!isHit) StartCoroutine(Shrink(thisTransform, rate));
             isHit = true;
         }
+        isHit = false;  //added after some debugging.  if a target ball was spawned right next the cue ball, it's isHit would be true, but for some reason it wouldn't dissappear. 
+                        //so it would be stuck on the play area.  this is a cheap way around that. 
     }
 
     public IEnumerator Shrink(Transform trans, float rate) 

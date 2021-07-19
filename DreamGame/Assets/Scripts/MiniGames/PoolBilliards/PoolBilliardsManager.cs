@@ -12,6 +12,7 @@ public class PoolBilliardsManager : MiniGameElement
 
     //////////////////////////////Config
     public float targetLocationPadding = 1f;
+    public Vector3 finalTargetBallLocation;
 
     //////////////////////////////State
 
@@ -21,12 +22,13 @@ public class PoolBilliardsManager : MiniGameElement
     public GameObject targetBallPrefab;
     public Transform targetBallParent;
     
+
     void Start()
     {
         GetTargetCount();
         // AttemptToSpawnTargets();
         InvokeRepeating("GetTargetCount", 0.5f, 0.5f);
-        // InvokeRepeating("AttemptToSpawnTargets", 3f, 3f);
+        InvokeRepeating("AttemptToSpawnTargets", 3f, 3f);
     }
 
     void Update()
@@ -67,7 +69,8 @@ public class PoolBilliardsManager : MiniGameElement
     {
         for(int i =0; i< iterations; i++)
         {
-            Vector3 targetDestination = SearchForLocation();
+            yield return StartCoroutine(SearchForLocation());
+            Vector3 targetDestination = finalTargetBallLocation;
             if (targetDestination.x == 1000f)
             {
                 print("the spawn method failed to return a valid location");
@@ -83,7 +86,7 @@ public class PoolBilliardsManager : MiniGameElement
     }
 
 
-    private Vector3 SearchForLocation()
+    private IEnumerator SearchForLocation()
     {
         float maxY = 0;
         float maxX=  0;
@@ -100,8 +103,8 @@ public class PoolBilliardsManager : MiniGameElement
             else if(testX < minX) {minX = testX+targetLocationPadding;}
         }
 
-    
-        Vector3 finalTargetBallLocation = new Vector3(1000,1000,1000);
+
+        finalTargetBallLocation = new Vector3(1000,1000,1000);
         List<float> distances = new List<float>();
         int iterations = 0;
         while(finalTargetBallLocation.x == 1000)
@@ -124,8 +127,10 @@ public class PoolBilliardsManager : MiniGameElement
             {
                 break;
             }
+            iterations++;
+            yield return null;
         }
-        return finalTargetBallLocation;
+       
 
     }
 
