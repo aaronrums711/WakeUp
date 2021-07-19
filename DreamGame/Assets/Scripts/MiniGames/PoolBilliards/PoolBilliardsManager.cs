@@ -57,7 +57,6 @@ public class PoolBilliardsManager : MiniGameElement
             // print("spawn attempt: " + chance);
             if (chance < spawnChance)
             {
-                // SpawnTarget();
                 targetsToSpawn++;
             }
             spawnChance -= spawnChanceReduction;
@@ -73,7 +72,8 @@ public class PoolBilliardsManager : MiniGameElement
             Vector3 targetDestination = finalTargetBallLocation;
             if (targetDestination.x == 1000f)
             {
-                print("the spawn method failed to return a valid location");
+                // print("the spawn method failed to return a valid location");
+                continue;
             }
             else 
             {
@@ -109,6 +109,7 @@ public class PoolBilliardsManager : MiniGameElement
         int iterations = 0;
         while(finalTargetBallLocation.x == 1000)
         {
+            distances = new List<float>();
             print("search iteration: " + iterations);
             Vector3 targetBallLocation = new Vector3(Random.Range(minY, maxY), Random.Range(minX, maxX));
             
