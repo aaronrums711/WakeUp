@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7916379094448281395}
   - component: {fileID: 7916379094448281396}
   - component: {fileID: 7916379094448281397}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: TargetBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7916379094448281399}
-  m_LocalRotation: {x: -0, y: -0, z: -0.011693528, w: 0.99993163}
+  m_LocalRotation: {x: 0, y: 0, z: -0.011693528, w: 0.99993163}
   m_LocalPosition: {x: -0.93, y: 2.15, z: 0}
   m_LocalScale: {x: 0.5965, y: 0.5965, z: 0.5965}
   m_Children: []
@@ -136,5 +136,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentMiniGame: {fileID: 0}
   totalTime: 1
-  growShrinkSplit: 0.297
   rate: 0.043
