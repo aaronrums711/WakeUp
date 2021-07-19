@@ -274,7 +274,7 @@ GameObject:
   - component: {fileID: 435625067}
   - component: {fileID: 435625068}
   - component: {fileID: 435625069}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -686,7 +686,7 @@ GameObject:
   - component: {fileID: 1230843825}
   - component: {fileID: 1230843826}
   - component: {fileID: 1230843827}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: CueBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -885,7 +885,7 @@ GameObject:
   - component: {fileID: 1525015783}
   - component: {fileID: 1525015784}
   - component: {fileID: 1525015785}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: PoolStick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1058,6 +1058,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TargetBall
       objectReference: {fileID: 0}
+    - target: {fileID: 7916379094448281399, guid: 957b048f25d0ed247bf0d86928411032, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 957b048f25d0ed247bf0d86928411032, type: 3}
 --- !u!4 &1882356535 stripped
@@ -1075,7 +1079,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1948859667}
   - component: {fileID: 1948859668}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Stick
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,9 +12,9 @@ TagManager:
   - Water
   - UI
   - PlayAreaBarriers
-  - MiniGame_NoCollision
-  - MiniGame_Collision
-  - 
+  - Pool_CueBall
+  - Pool_TargetBall
+  - Pool_Stick
   - 
   - 
   - 
