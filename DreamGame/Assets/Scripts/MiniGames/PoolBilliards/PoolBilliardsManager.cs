@@ -26,6 +26,7 @@ public class PoolBilliardsManager : MiniGameElement
         GetTargetCount();
         // AttemptToSpawnTargets();
         InvokeRepeating("GetTargetCount", 0.5f, 0.5f);
+        InvokeRepeating("AttemptToSpawnTargets", 3f, 3f);
     }
 
     void Update()
@@ -50,8 +51,8 @@ public class PoolBilliardsManager : MiniGameElement
         for (float i=attempts; i>0; i--)
         {
             float chance = UnityEngine.Random.Range(0f, 1f);
-            print("spawn threshold: " + spawnChance);
-            print("spawn attempt: " + chance);
+            // print("spawn threshold: " + spawnChance);
+            // print("spawn attempt: " + chance);
             if (chance < spawnChance)
             {
                 // SpawnTarget();
@@ -61,12 +62,21 @@ public class PoolBilliardsManager : MiniGameElement
         }
         StartCoroutine(SpawnTargets(targetsToSpawn));
     }
-
+ 
     private IEnumerator SpawnTargets(int iterations)
     {
         for(int i =0; i< iterations; i++)
         {
-            Instantiate(targetBallPrefab, SearchForLocation(), Quaternion.identity, targetBallParent);
+            Vector3 targetDestination = SearchForLocation();
+            if (targetDestination.x == 1000f)
+            {
+                print("the spawn method failed to return a valid location");
+            }
+            else 
+            {
+                Instantiate(targetBallPrefab, targetDestination, Quaternion.identity, targetBallParent);
+            }
+            
             yield return new WaitForSeconds(0.5f);
         }
         GetTargetCount();
@@ -93,9 +103,10 @@ public class PoolBilliardsManager : MiniGameElement
     
         Vector3 finalTargetBallLocation = new Vector3(1000,1000,1000);
         List<float> distances = new List<float>();
-
+        int iterations = 0;
         while(finalTargetBallLocation.x == 1000)
         {
+            print("search iteration: " + iterations);
             Vector3 targetBallLocation = new Vector3(Random.Range(minY, maxY), Random.Range(minX, maxX));
             
             foreach (BilliardsTarget target in parentMiniGame.transform.GetComponentsInChildren<BilliardsTarget>())
@@ -109,6 +120,10 @@ public class PoolBilliardsManager : MiniGameElement
             {
                 finalTargetBallLocation = targetBallLocation;
             }
+            else if( iterations >=10)
+            {
+                break;
+            }
         }
         return finalTargetBallLocation;
 
@@ -120,4 +135,6 @@ public class PoolBilliardsManager : MiniGameElement
     ///then we need to add a case to handle this in the SpawnTargets method.    could just use a continue for this. 
     
     ///I guess it's possible that all the balls could have been in such a position that there were not viable spots...
+
+    //also, figure out how the spawn method is going to get called.  
 }
