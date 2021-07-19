@@ -26,7 +26,7 @@ public class PoolBilliardsManager : MiniGameElement
         GetTargetCount();
         // AttemptToSpawnTargets();
         InvokeRepeating("GetTargetCount", 0.5f, 0.5f);
-        InvokeRepeating("AttemptToSpawnTargets", 3f, 3f);
+        // InvokeRepeating("AttemptToSpawnTargets", 3f, 3f);
     }
 
     void Update()
