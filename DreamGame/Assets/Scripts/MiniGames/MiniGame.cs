@@ -22,7 +22,7 @@ public class MiniGame : MonoBehaviour
     [Range(0f, 0.5f)]  [Tooltip("rate in seconds that the mini game will lose progress.  This should be pretty close to 0")]  
     public float rateOfDecay;
 
-    //with space at position 0, now any game can just use keysToPlay[orderInLevel]  to get the key that game is using
+     [Tooltip("with space at position 0, now any game can just use keysToPlay[orderInLevel]  to get the key that game is using")]
     public string [] keysToPlay = {"space", "r", "i", "v", "m" };
     public string keyForThisGame;
 
@@ -32,9 +32,38 @@ public class MiniGame : MonoBehaviour
     public bool isComplete;
     public static int numActiveGames;
 
+
+    //////////////////////////////Cached Component References
+    private List<GameObject> playAreaBarriers;
+
     void Start()
     {
         keyForThisGame = keysToPlay[orderInLevel];  //orderInLevel will eventually be set by a manager class. For now, VGIU
+        print("children of mini game: " + this.transform.childCount);
+    }
+
+
+    private void getPlayAreaBarriers()
+    {
+        GameObject barrierParent = new GameObject("test");
+        for (int i=0; i< this.transform.childCount; i++)
+        {
+            if (this.transform.GetChild(i).gameObject.CompareTag("PlayAreaBarriers"))
+            {
+                barrierParent = this.transform.GetChild(i).gameObject;
+                break;
+            }
+        }
+        if (barrierParent.name == "test")
+        {
+            Debug.LogError("this mini game does not have a child with the PlayAreaBarriers tag.  The parent mini game must be at the top of a hierarchy, and it must have a direct child that has this tag");
+            return;
+        }
+
+        for(int i=0; i< barrierParent.transform.childCount; i++)
+        {
+            playAreaBarriers.Add(barrierParent.transform.GetChild(i).gameObject);
+        }
     }
 
     public void StopGame()
@@ -60,6 +89,7 @@ public class MiniGame : MonoBehaviour
     {
         //adds additionalProgress to completionPercent
         completionPercent += additionalProgress;
+        CheckCompletion();
         return completionPercent;
     }
 
