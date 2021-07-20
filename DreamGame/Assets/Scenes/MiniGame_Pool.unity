@@ -857,8 +857,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2fe6ce5d914bd844a8b53224dd714de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseColor: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 0}
-  targetColor: {r: 0.06716209, g: 0, b: 0.8584906, a: 0}
+  baseColor: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
+  targetColor: {r: 0.06716209, g: 0, b: 0.8584906, a: 1}
   completionPercent: 0
   displayHeight: 0
   displayWidth: 0

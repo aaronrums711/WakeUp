@@ -45,7 +45,7 @@ public class MiniGame : MonoBehaviour
 
     void Update()
     {
-        DecayCompletion();
+        // DecayCompletion();
         TrackColorWithCompletionPercent();
     }
 
