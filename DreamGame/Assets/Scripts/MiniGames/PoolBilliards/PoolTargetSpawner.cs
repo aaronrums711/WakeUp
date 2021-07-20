@@ -6,7 +6,7 @@ using System.Linq;
 //this class is mostly just responsible for respawning targets.  There needs to be enough targets at a time so that the player 
 //always has something to aim at.  
 
-public class PoolBilliardsManager : MiniGameElement
+public class PoolTargetSpawner : MiniGameElement
 {
 
 
@@ -28,7 +28,7 @@ public class PoolBilliardsManager : MiniGameElement
         GetTargetCount();
         // AttemptToSpawnTargets();
         InvokeRepeating("GetTargetCount", 0.5f, 0.5f);
-        InvokeRepeating("AttemptToSpawnTargets", 3f, 3f);
+        InvokeRepeating("AttemptToSpawnTargets", 0.1f, 10f);
     }
 
     void Update()
@@ -42,8 +42,9 @@ public class PoolBilliardsManager : MiniGameElement
     }
 
     [ContextMenu("attempt to spawn target")]
-    private void AttemptToSpawnTargets()
+    public void AttemptToSpawnTargets()
     {
+        GetTargetCount();
         int targetsToSpawn = 0;
         if (targetsInPlay == maxTargetsAllowed) {return;}
 
@@ -78,11 +79,11 @@ public class PoolBilliardsManager : MiniGameElement
             else 
             {
                 Instantiate(targetBallPrefab, targetDestination, Quaternion.identity, targetBallParent);
+                GetTargetCount();
             }
             
             yield return new WaitForSeconds(0.5f);
         }
-        GetTargetCount();
     }
 
 
@@ -134,7 +135,7 @@ public class PoolBilliardsManager : MiniGameElement
     }
 
     ///UPON RETURN:
-    // test out how to call the spawn method...I think it can be on a long timer (maybe 10s), but also get called another way
-
+    //test out how to call the spawn method...I think it can be on a long timer (maybe 10s), but also get called another way
+    //also, rename this script to something like PoolBallSpawner, since that's really all it does.  
 
 }

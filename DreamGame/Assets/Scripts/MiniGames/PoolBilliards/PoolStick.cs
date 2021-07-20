@@ -24,13 +24,14 @@ public class PoolStick : MiniGameElement
     public CueBall ball; //VGIU
     public Rigidbody2D thisRB;
     [SerializeField] private Collider2D cueCollider; //VGIU
- 
+    public PoolTargetSpawner spawner;
     
 
 
 
     void Start()
     {
+        spawner = GameObject.FindObjectOfType<PoolTargetSpawner>();
         parentMiniGame = GetComponentInParent<MiniGame>();
         startingPos = this.transform.position;
         startingRot = this.transform.rotation;
@@ -97,7 +98,7 @@ public class PoolStick : MiniGameElement
         }
         this.transform.position = ball.transform.position + new Vector3(2,0,0);
         this.transform.rotation = startingRot;
-
+        spawner.AttemptToSpawnTargets();
         //fade in 
         for (int i = 0; i < this.transform.childCount; i++)
         {
