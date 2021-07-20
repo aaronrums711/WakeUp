@@ -11,7 +11,8 @@ public class MiniGame : MonoBehaviour
     public Color baseColor;
     public Color targetColor;
     [Tooltip("will almost always be 0-1.  added room on each side to account for edge cases")]  
-    [Range(-0.5f, 1.5f)] public float completionPercent;
+    [Range(-0.5f, 1.5f)] public float completionPercent = 0.5f;
+
     public float displayHeight;
     public float displayWidth;
     [Range(1,4)] public int orderInLevel;
@@ -20,7 +21,7 @@ public class MiniGame : MonoBehaviour
         precision, rhythm, speed, attention, strength
     }
     [Range(0f, 0.5f)]  [Tooltip("rate in seconds that the mini game will lose progress.  This should be pretty close to 0")]  
-    public float rateOfDecay;
+    public float rateOfDecay= 0.01f;
 
      [Tooltip("with space at position 0, now any game can just use keysToPlay[orderInLevel]  to get the key that game is using")]
     public string [] keysToPlay = {"space", "r", "i", "v", "m" };
@@ -34,12 +35,18 @@ public class MiniGame : MonoBehaviour
 
 
     //////////////////////////////Cached Component References
-    private List<GameObject> playAreaBarriers;
+    private List<GameObject> playAreaBarriers = new List<GameObject>();
 
     void Start()
     {
         keyForThisGame = keysToPlay[orderInLevel];  //orderInLevel will eventually be set by a manager class. For now, VGIU
-        print("children of mini game: " + this.transform.childCount);
+        getPlayAreaBarriers();
+    }
+
+    void Update()
+    {
+        DecayCompletion();
+        TrackColorWithCompletionPercent();
     }
 
 
@@ -75,13 +82,18 @@ public class MiniGame : MonoBehaviour
     public void TrackColorWithCompletionPercent()
     {
         //changes the color of playArea surrounding a game to indicate completionPercent.  Need to decide if it's going to be from white to baseColor or baseColor to white. 
-        return;
+        for (int i =0; i< playAreaBarriers.Count; i++)
+        {
+            SpriteRenderer sr  = playAreaBarriers[i].GetComponent<SpriteRenderer>();
+            sr.color = Color.Lerp(baseColor, targetColor, completionPercent);
+        }
+
     }
 
     public float DecayCompletion()
     {
         //pushes back the completion percent over time. 
-        completionPercent-= rateOfDecay;
+        completionPercent-= rateOfDecay*Time.deltaTime;
         return completionPercent;
     }
 
@@ -108,3 +120,6 @@ public class MiniGame : MonoBehaviour
     }
 
 }
+
+
+///UPON RETURN: keep working on the TrackColorWithCompletionPercent method.  the color.lerp is turning them all transparent...what the heck?

@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 413659457}
   m_Layer: 6
   m_Name: Right
-  m_TagString: Untagged
+  m_TagString: PlayAreaBarriers
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -385,7 +385,7 @@ GameObject:
   - component: {fileID: 456389158}
   m_Layer: 6
   m_Name: Left
-  m_TagString: Untagged
+  m_TagString: PlayAreaBarriers
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -577,7 +577,7 @@ GameObject:
   - component: {fileID: 659274270}
   m_Layer: 6
   m_Name: bottom
-  m_TagString: Untagged
+  m_TagString: PlayAreaBarriers
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -857,8 +857,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2fe6ce5d914bd844a8b53224dd714de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseColor: {r: 0, g: 0, b: 0, a: 0}
-  targetColor: {r: 0, g: 0, b: 0, a: 0}
+  baseColor: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 0}
+  targetColor: {r: 0.06716209, g: 0, b: 0.8584906, a: 0}
   completionPercent: 0
   displayHeight: 0
   displayWidth: 0
@@ -929,6 +929,7 @@ MonoBehaviour:
   ball: {fileID: 1230843827}
   thisRB: {fileID: 0}
   cueCollider: {fileID: 435625069}
+  spawner: {fileID: 0}
 --- !u!50 &1525015785
 Rigidbody2D:
   serializedVersion: 4
@@ -962,7 +963,7 @@ GameObject:
   - component: {fileID: 1768439554}
   m_Layer: 6
   m_Name: PlayArea
-  m_TagString: Untagged
+  m_TagString: PlayAreaBarriers
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1160,7 +1161,7 @@ GameObject:
   - component: {fileID: 2057492630}
   m_Layer: 6
   m_Name: Top
-  m_TagString: Untagged
+  m_TagString: PlayAreaBarriers
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
