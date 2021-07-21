@@ -12,7 +12,7 @@ public class MiniGame : MonoBehaviour
     public Color targetColor;
     [Tooltip("will almost always be 0-1.  added room on each side to account for edge cases")]  
     [Range(-0.2f, 1.2f)] public float completionPercent = 0.5f;
-
+    public float baseProgression = 0.05f;
     public float displayHeight;
     public float displayWidth;
     [Range(1,4)] public int orderInLevel;
@@ -32,6 +32,7 @@ public class MiniGame : MonoBehaviour
     public bool isFrozen;
     public bool isComplete;
     public static int numActiveGames;
+    public bool isTesting;
 
 
     //////////////////////////////Cached Component References
@@ -46,7 +47,10 @@ public class MiniGame : MonoBehaviour
 
     void Update()
     {
-        DecayCompletion();
+        if(!isTesting)
+        {
+            DecayCompletion();
+        } 
         TrackColorWithCompletionPercent();
     }
 
@@ -103,7 +107,6 @@ public class MiniGame : MonoBehaviour
             completionPercent = 0;
         }
         return completionPercent;   
- 
     }
 
     public float AddProgress(float additionalProgress)
