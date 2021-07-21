@@ -46,7 +46,7 @@ public class PoolTargetSpawner : MiniGameElement
     {
         GetTargetCount();
         int targetsToSpawn = 0;
-        if (targetsInPlay == maxTargetsAllowed) {return;}
+        if (targetsInPlay >= maxTargetsAllowed) {return;}
 
         float attempts = maxTargetsAllowed-targetsInPlay;
         float spawnChance= 1f * (attempts/maxTargetsAllowed);  //if there's Max-1 targets in play, there will only be a 20% chance of spawning another

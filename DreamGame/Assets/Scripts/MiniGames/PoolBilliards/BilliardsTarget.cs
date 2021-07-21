@@ -17,9 +17,11 @@ public class BilliardsTarget : MiniGameElement
 
     //////////////////////////////Cached Component References
     private Transform thisTransform;
+    public PoolHitManager hitManager; 
 
     void Start()
     {
+        hitManager = parentMiniGame.GetComponentInChildren<PoolHitManager>();
         initialScale = this.transform.localScale.x;
         thisTransform = GetComponent<Transform>();
         this.transform.localScale = Vector3.zero;
@@ -33,6 +35,7 @@ public class BilliardsTarget : MiniGameElement
         {
             if (!isHit) StartCoroutine(Shrink(thisTransform, rate));
             isHit = true;
+            hitManager.ProcessHit();
         }
         isHit = false;  //added after some debugging.  if a target ball was spawned right next the cue ball, it's isHit would be true, but for some reason it wouldn't dissappear. 
                         //so it would be stuck on the play area.  this is a cheap way around that. 
