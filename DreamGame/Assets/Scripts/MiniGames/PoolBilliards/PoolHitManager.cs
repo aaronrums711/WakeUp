@@ -13,7 +13,7 @@ public class PoolHitManager :  MiniGameElement
         parentMiniGame.AddProgress(progressionAmount);
     }
 
-    private void ResetTargetsHit()
+    public void ResetTargetsHit()
     {
         targetsHitThisShot = 0;
     }

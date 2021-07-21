@@ -860,6 +860,7 @@ MonoBehaviour:
   baseColor: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
   targetColor: {r: 0.06716209, g: 0, b: 0.8584906, a: 1}
   completionPercent: 0
+  baseProgression: 0.05
   displayHeight: 0
   displayWidth: 0
   orderInLevel: 1
@@ -874,6 +875,7 @@ MonoBehaviour:
   isActive: 0
   isFrozen: 0
   isComplete: 0
+  isTesting: 0
 --- !u!1 &1525015782
 GameObject:
   m_ObjectHideFlags: 0
@@ -930,6 +932,7 @@ MonoBehaviour:
   thisRB: {fileID: 0}
   cueCollider: {fileID: 435625069}
   spawner: {fileID: 0}
+  hitManager: {fileID: 0}
 --- !u!50 &1525015785
 Rigidbody2D:
   serializedVersion: 4
@@ -961,6 +964,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1768439553}
   - component: {fileID: 1768439554}
+  - component: {fileID: 1768439555}
   m_Layer: 6
   m_Name: PlayArea
   m_TagString: PlayAreaBarriers
@@ -1004,6 +1008,20 @@ MonoBehaviour:
   maxTargetsAllowed: 4
   targetBallPrefab: {fileID: 7916379094448281399, guid: 957b048f25d0ed247bf0d86928411032, type: 3}
   targetBallParent: {fileID: 208760036}
+--- !u!114 &1768439555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768439552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7681f2002cf4f3748a9bfd973397c043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
+  targetsHitThisShot: 0
 --- !u!1001 &1882356534
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -25,14 +25,15 @@ public class PoolStick : MiniGameElement
     public Rigidbody2D thisRB;
     [SerializeField] private Collider2D cueCollider; //VGIU
     public PoolTargetSpawner spawner;
+    public PoolHitManager hitManager; 
     
 
 
 
     void Start()
     {
+        hitManager = parentMiniGame.GetComponentInChildren<PoolHitManager>();
         spawner = GameObject.FindObjectOfType<PoolTargetSpawner>();
-        parentMiniGame = GetComponentInParent<MiniGame>();
         startingPos = this.transform.position;
         startingRot = this.transform.rotation;
         orderInLevel = 1;
@@ -107,6 +108,7 @@ public class PoolStick : MiniGameElement
         
         isDrawingBack = false;
         cueCollider.enabled = true;
+        hitManager.ResetTargetsHit();
     }
 
     private IEnumerator FadeOut(SpriteRenderer sr, float totalTime, float startAlpha, float endAlpha)
