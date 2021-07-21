@@ -47,7 +47,7 @@ public class MiniGame : MonoBehaviour
 
     void Update()
     {
-        if(!isTesting)
+        if(isTesting == true)
         {
             DecayCompletion();
         } 

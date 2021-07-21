@@ -9,7 +9,7 @@ public class PoolHitManager :  MiniGameElement
     public void ProcessHit()
     {
         targetsHitThisShot++;
-        float progressionAmount = parentMiniGame.baseProgression * (targetsHitThisShot * 0.05f);
+        float progressionAmount = parentMiniGame.baseProgression + (targetsHitThisShot * 0.05f);
         parentMiniGame.AddProgress(progressionAmount);
     }
 
