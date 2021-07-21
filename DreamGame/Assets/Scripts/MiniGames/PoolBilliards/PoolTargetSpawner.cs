@@ -111,7 +111,6 @@ public class PoolTargetSpawner : MiniGameElement
         while(finalTargetBallLocation.x == 1000)
         {
             distances = new List<float>();
-            print("search iteration: " + iterations);
             Vector3 targetBallLocation = new Vector3(Random.Range(minY, maxY), Random.Range(minX, maxX));
             
             foreach (BilliardsTarget target in parentMiniGame.transform.GetComponentsInChildren<BilliardsTarget>())
