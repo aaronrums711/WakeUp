@@ -47,10 +47,11 @@ public class MiniGame : MonoBehaviour
 
     void Update()
     {
-        if(isTesting == true)
+        if(isTesting == false)
         {
             DecayCompletion();
         } 
+        
         TrackColorWithCompletionPercent();
     }
 

@@ -864,7 +864,7 @@ MonoBehaviour:
   displayHeight: 0
   displayWidth: 0
   orderInLevel: 1
-  rateOfDecay: 0
+  rateOfDecay: 0.01
   keysToPlay:
   - space
   - r
