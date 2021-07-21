@@ -585,7 +585,7 @@ MonoBehaviour:
   targetsInPlay: 0
   maxTargetsAllowed: 4
   targetBallPrefab: {fileID: 7916379094448281399, guid: 957b048f25d0ed247bf0d86928411032, type: 3}
-  targetBallParent: {fileID: 0}
+  targetBallParent: {fileID: 208760036}
 --- !u!1001 &1882356534
 PrefabInstance:
   m_ObjectHideFlags: 0
