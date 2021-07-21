@@ -11,7 +11,7 @@ public class MiniGame : MonoBehaviour
     public Color baseColor;
     public Color targetColor;
     [Tooltip("will almost always be 0-1.  added room on each side to account for edge cases")]  
-    [Range(-0.5f, 1.5f)] public float completionPercent = 0.5f;
+    [Range(-0.2f, 1.2f)] public float completionPercent = 0.5f;
 
     public float displayHeight;
     public float displayWidth;
@@ -39,13 +39,14 @@ public class MiniGame : MonoBehaviour
 
     void Start()
     {
+        completionPercent = 0.5f;
         keyForThisGame = keysToPlay[orderInLevel];  //orderInLevel will eventually be set by a manager class. For now, VGIU
         getPlayAreaBarriers();
     }
 
     void Update()
     {
-        // DecayCompletion();
+        DecayCompletion();
         TrackColorWithCompletionPercent();
     }
 
@@ -93,8 +94,16 @@ public class MiniGame : MonoBehaviour
     public float DecayCompletion()
     {
         //pushes back the completion percent over time. 
-        completionPercent-= rateOfDecay*Time.deltaTime;
-        return completionPercent;
+        if (completionPercent >0)
+        {
+            completionPercent-= rateOfDecay*Time.deltaTime;
+        }
+        else if(completionPercent<0)
+        {
+            completionPercent = 0;
+        }
+        return completionPercent;   
+ 
     }
 
     public float AddProgress(float additionalProgress)
