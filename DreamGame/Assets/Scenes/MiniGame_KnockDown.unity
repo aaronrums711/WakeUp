@@ -141,9 +141,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentMiniGame: {fileID: 0}
-  playAreaBarriers: []
   targetLocationPadding: 0.5
   targetPrefab: {fileID: 5491674968492396711, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
+--- !u!114 &736497441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736497439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a958d364f176249468d6161f36c1b7f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
+  minWaveAmount: 5
+  maxWaveAmount: 10
+  isCurrentWaveOnPlayArea: 0
 --- !u!1 &833003877
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,6 +361,7 @@ MonoBehaviour:
   isFrozen: 0
   isComplete: 0
   isTesting: 1
+  playAreaBarriers: []
 --- !u!4 &1071494970
 Transform:
   m_ObjectHideFlags: 0
