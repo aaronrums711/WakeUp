@@ -133,8 +133,6 @@ public class PoolTargetSpawner : MiniGameElement
         return finalTargetBallLocation;
     }
 
-    ///UPON RETURN:
-    //test out how to call the spawn method...I think it can be on a long timer (maybe 10s), but also get called another way
-    //also, rename this script to something like PoolBallSpawner, since that's really all it does.  
+
 
 }
