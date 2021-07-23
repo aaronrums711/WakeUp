@@ -36,7 +36,7 @@ public class MiniGame : MonoBehaviour
 
 
     //////////////////////////////Cached Component References
-    private List<GameObject> playAreaBarriers = new List<GameObject>();
+    public List<GameObject> playAreaBarriers = new List<GameObject>();
 
     void Start()
     {

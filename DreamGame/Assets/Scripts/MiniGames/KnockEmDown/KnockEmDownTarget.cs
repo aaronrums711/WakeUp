@@ -5,7 +5,7 @@ using UnityEngine;
 public class KnockEmDownTarget : MonoBehaviour
 {
     //////////////////////////////Config
-    [Range(0.001f, 0.9f)] public float rate;
+    [Range(0.0001f, 0.005f)] public float rate;
 
     //////////////////////////////State
 

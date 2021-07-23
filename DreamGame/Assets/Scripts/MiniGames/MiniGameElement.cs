@@ -6,19 +6,10 @@ using System.Linq;
 public class MiniGameElement : MonoBehaviour
 {
     public MiniGame parentMiniGame;
-    public List<Transform> playAreaBarriers;
 
     void Awake()
     {
         GetParentMiniGame();
-
-        foreach (Transform transform in parentMiniGame.GetComponentsInChildren<Transform>())
-        {
-            if (transform.CompareTag("PlayAreaBarriers"))
-            {
-                playAreaBarriers.Add(transform);
-            }
-        }
     }
 
     public void GetParentMiniGame()
@@ -81,8 +72,12 @@ public class MiniGameElement : MonoBehaviour
             {
                 distances.Add(Vector3.Distance(testTargetLocation, objectsToAvoid[i].position));
             }
-
-            if (distances.Min() >padding)
+             
+            if(distances.Count == 0)
+            {
+                finalTargetLocation = testTargetLocation;
+            }
+            else if (distances.Min() >padding)
             {
                 finalTargetLocation = testTargetLocation;
             }
@@ -92,7 +87,7 @@ public class MiniGameElement : MonoBehaviour
             }
             iterations++;
         }
-        print(finalTargetLocation);
+        // print(finalTargetLocation);
         return finalTargetLocation;
     }
 

@@ -25,18 +25,21 @@ public class KnockDownTargetSpawner : MiniGameElement
     [ContextMenu("InstantiateTarget()")]
     public void InstantiateTarget()
     {
-        //we need list of transforms barriers and list transforms objectsToAvoid
-        // List<KnockEmDownTarget> currentTargets = new List<KnockEmDownTarget>();
-        // parentMiniGame.GetComponentsInChildren<KnockEmDownTarget>(currentTargets);
         List<Transform> targetTransforms = new List<Transform>();
-        foreach (KnockEmDownTarget target in parentMiniGame.GetComponentsInChildren<KnockEmDownTarget>())
+        foreach (KnockEmDownTarget target in targetParent.GetComponentsInChildren<KnockEmDownTarget>())
         {
             targetTransforms.Add(target.transform);
         }
 
-        Vector3 dest = GetRandomPoint(playAreaBarriers, targetLocationPadding, targetTransforms);
+        List<Transform> barriers = new List<Transform>();
+        foreach (GameObject go in parentMiniGame.playAreaBarriers)
+        {
+            barriers.Add(go.transform);;
+        }
+
+        Vector3 dest = GetRandomPoint(barriers, targetLocationPadding, targetTransforms);
         print(dest);
-        // Instantiate(targetPrefab, , Quaternion.identity, targetParent);
+        Instantiate(targetPrefab, dest, Quaternion.identity, targetParent);
     }
 
 
