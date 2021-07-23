@@ -41,8 +41,4 @@ public class KnockDownTargetSpawner : MiniGameElement
         print(dest);
         Instantiate(targetPrefab, dest, Quaternion.identity, targetParent);
     }
-
-
-
 }
-///UPON RETURN:  get this methodh working so that when it's called from the editor, a single target randomly appears.  The target should also start shrinking
