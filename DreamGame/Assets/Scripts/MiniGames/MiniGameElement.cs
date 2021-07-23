@@ -6,10 +6,19 @@ using System.Linq;
 public class MiniGameElement : MonoBehaviour
 {
     public MiniGame parentMiniGame;
+    public List<Transform> playAreaBarriers;
 
     void Awake()
     {
         GetParentMiniGame();
+
+        foreach (Transform transform in parentMiniGame.GetComponentsInChildren<Transform>())
+        {
+            if (transform.CompareTag("PlayAreaBarriers"))
+            {
+                playAreaBarriers.Add(transform);
+            }
+        }
     }
 
     public void GetParentMiniGame()
@@ -83,6 +92,7 @@ public class MiniGameElement : MonoBehaviour
             }
             iterations++;
         }
+        print(finalTargetLocation);
         return finalTargetLocation;
     }
 
