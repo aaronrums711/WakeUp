@@ -23,7 +23,7 @@ public class KnockDownTargetSpawner : MiniGameElement
     }
 
     [ContextMenu("InstantiateTarget()")]
-    public void InstantiateTarget()
+    public GameObject InstantiateTarget()
     {
         List<Transform> targetTransforms = new List<Transform>();
         foreach (KnockEmDownTarget target in targetParent.GetComponentsInChildren<KnockEmDownTarget>())
@@ -38,7 +38,6 @@ public class KnockDownTargetSpawner : MiniGameElement
         }
 
         Vector3 dest = GetRandomPoint(barriers, targetLocationPadding, targetTransforms);
-        print(dest);
-        Instantiate(targetPrefab, dest, Quaternion.identity, targetParent);
+        return Instantiate(targetPrefab.gameObject, dest, Quaternion.identity, targetParent);
     }
 }

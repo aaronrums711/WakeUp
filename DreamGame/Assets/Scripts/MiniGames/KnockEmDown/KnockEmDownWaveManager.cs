@@ -15,12 +15,14 @@ public class KnockEmDownWaveManager : MiniGameElement
     public int maxWaveAmount;
 
     [Range(0.1f, 2f)]  public float timeBetweenEachSpawn;
+
     //////////////////////////////State
     public bool isCurrentWaveOnPlayArea = false;
 
+
     //////////////////////////////Cached Component References
     KnockDownTargetSpawner spawner;
-
+    public List<GameObject> objectsInCurrentWave;
 
 
     void Start()
@@ -47,13 +49,13 @@ public class KnockEmDownWaveManager : MiniGameElement
         int targetsInWave = Random.Range(min, max+1);
         for(int i=0; i < targetsInWave; i++)
         {
-            spawner.InstantiateTarget();
+            objectsInCurrentWave.Add(spawner.InstantiateTarget());
             yield return new WaitForSeconds(timeBetweenEachSpawn);
         }
         StartCoroutine(MonitorCurrentWave());
     }
     
-    [ContextMenu("SpawnWaveFromEditor()")]
+    [ContextMenu("SpawnWaveFromEditor() testing only")] 
     public void SpawnWaveFromEditor()
     {
         StartCoroutine(SpawnWave(minWaveAmount, maxWaveAmount));
