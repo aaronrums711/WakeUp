@@ -175,8 +175,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentMiniGame: {fileID: 0}
-  growRate: 0.001
-  growEffectLength: 0.5
+  growRate: 0.00001
+  growEffectLength: 1
+  endEffectShrinkRate: 10
 --- !u!1 &833003877
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,6 +404,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 833003878}
     m_Modifications:
+    - target: {fileID: 5491674968492396711, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
+      propertyPath: initialShrinkRate
+      value: 0.35
+      objectReference: {fileID: 0}
     - target: {fileID: 7916379094448281398, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
       propertyPath: m_RootOrder
       value: 0

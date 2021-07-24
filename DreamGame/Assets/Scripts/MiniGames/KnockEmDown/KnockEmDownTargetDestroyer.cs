@@ -30,23 +30,8 @@ public class KnockEmDownTargetDestroyer : MiniGameElement
             }
             else if(waveManager.objectsInCurrentWave.Count >= 0)
             {
-                StartCoroutine(GrowAndShrink(waveManager.objectsInCurrentWave[0].gameObject.transform, growRate, waveManager.objectsInCurrentWave[0].GetComponent<KnockEmDownTarget>()));
+                waveManager.objectsInCurrentWave[0].GetComponent<KnockEmDownTarget>().CallDestroyEffect();
             }
         }
     }
-
-   public IEnumerator GrowAndShrink(Transform trans, float rate, KnockEmDownTarget target) 
-	{
-        float endTime= Time.time + growEffectLength;
-
-		Vector3 changeVector = new Vector3(rate, rate, rate);
-		while(Time.time < endTime)
-		{
-			trans.localScale += changeVector;
-			yield return null;
-		}
-        target.rate = endEffectShrinkRate;  //basically this makes the ball shrink very fast, then dissappear
-	}
-
-
 }

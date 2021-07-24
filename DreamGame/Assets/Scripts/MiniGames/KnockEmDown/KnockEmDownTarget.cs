@@ -5,9 +5,13 @@ using UnityEngine;
 public class KnockEmDownTarget : MiniGameElement
 {
     //////////////////////////////Config
-    [Range(0.0001f, 10f)] public float rate;
+    [Tooltip("should be a very small number between 0.0001 and 0.0007 or so ")]  
+    public float initialShrinkRate = 0.00035f;
+    public float growEffectLength = 0.5f;
+    public float endEffectRate = 0.01f;
 
     //////////////////////////////State
+    private IEnumerator initialCoroutine;
 
     //////////////////////////////Cached Component References
     private KnockEmDownWaveManager waveManager;
@@ -15,7 +19,8 @@ public class KnockEmDownTarget : MiniGameElement
     void Start()
     {
         waveManager = parentMiniGame.GetComponentInChildren<KnockEmDownWaveManager>();
-        StartCoroutine(Shrink(this.transform, rate));
+        initialCoroutine = Shrink(this.transform, initialShrinkRate);
+        StartCoroutine(initialCoroutine);
     }
 
     void Update()
@@ -27,10 +32,10 @@ public class KnockEmDownTarget : MiniGameElement
 
     public IEnumerator Shrink(Transform trans, float rate) 
     {
-
         Vector3 changeVector = new Vector3(rate, rate, rate);
         while(trans.localScale.x >=0.01)
         {
+            changeVector = new Vector3(rate, rate, rate);
             trans.localScale -= changeVector;
             yield return null;
         }
@@ -39,4 +44,36 @@ public class KnockEmDownTarget : MiniGameElement
         waveManager.objectsInCurrentWave.Remove(this.gameObject);
         Destroy(this.gameObject);
     }
+
+
+    public IEnumerator DestroyEffect(Transform trans, float rate, KnockEmDownTarget target) 
+	{
+        waveManager.objectsInCurrentWave.Remove(this.gameObject);
+        StopCoroutine(initialCoroutine);
+        float endTime= Time.time + growEffectLength;
+
+		Vector3 changeVector = new Vector3(rate, rate, rate);
+		while(Time.time < endTime)
+		{
+			trans.localScale += changeVector;
+			yield return null;
+		}
+
+        while(trans.localScale.x >=0.01)
+        {
+            changeVector = new Vector3(rate, rate, rate);
+            trans.localScale -= changeVector;
+            yield return null;
+        }
+        //in case it's not perfect, at the end of the loops just set scale to 0
+        trans.localScale = Vector3.zero;
+        Destroy(this.gameObject);
+	}
+
+    //to be called more simply from the TargetDestroyerClass. 
+    public void CallDestroyEffect()
+    {
+        StartCoroutine(DestroyEffect(this.transform,endEffectRate, this ));
+    }
+
 }

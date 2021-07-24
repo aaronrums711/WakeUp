@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7916379094448281398}
   - component: {fileID: 7916379094448281394}
-  - component: {fileID: 7916379094448281395}
-  - component: {fileID: 7916379094448281396}
   - component: {fileID: 5491674968492396711}
   m_Layer: 8
   m_Name: KnockEmDownTarget
@@ -85,43 +83,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &7916379094448281395
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7916379094448281399}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 631b6b3e523f39b44a420d059e951a0d, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
---- !u!50 &7916379094448281396
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7916379094448281399}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 10
-  m_LinearDrag: 1
-  m_AngularDrag: 10
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &5491674968492396711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,4 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22aed69bee8ed09489c82020cbefbbdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rate: 0.00062
+  parentMiniGame: {fileID: 0}
+  initialShrinkRate: 0.00045
+  growEffectLength: 0.09
+  endEffectRate: 0.05
