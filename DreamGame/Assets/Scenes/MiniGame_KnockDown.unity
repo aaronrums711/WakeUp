@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseColor: {r: 1, g: 1, b: 1, a: 1}
-  targetColor: {r: 1, g: 0.96603775, b: 0.96603775, a: 1}
+  targetColor: {r: 1, g: 0.4362056, b: 0.06132078, a: 1}
   completionPercent: 0.5
   baseProgression: 0.05
   displayHeight: 0
@@ -379,7 +379,7 @@ MonoBehaviour:
   isActive: 0
   isFrozen: 0
   isComplete: 0
-  isTesting: 1
+  isTesting: 0
   playAreaBarriers: []
 --- !u!4 &1071494970
 Transform:

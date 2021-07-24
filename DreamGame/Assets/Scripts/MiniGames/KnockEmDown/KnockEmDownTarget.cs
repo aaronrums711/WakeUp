@@ -71,9 +71,11 @@ public class KnockEmDownTarget : MiniGameElement
 	}
 
     //to be called more simply from the TargetDestroyerClass. 
-    public void CallDestroyEffect()
+    public float CallDestroyEffect()
     {
+        float scale = this.transform.localScale.x + 1;  //the +1 makes the score multiplcation make more sense
         StartCoroutine(DestroyEffect(this.transform,endEffectRate, this ));
+        return scale;
     }
 
 }

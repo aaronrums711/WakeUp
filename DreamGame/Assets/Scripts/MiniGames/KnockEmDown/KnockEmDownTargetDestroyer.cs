@@ -26,11 +26,12 @@ public class KnockEmDownTargetDestroyer : MiniGameElement
         {
             if (waveManager.objectsInCurrentWave.Count <= 0)
             {
-                ///negative progression
+                parentMiniGame.AddProgress(-0.02f);
             }
             else if(waveManager.objectsInCurrentWave.Count >= 0)
             {
-                waveManager.objectsInCurrentWave[0].GetComponent<KnockEmDownTarget>().CallDestroyEffect();
+                float scale = waveManager.objectsInCurrentWave[0].GetComponent<KnockEmDownTarget>().CallDestroyEffect();
+                parentMiniGame.AddProgress(0.02f * scale);
             }
         }
     }
