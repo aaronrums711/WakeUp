@@ -32,11 +32,6 @@ public class KnockEmDownWaveManager : MiniGameElement
     }
 
 
-    void Update()
-    {
-        
-    }
-
     public IEnumerator SpawnWave(int min, int max)
     {
         yield return new WaitForSeconds(Random.Range(3,6)); //this wait is so that waves don't come immediately after another.  This timer starts when the last target from previous wave is gone

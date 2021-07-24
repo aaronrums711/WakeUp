@@ -161,6 +161,22 @@ MonoBehaviour:
   maxWaveAmount: 10
   timeBetweenEachSpawn: 0.403
   isCurrentWaveOnPlayArea: 0
+  objectsInCurrentWave: []
+--- !u!114 &736497442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736497439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd0d0cbe5abed82459b8d80cb0852f7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
+  growRate: 0.001
+  growEffectLength: 0.5
 --- !u!1 &833003877
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,7 +366,7 @@ MonoBehaviour:
   baseProgression: 0.05
   displayHeight: 0
   displayWidth: 0
-  orderInLevel: 0
+  orderInLevel: 2
   rateOfDecay: 0.01
   keysToPlay:
   - space

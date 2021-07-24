@@ -5,7 +5,7 @@ using UnityEngine;
 public class KnockEmDownTarget : MiniGameElement
 {
     //////////////////////////////Config
-    [Range(0.0001f, 0.005f)] public float rate;
+    [Range(0.0001f, 10f)] public float rate;
 
     //////////////////////////////State
 
