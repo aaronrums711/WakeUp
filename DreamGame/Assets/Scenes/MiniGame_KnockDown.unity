@@ -143,6 +143,7 @@ MonoBehaviour:
   parentMiniGame: {fileID: 0}
   targetLocationPadding: 0.5
   targetPrefab: {fileID: 5491674968492396711, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
+  targetParent: {fileID: 0}
 --- !u!114 &736497441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,6 +159,7 @@ MonoBehaviour:
   parentMiniGame: {fileID: 0}
   minWaveAmount: 5
   maxWaveAmount: 10
+  timeBetweenEachSpawn: 0.403
   isCurrentWaveOnPlayArea: 0
 --- !u!1 &833003877
 GameObject:

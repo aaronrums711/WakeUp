@@ -14,7 +14,7 @@ public class KnockDownTargetSpawner : MiniGameElement
 
     //////////////////////////////Cached Component References
     public KnockEmDownTarget targetPrefab; //VGIU
-    private Transform targetParent;
+    public Transform targetParent;
 
     void Start()
     {

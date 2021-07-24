@@ -48,11 +48,22 @@ public class KnockEmDownWaveManager : MiniGameElement
             spawner.InstantiateTarget();
             yield return new WaitForSeconds(timeBetweenEachSpawn);
         }
-        isCurrentWaveOnPlayArea = false;
+        StartCoroutine(MonitorCurrentWave());
     }
+    
     [ContextMenu("SpawnWaveFromEditor()")]
     public void SpawnWaveFromEditor()
     {
         StartCoroutine(SpawnWave(minWaveAmount, maxWaveAmount));
     }
+
+    public IEnumerator MonitorCurrentWave()
+    {
+        while (spawner.targetParent.childCount > 0 )
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        isCurrentWaveOnPlayArea = false;
+    }
+
 }
