@@ -14,7 +14,7 @@ public class KnockEmDownWaveManager : MiniGameElement
     public int minWaveAmount;
     public int maxWaveAmount;
 
-    [Range(0.1f, 2f)]  public float timeBetweenEachSpawn;
+    [Range(0.1f, 2f)]  public float timeBetweenEachSpawn = 0.3f;
 
     //////////////////////////////State
     public bool isCurrentWaveOnPlayArea = false;
