@@ -24,4 +24,8 @@ public class LaserEmitter : MonoBehaviour
         lineRenderer.SetPosition(0, emissionPoint.position);
         lineRenderer.SetPosition(1, endPoint.position);
     }
+
+    /**
+    at this point the line is rendering, but not in the right place.  gotta fix the raycast to emit from the relative up direction of shootpoint
+    **/
 }
