@@ -451,7 +451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b68b50b99701dc64dba835e1904fb290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rot: {x: 0, y: 0, z: 20}
+  rot: {x: 0, y: 0, z: 30}
   rotationTesting: {fileID: 290284499}
 --- !u!1 &290284498
 GameObject:
