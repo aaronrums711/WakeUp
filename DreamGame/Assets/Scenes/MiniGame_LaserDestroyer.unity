@@ -1237,6 +1237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emissionPoint: {fileID: 252974120}
   centerTarget: {fileID: 1235287150}
+  laserInitializationLength: 5
 --- !u!1001 &1771353614
 PrefabInstance:
   m_ObjectHideFlags: 0
