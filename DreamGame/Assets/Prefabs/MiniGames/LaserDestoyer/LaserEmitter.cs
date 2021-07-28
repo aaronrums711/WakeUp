@@ -18,13 +18,36 @@ public class LaserEmitter : MonoBehaviour
 
     void Update()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, centerTarget.position- this.transform.position);
-        Debug.DrawLine(transform.position, hit.point);
-        lineRenderer.SetPosition(0, emissionPoint.position);
-        lineRenderer.SetPosition(1, hit.point);
+        // RaycastHit2D hit = Physics2D.Raycast(transform.position, centerTarget.position- this.transform.position);
+        // Debug.DrawLine(transform.position, hit.point);
+        // lineRenderer.SetPosition(0, emissionPoint.position);
+        // lineRenderer.SetPosition(1, hit.point);
+
+        StartCoroutine(InitialLaserCast());
     }
 
-    /**
-    at this point the line is rendering, but not in the right place.  gotta fix the raycast to emit from the relative up direction of shootpoint
-    **/
+
+    private IEnumerator InitialLaserCast()
+    {
+        float startTime = Time.time;
+        float elapsed = Time.time - startTime;
+        float totalTime = 1f;
+        
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, centerTarget.position- this.transform.position);
+        int maxPositions = lineRenderer.positionCount;
+        Vector2 newPos = Vector2.Lerp((Vector2)emissionPoint.position, (Vector2)hit.point, elapsed);
+        lineRenderer.SetPosition(0, newPos);
+
+        while (Vector2.Distance(lineRenderer.GetPosition(lineRenderer.positionCount), hit.point) > 0.2f)
+        {
+            hit = Physics2D.Raycast(transform.position, centerTarget.position- this.transform.position);
+            elapsed = Time.time - startTime;
+            int nextPosIndex = lineRenderer.positionCount +1;
+            newPos = Vector2.Lerp((Vector2)emissionPoint.position, (Vector2)hit.point, elapsed);
+            lineRenderer.SetPosition(nextPosIndex, newPos);
+            yield return null;
+        }
+
+
+    }
 }
