@@ -4,29 +4,37 @@ using UnityEngine;
 
 public class LaserEmitter : MonoBehaviour
 {
-    private LineRenderer lineRenderer;
-    public Transform emissionPoint;
-    public Transform centerTarget;
 
+    //////////////////////////////Config
     public float laserInitializationLength;  //VGIU
+
+
+    //////////////////////////////State
+    public bool isLaserInitialized;
+
+    //////////////////////////////Cached Component References
+    private LineRenderer lineRenderer;
+    public Transform emissionPoint;   //VGIU
+    public Transform centerTarget;    //VGIU
+
 
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.positionCount = 1;
+        lineRenderer.positionCount = 2;
         lineRenderer.enabled = true;
-        StartCoroutine(InitialLaserCast());
+        // StartCoroutine(InitialLaserCast());
         print("starting line position count: " + lineRenderer.positionCount);
 
     }
 
     void Update()
     {
-        // RaycastHit2D hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- emissionPoint.position);
-        // Debug.DrawLine(transform.position, hit.point);
-        // lineRenderer.SetPosition(0, emissionPoint.position);
-        // lineRenderer.SetPosition(1, hit.point);
-        // // lineRenderer.SetPosition(2, new Vector3(5,5,5));
+        RaycastHit2D hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- emissionPoint.position);
+        Debug.DrawLine(emissionPoint.position, hit.point);
+        lineRenderer.SetPosition(0, emissionPoint.position);
+        lineRenderer.SetPosition(1, hit.point);
+        // lineRenderer.SetPosition(2, new Vector3(5,5,5));
     }
 
 
@@ -35,9 +43,10 @@ public class LaserEmitter : MonoBehaviour
         float startTime = Time.time;
         float totalTime = laserInitializationLength;
         float elapsedPercent = (Time.time - startTime)/laserInitializationLength;
-        
         int nextPosIndex;
         
+        lineRenderer.positionCount= 1;
+
         RaycastHit2D hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- this.transform.position);
         Vector2 newPos = Vector2.Lerp((Vector2)emissionPoint.position, (Vector2)hit.point, elapsedPercent);
         lineRenderer.SetPosition(0, newPos);
@@ -53,7 +62,14 @@ public class LaserEmitter : MonoBehaviour
             yield return null;
             
         }
+        isLaserInitialized = true;
         print("end of the loop reached!");
 
+    }
+
+    [ContextMenu("initialize laser")]
+    public void CallInitialLaserCastFromEditor()
+    {
+        StartCoroutine(InitialLaserCast());
     }
 }
