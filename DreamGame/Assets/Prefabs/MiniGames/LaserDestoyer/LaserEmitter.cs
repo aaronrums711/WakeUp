@@ -5,8 +5,8 @@ using UnityEngine;
 public class LaserEmitter : MonoBehaviour
 {
     private LineRenderer lineRenderer;
-    public Transform endPoint;
     public Transform emissionPoint;
+    public Transform centerTarget;
 
 
 
@@ -18,11 +18,10 @@ public class LaserEmitter : MonoBehaviour
 
     void Update()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, centerTarget.position- this.transform.position);
         Debug.DrawLine(transform.position, hit.point);
-        endPoint.position = hit.point;
         lineRenderer.SetPosition(0, emissionPoint.position);
-        lineRenderer.SetPosition(1, endPoint.position);
+        lineRenderer.SetPosition(1, hit.point);
     }
 
     /**
