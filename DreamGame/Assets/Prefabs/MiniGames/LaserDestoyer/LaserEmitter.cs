@@ -8,46 +8,52 @@ public class LaserEmitter : MonoBehaviour
     public Transform emissionPoint;
     public Transform centerTarget;
 
-
+    public float laserInitializationLength;  //VGIU
 
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.positionCount = 1;
         lineRenderer.enabled = true;
+        StartCoroutine(InitialLaserCast());
+        print("starting line position count: " + lineRenderer.positionCount);
+
     }
 
     void Update()
     {
-        // RaycastHit2D hit = Physics2D.Raycast(transform.position, centerTarget.position- this.transform.position);
+        // RaycastHit2D hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- emissionPoint.position);
         // Debug.DrawLine(transform.position, hit.point);
         // lineRenderer.SetPosition(0, emissionPoint.position);
         // lineRenderer.SetPosition(1, hit.point);
-
-        StartCoroutine(InitialLaserCast());
+        // // lineRenderer.SetPosition(2, new Vector3(5,5,5));
     }
 
 
     private IEnumerator InitialLaserCast()
     {
         float startTime = Time.time;
-        float elapsed = Time.time - startTime;
-        float totalTime = 1f;
+        float totalTime = laserInitializationLength;
+        float elapsedPercent = (Time.time - startTime)/laserInitializationLength;
         
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, centerTarget.position- this.transform.position);
-        int maxPositions = lineRenderer.positionCount;
-        Vector2 newPos = Vector2.Lerp((Vector2)emissionPoint.position, (Vector2)hit.point, elapsed);
+        int nextPosIndex;
+        
+        RaycastHit2D hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- this.transform.position);
+        Vector2 newPos = Vector2.Lerp((Vector2)emissionPoint.position, (Vector2)hit.point, elapsedPercent);
         lineRenderer.SetPosition(0, newPos);
 
-        while (Vector2.Distance(lineRenderer.GetPosition(lineRenderer.positionCount), hit.point) > 0.2f)
+        while (Vector2.Distance(lineRenderer.GetPosition(lineRenderer.positionCount-1), hit.point) > 0.2f)
         {
-            hit = Physics2D.Raycast(transform.position, centerTarget.position- this.transform.position);
-            elapsed = Time.time - startTime;
-            int nextPosIndex = lineRenderer.positionCount +1;
-            newPos = Vector2.Lerp((Vector2)emissionPoint.position, (Vector2)hit.point, elapsed);
+            lineRenderer.positionCount++;
+            hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- this.transform.position);
+            elapsedPercent = (Time.time - startTime)/laserInitializationLength;
+            nextPosIndex = lineRenderer.positionCount-1;
+            newPos = Vector2.Lerp((Vector2)emissionPoint.position, (Vector2)hit.point, elapsedPercent);
             lineRenderer.SetPosition(nextPosIndex, newPos);
             yield return null;
+            
         }
-
+        print("end of the loop reached!");
 
     }
 }
