@@ -10,7 +10,7 @@ public class LaserEmitter : MonoBehaviour
     private IEnumerator maintainCoroutine;
 
     //////////////////////////////State
-    public bool isLaserInitialized;
+    public bool isLaserInitialized = false;
 
 
     //////////////////////////////Cached Component References
@@ -106,5 +106,10 @@ public class LaserEmitter : MonoBehaviour
     //     StopCoroutine(maintainCoroutine);
 
     // }
+
+    /**
+    UPON RETURN: get this method to retract the laser back to its target. 
+    could do this by just contiually change the the 2nd point in the list to a nearer and nearer vector. 
+    **/
 
 }
