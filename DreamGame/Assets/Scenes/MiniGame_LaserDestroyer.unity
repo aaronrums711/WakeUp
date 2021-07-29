@@ -1059,6 +1059,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1608232655}
+  - component: {fileID: 1608232656}
   m_Layer: 0
   m_Name: MiniGameLaserDestroyer
   m_TagString: Untagged
@@ -1083,6 +1084,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1608232656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608232654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2fe6ce5d914bd844a8b53224dd714de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseColor: {r: 1, g: 1, b: 1, a: 1}
+  targetColor: {r: 0, g: 0.6603774, b: 0.44025165, a: 1}
+  completionPercent: 0.5
+  baseProgression: 0.05
+  displayHeight: 0
+  displayWidth: 0
+  orderInLevel: 0
+  rateOfDecay: 0.01
+  keysToPlay:
+  - space
+  - r
+  - i
+  - v
+  - m
+  keyForThisGame: 
+  isActive: 0
+  isFrozen: 0
+  isComplete: 0
+  isTesting: 0
+  playAreaBarriers: []
 --- !u!1 &1619626576
 GameObject:
   m_ObjectHideFlags: 0
@@ -1235,6 +1268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 252b82402f642804abb15bea95bb39a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
   laserInitializationLength: 0
   laserReductionMultiplier: 0.09
   isLaserInitialized: 0
@@ -1302,43 +1336,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8845351484926580474, guid: e9f8142f0ea7dab4896520daff96ff73, type: 3}
   m_PrefabInstance: {fileID: 1771353614}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1771353616 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8845351484926580475, guid: e9f8142f0ea7dab4896520daff96ff73, type: 3}
-  m_PrefabInstance: {fileID: 1771353614}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1771353617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1771353616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2fe6ce5d914bd844a8b53224dd714de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseColor: {r: 1, g: 1, b: 1, a: 0}
-  targetColor: {r: 0.019294016, g: 0.5188679, b: 0.007342457, a: 0}
-  completionPercent: 0.5
-  baseProgression: 0.05
-  displayHeight: 0
-  displayWidth: 0
-  orderInLevel: 0
-  rateOfDecay: 0.01
-  keysToPlay:
-  - space
-  - r
-  - i
-  - v
-  - m
-  keyForThisGame: 
-  isActive: 0
-  isFrozen: 0
-  isComplete: 0
-  isTesting: 0
-  playAreaBarriers: []
 --- !u!1 &1851582914
 GameObject:
   m_ObjectHideFlags: 0

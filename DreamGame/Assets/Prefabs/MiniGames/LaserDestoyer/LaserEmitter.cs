@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserEmitter : MonoBehaviour
+public class LaserEmitter : MiniGameElement
 {
 
     //////////////////////////////Config
@@ -42,7 +42,6 @@ public class LaserEmitter : MonoBehaviour
         float totalTime = laserInitializationLength;
         float elapsedPercent = (Time.time - startTime)/laserInitializationLength;
         int nextPosIndex;
-        int iterations = 1;
         lineRenderer.positionCount= 1;
 
         RaycastHit2D hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- emissionPoint.position);
@@ -51,14 +50,12 @@ public class LaserEmitter : MonoBehaviour
 
         while (Vector2.Distance(lineRenderer.GetPosition(lineRenderer.positionCount-1), hit.point) > 0.2f)
         {
-            print("iteration count: " + iterations);
             lineRenderer.positionCount++;
             hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- emissionPoint.position);
             elapsedPercent = (Time.time - startTime)/laserInitializationLength;
             nextPosIndex = lineRenderer.positionCount-1;
             newPos = Vector2.Lerp((Vector2)emissionPoint.position, (Vector2)hit.point, elapsedPercent);
             lineRenderer.SetPosition(nextPosIndex, newPos);
-            iterations++;
             yield return null;
         }
         hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- emissionPoint.position);
