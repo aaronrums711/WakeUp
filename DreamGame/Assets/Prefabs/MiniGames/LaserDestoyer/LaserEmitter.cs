@@ -7,10 +7,11 @@ public class LaserEmitter : MonoBehaviour
 
     //////////////////////////////Config
     public float laserInitializationLength;  //VGIU
-
+    private IEnumerator maintainCoroutine;
 
     //////////////////////////////State
     public bool isLaserInitialized;
+
 
     //////////////////////////////Cached Component References
     private LineRenderer lineRenderer;
@@ -18,13 +19,17 @@ public class LaserEmitter : MonoBehaviour
     public Transform centerTarget;    //VGIU
 
 
+    void OnEnable()
+    {
+        print("this has been called from OnEnable");
+    }
+
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
         lineRenderer.enabled = true;
         StartCoroutine(InitialLaserCast());
-        print("starting line position count: " + lineRenderer.positionCount);
 
     }
 
@@ -38,13 +43,20 @@ public class LaserEmitter : MonoBehaviour
     }
 
 
+    [ContextMenu("initialize laser")]
+    public void CallInitialLaserCastFromEditor()
+    {
+        lineRenderer.positionCount= 0;
+        StartCoroutine(InitialLaserCast());
+    }
+
     private IEnumerator InitialLaserCast()
     {
         float startTime = Time.time;
         float totalTime = laserInitializationLength;
         float elapsedPercent = (Time.time - startTime)/laserInitializationLength;
         int nextPosIndex;
-        
+        int iterations = 1;
         lineRenderer.positionCount= 1;
 
         RaycastHit2D hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- emissionPoint.position);
@@ -53,23 +65,46 @@ public class LaserEmitter : MonoBehaviour
 
         while (Vector2.Distance(lineRenderer.GetPosition(lineRenderer.positionCount-1), hit.point) > 0.2f)
         {
+            print("iteration count: " + iterations);
             lineRenderer.positionCount++;
             hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- emissionPoint.position);
             elapsedPercent = (Time.time - startTime)/laserInitializationLength;
             nextPosIndex = lineRenderer.positionCount-1;
             newPos = Vector2.Lerp((Vector2)emissionPoint.position, (Vector2)hit.point, elapsedPercent);
             lineRenderer.SetPosition(nextPosIndex, newPos);
+            iterations++;
             yield return null;
-            
         }
+        hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- emissionPoint.position);
+        lineRenderer.positionCount=2;
+        lineRenderer.SetPosition(0, emissionPoint.position);
+        lineRenderer.SetPosition(1, hit.point);
+
         isLaserInitialized = true;
-        print("end of the loop reached!");
-
+        maintainCoroutine = MaintainLaser();
+        StartCoroutine(maintainCoroutine);
     }
 
-    [ContextMenu("initialize laser")]
-    public void CallInitialLaserCastFromEditor()
+
+
+    public IEnumerator MaintainLaser()
     {
-        StartCoroutine(InitialLaserCast());
+        print("maintain laser coroutine started");
+        RaycastHit2D hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- emissionPoint.position);
+
+        while(isLaserInitialized)
+        {
+            hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- emissionPoint.position);
+            lineRenderer.SetPosition(0, emissionPoint.position);
+            lineRenderer.SetPosition(1, hit.point);
+            yield return null;
+        }
     }
+
+    // public IEnumerator RetractLaser()
+    // {
+    //     StopCoroutine(maintainCoroutine);
+
+    // }
+
 }
