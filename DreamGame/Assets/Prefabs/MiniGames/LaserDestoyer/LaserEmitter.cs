@@ -8,6 +8,7 @@ public class LaserEmitter : MonoBehaviour
     //////////////////////////////Config
     public float laserInitializationLength;  //VGIU
     private IEnumerator maintainCoroutine;
+    public float laserReductionMultiplier = 0.09f;
 
     //////////////////////////////State
     public bool isLaserInitialized = false;
@@ -21,25 +22,10 @@ public class LaserEmitter : MonoBehaviour
 
     void OnEnable()
     {
-        print("this has been called from OnEnable");
-    }
-
-    void Start()
-    {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
         lineRenderer.enabled = true;
         StartCoroutine(InitialLaserCast());
-
-    }
-
-    void Update()
-    {
-        // RaycastHit2D hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- emissionPoint.position);
-        // Debug.DrawLine(emissionPoint.position, hit.point);
-        // lineRenderer.SetPosition(0, emissionPoint.position);
-        // lineRenderer.SetPosition(1, hit.point);
-        // // lineRenderer.SetPosition(2, new Vector3(5,5,5));
     }
 
 
@@ -101,15 +87,28 @@ public class LaserEmitter : MonoBehaviour
         }
     }
 
-    // public IEnumerator RetractLaser()
-    // {
-    //     StopCoroutine(maintainCoroutine);
 
-    // }
+    public IEnumerator RetractLaser()
+    {
+        isLaserInitialized = false;
+        StopCoroutine(maintainCoroutine);
+        Vector3 subtractionVector = ((centerTarget.position- emissionPoint.position).normalized)*laserReductionMultiplier;
+        
 
-    /**
-    UPON RETURN: get this method to retract the laser back to its target. 
-    could do this by just contiually change the the 2nd point in the list to a nearer and nearer vector. 
-    **/
+        while (Vector2.Distance(lineRenderer.GetPosition(1), emissionPoint.position) > 0.1)
+        {
+            Vector2 newPos = lineRenderer.GetPosition(1) - subtractionVector;
+            lineRenderer.SetPosition(1, newPos);
+            yield return null;
+        }
+        lineRenderer.positionCount = 0;        
+    }
+
+    [ContextMenu("retract laser")]
+    public void CallRetractLaser()
+    {
+        StartCoroutine(RetractLaser());
+    }
+
 
 }

@@ -1235,7 +1235,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 252b82402f642804abb15bea95bb39a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserInitializationLength: 1
+  laserInitializationLength: 0
+  laserReductionMultiplier: 0.09
   isLaserInitialized: 0
   emissionPoint: {fileID: 252974120}
   centerTarget: {fileID: 1235287150}
