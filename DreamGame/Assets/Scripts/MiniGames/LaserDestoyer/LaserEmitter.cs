@@ -30,10 +30,11 @@ public class LaserEmitter : MiniGameElement
 
 
     [ContextMenu("initialize laser")]
-    public void CallInitialLaserCastFromEditor()
+    public LaserEmitter CallInitialLaserCast()
     {
         lineRenderer.positionCount= 0;
         StartCoroutine(InitialLaserCast());
+        return this;
     }
 
     public IEnumerator InitialLaserCast()

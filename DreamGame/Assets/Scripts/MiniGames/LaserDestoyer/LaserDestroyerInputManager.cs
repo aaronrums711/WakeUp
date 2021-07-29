@@ -8,6 +8,8 @@ public class LaserDestroyerInputManager : MiniGameElement
     //////////////////////////////Config
 
     //////////////////////////////State
+    public LaserEmitter currentActiveEmitter;
+    public int currentActiveEmitterChildIndex;
 
     //////////////////////////////Cached Component References
     public List<LaserEmitter> allLaserEmitters;
@@ -19,6 +21,8 @@ public class LaserDestroyerInputManager : MiniGameElement
         {
             allLaserEmitters.Add(emitter);
         }
+        currentActiveEmitterChildIndex = Random.Range(0, allLaserEmitters.Count-1);
+        currentActiveEmitter = allLaserEmitters[currentActiveEmitterChildIndex].CallInitialLaserCast();
     }
 
     void Update()
@@ -31,6 +35,17 @@ public class LaserDestroyerInputManager : MiniGameElement
 
     private void PassToNextTurret()
     {
-        return;
+        currentActiveEmitter.CallRetractLaser();
+        
+        if (currentActiveEmitterChildIndex == allLaserEmitters.Count-1 )
+        {
+            currentActiveEmitterChildIndex = 0;
+        }
+        else
+        {
+            currentActiveEmitterChildIndex++;
+        }
+        currentActiveEmitter = allLaserEmitters[currentActiveEmitterChildIndex].CallInitialLaserCast();
     }
+
 }

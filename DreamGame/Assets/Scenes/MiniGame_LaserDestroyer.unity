@@ -1923,7 +1923,7 @@ MonoBehaviour:
   baseProgression: 0.05
   displayHeight: 0
   displayWidth: 0
-  orderInLevel: 0
+  orderInLevel: 3
   rateOfDecay: 0.01
   keysToPlay:
   - space
@@ -2258,6 +2258,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentMiniGame: {fileID: 0}
+  currentActiveEmitter: {fileID: 0}
+  currentActiveEmitterChildIndex: 0
   allLaserEmitters: []
 --- !u!1 &1794727391
 GameObject:
