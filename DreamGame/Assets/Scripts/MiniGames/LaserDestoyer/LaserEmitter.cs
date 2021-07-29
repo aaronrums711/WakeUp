@@ -25,7 +25,7 @@ public class LaserEmitter : MiniGameElement
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
         lineRenderer.enabled = true;
-        StartCoroutine(InitialLaserCast());
+        // StartCoroutine(InitialLaserCast());   this will now get called from LaserDestroyerInputManager script
     }
 
 
@@ -36,7 +36,7 @@ public class LaserEmitter : MiniGameElement
         StartCoroutine(InitialLaserCast());
     }
 
-    private IEnumerator InitialLaserCast()
+    public IEnumerator InitialLaserCast()
     {
         float startTime = Time.time;
         float totalTime = laserInitializationLength;
