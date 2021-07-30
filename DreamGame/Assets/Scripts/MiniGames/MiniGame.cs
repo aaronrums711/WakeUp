@@ -135,4 +135,3 @@ public class MiniGame : MonoBehaviour
 }
 
 
-///UPON RETURN: keep working on the TrackColorWithCompletionPercent method.  the color.lerp is turning them all transparent...what the heck?
