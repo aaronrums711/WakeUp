@@ -53,16 +53,6 @@ public class LaserEmitter : MiniGameElement
         StartCoroutine(currentCoroutine);
     }
 
-        public LaserEmitter CallInitialLaserCast()
-    {
-        lineRenderer.positionCount= 0;
-        currentCoroutine = InitialLaserCast();
-        StartCoroutine(currentCoroutine);
-        return this;
-    }
-
-
-
     public IEnumerator MaintainLaser()
     {
         RaycastHit2D hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- emissionPoint.position);
@@ -75,7 +65,6 @@ public class LaserEmitter : MiniGameElement
             yield return null;
         }
     }
-
 
     public IEnumerator RetractLaser()
     {
@@ -93,10 +82,17 @@ public class LaserEmitter : MiniGameElement
         lineRenderer.positionCount = 0;        
     }
 
-    [ContextMenu("retract laser")]
     public void CallRetractLaser()
     {
         StartCoroutine(RetractLaser());
+    }
+
+    public LaserEmitter CallInitialLaserCast()
+    {
+        lineRenderer.positionCount= 0;
+        currentCoroutine = InitialLaserCast();
+        StartCoroutine(currentCoroutine);
+        return this;
     }
 
 
