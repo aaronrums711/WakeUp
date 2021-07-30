@@ -22,7 +22,7 @@ public class LaserDestroyerInputManager : MiniGameElement
             allLaserEmitters.Add(emitter);
         }
         currentActiveEmitterChildIndex = Random.Range(0, allLaserEmitters.Count-1);
-        currentActiveEmitter = allLaserEmitters[currentActiveEmitterChildIndex].CallInitialLaserCast();
+        currentActiveEmitter = allLaserEmitters[currentActiveEmitterChildIndex].CallInitialLaserCast2();
     }
 
     void Update()
@@ -45,7 +45,7 @@ public class LaserDestroyerInputManager : MiniGameElement
         {
             currentActiveEmitterChildIndex++;
         }
-        currentActiveEmitter = allLaserEmitters[currentActiveEmitterChildIndex].CallInitialLaserCast();
+        currentActiveEmitter = allLaserEmitters[currentActiveEmitterChildIndex].CallInitialLaserCast2();
     }
 
 }

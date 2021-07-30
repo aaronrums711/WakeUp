@@ -1113,6 +1113,7 @@ MonoBehaviour:
   parentMiniGame: {fileID: 0}
   laserInitializationLength: 0
   laserReductionMultiplier: 0.09
+  laserInitializationMultiplier: 0.13
   isLaserInitialized: 0
   emissionPoint: {fileID: 681275630}
   centerTarget: {fileID: 1235287150}
@@ -1663,6 +1664,7 @@ MonoBehaviour:
   parentMiniGame: {fileID: 0}
   laserInitializationLength: 0
   laserReductionMultiplier: 0.09
+  laserInitializationMultiplier: 0.13
   isLaserInitialized: 0
   emissionPoint: {fileID: 837539400}
   centerTarget: {fileID: 1235287150}
@@ -2093,6 +2095,7 @@ MonoBehaviour:
   parentMiniGame: {fileID: 0}
   laserInitializationLength: 0
   laserReductionMultiplier: 0.09
+  laserInitializationMultiplier: 0.13
   isLaserInitialized: 0
   emissionPoint: {fileID: 252974120}
   centerTarget: {fileID: 1235287150}
@@ -2611,6 +2614,7 @@ MonoBehaviour:
   parentMiniGame: {fileID: 0}
   laserInitializationLength: 0
   laserReductionMultiplier: 0.09
+  laserInitializationMultiplier: 0.13
   isLaserInitialized: 0
   emissionPoint: {fileID: 347019788}
   centerTarget: {fileID: 1235287150}

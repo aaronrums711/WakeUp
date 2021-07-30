@@ -9,6 +9,7 @@ public class LaserEmitter : MiniGameElement
     public float laserInitializationLength;  //VGIU
     private IEnumerator maintainCoroutine;
     public float laserReductionMultiplier = 0.09f;
+    public float laserInitializationMultiplier = 0.1f;
 
     //////////////////////////////State
     public bool isLaserInitialized = false;
@@ -70,10 +71,42 @@ public class LaserEmitter : MiniGameElement
     }
 
 
+    public IEnumerator InitialLaserCast2()
+    {
+        lineRenderer.positionCount= 2;
+        RaycastHit2D hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- emissionPoint.position);
+        Vector3 additionVector =  ((centerTarget.position- emissionPoint.position).normalized)*laserInitializationMultiplier;
+        lineRenderer.SetPosition(0, emissionPoint.position);
+        lineRenderer.SetPosition(1, emissionPoint.position+ additionVector);
+
+        while(Vector2.Distance(lineRenderer.GetPosition(1), hit.point)>0.2)
+        {
+            hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- emissionPoint.position);
+            Vector2 newPos = lineRenderer.GetPosition(1) + additionVector;
+            lineRenderer.SetPosition(1, newPos);
+            yield return null;
+        }
+
+        hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- emissionPoint.position);
+        lineRenderer.SetPosition(1, hit.point);
+        print("end of loop reached");
+
+        isLaserInitialized = true;
+        maintainCoroutine = MaintainLaser();
+        StartCoroutine(maintainCoroutine);
+    }
+
+        public LaserEmitter CallInitialLaserCast2()
+    {
+        lineRenderer.positionCount= 0;
+        StartCoroutine(InitialLaserCast2());
+        return this;
+    }
+
+
 
     public IEnumerator MaintainLaser()
     {
-        print("maintain laser coroutine started");
         RaycastHit2D hit = Physics2D.Raycast(emissionPoint.position, centerTarget.position- emissionPoint.position);
 
         while(isLaserInitialized)
