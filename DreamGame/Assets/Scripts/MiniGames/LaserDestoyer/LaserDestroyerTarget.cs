@@ -6,6 +6,7 @@ public class LaserDestroyerTarget : MiniGameElement
 {
 
     //////////////////////////////Config
+
     //////////////////////////////State
     public bool isScoreAdding;
     //////////////////////////////Cached Component References

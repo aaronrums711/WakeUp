@@ -311,6 +311,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 153508367}
+  - component: {fileID: 153508368}
   m_Layer: 0
   m_Name: ProtectiveRing
   m_TagString: Untagged
@@ -327,7 +328,7 @@ Transform:
   m_GameObject: {fileID: 153508366}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 830066205}
   - {fileID: 2082554000}
@@ -339,6 +340,21 @@ Transform:
   m_Father: {fileID: 256154972}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &153508368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153508366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b68b50b99701dc64dba835e1904fb290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
+  baseRot: {x: 0, y: 0, z: 40}
+  rotPlusRandom: {x: 0, y: 0, z: 0}
 --- !u!1001 &209546415
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -418,7 +434,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 256154972}
-  - component: {fileID: 256154973}
   m_Layer: 0
   m_Name: CenterTarget
   m_TagString: Untagged
@@ -442,20 +457,6 @@ Transform:
   m_Father: {fileID: 1608232655}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &256154973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 256154971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b68b50b99701dc64dba835e1904fb290, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentMiniGame: {fileID: 0}
-  rot: {x: 0, y: 0, z: 30}
 --- !u!1001 &438306412
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1045,7 +1046,7 @@ Transform:
   m_GameObject: {fileID: 1156990878}
   m_LocalRotation: {x: 0, y: -0, z: 0.7071068, w: -0.7071068}
   m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 0.10408752, y: 0.8666944, z: 1}
+  m_LocalScale: {x: 0.10408752, y: 0.8666944, z: 0}
   m_Children: []
   m_Father: {fileID: 153508367}
   m_RootOrder: 3
@@ -1360,7 +1361,7 @@ MonoBehaviour:
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   targetColor: {r: 0, g: 0.7169812, b: 0.4779875, a: 1}
   completionPercent: 0.5
-  baseProgression: 0.05
+  baseProgression: 0.03
   displayHeight: 0
   displayWidth: 0
   orderInLevel: 3
