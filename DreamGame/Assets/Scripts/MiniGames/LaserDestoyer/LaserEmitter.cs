@@ -22,11 +22,16 @@ public class LaserEmitter : MiniGameElement
 
     void OnEnable()
     {
+        
         target = parentMiniGame.GetComponentInChildren<LaserDestroyerTarget>();
         centerTargetTransform = target.transform;
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
         // StartCoroutine(InitialLaserCast());   this will now get called from LaserDestroyerInputManager script
+        foreach(SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())
+        {
+            parentMiniGame.ApplyColor(sr, 0.6f);
+        }
     }
 
 
@@ -63,6 +68,14 @@ public class LaserEmitter : MiniGameElement
             hit = Physics2D.Raycast(emissionPoint.position, centerTargetTransform.position- emissionPoint.position);
             lineRenderer.SetPosition(0, emissionPoint.position);
             lineRenderer.SetPosition(1, hit.point);
+            if (hit.collider.name == target.name)
+            {
+                target.isScoreAdding = true;
+            }
+            else 
+            {
+                target.isScoreAdding = false;
+            }
             yield return null;
         }
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CenterTargetRotator : MonoBehaviour
+public class CenterTargetRotator : MiniGameElement
 {
     //////////////////////////////Config
     public Vector3 rot;
