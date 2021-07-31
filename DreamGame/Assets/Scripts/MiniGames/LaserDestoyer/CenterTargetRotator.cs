@@ -6,7 +6,7 @@ public class CenterTargetRotator : MiniGameElement
 {
     //////////////////////////////Config
     public Vector3 rot;
-
+    public Vector3 rotPlusRandom;
     //////////////////////////////State
     //////////////////////////////Cached Component References
 
@@ -22,9 +22,10 @@ public class CenterTargetRotator : MiniGameElement
         float targetRotation = this.transform.rotation.eulerAngles.z + rotationAmount > 360 ? this.transform.rotation.eulerAngles.z + rotationAmount -360 : this.transform.rotation.eulerAngles.z + rotationAmount;
         int OneOrZero = Random.Range(0,2);
         int NegOrPosOne = OneOrZero == 1 ? 1 : -1;
+        rotPlusRandom = rot * Random.Range(0.5f, 3f);
         while (Mathf.Abs(this.transform.rotation.eulerAngles.z - targetRotation) > 2)
         {
-            this.transform.Rotate(rot *Time.deltaTime * NegOrPosOne);
+            this.transform.Rotate(rotPlusRandom *Time.deltaTime ) ; //* NegOrPosOne)
             yield return null;
         }
         this.transform.rotation = Quaternion.Euler(0,0,targetRotation);
@@ -34,7 +35,7 @@ public class CenterTargetRotator : MiniGameElement
     public IEnumerator ContinuallyRotate()
     {
         yield return StartCoroutine(RotateChunk());
-        yield return new WaitForSeconds(Random.Range(4,10));
+        yield return new WaitForSeconds(Random.Range(2,4));
         StartCoroutine(ContinuallyRotate());
     }
 
