@@ -10,24 +10,47 @@ public class LaserDestroyerRingChanger : MonoBehaviour
 	******************/
 	
 	//////////////////////////////Config
-	
+    private const string anim1 = "MovePanels1";
+	private const string anim2 = "MovePanels2";
+    private const string anim3 = "MovePanels3";
+
+
 	//////////////////////////////State
 	
 	//////////////////////////////Cached Component References
+    private Animator thisAnimator;
 	
 	
 	void Awake()
     {
-        
+        thisAnimator = GetComponentInParent<Animator>();
     }
 	
     void Start()
     {
-        
+        thisAnimator.Play(anim2);
+        StartCoroutine(ContinuallyMovePanels());
     }
 
-    void Update()
+
+    public IEnumerator ContinuallyMovePanels()
     {
-        
+        int animToPlay = Random.Range(1,4);
+        if (animToPlay == 1)
+        {
+            thisAnimator.Play(anim1);
+        }
+        else if (animToPlay == 2)
+        {
+            thisAnimator.Play(anim2);
+        }
+        else if (animToPlay == 3)
+        {
+            thisAnimator.Play(anim3);
+        }
+
+        print("selected animation number: " + animToPlay);
+        yield return new WaitForSeconds(12f);  //this is longer than 10 seconds which is the length of the longest of these anims.  This way they won't overlap
+        StartCoroutine(ContinuallyMovePanels());
     }
 }
