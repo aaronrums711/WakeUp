@@ -10,11 +10,15 @@ public class LaserDestroyerTarget : MiniGameElement
     //////////////////////////////State
     public bool isScoreAdding;
     //////////////////////////////Cached Component References
+    public  ParticleSystem ps;
+
 
 
     void Start()
     {
         isScoreAdding = false;
+        ps = parentMiniGame.GetComponentInChildren<ParticleSystem>();
+
     }
 
     void Update()
@@ -22,6 +26,11 @@ public class LaserDestroyerTarget : MiniGameElement
         if (isScoreAdding)
         {
             parentMiniGame.AddProgress(parentMiniGame.baseProgression * Time.deltaTime);
+            // ps.Play();
+        }
+        else
+        {
+            // ps.Stop();
         }
     }
 }

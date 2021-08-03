@@ -19,11 +19,14 @@ public class LaserEmitter : MiniGameElement
     public Transform emissionPoint;   //VGIU
     private Transform centerTargetTransform;    
     private LaserDestroyerTarget target;
+    public  ParticleSystem ps;
+
 
     void OnEnable()
     {
         
         target = parentMiniGame.GetComponentInChildren<LaserDestroyerTarget>();
+        ps = parentMiniGame.GetComponentInChildren<ParticleSystem>();
         centerTargetTransform = target.transform;
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
@@ -71,10 +74,14 @@ public class LaserEmitter : MiniGameElement
             if (hit.collider.name == target.name)
             {
                 target.isScoreAdding = true;
+                ps.transform.position = hit.point;
+                ps.transform.right = this.transform.position - centerTargetTransform.position;
+                ps.Play();
             }
             else 
             {
                 target.isScoreAdding = false;
+                ps.Stop();
             }
             yield return null;
         }
