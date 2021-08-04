@@ -278,8 +278,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.052215576
-        value: 0.22116661
+        time: 0
+        value: 0.09894371
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -287,8 +287,8 @@ LineRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.7469819
-        value: 0.076920986
+        time: 0.7515443
+        value: 0.05469656
         inSlope: -0
         outSlope: -0
         tangentMode: 0
@@ -352,4 +352,4 @@ MonoBehaviour:
   laserInitializationMultiplier: 0.13
   isLaserInitialized: 0
   emissionPoint: {fileID: 4333559222749589443}
-  centerTarget: {fileID: 0}
+  ps: {fileID: 0}

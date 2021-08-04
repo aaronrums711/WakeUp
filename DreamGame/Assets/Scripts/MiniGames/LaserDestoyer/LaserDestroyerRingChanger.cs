@@ -48,8 +48,6 @@ public class LaserDestroyerRingChanger : MonoBehaviour
         {
             thisAnimator.Play(anim3);
         }
-
-        print("selected animation number: " + animToPlay);
         yield return new WaitForSeconds(12f);  //this is longer than 10 seconds which is the length of the longest of these anims.  This way they won't overlap
         StartCoroutine(ContinuallyMovePanels());
     }
