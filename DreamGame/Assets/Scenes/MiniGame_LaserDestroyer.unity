@@ -1545,7 +1545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseColor: {r: 1, g: 1, b: 1, a: 1}
-  targetColor: {r: 0, g: 0.7169812, b: 0.4779875, a: 1}
+  targetColor: {r: 0.6502807, g: 0, b: 0.7176471, a: 1}
   completionPercent: 0.5
   baseProgression: 0.03
   displayHeight: 0
@@ -6824,6 +6824,10 @@ PrefabInstance:
     - target: {fileID: 4333559223377392056, guid: e411664cc316b8545a574d4fb774b663, type: 3}
       propertyPath: applyColor
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4333559223377392056, guid: e411664cc316b8545a574d4fb774b663, type: 3}
+      propertyPath: colorSpread
+      value: 0.349
       objectReference: {fileID: 0}
     - target: {fileID: 4333559223377392056, guid: e411664cc316b8545a574d4fb774b663, type: 3}
       propertyPath: centerTarget

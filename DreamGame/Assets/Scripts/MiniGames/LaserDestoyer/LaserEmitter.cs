@@ -21,6 +21,27 @@ public class LaserEmitter : MiniGameElement
     private LaserDestroyerTarget target;
     public  ParticleSystem ps;
 
+    void Start()
+    {
+        lineRenderer = GetComponent<LineRenderer>();
+
+        Gradient gradient = new Gradient();
+        GradientColorKey[] colorKeys = new GradientColorKey[2];
+        colorKeys[0].color = parentMiniGame.targetColor;
+        colorKeys[0].time= 0.0f;
+        colorKeys[1].color = parentMiniGame.baseColor;
+        colorKeys[1].time =0.35f;
+
+        GradientAlphaKey[] alphaKeys;
+        alphaKeys = new GradientAlphaKey[2];
+        alphaKeys[0].alpha = 1.0f;
+        alphaKeys[0].time = 0.0f;
+        alphaKeys[1].alpha = 0.0f;
+        alphaKeys[1].time = 1.0f;
+
+        gradient.SetKeys(colorKeys, alphaKeys);
+        lineRenderer.colorGradient = gradient;
+    }
 
     void OnEnable()
     {
@@ -36,6 +57,7 @@ public class LaserEmitter : MiniGameElement
             parentMiniGame.ApplyColor(sr, 0.6f);
         }
         ps.Stop();   
+        
     }
 
 
