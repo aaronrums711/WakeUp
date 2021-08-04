@@ -132,7 +132,20 @@ public class MiniGame : MonoBehaviour
         return isComplete;
     }
 
+    public void ApplyColor(SpriteRenderer sr, float percent)
+    {
+        sr.color = Color.Lerp(baseColor, targetColor, percent);
+    }
+
+    public void ApplyColor(List<SpriteRenderer> AllSRs, float percent)
+    {
+        foreach(SpriteRenderer sr in AllSRs)
+        {
+            sr.color = Color.Lerp(baseColor, targetColor, percent);
+        }
+    }
+
+
 }
 
 
-///UPON RETURN: keep working on the TrackColorWithCompletionPercent method.  the color.lerp is turning them all transparent...what the heck?

@@ -17,7 +17,13 @@ public class MiniGameElement : MonoBehaviour
         parentMiniGame = GetComponentInParent<MiniGame>();
         if (parentMiniGame == null)
         {
-            Debug.LogError("this game element doesn't have a parent MiniGame that it belongs to.  Something is wrong");
+            parentMiniGame = GetComponentInParent<Transform>().GetComponentInParent<MiniGame>();
+
+            if(parentMiniGame == null)
+            {
+                Debug.LogError("this game element doesn't have a parent MiniGame in a direct parent or a parent's parent.  Something is wrong");
+            }
+            
         }
     }
     
