@@ -35,6 +35,7 @@ public class LaserEmitter : MiniGameElement
         {
             parentMiniGame.ApplyColor(sr, 0.6f);
         }
+        ps.Stop();   
     }
 
 
@@ -76,7 +77,11 @@ public class LaserEmitter : MiniGameElement
                 target.isScoreAdding = true;
                 ps.transform.position = hit.point;
                 ps.transform.right = this.transform.position - centerTargetTransform.position;
-                ps.Play();
+                if(ps.isStopped)
+                {
+                    ps.Play();
+                }
+                
             }
             else 
             {
