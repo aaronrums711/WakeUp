@@ -320,10 +320,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChoppedTarget
       objectReference: {fileID: 0}
-    - target: {fileID: 508047140130518336, guid: fe34cc2feb1d5dc44bac196079211ebf, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6360344879016332143, guid: fe34cc2feb1d5dc44bac196079211ebf, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -552,29 +548,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1688007839 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 508047140130518336, guid: fe34cc2feb1d5dc44bac196079211ebf, type: 3}
-  m_PrefabInstance: {fileID: 1076013925}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1688007843 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6360344879016332143, guid: fe34cc2feb1d5dc44bac196079211ebf, type: 3}
   m_PrefabInstance: {fileID: 1076013925}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1688007844
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1688007839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30976af95b15a124bb146d3ad1ad720a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  launchSpeed: 5
 --- !u!1 &1734957768
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,12 +687,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentMiniGame: {fileID: 0}
-  launchSpeed: 13
-  targetRotation: {x: 0, y: 0, z: 0}
-  launchSpeedMin: 12
-  launchSpeedMax: 16
-  launchPoints: []
+  launchSpeedMin: 11
+  launchSpeedMax: 13.5
   choppedTargetPrefab: {fileID: 508047140130518336, guid: fe34cc2feb1d5dc44bac196079211ebf, type: 3}
+  targetParent: {fileID: 0}
 --- !u!1 &2039893041
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,8 +716,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2039893041}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0113, y: -1.9785, z: 0}
-  m_LocalScale: {x: 11.815728, y: 10.969759, z: 1}
+  m_LocalPosition: {x: 0.0308, y: 0.001, z: 0}
+  m_LocalScale: {x: 6.256574, y: 7.0108066, z: 1}
   m_Children: []
   m_Father: {fileID: 1343224636}
   m_RootOrder: 1
@@ -889,7 +865,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 6ad513e6458d8ee49b88bb0a063f0b34, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

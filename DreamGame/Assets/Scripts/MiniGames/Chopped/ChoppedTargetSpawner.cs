@@ -11,17 +11,17 @@ public class ChoppedTargetSpawner : MiniGameElement
 	******************/
 	
 	//////////////////////////////Config
-    public float launchSpeed;
-    public Vector3 targetRotation;
+    private float launchSpeed;
+    private Vector3 targetRotation;
     public float launchSpeedMin;
     public float launchSpeedMax;
 	
 	//////////////////////////////State
 	
 	//////////////////////////////Cached Component References
-    public Transform[] launchPoints;
+    private Transform[] launchPoints;
     public GameObject choppedTargetPrefab;
-    private Transform targetParent;
+    public Transform targetParent;
 	
 	
     void Start()
@@ -49,7 +49,7 @@ public class ChoppedTargetSpawner : MiniGameElement
         }
         else if (launchPointIndex == 1)
         {
-             targetRotation = new Vector3 (0,0, Random.Range(-25,-25));
+             targetRotation = new Vector3 (0,0, Random.Range(-25,25));
         }
         else if (launchPointIndex == 2)
         {
