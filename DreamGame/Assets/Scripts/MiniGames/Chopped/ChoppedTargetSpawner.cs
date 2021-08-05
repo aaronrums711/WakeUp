@@ -6,10 +6,15 @@ public class ChoppedTargetSpawner : MiniGameElement
 {
 	/*****************
 	CreateDate:  8/4/21
-	Functionality: spawns targets from different launchers below the play area.  It also applies force
+	Functionality: spawns targets from different launchers below the play area.  It also applies force to the targets. 
+    Notes:  Make sure all the launchers start with 0,0,0 for rotation!
 	******************/
 	
 	//////////////////////////////Config
+    public float launchSpeed;
+    public Vector3 targetRotation;
+    public float launchSpeedMin;
+    public float launchSpeedMax;
 	
 	//////////////////////////////State
 	
@@ -21,8 +26,12 @@ public class ChoppedTargetSpawner : MiniGameElement
 	
     void Start()
     {
-        launchPoints = GetComponentsInChildren<Transform>();
+        launchPoints = new Transform[GameObject.Find("LaunchPoints").GetComponent<Transform>().childCount];
         targetParent = GameObject.Find("AllTargets").GetComponent<Transform>();
+        for (int i =0; i< GameObject.Find("LaunchPoints").GetComponent<Transform>().childCount; i++)
+        {
+            launchPoints[i] = GameObject.Find("LaunchPoints").GetComponent<Transform>().GetChild(i);
+        }
     }
 
     void Update()
@@ -34,7 +43,31 @@ public class ChoppedTargetSpawner : MiniGameElement
     public void SpawnTarget()
     {
         int launchPointIndex = Random.Range(0, launchPoints.Length);
-        Instantiate(choppedTargetPrefab, launchPoints[launchPointIndex].position, Quaternion.identity,targetParent );
+        if (launchPointIndex == 0)
+        {
+             targetRotation = new Vector3 (0,0, Random.Range(-10,-30));
+        }
+        else if (launchPointIndex == 1)
+        {
+             targetRotation = new Vector3 (0,0, Random.Range(-25,-25));
+        }
+        else if (launchPointIndex == 2)
+        {
+             targetRotation = new Vector3 (0,0, Random.Range(10,30));
+        }
+
+        launchSpeed = Random.Range(launchSpeedMin,launchSpeedMax);
+
+        GameObject newObj = Instantiate(choppedTargetPrefab, launchPoints[launchPointIndex].position, Quaternion.Euler(targetRotation),targetParent);
+
+        newObj.GetComponent<Rigidbody2D>().AddRelativeForce(transform.up * launchSpeed, ForceMode2D.Impulse);
+    }
+
+
+    public IEnumerator dieAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        Destroy(this.gameObject);
     }
 
 }
