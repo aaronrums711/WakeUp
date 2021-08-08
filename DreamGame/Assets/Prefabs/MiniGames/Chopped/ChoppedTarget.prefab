@@ -137,6 +137,7 @@ MonoBehaviour:
   parentMiniGame: {fileID: 0}
   currentHealth: 0
   maxHealth: 3
-  flashEffectCount: 5
+  flashEffectCount: 3
   flashLength: 0.05
   slashEffPrefab: {fileID: 8361297602864394478, guid: 435999aa847e366479b7df55c4bcbc4c, type: 3}
+  startingSprite: {fileID: 0}

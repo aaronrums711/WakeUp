@@ -22,6 +22,7 @@ public class ChoppedTarget : MiniGameElement
     private SpriteRenderer thisSR;
     private Rigidbody2D rb;
     private ChoppedTargetSpawner spawner;
+    public Sprite startingSprite;
 
 	
 	
@@ -36,6 +37,7 @@ public class ChoppedTarget : MiniGameElement
         thisSR = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         spawner = GameObject.Find("LaunchPoints").GetComponent<ChoppedTargetSpawner>();
+        startingSprite = thisSR.sprite;
     }
 
     void Update()
@@ -49,8 +51,8 @@ public class ChoppedTarget : MiniGameElement
         Instantiate(slashEffPrefab, this.transform.position,Quaternion.Euler(0,0, Random.Range(0,359)));
         Vector2 velocityAtHit = rb.velocity;
         rb.velocity = Vector2.zero;
-        yield return StartCoroutine(SpriteFlash(thisSR));
-        // yield return new WaitForSeconds(0.1f);
+        StartCoroutine(SpriteFlash(thisSR));
+        yield return StartCoroutine(FreezeVelocityForTime(0.15f, rb));
         rb.velocity = velocityAtHit;
         if (currentHealth <= 0)
         {
@@ -61,15 +63,27 @@ public class ChoppedTarget : MiniGameElement
 
     public IEnumerator SpriteFlash(SpriteRenderer sr)
     {
-        Sprite startingSprite = sr.sprite;
         for (int i = 0; i < flashEffectCount; i++)
         {
             sr.sprite = null;
             yield return new WaitForSeconds(flashLength);
             sr.sprite = startingSprite;
+            yield return new WaitForSeconds(flashLength);
+        }
+    }
+
+    public IEnumerator FreezeVelocityForTime(float freezeTime, Rigidbody2D rbToFreeze)
+    {
+        float elapsed = 0f;
+        while (elapsed < freezeTime)
+        {
+            rbToFreeze.velocity = Vector2.zero;
+            elapsed += Time.deltaTime;
+            yield return null;
         }
 
     }
+
 
     [ContextMenu("handle hit")]
     public void CallHandleHit()

@@ -35,7 +35,7 @@ public class ChoppedTargetSpawner : MiniGameElement
         {
             launchPoints[i] = GameObject.Find("LaunchPoints").GetComponent<Transform>().GetChild(i);
         }
-        InvokeRepeating("SpawnTarget", 1f, 3f);
+        InvokeRepeating("SpawnTarget", 1f, 6f);
     }
 
     void Update()
