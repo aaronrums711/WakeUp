@@ -35,6 +35,7 @@ public class SlashAnimation : MonoBehaviour
             yield return new WaitForSeconds(animationSpeed);
         }
         sr.sprite = null;
+        Destroy(this.gameObject);
     }
 
     [ContextMenu("play anim")]

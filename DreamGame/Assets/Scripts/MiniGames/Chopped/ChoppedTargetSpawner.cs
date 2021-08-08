@@ -17,11 +17,13 @@ public class ChoppedTargetSpawner : MiniGameElement
     public float launchSpeedMax;
 	
 	//////////////////////////////State
+    private List<ChoppedTarget> allTargets;
 	
 	//////////////////////////////Cached Component References
     private Transform[] launchPoints;
     public GameObject choppedTargetPrefab;
     public Transform targetParent;
+    
 	
 	
     void Start()
@@ -59,15 +61,9 @@ public class ChoppedTargetSpawner : MiniGameElement
         launchSpeed = Random.Range(launchSpeedMin,launchSpeedMax);
 
         GameObject newObj = Instantiate(choppedTargetPrefab, launchPoints[launchPointIndex].position, Quaternion.Euler(targetRotation),targetParent);
-
+        allTargets.Add(newObj.GetComponent<ChoppedTarget>());
         newObj.GetComponent<Rigidbody2D>().AddRelativeForce(transform.up * launchSpeed, ForceMode2D.Impulse);
     }
 
-
-    public IEnumerator dieAfterSeconds(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        Destroy(this.gameObject);
-    }
 
 }
