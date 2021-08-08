@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChoppedInputManager : MonoBehaviour, IOneKeyPlay
+public class ChoppedInputManager : MiniGameElement, IOneKeyPlay
 {
 	/*****************
 	CreateDate: 8/8/2021

@@ -21,6 +21,7 @@ public class ChoppedTarget : MiniGameElement
 	//////////////////////////////Cached Component References
     private SpriteRenderer thisSR;
     private Rigidbody2D rb;
+    private ChoppedTargetSpawner spawner;
 
 	
 	
@@ -59,6 +60,10 @@ public class ChoppedTarget : MiniGameElement
             sr.sprite = null;
             yield return new WaitForSeconds(flashLength);
             sr.sprite = startingSprite;
+        }
+        if (currentHealth <= 0)
+        {
+            //remove from list, then destroy
         }
     }
 

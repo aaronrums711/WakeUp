@@ -139,4 +139,4 @@ MonoBehaviour:
   maxHealth: 3
   flashEffectCount: 5
   flashLength: 0.05
-  slashEffPrefab: {fileID: 0}
+  slashEffPrefab: {fileID: 8361297602864394478, guid: 435999aa847e366479b7df55c4bcbc4c, type: 3}
