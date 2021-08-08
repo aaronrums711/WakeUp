@@ -102,4 +102,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 73748e046f316e249884ab231fe598f0, type: 3}
   - {fileID: 21300000, guid: 37f5386849fef414bbfcf1d2086a6169, type: 3}
   - {fileID: 21300000, guid: 1a7bef7b306b13e4babd69c1954187fd, type: 3}
-  animationSpeed: 0.014
+  animationSpeed: 0.045

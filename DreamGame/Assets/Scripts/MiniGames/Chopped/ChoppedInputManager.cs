@@ -32,15 +32,15 @@ public class ChoppedInputManager : MiniGameElement, IOneKeyPlay
 
     void Update()
     {
-		// if (Input.GetKeyDown(parentMiniGame.keyForThisGame))
-		// {
-		// 	OneKeyPlay();
-		// }
+		if (Input.GetKeyDown(parentMiniGame.keyForThisGame) && spawner.allTargets.Count > 0)
+		{
+			OneKeyPlay();
+		}
     }
 
 
 	public void OneKeyPlay()
 	{
-		spawner.allTargets[0].handleHit();
+		spawner.allTargets[0].CallHandleHit();
 	}
 }

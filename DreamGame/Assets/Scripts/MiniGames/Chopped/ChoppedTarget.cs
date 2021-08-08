@@ -45,10 +45,12 @@ public class ChoppedTarget : MiniGameElement
 
     public IEnumerator handleHit()
     {
+        currentHealth--;
         Instantiate(slashEffPrefab, this.transform.position,Quaternion.Euler(0,0, Random.Range(0,359)));
         Vector2 velocityAtHit = rb.velocity;
         rb.velocity = Vector2.zero;
         yield return StartCoroutine(SpriteFlash(thisSR));
+        // yield return new WaitForSeconds(0.1f);
         rb.velocity = velocityAtHit;
         if (currentHealth <= 0)
         {
@@ -59,7 +61,6 @@ public class ChoppedTarget : MiniGameElement
 
     public IEnumerator SpriteFlash(SpriteRenderer sr)
     {
-        currentHealth--;
         Sprite startingSprite = sr.sprite;
         for (int i = 0; i < flashEffectCount; i++)
         {
