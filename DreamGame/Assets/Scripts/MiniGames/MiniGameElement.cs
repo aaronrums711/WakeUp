@@ -14,7 +14,7 @@ public class MiniGameElement : MonoBehaviour
 
     public void GetParentMiniGame()
     {
-        print("searching for parent mini game");
+        print(this.gameObject.name + " is searching for parent mini game");
         parentMiniGame = GetComponentInParent<MiniGame>();
         if (parentMiniGame == null)
         {
