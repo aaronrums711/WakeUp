@@ -192,6 +192,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 620019990}
+  - component: {fileID: 620019991}
   m_Layer: 0
   m_Name: AllTargets
   m_TagString: Untagged
@@ -214,6 +215,23 @@ Transform:
   m_Father: {fileID: 1343224636}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &620019991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620019989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e9a392819163f04782bf4e667b64bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
+  launchSpeedMin: 0
+  launchSpeedMax: 0
+  choppedTargetPrefab: {fileID: 0}
+  targetParent: {fileID: 0}
 --- !u!1001 &1076013925
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -480,7 +498,7 @@ MonoBehaviour:
   launchSpeedMin: 11
   launchSpeedMax: 13.5
   choppedTargetPrefab: {fileID: 508047140130518336, guid: fe34cc2feb1d5dc44bac196079211ebf, type: 3}
-  targetParent: {fileID: 0}
+  targetParent: {fileID: 620019990}
 --- !u!1 &2039893041
 GameObject:
   m_ObjectHideFlags: 0
