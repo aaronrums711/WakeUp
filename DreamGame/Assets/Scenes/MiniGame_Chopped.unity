@@ -478,6 +478,12 @@ MonoBehaviour:
   parentMiniGame: {fileID: 0}
   launchSpeedMin: 11
   launchSpeedMax: 13.5
+  minWaveAmount: 3
+  maxWaveAmount: 6
+  minWaveTimeBetweenSpawns: 0.5
+  maxWaveTimeBetweenSpawns: 2
+  minTimeBetweenWaves: 5
+  maxTimeBetweenWaves: 7
   allTargets: []
   choppedTargetPrefab: {fileID: 508047140130518336, guid: fe34cc2feb1d5dc44bac196079211ebf, type: 3}
   targetParent: {fileID: 620019990}

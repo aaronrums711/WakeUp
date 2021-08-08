@@ -16,6 +16,12 @@ public class ChoppedTargetSpawner : MiniGameElement
     private Vector3 targetRotation;
     public float launchSpeedMin;
     public float launchSpeedMax;
+    public int minWaveAmount;
+    public int maxWaveAmount;
+    public float minWaveTimeBetweenSpawns;
+    public float maxWaveTimeBetweenSpawns;
+    public float minTimeBetweenWaves;
+    public float maxTimeBetweenWaves;
 	
 	//////////////////////////////State
     public List<ChoppedTarget> allTargets;
@@ -35,7 +41,14 @@ public class ChoppedTargetSpawner : MiniGameElement
         {
             launchPoints[i] = GameObject.Find("LaunchPoints").GetComponent<Transform>().GetChild(i);
         }
-        InvokeRepeating("SpawnTarget", 1f, 6f);
+
+        if(launchPoints.Length > 3)
+        {
+            print("there's more than three launchers, you may need to redo the rotation ranges in the SpawnTarget() method");
+        }
+
+        StartCoroutine(GenerateWave());
+
     }
 
     void Update()
@@ -46,6 +59,7 @@ public class ChoppedTargetSpawner : MiniGameElement
     [ContextMenu("spawn target")]
     public void SpawnTarget()
     {
+
         int launchPointIndex = Random.Range(0, launchPoints.Length);
         if (launchPointIndex == 0)
         {
@@ -66,6 +80,22 @@ public class ChoppedTargetSpawner : MiniGameElement
         allTargets.Add(newObj.GetComponent<ChoppedTarget>());
         newObj.GetComponent<Rigidbody2D>().AddRelativeForce(transform.up * launchSpeed, ForceMode2D.Impulse);
     }
+
+    public IEnumerator GenerateWave()
+    {
+        float timeUntilNextWave = Random.Range(minTimeBetweenWaves, maxTimeBetweenWaves);
+        float waveAmount = Random.Range(minWaveAmount, maxWaveAmount);
+        float betweenTime = Random.Range(minWaveTimeBetweenSpawns, maxWaveTimeBetweenSpawns);
+        for (int i = 0; i < waveAmount; i++)
+        {
+            SpawnTarget();
+            yield return new WaitForSeconds(betweenTime);
+        }
+        yield return new WaitForSeconds(timeUntilNextWave);
+        StartCoroutine(GenerateWave());
+    }
+
+
 
 
 }

@@ -17,7 +17,8 @@ public class ChoppedTarget : MiniGameElement
     public GameObject slashEffPrefab;
 	
 	//////////////////////////////State
-	
+	private Vector3 startingPos;
+
 	//////////////////////////////Cached Component References
     private SpriteRenderer thisSR;
     private Rigidbody2D rb;
@@ -38,6 +39,7 @@ public class ChoppedTarget : MiniGameElement
         rb = GetComponent<Rigidbody2D>();
         spawner = GameObject.Find("LaunchPoints").GetComponent<ChoppedTargetSpawner>();
         startingSprite = thisSR.sprite;
+        startingPos = this.transform.position;
     }
 
     void Update()
