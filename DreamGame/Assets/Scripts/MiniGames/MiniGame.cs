@@ -13,6 +13,8 @@ public class MiniGame : MonoBehaviour
     [Tooltip("will almost always be 0-1.  added room on each side to account for edge cases")]  
     [Range(-0.2f, 1.2f)] public float completionPercent = 0.5f;
     public float baseProgression = 0.05f;
+    [Tooltip("will only be used in some cases, where progression is in chunks instead of gradual")]  
+    public float progressionMultiplier = 1;
     public float displayHeight;
     public float displayWidth;
     [Range(1,4)] public int orderInLevel;
@@ -26,6 +28,7 @@ public class MiniGame : MonoBehaviour
      [Tooltip("with space at position 0, now any game can just use keysToPlay[orderInLevel]  to get the key that game is using")]
     public string [] keysToPlay = {"space", "r", "i", "v", "m" };
     public string keyForThisGame;
+
 
     //////////////////////////State
     public bool isActive;

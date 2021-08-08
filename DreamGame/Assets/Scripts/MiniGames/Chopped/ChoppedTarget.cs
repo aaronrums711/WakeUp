@@ -57,6 +57,7 @@ public class ChoppedTarget : MiniGameElement
         if (currentHealth <= 0)
         {
             spawner.allTargets.RemoveAt(0);
+            parentMiniGame.AddProgress(parentMiniGame.baseProgression * parentMiniGame.progressionMultiplier);
             Destroy(this.gameObject);
         }
     }
