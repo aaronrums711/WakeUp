@@ -16,6 +16,7 @@ public class ChoppedInputManager : MiniGameElement, IOneKeyPlay
 	//////////////////////////////State
 	
 	//////////////////////////////Cached Component References
+	private ChoppedTargetSpawner spawner;
 
 	
 	
@@ -26,17 +27,20 @@ public class ChoppedInputManager : MiniGameElement, IOneKeyPlay
 	
     void Start()
     {
-        
+		spawner = GameObject.Find("LaunchPoints").GetComponent<ChoppedTargetSpawner>();
     }
 
     void Update()
     {
-  
+		// if (Input.GetKeyDown(parentMiniGame.keyForThisGame))
+		// {
+		// 	OneKeyPlay();
+		// }
     }
 
 
 	public void OneKeyPlay()
 	{
-		return;
+		spawner.allTargets[0].handleHit();
 	}
 }

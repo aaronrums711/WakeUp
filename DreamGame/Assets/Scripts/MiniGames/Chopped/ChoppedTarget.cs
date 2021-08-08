@@ -35,6 +35,7 @@ public class ChoppedTarget : MiniGameElement
         currentHealth = maxHealth;
         thisSR = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        spawner = GameObject.Find("LaunchPoints").GetComponent<ChoppedTargetSpawner>();
     }
 
     void Update()
@@ -49,6 +50,11 @@ public class ChoppedTarget : MiniGameElement
         rb.velocity = Vector2.zero;
         yield return StartCoroutine(SpriteFlash(thisSR));
         rb.velocity = velocityAtHit;
+        if (currentHealth <= 0)
+        {
+            spawner.allTargets.RemoveAt(0);
+            Destroy(this.gameObject);
+        }
     }
 
     public IEnumerator SpriteFlash(SpriteRenderer sr)
@@ -61,10 +67,7 @@ public class ChoppedTarget : MiniGameElement
             yield return new WaitForSeconds(flashLength);
             sr.sprite = startingSprite;
         }
-        if (currentHealth <= 0)
-        {
-            //remove from list, then destroy
-        }
+
     }
 
     [ContextMenu("handle hit")]

@@ -8,6 +8,7 @@ public class ChoppedTargetSpawner : MiniGameElement
 	CreateDate:  8/4/21
 	Functionality: spawns targets from different launchers below the play area.  It also applies force to the targets. 
     Notes:  Make sure all the launchers start with 0,0,0 for rotation!
+            Also make sure this object is on the "LaunchPoints" game object - it is found by string reference from other scripts
 	******************/
 	
 	//////////////////////////////Config
@@ -17,7 +18,7 @@ public class ChoppedTargetSpawner : MiniGameElement
     public float launchSpeedMax;
 	
 	//////////////////////////////State
-    private List<ChoppedTarget> allTargets;
+    public List<ChoppedTarget> allTargets;
 	
 	//////////////////////////////Cached Component References
     private Transform[] launchPoints;
