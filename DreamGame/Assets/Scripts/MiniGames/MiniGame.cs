@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;  //need the ToList() function
 
 
 ///this class is the parent class of all mini games, and contains shared behavior
@@ -81,11 +82,16 @@ public class MiniGame : MonoBehaviour
         {
             playAreaBarriers.Add(barrierParent.transform.GetChild(i).gameObject);
         }
+        Destroy(GameObject.Find("test"));
     }
 
     public void StopGame()
     {
-        //stops the game. This will be ued when isComplete = true or when player loses
+        //get a list of all Rigidbodies
+        //get a list of all scripts - I think you can search for monobehaviors.  Make sure to exclude this script somehow.  might need to use GetChild recursively to avoid getting this script in the list
+        //foreach of the items in each of those lists, disable them. 
+        List <Rigidbody2D> allRBs = GetComponentsInChildren<Rigidbody2D>().ToList();
+        List <MonoBehaviour> allScripts = GetComponentsInChildren<MonoBehaviour>().ToList();
         return;
     }
 
