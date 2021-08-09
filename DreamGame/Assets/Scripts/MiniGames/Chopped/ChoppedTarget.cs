@@ -11,11 +11,15 @@ public class ChoppedTarget : MiniGameElement
 	
 	//////////////////////////////Config
     public int currentHealth;
+    public int totalHealth;
     public int maxHealth;
+    public int minHealth;
+    public float sizeToHealthMultiplier;
     public float flashEffectCount;
     public float flashLength;
     public GameObject slashEffPrefab;
-	
+	public Vector3 startingScale;
+
 	//////////////////////////////State
 	private float startingYPos;
 
@@ -24,6 +28,7 @@ public class ChoppedTarget : MiniGameElement
     private Rigidbody2D rb;
     private ChoppedTargetSpawner spawner;
     public Sprite startingSprite;
+    
 
 	
 	
@@ -34,12 +39,15 @@ public class ChoppedTarget : MiniGameElement
 	
     void Start()
     {
-        currentHealth = maxHealth;
+        startingScale = this.transform.localScale;
+        SetHealthAndSize();
+        currentHealth = totalHealth;
         thisSR = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         spawner = GameObject.Find("LaunchPoints").GetComponent<ChoppedTargetSpawner>();
         startingSprite = thisSR.sprite;
         startingYPos = this.transform.position.y-0.25f;  //subtracting 0.25 just so there's no accidental self destruction right when it's spawned
+        
     }
 
     void Update()
@@ -96,6 +104,25 @@ public class ChoppedTarget : MiniGameElement
     public void CallHandleHit()
     {
         StartCoroutine(handleHit());
+    }
+
+    private void SetHealthAndSize()
+    {
+        totalHealth = Random.Range(minHealth, maxHealth);
+        //this logic assumes that there are only 3 options for health.  right now it's 1,2,3. 
+        if (maxHealth - minHealth > 3) {print("there is a larger span of health than originally planned, you may want to look at this logic again");}
+        if (totalHealth == minHealth)
+        {
+            this.transform.localScale = startingScale * (1+(-sizeToHealthMultiplier));
+        }
+        else if (totalHealth == minHealth + 1)
+        {
+            return;
+        }
+        else if( totalHealth == maxHealth -1)
+        {
+            this.transform.localScale = startingScale * (1+(sizeToHealthMultiplier));
+        }
     }
 
 }

@@ -136,8 +136,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentMiniGame: {fileID: 0}
   currentHealth: 0
-  maxHealth: 3
+  totalHealth: 0
+  maxHealth: 4
+  minHealth: 1
+  sizeToHealthMultiplier: 0.3
   flashEffectCount: 3
   flashLength: 0.05
   slashEffPrefab: {fileID: 8361297602864394478, guid: 435999aa847e366479b7df55c4bcbc4c, type: 3}
+  startingScale: {x: 0, y: 0, z: 0}
   startingSprite: {fileID: 0}

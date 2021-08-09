@@ -477,12 +477,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentMiniGame: {fileID: 0}
-  launchSpeedMin: 11
-  launchSpeedMax: 13.5
+  launchSpeedMin: 9
+  launchSpeedMax: 12
   minWaveAmount: 3
   maxWaveAmount: 6
-  minWaveTimeBetweenSpawns: 0.75
-  maxWaveTimeBetweenSpawns: 2
+  minWaveTimeBetweenSpawns: 0.5
+  maxWaveTimeBetweenSpawns: 1.5
   minTimeBetweenWaves: 5
   maxTimeBetweenWaves: 7
   allTargets: []
