@@ -303,6 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2fe6ce5d914bd844a8b53224dd714de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  miniGameName: 
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   targetColor: {r: 0, g: 0.42815948, b: 0.8207547, a: 1}
   completionPercent: 0.5
@@ -480,7 +481,7 @@ MonoBehaviour:
   launchSpeedMax: 13.5
   minWaveAmount: 3
   maxWaveAmount: 6
-  minWaveTimeBetweenSpawns: 0.5
+  minWaveTimeBetweenSpawns: 0.75
   maxWaveTimeBetweenSpawns: 2
   minTimeBetweenWaves: 5
   maxTimeBetweenWaves: 7

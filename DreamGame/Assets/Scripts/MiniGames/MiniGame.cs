@@ -8,6 +8,7 @@ public class MiniGame : MonoBehaviour
 {
 
     ////////////////////////Config
+    public string miniGameName;
     public Color baseColor;
     public Color targetColor;
     [Tooltip("will almost always be 0-1.  added room on each side to account for edge cases")]  

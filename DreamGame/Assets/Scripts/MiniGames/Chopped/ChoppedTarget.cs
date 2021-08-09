@@ -17,7 +17,7 @@ public class ChoppedTarget : MiniGameElement
     public GameObject slashEffPrefab;
 	
 	//////////////////////////////State
-	private Vector3 startingPos;
+	private float startingYPos;
 
 	//////////////////////////////Cached Component References
     private SpriteRenderer thisSR;
@@ -39,12 +39,16 @@ public class ChoppedTarget : MiniGameElement
         rb = GetComponent<Rigidbody2D>();
         spawner = GameObject.Find("LaunchPoints").GetComponent<ChoppedTargetSpawner>();
         startingSprite = thisSR.sprite;
-        startingPos = this.transform.position;
+        startingYPos = this.transform.position.y-0.25f;  //subtracting 0.25 just so there's no accidental self destruction right when it's spawned
     }
 
     void Update()
     {
-        
+        if (this.transform.position.y < startingYPos)
+        {
+            spawner.allTargets.RemoveAt(0);
+            Destroy(this.gameObject);
+        }
     }
 
     public IEnumerator handleHit()
@@ -93,4 +97,5 @@ public class ChoppedTarget : MiniGameElement
     {
         StartCoroutine(handleHit());
     }
+
 }
