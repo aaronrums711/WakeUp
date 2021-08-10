@@ -52,7 +52,7 @@ public class MiniGame : MonoBehaviour
 
     void Update()
     {
-        if(isTesting == false)
+        if(isTesting == false && isComplete == false)
         {
             DecayCompletion();
         } 
@@ -85,14 +85,23 @@ public class MiniGame : MonoBehaviour
         Destroy(GameObject.Find("test"));
     }
 
+    [ContextMenu("stop game")]
     public void StopGame()
     {
-        //get a list of all Rigidbodies
-        //get a list of all scripts - I think you can search for monobehaviors.  Make sure to exclude this script somehow.  might need to use GetChild recursively to avoid getting this script in the list
-        //foreach of the items in each of those lists, disable them. 
+        print("StopGame() method has been called from " + this.name);
         List <Rigidbody2D> allRBs = GetComponentsInChildren<Rigidbody2D>().ToList();
         List <MonoBehaviour> allScripts = GetComponentsInChildren<MonoBehaviour>().ToList();
-        return;
+        allScripts.Remove(this); //this script, the MiniGame script, should not be in this list. 
+        foreach (Rigidbody2D rb in allRBs)
+        {
+            rb.gravityScale = 0f;  //rigidbodies can't be disabled, so, doing this. 
+            rb.bodyType = RigidbodyType2D.Static;
+        }
+        foreach (MonoBehaviour script in allScripts)
+        {
+            script.StopAllCoroutines();
+            script.enabled = false;
+        }
     }
 
     public void TrackColorWithCompletionPercent()
@@ -138,6 +147,10 @@ public class MiniGame : MonoBehaviour
         else 
         {
             isComplete = false;
+        }
+        if(isComplete)
+        {
+            StopGame();
         }
         return isComplete;
     }
