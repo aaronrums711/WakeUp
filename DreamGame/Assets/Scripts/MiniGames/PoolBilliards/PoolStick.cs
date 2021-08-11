@@ -71,7 +71,7 @@ public class PoolStick : MiniGameElement
 
     public void CueHit()
     {
-        float finalHitMultiplier = hitSpeed+ (pullBackDistance * 25); //25 is arbitrary, but it just needs to be high enough to make pulling back the cue stick farther have a distinguishable effect 
+        float finalHitMultiplier = hitSpeed+ (pullBackDistance * 30); //number here is arbitrary, but it just needs to be high enough to make pulling back the cue stick farther have a distinguishable effect 
         print("final hit multiplier " + finalHitMultiplier);
         thisRB.AddForce(transform.up * finalHitMultiplier , ForceMode2D.Impulse);
         //this will always hit the ball (and it must).  from the OnCollEnter from that collision, ResetStickPos() is called
