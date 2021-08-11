@@ -12,6 +12,7 @@ public class PoolStick : MiniGameElement
     public float drawBackSpeed;
     public float hitSpeed = 10;
     private float pullBackDistance;
+    [Range(0.1f, 2)]public float maxAllowedPullbackDistance;  //VGIU
     private Vector3 startingPos;
     private Quaternion startingRot;
     public int orderInLevel;   //change this back to use the mini game value, just doing this now to avoid error
@@ -55,11 +56,11 @@ public class PoolStick : MiniGameElement
     private IEnumerator InitiatePullBack()
     {
         isDrawingBack = true;
-        float maxPullBackDistance = 2f;
+        
         Vector2 pullBackStartPos = this.transform.position;
         pullBackDistance = Vector2.Distance(new Vector2(transform.position.x, transform.position.y),pullBackStartPos);
 
-        while(Input.GetKey(parentMiniGame.keyForThisGame) && pullBackDistance < maxPullBackDistance)  
+        while(Input.GetKey(parentMiniGame.keyForThisGame) && pullBackDistance < maxAllowedPullbackDistance)  
         {
             transform.Translate(Vector2.down  * Time.deltaTime * drawBackSpeed);
             pullBackDistance = Vector2.Distance(new Vector2(transform.position.x, transform.position.y),pullBackStartPos);
@@ -70,7 +71,9 @@ public class PoolStick : MiniGameElement
 
     public void CueHit()
     {
-        thisRB.AddForce(transform.up * (hitSpeed+ (pullBackDistance + 1)), ForceMode2D.Impulse);
+        float finalHitMultiplier = hitSpeed+ (pullBackDistance * 25); //25 is arbitrary, but it just needs to be high enough to make pulling back the cue stick farther have a distinguishable effect 
+        print("final hit multiplier " + finalHitMultiplier);
+        thisRB.AddForce(transform.up * finalHitMultiplier , ForceMode2D.Impulse);
         //this will always hit the ball (and it must).  from the OnCollEnter from that collision, ResetStickPos() is called
     }
 
