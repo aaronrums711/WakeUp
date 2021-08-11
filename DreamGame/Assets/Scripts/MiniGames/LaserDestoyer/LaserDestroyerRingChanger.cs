@@ -23,7 +23,7 @@ public class LaserDestroyerRingChanger : MiniGameElement
 	
 	void Awake()
     {
-        
+        GetParentMiniGame();
     }
 	
     void Start()
