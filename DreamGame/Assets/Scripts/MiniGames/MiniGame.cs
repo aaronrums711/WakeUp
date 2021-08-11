@@ -101,6 +101,7 @@ public class MiniGame : MonoBehaviour
         {
             script.StopAllCoroutines();
             script.enabled = false;
+            print(script.GetType());
         }
     }
 

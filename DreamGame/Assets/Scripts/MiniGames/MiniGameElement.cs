@@ -14,17 +14,22 @@ public class MiniGameElement : MonoBehaviour
 
     public void GetParentMiniGame()
     {
-        // print(this.gameObject.name + " is searching for parent mini game");  uncomment this for testing
-        parentMiniGame = GetComponentInParent<MiniGame>();
+        print(this.GetType() + " on " + this.gameObject.name + " is searching for parent mini game");  //uncomment this for testing
+
+        parentMiniGame = GetComponent<MiniGame>(); //for scripts on the same object as MiniGame
         if (parentMiniGame == null)
         {
-            parentMiniGame = GetComponentInParent<Transform>().GetComponentInParent<MiniGame>();
+            parentMiniGame = GetComponentInParent<MiniGame>(); //for scripts on a child object
 
-            if(parentMiniGame == null)
+            if (parentMiniGame == null)
             {
-                Debug.LogError("this game element doesn't have a parent MiniGame in a direct parent or a parent's parent.  Something is wrong");
+                parentMiniGame = GetComponentInParent<Transform>().GetComponentInParent<MiniGame>();  //for scripts on a child's child
             }
-            
+        }
+
+        if(parentMiniGame == null)
+        {
+            Debug.LogError("this game element doesn't have a parent MiniGame in a direct parent or a parent's parent.  Something is wrong");
         }
     }
     

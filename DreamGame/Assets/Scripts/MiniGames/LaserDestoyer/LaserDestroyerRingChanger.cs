@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserDestroyerRingChanger : MonoBehaviour
+public class LaserDestroyerRingChanger : MiniGameElement
 {
 	/*****************
 	CreateDate: 7/31/21
@@ -23,11 +23,12 @@ public class LaserDestroyerRingChanger : MonoBehaviour
 	
 	void Awake()
     {
-        thisAnimator = GetComponentInParent<Animator>();
+        
     }
 	
     void Start()
     {
+        thisAnimator = GetComponentInParent<Animator>();
         thisAnimator.Play(anim2);
         StartCoroutine(ContinuallyMovePanels());
     }
