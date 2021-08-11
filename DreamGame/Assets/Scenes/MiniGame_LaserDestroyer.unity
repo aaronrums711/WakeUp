@@ -369,6 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a437bca540f2654ab0f5b07b070e241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
 --- !u!1001 &209546415
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1507,6 +1508,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1608232655}
   - component: {fileID: 1608232656}
+  - component: {fileID: 1608232657}
   m_Layer: 0
   m_Name: MiniGameLaserDestroyer
   m_TagString: Untagged
@@ -1544,10 +1546,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2fe6ce5d914bd844a8b53224dd714de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  miniGameName: 
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   targetColor: {r: 0.8962264, g: 0.23313572, b: 0.12259703, a: 1}
-  completionPercent: 0.5
+  completionPercent: 0.92
   baseProgression: 0.03
+  progressionMultiplier: 1
   displayHeight: 0
   displayWidth: 0
   orderInLevel: 3
@@ -1564,6 +1568,22 @@ MonoBehaviour:
   isComplete: 0
   isTesting: 0
   playAreaBarriers: []
+--- !u!114 &1608232657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608232654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aee8d1787ebddc449be3c38191e700b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
+  currentActiveEmitter: {fileID: 0}
+  currentActiveEmitterChildIndex: 0
+  allLaserEmitters: []
 --- !u!4 &1619626577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4333559223377392058, guid: e411664cc316b8545a574d4fb774b663, type: 3}
@@ -6435,27 +6455,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8845351484926580474, guid: e9f8142f0ea7dab4896520daff96ff73, type: 3}
   m_PrefabInstance: {fileID: 1771353614}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1771353616 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8845351484926580475, guid: e9f8142f0ea7dab4896520daff96ff73, type: 3}
-  m_PrefabInstance: {fileID: 1771353614}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1771353617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1771353616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0aee8d1787ebddc449be3c38191e700b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentMiniGame: {fileID: 0}
-  currentActiveEmitter: {fileID: 0}
-  currentActiveEmitterChildIndex: 0
-  allLaserEmitters: []
 --- !u!1001 &1842102878
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserDestroyerInputManager : MiniGameElement
+public class LaserDestroyerInputManager : MiniGameElement, IOneKeyPlay
 {
 
     //////////////////////////////Config
@@ -27,13 +27,13 @@ public class LaserDestroyerInputManager : MiniGameElement
 
     void Update()
     {
-        if (Input.GetKeyDown(parentMiniGame.keyForThisGame))
+        if (Input.GetKeyDown(parentMiniGame.keyForThisGame) && parentMiniGame.isComplete == false)
         {
-            PassToNextTurret();
+            OneKeyPlay();
         }
     }
 
-    private void PassToNextTurret()
+    public void OneKeyPlay()
     {
         currentActiveEmitter.CallRetractLaser();
         

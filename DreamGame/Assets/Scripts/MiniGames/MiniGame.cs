@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;  //need the ToList() function
 
 
 ///this class is the parent class of all mini games, and contains shared behavior
@@ -8,11 +9,14 @@ public class MiniGame : MonoBehaviour
 {
 
     ////////////////////////Config
+    public string miniGameName;
     public Color baseColor;
     public Color targetColor;
     [Tooltip("will almost always be 0-1.  added room on each side to account for edge cases")]  
     [Range(-0.2f, 1.2f)] public float completionPercent = 0.5f;
     public float baseProgression = 0.05f;
+    [Tooltip("will only be used in some cases, where progression is in chunks instead of gradual")]  
+    public float progressionMultiplier = 1;
     public float displayHeight;
     public float displayWidth;
     [Range(1,4)] public int orderInLevel;
@@ -26,6 +30,7 @@ public class MiniGame : MonoBehaviour
      [Tooltip("with space at position 0, now any game can just use keysToPlay[orderInLevel]  to get the key that game is using")]
     public string [] keysToPlay = {"space", "r", "i", "v", "m" };
     public string keyForThisGame;
+
 
     //////////////////////////State
     public bool isActive;
@@ -47,7 +52,7 @@ public class MiniGame : MonoBehaviour
 
     void Update()
     {
-        if(isTesting == false)
+        if(isTesting == false && isComplete == false)
         {
             DecayCompletion();
         } 
@@ -77,12 +82,27 @@ public class MiniGame : MonoBehaviour
         {
             playAreaBarriers.Add(barrierParent.transform.GetChild(i).gameObject);
         }
+        Destroy(GameObject.Find("test"));
     }
 
+    [ContextMenu("stop game")]
     public void StopGame()
     {
-        //stops the game. This will be ued when isComplete = true or when player loses
-        return;
+        print("StopGame() method has been called from " + this.name);
+        List <Rigidbody2D> allRBs = GetComponentsInChildren<Rigidbody2D>().ToList();
+        List <MonoBehaviour> allScripts = GetComponentsInChildren<MonoBehaviour>().ToList();
+        allScripts.Remove(this); //this script, the MiniGame script, should not be in this list. 
+        foreach (Rigidbody2D rb in allRBs)
+        {
+            rb.gravityScale = 0f;  //rigidbodies can't be disabled, so, doing this. 
+            rb.bodyType = RigidbodyType2D.Static;
+        }
+        foreach (MonoBehaviour script in allScripts)
+        {
+            script.StopAllCoroutines();
+            script.enabled = false;
+            print(script.GetType());
+        }
     }
 
     public void TrackColorWithCompletionPercent()
@@ -128,6 +148,10 @@ public class MiniGame : MonoBehaviour
         else 
         {
             isComplete = false;
+        }
+        if(isComplete)
+        {
+            StopGame();
         }
         return isComplete;
     }
