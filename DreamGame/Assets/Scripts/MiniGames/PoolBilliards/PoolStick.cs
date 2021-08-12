@@ -5,6 +5,9 @@ using UnityEngine;
 public class PoolStick : MiniGameElement
 {
 
+    /**
+    notes: this must be on the PoolStick object, which has the two children beneath it. 
+    **/
 
     //////////////////////////////Config
     private float angle = 20; //controls rotation speed around ball. this is arbitrary, since we are using rotationSpeed to control it as well. 
@@ -43,14 +46,18 @@ public class PoolStick : MiniGameElement
 
     void Update()
     {
-        if (!Input.GetKey(parentMiniGame.keyForThisGame)  && isDrawingBack == false)
+        if (parentMiniGame.isActive) //this will stop the rotation AND the input if isActive = false
         {
-            transform.RotateAround(ball.transform.position, Vector3.forward, angle * Time.deltaTime * rotationSpeed);
+            if (!Input.GetKey(parentMiniGame.keyForThisGame)  && isDrawingBack == false)
+            {
+                transform.RotateAround(ball.transform.position, Vector3.forward, angle * Time.deltaTime * rotationSpeed);
+            }
+            else if (Input.GetKeyDown(parentMiniGame.keyForThisGame))
+            {
+                StartCoroutine(InitiatePullBack());
+            }
         }
-        else if (Input.GetKeyDown(parentMiniGame.keyForThisGame))
-        {
-            StartCoroutine(InitiatePullBack());
-        }
+
     }
 
     private IEnumerator InitiatePullBack()
