@@ -76,7 +76,7 @@ public class PoolStick : MiniGameElement, IOneKeyPlay
         OneKeyPlay();
     }
 
-    public void OneKeyPlay() //this is being given the one key play, because if it's ever called separately, this is what actually generates the force
+    public void OneKeyPlay() //this is being given the OneKeyPlay(), because if it's ever called separately, this is what actually generates the force
     {
         float finalHitMultiplier = hitSpeed+ (pullBackDistance * 30); //number here is arbitrary, but it just needs to be high enough to make pulling back the cue stick farther have a distinguishable effect 
         // print("final hit multiplier " + finalHitMultiplier);
