@@ -22,7 +22,7 @@ public class PoolHitManager :  MiniGameElement, IProgressionAdder
 
     public void AddMiniGameProgress()
     {
-        float progressionAmount = parentMiniGame.baseProgression + (targetsHitThisShot * multipleHitsMultiplier); 
+        float progressionAmount = parentMiniGame.baseProgressionChunk + (targetsHitThisShot * multipleHitsMultiplier); 
                                                                                                 //if baseProgression is 0.05, hitting three balls
                                                                                                 //will result in 0.6 increase.  thats alot. 
                                                                                                 //

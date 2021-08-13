@@ -14,8 +14,12 @@ public class MiniGame : MonoBehaviour
     public Color targetColor;
     [Tooltip("will almost always be 0-1.  added room on each side to account for edge cases")]  
     [Range(-0.2f, 1.2f)] public float completionPercent = 0.5f;
+
+    [Tooltip("base progression.  use this for games that have gradual PER SECOND progression")]  
     public float baseProgression = 0.05f;
-    [Tooltip("will only be used in some cases, where progression is in chunks instead of gradual")]  
+
+    [Tooltip("this should be used in games where progression is in chunks, not per second")]  
+    public float baseProgressionChunk = 0.05f;
     public float progressionMultiplier = 1;
     public float displayHeight;
     public float displayWidth;
