@@ -410,6 +410,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1270297151}
   - component: {fileID: 1270297152}
+  - component: {fileID: 1270297153}
+  - component: {fileID: 1270297154}
   m_Layer: 0
   m_Name: PoolBilliards
   m_TagString: Untagged
@@ -447,11 +449,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2fe6ce5d914bd844a8b53224dd714de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  miniGameName: 
+  miniGameName: Pool
   baseColor: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
   targetColor: {r: 0.06716209, g: 0, b: 0.8584906, a: 1}
   completionPercent: 0
   baseProgression: 0.05
+  baseProgressionChunk: 0.05
   progressionMultiplier: 1
   displayHeight: 0
   displayWidth: 0
@@ -469,6 +472,39 @@ MonoBehaviour:
   isComplete: 0
   isTesting: 0
   playAreaBarriers: []
+--- !u!114 &1270297153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270297150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7681f2002cf4f3748a9bfd973397c043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
+  targetsHitThisShot: 0
+  multipleHitsMultiplier: 0.05
+--- !u!114 &1270297154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270297150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a831d5764b20f1343b9d1ba53ae7985c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
+  targetLocationPadding: 1
+  targetsInPlay: 0
+  maxTargetsAllowed: 4
+  targetBallPrefab: {fileID: 7916379094448281399, guid: 957b048f25d0ed247bf0d86928411032, type: 3}
+  targetBallParent: {fileID: 208760036}
 --- !u!1 &1525015782
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,48 +584,11 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!1 &1768439552 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8845351484926580475, guid: e9f8142f0ea7dab4896520daff96ff73, type: 3}
-  m_PrefabInstance: {fileID: 8845351486695008763}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1768439553 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8845351484926580474, guid: e9f8142f0ea7dab4896520daff96ff73, type: 3}
   m_PrefabInstance: {fileID: 8845351486695008763}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1768439554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1768439552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7681f2002cf4f3748a9bfd973397c043, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentMiniGame: {fileID: 0}
-  targetsHitThisShot: 0
---- !u!114 &1768439555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1768439552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a831d5764b20f1343b9d1ba53ae7985c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentMiniGame: {fileID: 0}
-  targetLocationPadding: 1
-  targetsInPlay: 0
-  maxTargetsAllowed: 4
-  targetBallPrefab: {fileID: 7916379094448281399, guid: 957b048f25d0ed247bf0d86928411032, type: 3}
-  targetBallParent: {fileID: 208760036}
 --- !u!1001 &1882356534
 PrefabInstance:
   m_ObjectHideFlags: 0
