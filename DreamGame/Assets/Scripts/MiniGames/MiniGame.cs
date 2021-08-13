@@ -93,6 +93,7 @@ public class MiniGame : MonoBehaviour
     [ContextMenu("stop game")]
     public void StopGame()
     {
+        isActive = false;
         print("StopGame() method has been called from " + this.name);
         List <Rigidbody2D> allRBs = GetComponentsInChildren<Rigidbody2D>().ToList();
         List <MonoBehaviour> allScripts = GetComponentsInChildren<MonoBehaviour>().ToList();

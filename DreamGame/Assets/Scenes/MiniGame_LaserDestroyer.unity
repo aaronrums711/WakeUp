@@ -1546,11 +1546,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2fe6ce5d914bd844a8b53224dd714de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  miniGameName: 
+  miniGameName: LaserDestroyer
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   targetColor: {r: 0.8962264, g: 0.23313572, b: 0.12259703, a: 1}
   completionPercent: 0.92
   baseProgression: 0.03
+  baseProgressionChunk: 0.05
   progressionMultiplier: 1
   displayHeight: 0
   displayWidth: 0

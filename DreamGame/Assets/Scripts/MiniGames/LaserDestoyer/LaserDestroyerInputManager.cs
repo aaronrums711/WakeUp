@@ -27,7 +27,7 @@ public class LaserDestroyerInputManager : MiniGameElement, IOneKeyPlay
 
     void Update()
     {
-        if (Input.GetKeyDown(parentMiniGame.keyForThisGame) && parentMiniGame.isComplete == false)
+        if (Input.GetKeyDown(parentMiniGame.keyForThisGame) && parentMiniGame.isActive)
         {
             OneKeyPlay();
         }
