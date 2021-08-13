@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolStick : MiniGameElement
+public class PoolStick : MiniGameElement, IOneKeyPlay
 {
 
     /**
@@ -73,10 +73,10 @@ public class PoolStick : MiniGameElement
             pullBackDistance = Vector2.Distance(new Vector2(transform.position.x, transform.position.y),pullBackStartPos);
             yield return null;
         }
-        CueHit();
+        OneKeyPlay();
     }
 
-    public void CueHit()
+    public void OneKeyPlay() //this is being given the one key play, because if it's ever called separately, this is what actually generates the force
     {
         float finalHitMultiplier = hitSpeed+ (pullBackDistance * 30); //number here is arbitrary, but it just needs to be high enough to make pulling back the cue stick farther have a distinguishable effect 
         // print("final hit multiplier " + finalHitMultiplier);
