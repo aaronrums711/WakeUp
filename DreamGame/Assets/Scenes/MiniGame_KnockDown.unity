@@ -361,10 +361,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2fe6ce5d914bd844a8b53224dd714de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  miniGameName: 
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   targetColor: {r: 1, g: 0.4362056, b: 0.06132078, a: 1}
   completionPercent: 0.5
-  baseProgression: 0.05
+  baseProgression: 0.02
+  baseProgressionChunk: 0.05
+  progressionMultiplier: 1
   displayHeight: 0
   displayWidth: 0
   orderInLevel: 2
