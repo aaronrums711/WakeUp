@@ -18,11 +18,6 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable
 	//////////////////////////////Cached Component References
 	
 	
-	void Awake()
-    {
-        
-    }
-	
     void Start()
     {
         
