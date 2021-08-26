@@ -247,6 +247,7 @@ MonoBehaviour:
   targetColor: {r: 0, g: 0.42815948, b: 0.8207547, a: 1}
   completionPercent: 0.5
   baseProgression: 0.05
+  baseProgressionChunk: 0.035
   progressionMultiplier: 1.5
   displayHeight: 0
   displayWidth: 0

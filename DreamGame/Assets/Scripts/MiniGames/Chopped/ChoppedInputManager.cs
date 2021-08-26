@@ -32,13 +32,16 @@ public class ChoppedInputManager : MiniGameElement, IOneKeyPlay
 
     void Update()
     {
-		if (Input.GetKeyDown(parentMiniGame.keyForThisGame) && spawner.allTargets.Count > 0)
+		if (Input.GetKeyDown(parentMiniGame.keyForThisGame) && parentMiniGame.isActive == true)
 		{
-			OneKeyPlay();
-		}
-		else if (Input.GetKeyDown(parentMiniGame.keyForThisGame) && spawner.allTargets.Count <= 0)  //prevent spamming - if input is given when no targets on field, give negative progress
-		{
-			parentMiniGame.AddProgress(parentMiniGame.baseProgression * -1);
+			if (spawner.allTargets.Count > 0)
+			{
+				OneKeyPlay();
+			}
+			if (spawner.allTargets.Count <= 0)
+			{
+				parentMiniGame.AddProgress(parentMiniGame.baseProgressionChunk * -1);
+			}
 		}
     }
 

@@ -20,6 +20,9 @@ public class ChoppedTarget : MiniGameElement
     public GameObject slashEffPrefab;
 	public Vector3 startingScale;
 
+     [Tooltip("this should be be < 0.02.  it controls how much additional progress is given for destroying larger targets versus smaller ones")] 
+    public float progressionToSizeMultiplier;
+
 	//////////////////////////////State
 	private float startingYPos;
 
@@ -71,7 +74,8 @@ public class ChoppedTarget : MiniGameElement
         if (currentHealth <= 0)
         {
             spawner.allTargets.RemoveAt(0);
-            parentMiniGame.AddProgress(parentMiniGame.baseProgression * parentMiniGame.progressionMultiplier);
+            parentMiniGame.AddProgress(parentMiniGame.baseProgressionChunk + (totalHealth * progressionToSizeMultiplier));  //award more progress based on the target totalHealth
+                                                                                                                            //toggling the progressionToSizeMultiplier is one way to make this game harder
             Destroy(this.gameObject);
         }
     }
