@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChoppedTarget : MiniGameElement
+public class ChoppedTarget : MiniGameElement, IProgressionAdder
 {
 	/*****************
 	CreateDate:  8/5/21
@@ -74,8 +74,7 @@ public class ChoppedTarget : MiniGameElement
         if (currentHealth <= 0)
         {
             spawner.allTargets.RemoveAt(0);
-            parentMiniGame.AddProgress(parentMiniGame.baseProgressionChunk + (totalHealth * progressionToSizeMultiplier));  //award more progress based on the target totalHealth
-                                                                                                                            //toggling the progressionToSizeMultiplier is one way to make this game harder
+            AddMiniGameProgress();
             Destroy(this.gameObject);
         }
     }
@@ -127,6 +126,13 @@ public class ChoppedTarget : MiniGameElement
         {
             this.transform.localScale = startingScale * (1+(sizeToHealthMultiplier));
         }
+    }
+
+    public void AddMiniGameProgress()
+    {
+        parentMiniGame.AddProgress(parentMiniGame.baseProgressionChunk + (totalHealth * progressionToSizeMultiplier));  
+            //award more progress based on the target totalHealth
+            //toggling the progressionToSizeMultiplier is one way to make this game harder
     }
 
 }

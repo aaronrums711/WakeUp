@@ -57,7 +57,7 @@ public class MiniGame : MonoBehaviour
 
     void Update()
     {
-        if(isTesting == false && isComplete == false)
+        if(isTesting == false && isActive == true)
         {
             DecayCompletion();
         } 
@@ -92,6 +92,8 @@ public class MiniGame : MonoBehaviour
 
     [ContextMenu("stop game")]
     public void StopGame()
+    //as of 8/26 this is not getting called anywhere, becauase the new IStoppable interface is being implemented in each mini game
+    //it was previously being called below in CheckCompletion()
     {
         isActive = false;
         print("StopGame() method has been called from " + this.name);
@@ -157,7 +159,7 @@ public class MiniGame : MonoBehaviour
         }
         if(isComplete)
         {
-            StopGame();
+            //StopGame();
         }
         return isComplete;
     }
