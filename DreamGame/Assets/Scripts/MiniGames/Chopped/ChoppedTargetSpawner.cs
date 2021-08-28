@@ -47,7 +47,11 @@ public class ChoppedTargetSpawner : MiniGameElement
             print("there's more than three launchers, you may need to redo the rotation ranges in the SpawnTarget() method");
         }
 
-        StartCoroutine(GenerateWave());
+        if (parentMiniGame.isActive)
+        {
+            StartCoroutine(GenerateWave());
+
+        }
 
     }
 
