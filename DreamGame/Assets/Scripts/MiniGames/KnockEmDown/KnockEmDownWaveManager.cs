@@ -49,12 +49,6 @@ public class KnockEmDownWaveManager : MiniGameElement
         }
         StartCoroutine(MonitorCurrentWave());
     }
-    
-    [ContextMenu("SpawnWaveFromEditor() testing only")] 
-    public void SpawnWaveFromEditor()
-    {
-        StartCoroutine(SpawnWave(minWaveAmount, maxWaveAmount));
-    }
 
     public IEnumerator MonitorCurrentWave()
     {
@@ -66,5 +60,16 @@ public class KnockEmDownWaveManager : MiniGameElement
         StartCoroutine(SpawnWave(minWaveAmount, maxWaveAmount));
     }
     
+
+
+        
+
+
+        
+    [ContextMenu("SpawnWaveFromEditor() testing only")] 
+    public void SpawnWaveFromEditor()
+    {
+        StartCoroutine(SpawnWave(minWaveAmount, maxWaveAmount));
+    }
 
 }

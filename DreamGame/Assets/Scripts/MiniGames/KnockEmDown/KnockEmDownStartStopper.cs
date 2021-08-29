@@ -16,6 +16,8 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable
 	//////////////////////////////State
 	
 	//////////////////////////////Cached Component References
+	public KnockEmDownWaveManager waveManager;
+	public Transform targetParent;
 	
 	/**
 	StopMiniGame()
@@ -29,17 +31,26 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable
 		current targets resume shrinking
 		targets spawn again as usual
 	**/
+
+	void Start()
+	{
+		waveManager = parentMiniGame.GetComponentInChildren<KnockEmDownWaveManager>();
+		targetParent = GameObject.Find("KnockDownTarget").GetComponent<Transform>();
+	}
 	
 
-
+	[ContextMenu("StopMiniGame() testing only")] 
 	public void StopMiniGame()
 	{
-		return;
+		parentMiniGame.isActive = false;
+		waveManager.StopAllCoroutines();
 	}
 
 	
 	public void RestartMiniGame()
 	{
-		return;
+		int targetsInPlay = targetParent.childCount;
+		parentMiniGame.isActive = true;
+		StartCoroutine(waveManager.SpawnWave(waveManager.minWaveAmount, waveManager.maxWaveAmount-targetsInPlay));
 	}
 }

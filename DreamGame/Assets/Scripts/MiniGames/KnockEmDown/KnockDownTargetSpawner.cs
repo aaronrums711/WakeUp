@@ -6,6 +6,12 @@ using System.Linq;
 public class KnockDownTargetSpawner : MiniGameElement
 {
 
+	/*****************
+	CreateDate: 	8/05/21 approx
+	Functionality:	spawns a single target.  This method is called from the WaveManager class
+	Notes:	
+	Dependencies:
+	******************/
 
     //////////////////////////////Config
     public float targetLocationPadding = 0.5f;
