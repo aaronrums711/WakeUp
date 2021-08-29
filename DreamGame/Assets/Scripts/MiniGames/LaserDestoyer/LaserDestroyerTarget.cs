@@ -23,7 +23,7 @@ public class LaserDestroyerTarget : MiniGameElement, IProgressionAdder
 
     void Update()
     {
-        if (isScoreAdding)
+        if (isScoreAdding && parentMiniGame.isActive)
         {
             AddMiniGameProgress();
         }
