@@ -39,6 +39,7 @@ public class KnockEmDownTarget : MiniGameElement
             trans.localScale -= changeVector;
             yield return null;
         }
+        
         //in case it's not perfect, at the end of the loops just set scale to 0
         trans.localScale = Vector3.zero;
         waveManager.objectsInCurrentWave.Remove(this.gameObject);
