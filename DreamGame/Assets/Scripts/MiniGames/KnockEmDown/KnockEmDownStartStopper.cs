@@ -42,22 +42,25 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable
 	[ContextMenu("StopMiniGame() testing only")] 
 	public void StopMiniGame()
 	{
-		int itCount = 0;
 		parentMiniGame.isActive = false;
 		waveManager.StopAllCoroutines();
-		for (int i = 0; i<targetParent.childCount; i++)
-		{
-			StopCoroutine(targetParent.GetChild(i).GetComponent<KnockEmDownTarget>().initialCoroutine);
-			itCount ++;
-		}
-		print("StopMiniGame() loop ran " + itCount + " times");
+		//setting isActive to false will stop all of the targets from shrinking, then the RestartMiniGame()
+		//method will restart each one. 
 	}
 
-	
+	[ContextMenu("RestartMiniGame() testing only")] 
 	public void RestartMiniGame()
 	{
 		int targetsInPlay = targetParent.childCount;
 		parentMiniGame.isActive = true;
+
 		StartCoroutine(waveManager.SpawnWave(waveManager.minWaveAmount, waveManager.maxWaveAmount-targetsInPlay));
+
+		for (int i = 0; i<targetParent.childCount; i++)
+		{
+			Transform targetTrans = targetParent.GetChild(i).GetComponent<Transform>();
+			float shrinkRate = targetParent.GetChild(i).GetComponent<KnockEmDownTarget>().initialShrinkRate;
+			StartCoroutine(targetParent.GetChild(i).GetComponent<KnockEmDownTarget>().Shrink(targetTrans,shrinkRate));
+		}
 	}
 }

@@ -12,7 +12,7 @@ public class KnockEmDownTarget : MiniGameElement
 
     //////////////////////////////State
     [HideInInspector]
-    public IEnumerator initialCoroutine;
+    public Coroutine initialCoroutine;
 
     //////////////////////////////Cached Component References
     private KnockEmDownWaveManager waveManager;
@@ -20,8 +20,8 @@ public class KnockEmDownTarget : MiniGameElement
     void Start()
     {
         waveManager = parentMiniGame.GetComponentInChildren<KnockEmDownWaveManager>();
-        initialCoroutine = Shrink(this.transform, initialShrinkRate);
-        StartCoroutine(initialCoroutine);
+        //initialCoroutine = Shrink(this.transform, initialShrinkRate);
+        initialCoroutine = StartCoroutine(Shrink(this.transform, initialShrinkRate));
     }
 
     void Update()
@@ -34,16 +34,21 @@ public class KnockEmDownTarget : MiniGameElement
     public IEnumerator Shrink(Transform trans, float rate) 
     {
         Vector3 changeVector = new Vector3(rate, rate, rate);
-        while(trans.localScale.x >=0.01)
-        {
+        while(trans.localScale.x >=0.01 && parentMiniGame.isActive)
+        {   //this loop will terminate for 1 of 2 reasons.  if the scale has reduced enough, then 
+            //the target will be removed and destroyed.
+            //if the isActive flag has been set to false, none of that will happen. 
             trans.localScale -= changeVector;
             yield return null;
         }
         
-        //in case it's not perfect, at the end of the loops just set scale to 0
-        trans.localScale = Vector3.zero;
-        waveManager.objectsInCurrentWave.Remove(this.gameObject);
-        Destroy(this.gameObject);
+        if(parentMiniGame.isActive)
+        {
+            //in case it's not perfect, at the end of the loops just set scale to 0
+            trans.localScale = Vector3.zero;
+            waveManager.objectsInCurrentWave.Remove(this.gameObject);
+            Destroy(this.gameObject);
+        }
     }
 
 
