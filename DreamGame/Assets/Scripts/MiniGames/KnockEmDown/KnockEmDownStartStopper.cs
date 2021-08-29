@@ -35,15 +35,22 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable
 	void Start()
 	{
 		waveManager = parentMiniGame.GetComponentInChildren<KnockEmDownWaveManager>();
-		targetParent = GameObject.Find("KnockDownTarget").GetComponent<Transform>();
+		targetParent = GameObject.Find("KnockDownTargets").GetComponent<Transform>();
 	}
 	
 
 	[ContextMenu("StopMiniGame() testing only")] 
 	public void StopMiniGame()
 	{
+		int itCount = 0;
 		parentMiniGame.isActive = false;
 		waveManager.StopAllCoroutines();
+		for (int i = 0; i<targetParent.childCount; i++)
+		{
+			StopCoroutine(targetParent.GetChild(i).GetComponent<KnockEmDownTarget>().initialCoroutine);
+			itCount ++;
+		}
+		print("StopMiniGame() loop ran " + itCount + " times");
 	}
 
 	

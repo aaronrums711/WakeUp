@@ -11,7 +11,8 @@ public class KnockEmDownTarget : MiniGameElement
     public float endEffectRate = 0.01f;
 
     //////////////////////////////State
-    private IEnumerator initialCoroutine;
+    [HideInInspector]
+    public IEnumerator initialCoroutine;
 
     //////////////////////////////Cached Component References
     private KnockEmDownWaveManager waveManager;
@@ -35,7 +36,6 @@ public class KnockEmDownTarget : MiniGameElement
         Vector3 changeVector = new Vector3(rate, rate, rate);
         while(trans.localScale.x >=0.01)
         {
-            changeVector = new Vector3(rate, rate, rate);
             trans.localScale -= changeVector;
             yield return null;
         }
