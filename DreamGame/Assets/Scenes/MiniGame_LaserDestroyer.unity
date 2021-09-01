@@ -355,8 +355,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentMiniGame: {fileID: 0}
-  baseRot: {x: 0, y: 0, z: 40}
-  rotPlusRandom: {x: 0, y: 0, z: 0}
+  baseRotSpeed: {x: 0, y: 0, z: 40}
+  rotSpeedPlusRandom: {x: 0, y: 0, z: 0}
+  targetRotation: 0
 --- !u!114 &153508369
 MonoBehaviour:
   m_ObjectHideFlags: 0
