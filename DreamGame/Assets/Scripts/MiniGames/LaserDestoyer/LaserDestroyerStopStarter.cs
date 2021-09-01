@@ -55,6 +55,7 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable
 		ringChanger.thisAnimator.enabled = false;
 
 		inputManager.currentActiveEmitter.StopAllCoroutines();
+		ps.Pause();
 
 	}
 
