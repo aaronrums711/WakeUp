@@ -17,6 +17,9 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable
 	
 	//////////////////////////////Cached Component References
 	private CenterTargetRotator rotator;
+	private LaserDestroyerRingChanger ringChanger;
+	private LaserDestroyerInputManager inputManager;
+	private ParticleSystem ps;
 	
 	/**
 	StopMiniGame()
@@ -29,12 +32,16 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable
 		freeze laser where it currrently is
 		stop center rotator
 		particle effect must be frozen
+		the ring changer must be stopped
 
 	**/
 	
 	void Start()
 	{
 		rotator = parentMiniGame.GetComponentInChildren<CenterTargetRotator>();
+		ringChanger = parentMiniGame.GetComponentInChildren<LaserDestroyerRingChanger>();
+		inputManager = parentMiniGame.GetComponentInChildren<LaserDestroyerInputManager>();
+		ps = parentMiniGame.GetComponentInChildren<ParticleSystem>();
 	}
 
 	[ContextMenu("StopMiniGame()")]
@@ -44,6 +51,11 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable
 		rotator.transform.rotation = Quaternion.Euler(0,0,rotator.targetRotation);  //we can't stop RotateChunk() in the middle of it's rotation, because it needs to be only on increments of 45 degrees
 																					//so when this method is called, we are just setting the rotation to whatever it's final rotation was going to be for that chunk
 		rotator.StopAllCoroutines();
+		ringChanger.StopAllCoroutines();
+		ringChanger.thisAnimator.enabled = false;
+
+		inputManager.currentActiveEmitter.StopAllCoroutines();
+
 	}
 
 	[ContextMenu("RestartMiniGame()")]
@@ -51,5 +63,7 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable
 	{
 		parentMiniGame.isActive = true;
 		StartCoroutine(rotator.ContinuallyRotate());
+		ringChanger.thisAnimator.enabled = true;
+		StartCoroutine(ringChanger.ContinuallyMovePanels());
 	}
 }

@@ -5,6 +5,13 @@ using UnityEngine;
 public class LaserEmitter : MiniGameElement
 {
 
+    	/*****************
+	CreateDate: 	July 2021
+	Functionality:	this script sits on each laser emitter
+	Notes:          InitialLaserCast() and RetractLaser() are both called from LaserDestroyerInputManager
+	Dependencies:   this must be on each emitters
+	******************/
+
     //////////////////////////////Config
     private IEnumerator currentCoroutine;
     public float laserReductionMultiplier = 0.09f;
@@ -108,8 +115,8 @@ public class LaserEmitter : MiniGameElement
             else 
             {
                 target.isScoreAdding = false;
-                // ps.Stop();
-                ps.Pause();
+                ps.Stop();
+                // ps.Pause();  //this actually freezes the particles, which will be used in the StopMiniGame() method
             }
             yield return null;
         }

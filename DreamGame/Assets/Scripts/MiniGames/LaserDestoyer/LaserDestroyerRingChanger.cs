@@ -18,13 +18,8 @@ public class LaserDestroyerRingChanger : MiniGameElement
 	//////////////////////////////State
 	
 	//////////////////////////////Cached Component References
-    private Animator thisAnimator;
+    public Animator thisAnimator;
 	
-	
-	void Awake()
-    {
-        GetParentMiniGame();
-    }
 	
     void Start()
     {
