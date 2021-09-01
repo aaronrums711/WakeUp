@@ -16,6 +16,7 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable
 	//////////////////////////////State
 	
 	//////////////////////////////Cached Component References
+	private CenterTargetRotator rotator;
 	
 	/**
 	StopMiniGame()
@@ -31,14 +32,24 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable
 
 	**/
 	
+	void Start()
+	{
+		rotator = parentMiniGame.GetComponentInChildren<CenterTargetRotator>();
+	}
 
+	[ContextMenu("StopMiniGame()")]
 	public void StopMiniGame()
 	{
 		parentMiniGame.isActive = false;
+		rotator.transform.rotation = Quaternion.Euler(0,0,rotator.targetRotation);  //we can't stop RotateChunk() in the middle of it's rotation, because it needs to be only on increments of 45 degrees
+																					//so when this method is called, we are just setting the rotation to whatever it's final rotation was going to be for that chunk
+		rotator.StopAllCoroutines();
 	}
 
+	[ContextMenu("RestartMiniGame()")]
 	public void RestartMiniGame()
 	{
-		return;
+		parentMiniGame.isActive = true;
+		StartCoroutine(rotator.ContinuallyRotate());
 	}
 }

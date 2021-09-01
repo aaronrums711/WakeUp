@@ -1510,6 +1510,7 @@ GameObject:
   - component: {fileID: 1608232655}
   - component: {fileID: 1608232656}
   - component: {fileID: 1608232657}
+  - component: {fileID: 1608232658}
   m_Layer: 0
   m_Name: MiniGameLaserDestroyer
   m_TagString: Untagged
@@ -1586,6 +1587,19 @@ MonoBehaviour:
   currentActiveEmitter: {fileID: 0}
   currentActiveEmitterChildIndex: 0
   allLaserEmitters: []
+--- !u!114 &1608232658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608232654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57689ec453caa9d46ad33b5cb785fe2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
 --- !u!4 &1619626577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4333559223377392058, guid: e411664cc316b8545a574d4fb774b663, type: 3}

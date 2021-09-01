@@ -108,7 +108,8 @@ public class LaserEmitter : MiniGameElement
             else 
             {
                 target.isScoreAdding = false;
-                ps.Stop();
+                // ps.Stop();
+                ps.Pause();
             }
             yield return null;
         }
