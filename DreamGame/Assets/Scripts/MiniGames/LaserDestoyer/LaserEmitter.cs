@@ -106,7 +106,7 @@ public class LaserEmitter : MiniGameElement
                 target.isScoreAdding = true;
                 ps.transform.position = hit.point;
                 ps.transform.right = this.transform.position - centerTargetTransform.position;
-                if(ps.isStopped)
+                if(ps.isStopped || ps.isPaused)
                 {
                     ps.Play();
                 }
