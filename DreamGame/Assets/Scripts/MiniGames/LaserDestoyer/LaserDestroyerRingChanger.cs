@@ -24,7 +24,7 @@ public class LaserDestroyerRingChanger : MiniGameElement
     void Start()
     {
         thisAnimator = GetComponentInParent<Animator>();
-        thisAnimator.Play(anim2);
+        // thisAnimator.Play(anim2);
         StartCoroutine(ContinuallyMovePanels());
     }
 
