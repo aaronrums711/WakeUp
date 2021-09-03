@@ -29,14 +29,17 @@ public class PoolStartStopper : MiniGameElement, IStoppable
         
     }
 
+	[ContextMenu("StopMiniGame()")]
 	public void StopMiniGame()
 	{
 		parentMiniGame.isActive = false;
 		spawner.CancelInvoke("AttemptToSpawnTargets");
 	}
 
+	[ContextMenu("RestartMiniGame()")]
 	public void RestartMiniGame()
 	{
 		parentMiniGame.isActive = true;;
+		spawner.InvokeRepeating("AttemptToSpawnTargets", 5f, 10f);
 	}
 }
