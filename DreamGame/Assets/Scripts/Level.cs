@@ -14,10 +14,15 @@ public class Level : ScriptableObject
 	******************/
 	
 	public LevelType thisLevelType = LevelType.TimeCrunch;
+	[Tooltip("at the moment, each mini game in a level will have the same difficulty, except for Maintain, which has a second difficulty for the secondary games")]  
 	public DifficultyParams difficultyParams;
+	public bool hasTotalLevelTimer;
 
-	[Tooltip("for TimeCrunch, this will be between 2 an 4.  For Rotation, probably 4-8.  For MaintainTheGame/Sprint, 7+")]  
-	public int numGames;
+	[Tooltip("for TimeCrunch, this will be between 2 an 4.  For Rotation, probably 3-5.  For MaintainTheGame/Sprint, 7+")]  
+	public int totalGamesInLevel;
+
+	public int gamesAtOneTime;
+
 	public int totalLevelTimeLimitSeconds;
 	public int lagBetweenGamesSeconds;
 
@@ -25,14 +30,15 @@ public class Level : ScriptableObject
 	public float timeCrunchVar;
 
 	[Header("Doubles")]
-	public float doublesVar;
+	public int timerForEachPairSeconds;
 
 	[Header("Sprint")]
 	public float sprintVar;
 
 	[Header("MaintainTheGame")]
-	public float maintainTheGameVar;
+	public DifficultyParams secondaryGamesDiffucltyParams;
 
 	[Header("Rotation")]
-	public float rotationVar;
+	public float totalSkips;
+	public float availableSkips;
 }
