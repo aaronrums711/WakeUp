@@ -12,5 +12,5 @@ using UnityEngine;
 
 public enum LevelType
 {
-	TimeCrunch, Sprint, MaintainTheGame, Rotation
+	TimeCrunch, Sprint, MaintainTheGame, Rotation, Doubles
 };

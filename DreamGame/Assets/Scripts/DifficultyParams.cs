@@ -13,6 +13,17 @@ public class DifficultyParams : ScriptableObject
 	Dependencies:
 	******************/
 	
+	[Tooltip("less than 1 will add less progression for each action, more than 1 will add more")]  
+	public float universalProgressionMultiplier; 
 
+	[Tooltip("should be slightly less than 1 to make games easier, slighly more than 1 to make them harder")]  
+	public float universalDragMultiplier;
+
+	[Tooltip("should be applied to most things that moves or spawn automatically.  Not everything is made harder by getting faster, sometimes the opposite")]  
+	public float universalSpeedMultiplier;
+
+	public DifficultyDescription difficulty= DifficultyDescription.easy;
 
 }
+
+public enum DifficultyDescription {easy, medium, hard, endGame};
