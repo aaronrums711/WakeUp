@@ -13,7 +13,20 @@ public class Level : ScriptableObject
 	Dependencies:
 	******************/
 	
+	public LevelType thisLevelType = LevelType.TimeCrunch;
+	public DifficultyParams difficultyParams;
 
-		
+	[Tooltip("for TimeCrunch, this will be between 2 an 4.  For Rotation, probably 4-8.  For MaintainTheGame/Sprint, 7+")]  
+	public int numGames;
+
+	[Tooltip("should be slightly less than 1 to make games easier, slighly more than 1 to make them harder")]  
+	public int UniversalDragMultiplier;
+
+	public int totalLevelTimeLimitSeconds;
+	
+	public int lagBetweenGamesSeconds;
+
+	
+
 
 }
