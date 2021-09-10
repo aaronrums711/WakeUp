@@ -16,7 +16,7 @@ public class Level : ScriptableObject
 	public LevelType thisLevelType = LevelType.TimeCrunch;
 	[Tooltip("at the moment, each mini game in a level will have the same difficulty, except for Maintain, which has a second difficulty for the secondary games")]  
 	public DifficultyParams difficultyParams;
-	public bool hasTotalLevelTimer;
+	public bool usesTotalLevelTimerLimit;
 
 	[Tooltip("for TimeCrunch, this will be between 2 an 4.  For Rotation, probably 3-5.  For MaintainTheGame/Sprint, 7+")]  
 	public int totalGamesInLevel;
