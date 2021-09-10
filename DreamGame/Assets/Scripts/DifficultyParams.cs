@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "new diff params", menuName = "difficulty params")]
 public class DifficultyParams : ScriptableObject
 {
 	/*****************
@@ -13,7 +14,7 @@ public class DifficultyParams : ScriptableObject
 	Dependencies:
 	******************/
 	
-	[Tooltip("less than 1 will add less progression for each action, more than 1 will add more")]  
+	[Tooltip("less than 1 will add less progression for each succesful action, more than 1 will add more")]  
 	public float universalProgressionMultiplier; 
 
 	[Tooltip("should be slightly less than 1 to make games easier, slighly more than 1 to make them harder")]  

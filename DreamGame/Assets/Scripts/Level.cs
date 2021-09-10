@@ -21,6 +21,18 @@ public class Level : ScriptableObject
 	public int totalLevelTimeLimitSeconds;
 	public int lagBetweenGamesSeconds;
 
+	[Header("Time Crunch")]
+	public float timeCrunchVar;
 
+	[Header("Doubles")]
+	public float doublesVar;
 
+	[Header("Sprint")]
+	public float sprintVar;
+
+	[Header("MaintainTheGame")]
+	public float maintainTheGameVar;
+
+	[Header("Rotation")]
+	public float rotationVar;
 }
