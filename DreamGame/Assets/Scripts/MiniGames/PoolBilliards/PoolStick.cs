@@ -30,6 +30,7 @@ public class PoolStick : MiniGameElement, IOneKeyPlay
     [SerializeField] private Collider2D cueCollider; //VGIU
     public PoolTargetSpawner spawner;
     public PoolHitManager hitManager; 
+    public float speedMultiplier;  //just making this for efficiency purpose, since we don't want to reach for level.difficultyParams.UniversalSpeedMultiplier every frame
     
 
 
@@ -42,6 +43,7 @@ public class PoolStick : MiniGameElement, IOneKeyPlay
         startingRot = this.transform.rotation;
         orderInLevel = 1;
         thisRB = GetComponent<Rigidbody2D>();
+        speedMultiplier = parentMiniGame.level.difficultyParams.universalSpeedMultiplier;
     }
 
     void Update()
@@ -50,14 +52,13 @@ public class PoolStick : MiniGameElement, IOneKeyPlay
         {
             if (!Input.GetKey(parentMiniGame.keyForThisGame)  && isDrawingBack == false)
             {
-                transform.RotateAround(ball.transform.position, Vector3.forward, angle * Time.deltaTime * rotationSpeed);
+                transform.RotateAround(ball.transform.position, Vector3.forward, (angle * Time.deltaTime * rotationSpeed)* speedMultiplier);
             }
             else if (Input.GetKeyDown(parentMiniGame.keyForThisGame))
             {
                 StartCoroutine(InitiatePullBack());
             }
         }
-
     }
 
     private IEnumerator InitiatePullBack()

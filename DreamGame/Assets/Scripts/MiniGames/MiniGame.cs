@@ -34,6 +34,7 @@ public class MiniGame : MonoBehaviour
      [Tooltip("with space at position 0, now any game can just use keysToPlay[orderInLevel]  to get the key that game is using")]
     public string [] keysToPlay = {"space", "r", "i", "v", "m" };
     public string keyForThisGame;
+    public Level level;
 
 
     //////////////////////////State
@@ -43,6 +44,7 @@ public class MiniGame : MonoBehaviour
     public static int numActiveGames;
     public bool isTesting;
 
+   
 
     //////////////////////////////Cached Component References
     public List<GameObject> playAreaBarriers = new List<GameObject>();
@@ -129,7 +131,7 @@ public class MiniGame : MonoBehaviour
         //pushes back the completion percent over time. 
         if (completionPercent >0)
         {
-            completionPercent-= rateOfDecay*Time.deltaTime;
+            completionPercent-= (rateOfDecay*Time.deltaTime) * level.difficultyParams.universalDragMultiplier;
         }
         else if(completionPercent<0)
         {
