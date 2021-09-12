@@ -26,6 +26,10 @@ public class Level : ScriptableObject
 	public int totalLevelTimeLimitSeconds;
 	public int lagBetweenGamesSeconds;
 
+	[Tooltip("misc multipliers will undoubtedly be leveltype specific, so putting them here makes more sense, rather than in the DifficultyParams")]  
+	public float miscMultiplier = 1;
+	public float secondaryMiscMultiplier = 1;
+
 	[Header("Time Crunch")]
 	public float timeCrunchVar;
 

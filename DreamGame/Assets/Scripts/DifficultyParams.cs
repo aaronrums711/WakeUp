@@ -23,8 +23,12 @@ public class DifficultyParams : ScriptableObject
 	[Tooltip("should be applied to most things that moves or spawn automatically.  Not everything is made harder by getting faster, sometimes the opposite")]  
 	public float universalSpeedMultiplier;
 
-	public DifficultyDescription difficulty= DifficultyDescription.easy;
+	[Tooltip("use this in the that a single game needs 2 different speed multipliers, to make one thing faster and another slower, for example")]  
+	public float secondaryUniversalSpeedMultiplier;
 
+	public DifficultyDescription difficulty;
+	public QuicknessToComplete quicknessToComplete;
+	public SpeedDescription speedDescription;
 }
 
-public enum DifficultyDescription {easy, medium, hard, endGame};
+

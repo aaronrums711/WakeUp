@@ -49,13 +49,11 @@ public class PoolTargetSpawner : MiniGameElement
         if (targetsInPlay >= maxTargetsAllowed) {return;}
 
         float attempts = maxTargetsAllowed-targetsInPlay;
-        float spawnChance= 1f * (attempts/maxTargetsAllowed);  //if there's Max-1 targets in play, there will only be a 20% chance of spawning another
-        float spawnChanceReduction = 0.1f;
+        float spawnChance= 1f * (attempts/maxTargetsAllowed);  //if there's Max-1 targets in play, there will only be a  chance of spawning another
+        float spawnChanceReduction = 0.1f * parentMiniGame.level.miscMultiplier;
         for (float i=attempts; i>0; i--)
         {
             float chance = UnityEngine.Random.Range(0f, 1f);
-            // print("spawn threshold: " + spawnChance);
-            // print("spawn attempt: " + chance);
             if (chance < spawnChance)
             {
                 targetsToSpawn++;
