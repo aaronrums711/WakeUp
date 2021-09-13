@@ -203,11 +203,10 @@ public class MiniGame : MonoBehaviour
             rateOfDecay *= progressionParams.universalDragMultiplier;
             baseProgression *=  progressionParams.universalProgressionMultiplier;
             baseProgressionChunk *= progressionParams.universalProgressionChunkMultiplier;
-            print("ProgressionParameters succesfully assigned from scriptable object");
         }
         else
         {
-            print("there was no  matching ProgressionParameter object found.  Something is wrong");
+            Debug.LogError("there was no  matching ProgressionParameter object found.  Something is wrong");
             return;
         }
     }
