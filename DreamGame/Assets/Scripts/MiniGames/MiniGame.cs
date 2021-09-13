@@ -57,6 +57,7 @@ public class MiniGame : MonoBehaviour
 
     void Start()
     {
+        AssignProgressionParameters();
         isActive = true; //this may be set by manager scripts later on...but for now, whenever a minigame is instnatiated, isActive will be set to true;
         completionPercent = 0.5f;
         keyForThisGame = keysToPlay[orderInLevel];  //orderInLevel will eventually be set by a manager class. For now, VGIU
@@ -129,7 +130,6 @@ public class MiniGame : MonoBehaviour
             SpriteRenderer sr  = playAreaBarriers[i].GetComponent<SpriteRenderer>();
             sr.color = Color.Lerp(baseColor, targetColor, completionPercent);
         }
-
     }
 
     public float DecayCompletion()
@@ -137,7 +137,7 @@ public class MiniGame : MonoBehaviour
         //pushes back the completion percent over time. 
         if (completionPercent >0)
         {
-            completionPercent-= (rateOfDecay*Time.deltaTime)/*** level.difficultyParams.universalDragMultiplier**/ ;
+            completionPercent-= (rateOfDecay*Time.deltaTime);
         }
         else if(completionPercent<0)
         {
@@ -185,6 +185,32 @@ public class MiniGame : MonoBehaviour
         }
     }
 
+    public void AssignProgressionParameters()
+    {
+
+        Object[] allProgressionParams = Resources.LoadAll("", typeof(ProgressionParams));
+
+        foreach (ProgressionParams p in allProgressionParams)
+        {
+            if (p.DifficultyDescription == this.level.generalDifficulty)
+            {
+                this.progressionParams = p;
+            }
+        }
+
+        if (progressionParams != null)
+        {
+            rateOfDecay *= progressionParams.universalDragMultiplier;
+            baseProgression *=  progressionParams.universalProgressionMultiplier;
+            baseProgressionChunk *= progressionParams.universalProgressionChunkMultiplier;
+            print("ProgressionParameters succesfully assigned from scriptable object");
+        }
+        else
+        {
+            print("there was no  matching ProgressionParameter object found.  Something is wrong");
+            return;
+        }
+    }
 
 }
 

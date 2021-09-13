@@ -457,9 +457,6 @@ MonoBehaviour:
   baseProgression: 0.05
   baseProgressionChunk: 0.05
   progressionMultiplier: 1
-  displayHeight: 0
-  displayWidth: 0
-  orderInLevel: 1
   rateOfDecay: 0.01
   keysToPlay:
   - space
@@ -468,11 +465,16 @@ MonoBehaviour:
   - v
   - m
   keyForThisGame: 
+  orderInLevel: 1
   level: {fileID: 11400000, guid: 7117fa4a1d85c4d4890a6d08bb8649c0, type: 2}
+  progressionParams: {fileID: 0}
+  difficultyParams: {fileID: 0}
   isActive: 0
   isFrozen: 0
   isComplete: 0
   isTesting: 0
+  displayHeight: 0
+  displayWidth: 0
   playAreaBarriers: []
 --- !u!114 &1270297153
 MonoBehaviour:
@@ -578,6 +580,7 @@ MonoBehaviour:
   cueCollider: {fileID: 435625069}
   spawner: {fileID: 0}
   hitManager: {fileID: 0}
+  speedMultiplier: 0
 --- !u!50 &1525015785
 Rigidbody2D:
   serializedVersion: 4
