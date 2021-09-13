@@ -36,6 +36,8 @@ public class MiniGame : MonoBehaviour
     public string keyForThisGame;
     public Level level;
 
+    
+
 
     //////////////////////////State
     public bool isActive;
@@ -131,7 +133,7 @@ public class MiniGame : MonoBehaviour
         //pushes back the completion percent over time. 
         if (completionPercent >0)
         {
-            completionPercent-= (rateOfDecay*Time.deltaTime) * level.difficultyParams.universalDragMultiplier;
+            completionPercent-= (rateOfDecay*Time.deltaTime)/*** level.difficultyParams.universalDragMultiplier**/ ;
         }
         else if(completionPercent<0)
         {
