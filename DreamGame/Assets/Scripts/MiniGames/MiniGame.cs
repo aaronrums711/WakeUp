@@ -12,6 +12,7 @@ public class MiniGame : MonoBehaviour
 
     [Header("basic info")]
     public string miniGameName;
+    public InherentComplexity complexity; 
     public Color baseColor;
     public Color targetColor;
     [Tooltip("will almost always be 0-1.  added room on each side to account for edge cases")]  

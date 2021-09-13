@@ -451,6 +451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   miniGameName: Pool
+  complexity: 1
   baseColor: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
   targetColor: {r: 0.06716209, g: 0, b: 0.8584906, a: 1}
   completionPercent: 0
@@ -573,7 +574,6 @@ MonoBehaviour:
   drawBackSpeed: 1
   hitSpeed: 60
   maxAllowedPullbackDistance: 1.498
-  orderInLevel: 1
   isDrawingBack: 0
   ball: {fileID: 1230843827}
   thisRB: {fileID: 0}

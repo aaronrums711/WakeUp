@@ -18,7 +18,6 @@ public class PoolStick : MiniGameElement, IOneKeyPlay
     [Range(0.1f, 2)]public float maxAllowedPullbackDistance;  //VGIU
     private Vector3 startingPos;
     private Quaternion startingRot;
-    public int orderInLevel;   //change this back to use the mini game value, just doing this now to avoid error
     private Color resetColor = Color.white;
 
     //////////////////////////////State
@@ -41,7 +40,6 @@ public class PoolStick : MiniGameElement, IOneKeyPlay
         spawner = GameObject.FindObjectOfType<PoolTargetSpawner>();
         startingPos = this.transform.position;
         startingRot = this.transform.rotation;
-        orderInLevel = 1;
         thisRB = GetComponent<Rigidbody2D>();
         speedMultiplier = 1.2f;//parentMiniGame.level.difficultyParams.universalSpeedMultiplier;
     }

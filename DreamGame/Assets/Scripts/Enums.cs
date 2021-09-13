@@ -35,3 +35,10 @@ public enum skills
 {
 	precision, rhythm, speed, attention, strength
 }
+
+//this can be used to label  mini games so they can be used for different purposes.  Not exactly sure if it'll ever be implemented, but might as well create it. 
+//every MiniGame object will have one of these.  
+public enum InherentComplexity
+{
+	simple, average, complex
+}
