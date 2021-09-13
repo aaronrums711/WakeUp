@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: TimeCrunch_Easy
   m_EditorClassIdentifier: 
   thisLevelType: 0
-  difficultyParams: {fileID: 11400000, guid: df2e3d7da9a9e104ca22e5b83e7d25ac, type: 2}
+  generalDifficulty: 0
   usesTotalLevelTimerLimit: 1
   totalGamesInLevel: 2
   gamesAtOneTime: 2
   totalLevelTimeLimitSeconds: 180
   lagBetweenGamesSeconds: 10
+  miscMultiplier: 0.4
+  secondaryMiscMultiplier: 1
   timeCrunchVar: 0
   timerForEachPairSeconds: 0
   sprintVar: 0

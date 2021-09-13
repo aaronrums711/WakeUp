@@ -30,3 +30,8 @@ public enum SpeedDescription
 {
 	slow, average, fast, veryFast
 };
+
+public enum skills
+{
+	precision, rhythm, speed, attention, strength
+}

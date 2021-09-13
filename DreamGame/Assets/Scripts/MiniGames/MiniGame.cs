@@ -9,46 +9,50 @@ public class MiniGame : MonoBehaviour
 {
 
     ////////////////////////Config
+
+    [Header("basic info")]
     public string miniGameName;
     public Color baseColor;
     public Color targetColor;
     [Tooltip("will almost always be 0-1.  added room on each side to account for edge cases")]  
     [Range(-0.2f, 1.2f)] public float completionPercent = 0.5f;
 
+    [Header("progression")]
     [Tooltip("base progression.  use this for games that have gradual PER SECOND progression")]  
     public float baseProgression = 0.05f;
-
     [Tooltip("this should be used in games where progression is in chunks, not per second")]  
     public float baseProgressionChunk = 0.05f;
     public float progressionMultiplier = 1;
-    public float displayHeight;
-    public float displayWidth;
-    [Range(1,4)] public int orderInLevel;
-    public enum skills
-    {
-        precision, rhythm, speed, attention, strength
-    }
     [Range(0f, 0.5f)]  [Tooltip("rate in seconds that the mini game will lose progress.  This should be pretty close to 0")]  
     public float rateOfDecay= 0.01f;
 
-     [Tooltip("with space at position 0, now any game can just use keysToPlay[orderInLevel]  to get the key that game is using")]
+ 
+    [Header("input")]
+    [Tooltip("with space at position 0, now any game can just use keysToPlay[orderInLevel]  to get the key that game is using")]
     public string [] keysToPlay = {"space", "r", "i", "v", "m" };
     public string keyForThisGame;
-    public Level level;
+    [Range(1,4)] public int orderInLevel;
 
-    
+    [Header("level parameters")]
+    public Level level;  //I'm not 100% sure if the mini game needs a reference to the level...but I'll leave it here for now.  
+    public ProgressionParams progressionParams;
+    public DifficultyParams difficultyParams;
 
 
     //////////////////////////State
+    [Header("game state")]
     public bool isActive;
     public bool isFrozen;
     public bool isComplete;
-    public static int numActiveGames;
+    //public static int numActiveGames; don't think this is used anywhere, and doesn't really make sense to be here
     public bool isTesting;
 
    
 
     //////////////////////////////Cached Component References
+    [Header("display")]
+    public float displayHeight;
+    public float displayWidth;
     public List<GameObject> playAreaBarriers = new List<GameObject>();
 
     void Start()

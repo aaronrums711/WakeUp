@@ -41,7 +41,7 @@ public class Level : ScriptableObject
 	public float sprintVar;
 
 	[Header("MaintainTheGame")]
-	public DifficultyParams secondaryGamesDiffucltyParams;
+	public ProgressionParams secondaryGamesDiffucltyParams;
 
 	[Header("Rotation")]
 	public float totalSkips;
