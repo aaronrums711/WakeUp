@@ -10,12 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f43e430bb478f74429744196ee380744, type: 3}
-  m_Name: EasyCompleteAvgSpeed
+  m_Name: DiffParams_Easy
   m_EditorClassIdentifier: 
-  universalProgressionMultiplier: 1.2
-  universalDragMultiplier: 0.8
-  universalSpeedMultiplier: 1
-  secondaryUniversalSpeedMultiplier: 1
+  scaleUpMultiplier: 0.7
+  scaleDownMultiplier: 1.3
   difficulty: 0
-  quicknessToComplete: 1
-  speedDescription: 1

@@ -7,22 +7,19 @@ public class DifficultyParams : ScriptableObject
 {
 	/*****************
 	CreateDate: 	9/9/21
-	Functionality:	an instance of this will be slotted into a Level object, to, together, create the level type and it's difficulty. 
-					this should contain parameters that effect the difficulty of all mini games, regardles of level type or what mini game it is. 
-					Things like UniversalDragAddition, ProgressAddition/Subtraction, UniversalSpeed etc. 
+	Functionality:	an instance of this will be slotted into a mini game object.  Each mini game may need different parameters to achieve the same level of difficulty, 
+					so it can't go in the level object.  But it will use the GeneralDifficulty field of the Level object to determine which parameters to use. 
 	Notes:
 	Dependencies:
 	******************/
 	
-	[Tooltip("should be applied to most things that moves or spawn automatically.  Not everything is made harder by getting faster, sometimes the opposite")]  
-	public float universalSpeedMultiplier;
+	[Tooltip("this grows as difficulty increases, and should be used on things that need to be faster or happen  more frequently as difficulty increases")]  
+	public float scaleUpMultiplier;
 
-	[Tooltip("use this in the that a single game needs 2 different speed multipliers, to make one thing faster and another slower, for example")]  
-	public float secondaryUniversalSpeedMultiplier;
+	[Tooltip("this shrinks as difficulty increases, and should be used on things that need to be slower or happen less often as difficulty increases")]  
+	public float scaleDownMultiplier;
 
-	public DifficultyDescription difficulty;
-	public QuicknessToComplete quicknessToComplete;
-	public SpeedDescription speedDescription;
+	public DifficultyDescription difficultyDescription;
 }
 
 

@@ -12,7 +12,8 @@ public class MiniGame : MonoBehaviour
 
     [Header("basic info")]
     public string miniGameName;
-    public InherentComplexity complexity; 
+    [Tooltip("this is not difficulty.  This represents the level of complexity that this mini game has.  Roughly, how much attention or skill does it take to complete?")]  
+    public InherentComplexity inherentComplexity; 
     public Color baseColor;
     public Color targetColor;
     [Tooltip("will almost always be 0-1.  added room on each side to account for edge cases")]  
@@ -59,6 +60,7 @@ public class MiniGame : MonoBehaviour
     void Start()
     {
         AssignProgressionParameters();
+        AssignDifficultyParameters();
         isActive = true; //this may be set by manager scripts later on...but for now, whenever a minigame is instnatiated, isActive will be set to true;
         completionPercent = 0.5f;
         keyForThisGame = keysToPlay[orderInLevel];  //orderInLevel will eventually be set by a manager class. For now, VGIU
@@ -193,7 +195,7 @@ public class MiniGame : MonoBehaviour
 
         foreach (ProgressionParams p in allProgressionParams)
         {
-            if (p.DifficultyDescription == this.level.generalDifficulty)
+            if (p.difficultyDescription == this.level.generalDifficulty)
             {
                 this.progressionParams = p;
             }
@@ -211,6 +213,28 @@ public class MiniGame : MonoBehaviour
             return;
         }
     }
+
+    public void AssignDifficultyParameters()
+    {
+        Object[] allDifficultyParams = Resources.LoadAll("", typeof(DifficultyParams));
+        
+        foreach (DifficultyParams p in allDifficultyParams)
+        {
+            if (p.difficultyDescription == this.level.generalDifficulty)
+            {
+                this.difficultyParams = p;
+                break;
+            }
+        }
+
+        if (this.difficultyParams == null)
+        {
+            Debug.LogError("there was no  matching difficultyParameters object found.  Something is wrong");
+        }
+
+    }
+
+
 
 }
 

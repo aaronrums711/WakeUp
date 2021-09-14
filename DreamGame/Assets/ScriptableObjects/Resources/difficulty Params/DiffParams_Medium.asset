@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 493763e82640e3d429fb4b06957f9cde, type: 3}
-  m_Name: Hard_ProgressionParams
+  m_Script: {fileID: 11500000, guid: f43e430bb478f74429744196ee380744, type: 3}
+  m_Name: DiffParams_Medium
   m_EditorClassIdentifier: 
-  universalProgressionMultiplier: 0.8
-  universalProgressionChunkMultiplier: 0.8
-  universalDragMultiplier: 1.2
-  difficultyDescription: 2
+  scaleUpMultiplier: 1
+  scaleDownMultiplier: 1
+  difficultyDescription: 0
