@@ -29,7 +29,7 @@ public class PoolStick : MiniGameElement, IOneKeyPlay
     [SerializeField] private Collider2D cueCollider; //VGIU
     public PoolTargetSpawner spawner;
     public PoolHitManager hitManager; 
-    public float speedMultiplier = 1.2f;  //just making this for efficiency purpose, since we don't want to reach for level.difficultyParams.UniversalSpeedMultiplier every frame
+    public float speedMultiplier;  //just making this for efficiency purpose, since we don't want to reach for level.difficultyParams.UniversalSpeedMultiplier every frame
     
 
 
@@ -41,7 +41,7 @@ public class PoolStick : MiniGameElement, IOneKeyPlay
         startingPos = this.transform.position;
         startingRot = this.transform.rotation;
         thisRB = GetComponent<Rigidbody2D>();
-        speedMultiplier = 1.2f;//parentMiniGame.level.difficultyParams.universalSpeedMultiplier;
+        speedMultiplier = parentMiniGame.difficultyParams.scaleUpMultiplier;
     }
 
     void Update()

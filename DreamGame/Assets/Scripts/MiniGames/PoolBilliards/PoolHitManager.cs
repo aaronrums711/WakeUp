@@ -22,7 +22,7 @@ public class PoolHitManager :  MiniGameElement, IProgressionAdder
 
     public void AddMiniGameProgress()
     {
-        float progressionAmount = (parentMiniGame.baseProgressionChunk + (targetsHitThisShot * multipleHitsMultiplier)) /* parentMiniGame.level.difficultyParams.universalProgressionMultiplier**/; 
+        float progressionAmount = (parentMiniGame.baseProgressionChunk + (targetsHitThisShot * multipleHitsMultiplier)) * parentMiniGame.progressionParams.universalProgressionMultiplier;
                                                                                       
         parentMiniGame.AddProgress(progressionAmount);
     }
