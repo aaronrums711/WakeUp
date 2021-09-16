@@ -159,7 +159,8 @@ MonoBehaviour:
   parentMiniGame: {fileID: 0}
   minWaveAmount: 5
   maxWaveAmount: 10
-  timeBetweenEachSpawn: 0.22
+  minTimeBetweenEachSpawn: 0.15
+  maxTimeBetweeenEachSpawn: 0.32
   isCurrentWaveOnPlayArea: 0
   objectsInCurrentWave: []
 --- !u!114 &736497442
