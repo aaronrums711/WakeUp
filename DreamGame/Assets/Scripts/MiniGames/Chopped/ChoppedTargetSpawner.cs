@@ -27,7 +27,7 @@ public class ChoppedTargetSpawner : MiniGameElement
     public List<ChoppedTarget> allTargets;
 	
 	//////////////////////////////Cached Component References
-    private Transform[] launchPoints;
+    public Transform[] launchPoints;
     public GameObject choppedTargetPrefab;
     public Transform targetParent;
     
@@ -35,9 +35,10 @@ public class ChoppedTargetSpawner : MiniGameElement
 	
     void Start()
     {
-        launchPoints = new Transform[GameObject.Find("LaunchPoints").GetComponent<Transform>().childCount];
+        
+        launchPoints = new Transform[GameObject.Find("LaunchPoints").GetComponent<Transform>().childCount];  //this line simply names how many objects are in the list
         targetParent = GameObject.Find("AllTargets").GetComponent<Transform>();
-        for (int i =0; i< GameObject.Find("LaunchPoints").GetComponent<Transform>().childCount; i++)
+        for (int i =0; i< GameObject.Find("LaunchPoints").GetComponent<Transform>().childCount; i++)  //this actually sets those objects
         {
             launchPoints[i] = GameObject.Find("LaunchPoints").GetComponent<Transform>().GetChild(i);
         }
@@ -50,8 +51,10 @@ public class ChoppedTargetSpawner : MiniGameElement
         if (parentMiniGame.isActive)
         {
             StartCoroutine(GenerateWave());
-
         }
+
+        minWaveTimeBetweenSpawns *= parentMiniGame.difficultyParams.scaleDownMultiplier;  //the time between each spawn WITHIN a wave will get less as difficulty increases.  
+        maxWaveTimeBetweenSpawns *= parentMiniGame.difficultyParams.scaleDownMultiplier;
 
     }
 

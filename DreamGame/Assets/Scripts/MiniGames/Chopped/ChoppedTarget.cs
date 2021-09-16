@@ -36,10 +36,10 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
 
 	
 	
-	void Awake()
-    {
-        GetParentMiniGame();  //I have not idea why, but this is not getting called automatically like it's supposed to, so I'm calling it here. 
-    }
+	// void Awake()
+    // {
+    //     GetParentMiniGame();  //I have not idea why, but this is not getting called automatically like it's supposed to, so I'm calling it here. 
+    // }
 	
     void Start()
     {
@@ -131,7 +131,7 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
 
     public void AddMiniGameProgress()
     {
-        parentMiniGame.AddProgress(parentMiniGame.baseProgressionChunk + (totalHealth * progressionToSizeMultiplier));  
+        parentMiniGame.AddProgress((parentMiniGame.baseProgressionChunk + (totalHealth * progressionToSizeMultiplier))  * parentMiniGame.progressionParams.universalProgressionMultiplier);  
             //award more progress based on the target totalHealth
             //toggling the progressionToSizeMultiplier is one way to make this game harder
     }
