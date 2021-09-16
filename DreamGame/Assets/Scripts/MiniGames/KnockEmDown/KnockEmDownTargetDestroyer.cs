@@ -31,7 +31,7 @@ public class KnockEmDownTargetDestroyer : MiniGameElement, IProgressionAdder, IO
     public void AddMiniGameProgress()
     {
         float scale = waveManager.objectsInCurrentWave[0].GetComponent<KnockEmDownTarget>().CallDestroyEffect();
-        parentMiniGame.AddProgress(parentMiniGame.baseProgressionChunk * scale);
+        parentMiniGame.AddProgress((parentMiniGame.baseProgressionChunk * scale)  * parentMiniGame.progressionParams.universalProgressionChunkMultiplier);
     }
 
     public void OneKeyPlay()

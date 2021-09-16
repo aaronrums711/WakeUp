@@ -57,10 +57,15 @@ public class MiniGame : MonoBehaviour
     public float displayWidth;
     public List<GameObject> playAreaBarriers = new List<GameObject>();
 
-    void Start()
+    void Awake()
     {
         AssignProgressionParameters();
         AssignDifficultyParameters();
+    }
+
+    void Start()
+    {
+        
         isActive = true; //this may be set by manager scripts later on...but for now, whenever a minigame is instnatiated, isActive will be set to true;
         completionPercent = 0.5f;
         keyForThisGame = keysToPlay[orderInLevel];  //orderInLevel will eventually be set by a manager class. For now, VGIU
