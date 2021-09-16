@@ -20,10 +20,6 @@ public class ChoppedInputManager : MiniGameElement, IOneKeyPlay
 
 	
 	
-	void Awake()
-    {
-        GetParentMiniGame();  //I have not idea why, but this is not getting called automatically like it's supposed to, so I'm calling it here. 
-    }
 	
     void Start()
     {
