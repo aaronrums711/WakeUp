@@ -35,6 +35,6 @@ public class LaserDestroyerTarget : MiniGameElement, IProgressionAdder
 
     public void AddMiniGameProgress()
     {
-        parentMiniGame.AddProgress(parentMiniGame.baseProgression * Time.deltaTime);
+        parentMiniGame.AddProgress((parentMiniGame.baseProgression * Time.deltaTime) * parentMiniGame.progressionParams.universalProgressionMultiplier);
     }
 }
