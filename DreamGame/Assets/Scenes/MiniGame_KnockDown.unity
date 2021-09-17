@@ -315,7 +315,7 @@ MonoBehaviour:
   targetColor: {r: 1, g: 0.4362056, b: 0.06132078, a: 1}
   completionPercent: 0.5
   baseProgression: 0.02
-  baseProgressionChunk: 0.02
+  baseProgressionChunk: 0.015
   progressionMultiplier: 1
   rateOfDecay: 0.01
   keysToPlay:

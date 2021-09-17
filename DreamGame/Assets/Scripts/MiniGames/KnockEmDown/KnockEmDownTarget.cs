@@ -6,7 +6,7 @@ public class KnockEmDownTarget : MiniGameElement
 {
     //////////////////////////////Config
     [Tooltip("should be a very small number between 0.0001 and 0.0007 or so ")]  
-    public float initialShrinkRate = 0.00035f;
+    public float initialShrinkRate; //VGIU from the prefab
     public float growEffectLength = 0.5f;
     public float endEffectRate = 0.01f;
 
@@ -19,6 +19,7 @@ public class KnockEmDownTarget : MiniGameElement
 
     void Start()
     {
+        initialShrinkRate *= parentMiniGame.difficultyParams.scaleUpMultiplier;
         waveManager = parentMiniGame.GetComponentInChildren<KnockEmDownWaveManager>();
         //initialCoroutine = Shrink(this.transform, initialShrinkRate);
         initialCoroutine = StartCoroutine(Shrink(this.transform, initialShrinkRate));
@@ -79,7 +80,7 @@ public class KnockEmDownTarget : MiniGameElement
     //to be called more simply from the TargetDestroyerClass. 
     public float CallDestroyEffect()
     {
-        float scale = this.transform.localScale.x + 1;  //the +1 makes the score multiplcation make more sense
+        float scale = this.transform.localScale.x * 2;  //multiplying by two will roughly be 1 at the start of a targets life, because their X scale is about .5  
         StartCoroutine(DestroyEffect(this.transform,endEffectRate, this ));
         return scale;
     }
