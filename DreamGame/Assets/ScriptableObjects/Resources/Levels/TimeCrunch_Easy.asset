@@ -17,12 +17,16 @@ MonoBehaviour:
   usesTotalLevelTimerLimit: 1
   totalGamesInLevel: 3
   gamesAtOneTime: 3
+  minGamesNeededToWin: 0
   totalLevelTimeLimitSeconds: 180
   lagBetweenGamesSeconds: 10
+  gamesStopIfCompleted: 1
+  gamesStopIfFailed: 0
   miscMultiplier: 0.4
   secondaryMiscMultiplier: 1
   timeCrunchVar: 0
   timerForEachPairSeconds: 0
+  pairsNeededToWin: 0
   sprintVar: 0
   secondaryGamesDiffucltyParams: {fileID: 0}
   totalSkips: 0

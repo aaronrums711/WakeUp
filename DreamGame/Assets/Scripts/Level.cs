@@ -24,8 +24,14 @@ public class Level : ScriptableObject
 
 	public int gamesAtOneTime;
 
+	[Tooltip("not all level types require all games in a level to be completed in order to beat the level.")]  
+	public int minGamesNeededToWin;
+
 	public int totalLevelTimeLimitSeconds;
 	public int lagBetweenGamesSeconds;
+	public bool gamesStopIfCompleted;
+	public bool gamesStopIfFailed;
+
 
 	[Tooltip("misc multipliers will undoubtedly be leveltype specific, so putting them here makes more sense, rather than in the DifficultyParams")]  
 	public float miscMultiplier = 1;
@@ -36,6 +42,7 @@ public class Level : ScriptableObject
 
 	[Header("Doubles")]
 	public int timerForEachPairSeconds;
+	public int pairsNeededToWin;
 
 	[Header("Sprint")]
 	public float sprintVar;
