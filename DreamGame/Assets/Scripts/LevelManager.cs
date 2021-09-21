@@ -12,24 +12,37 @@ public class LevelManager : MonoBehaviour
 	******************/
 	
 	//////////////////////////////Config
-	
+	public Level thisLevel;
+	public int gamesNeededToWin;
+	public int currentGamesWon;
+	// public List<MiniGame> allMinigames;
+	public MiniGame[] miniGames;
+
 	//////////////////////////////State
+	public bool isLevelComplete = false;
+	public bool isLevelWon = false;
 	
 	//////////////////////////////Cached Component References
 	
 	
-	void Awake()
-    {
-        
-    }
-	
     void Start()
     {
-        
+         gamesNeededToWin = thisLevel.minGamesNeededToWin;
+		 miniGames = FindObjectsOfType(typeof(MiniGame), true);
     }
 
     void Update()
     {
         
     }
+
+	// public List<MiniGame> GetAllMiniGamesInLevel()
+	// {
+	// 	// MiniGame[] miniGames =  new MiniGame[thisLevel.totalGamesInLevel];
+		
+	// 	miniGames = FindObjectsOfType(typeof(MiniGame), true);
+	// }
+
+
+
 }
