@@ -26,9 +26,10 @@ public class LevelManager : MonoBehaviour
 	
 	
     void Start()
-    {
-         gamesNeededToWin = thisLevel.minGamesNeededToWin;
-		 miniGames = FindObjectsOfType(typeof(MiniGame), true);
+     {
+        gamesNeededToWin = thisLevel.minGamesNeededToWin;
+	 	miniGames = FindObjectsOfType<MiniGame>(true);
+		 
     }
 
     void Update()
