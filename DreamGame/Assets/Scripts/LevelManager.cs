@@ -17,33 +17,49 @@ public class LevelManager : MonoBehaviour
 	public int currentGamesWon;
 	// public List<MiniGame> allMinigames;
 	public MiniGame[] miniGames;
+	private int executionInterval= 5;
 
 	//////////////////////////////State
-	public bool isLevelComplete = false;
+	public bool isLevelFinished = false;
 	public bool isLevelWon = false;
 	
 	//////////////////////////////Cached Component References
 	
 	
     void Start()
-     {
+    {
         gamesNeededToWin = thisLevel.minGamesNeededToWin;
 	 	miniGames = FindObjectsOfType<MiniGame>(true);
-		 
     }
 
     void Update()
     {
-        
+		if (Time.frameCount % executionInterval == 0) //only execute it every executionInterval frames.  This probably isn't that necessary...but we'll see
+		{
+			CheckAllMiniGames();
+		}
     }
 
-	// public List<MiniGame> GetAllMiniGamesInLevel()
-	// {
-	// 	// MiniGame[] miniGames =  new MiniGame[thisLevel.totalGamesInLevel];
-		
-	// 	miniGames = FindObjectsOfType(typeof(MiniGame), true);
-	// }
+	public void CheckAllMiniGames()
+	{
+		int gamesCompleted = 0;
+		foreach (MiniGame mg in miniGames)
+		{
+			if (mg.isComplete)
+			{
+				gamesCompleted++;
+			}
+		}
+		currentGamesWon = gamesCompleted;
+
+		if (currentGamesWon >= gamesNeededToWin)
+		{
+			isLevelWon = true;
+			isLevelFinished = true;
+			print("you've beatent the leve, congratulations!");
+		}
 
 
+	}
 
 }
