@@ -15,4 +15,5 @@ MonoBehaviour:
   universalProgressionMultiplier: 0.6
   universalProgressionChunkMultiplier: 0.6
   universalDragMultiplier: 1.3
+  startingProgression: 0.35
   difficultyDescription: 3

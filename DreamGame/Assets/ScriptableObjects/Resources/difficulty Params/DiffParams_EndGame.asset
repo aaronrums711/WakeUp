@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleUpMultiplier: 1.7
   scaleDownMultiplier: 0.6
-  difficultyDescription: 0
+  difficultyDescription: 3
