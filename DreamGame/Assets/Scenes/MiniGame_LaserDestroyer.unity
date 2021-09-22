@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 14398337}
   - component: {fileID: 14398336}
   m_Layer: 0
-  m_Name: Manager
+  m_Name: LeveManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -156,7 +156,7 @@ MonoBehaviour:
   gamesNeededToWin: 0
   currentGamesWon: 0
   miniGames: []
-  isLevelComplete: 0
+  isLevelFinished: 0
   isLevelWon: 0
 --- !u!4 &14398337
 Transform:

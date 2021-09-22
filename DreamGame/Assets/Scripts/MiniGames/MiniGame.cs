@@ -18,6 +18,7 @@ public class MiniGame : MonoBehaviour
     public Color targetColor;
     [Tooltip("will almost always be 0-1.  added room on each side to account for edge cases")]  
     [Range(-0.2f, 1.2f)] public float completionPercent = 0.5f;
+    
 
     [Header("progression")]
     [Tooltip("base progression.  use this for games that have gradual PER SECOND progression")]  
@@ -57,10 +58,15 @@ public class MiniGame : MonoBehaviour
     public float displayWidth;
     public List<GameObject> playAreaBarriers = new List<GameObject>();
 
+    public IStoppable stopStarter;  //this is not showing in the inspector, I don't know why. 
+    
+    
+
     void Awake()
     {
         AssignProgressionParameters();
         AssignDifficultyParameters();
+        stopStarter = GetComponentInChildren<IStoppable>();
     }
 
     void Start()
@@ -107,28 +113,28 @@ public class MiniGame : MonoBehaviour
         Destroy(GameObject.Find("test"));
     }
 
-    [ContextMenu("stop game")]
-    public void StopGame()
-    //as of 8/26 this is not getting called anywhere, becauase the new IStoppable interface is being implemented in each mini game
-    //it was previously being called below in CheckCompletion()
-    {
-        isActive = false;
-        print("StopGame() method has been called from " + this.name);
-        List <Rigidbody2D> allRBs = GetComponentsInChildren<Rigidbody2D>().ToList();
-        List <MonoBehaviour> allScripts = GetComponentsInChildren<MonoBehaviour>().ToList();
-        allScripts.Remove(this); //this script, the MiniGame script, should not be in this list. 
-        foreach (Rigidbody2D rb in allRBs)
-        {
-            rb.gravityScale = 0f;  //rigidbodies can't be disabled, so, doing this. 
-            rb.bodyType = RigidbodyType2D.Static;
-        }
-        foreach (MonoBehaviour script in allScripts)
-        {
-            script.StopAllCoroutines();
-            script.enabled = false;
-            print(script.GetType());
-        }
-    }
+    // [ContextMenu("stop game")]
+    // public void StopGame()
+    // //as of 8/26 this is not getting called anywhere, becauase the new IStoppable interface is being implemented in each mini game
+    // //it was previously being called below in CheckCompletion()
+    // {
+    //     isActive = false;
+    //     print("StopGame() method has been called from " + this.name);
+    //     List <Rigidbody2D> allRBs = GetComponentsInChildren<Rigidbody2D>().ToList();
+    //     List <MonoBehaviour> allScripts = GetComponentsInChildren<MonoBehaviour>().ToList();
+    //     allScripts.Remove(this); //this script, the MiniGame script, should not be in this list. 
+    //     foreach (Rigidbody2D rb in allRBs)
+    //     {
+    //         rb.gravityScale = 0f;  //rigidbodies can't be disabled, so, doing this. 
+    //         rb.bodyType = RigidbodyType2D.Static;
+    //     }
+    //     foreach (MonoBehaviour script in allScripts)
+    //     {
+    //         script.StopAllCoroutines();
+    //         script.enabled = false;
+    //         print(script.GetType());
+    //     }
+    // }
 
     public void TrackColorWithCompletionPercent()
     {
@@ -175,7 +181,7 @@ public class MiniGame : MonoBehaviour
         }
         if(isComplete)
         {
-            //StopGame();
+            stopStarter.StopMiniGame();
         }
         return isComplete;
     }
