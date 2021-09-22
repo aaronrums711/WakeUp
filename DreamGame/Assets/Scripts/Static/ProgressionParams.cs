@@ -21,6 +21,11 @@ public class ProgressionParams : ScriptableObject
 
 	[Tooltip("should be slightly less than 1 to make games easier, slighly more than 1 to make them harder")]  
 	public float universalDragMultiplier;
+
+	[Range(0.01f, 1f)] 
+	public float startingProgression;
+
+
 	public DifficultyDescription difficultyDescription;
 
 }

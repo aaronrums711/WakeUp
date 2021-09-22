@@ -56,7 +56,7 @@ public class LevelManager : MonoBehaviour
 		{
 			isLevelWon = true;
 			isLevelFinished = true;
-			print("you've beatent the leve, congratulations!");
+			print("you've beatent the level, congratulations!");
 		}
 
 
