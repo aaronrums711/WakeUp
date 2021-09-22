@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolStick : MiniGameElement
+public class PoolStick : MiniGameElement, IOneKeyPlay
 {
 
+    /**
+    notes: this must be on the PoolStick object, which has the two children beneath it. 
+    **/
 
     //////////////////////////////Config
     private float angle = 20; //controls rotation speed around ball. this is arbitrary, since we are using rotationSpeed to control it as well. 
@@ -15,7 +18,6 @@ public class PoolStick : MiniGameElement
     [Range(0.1f, 2)]public float maxAllowedPullbackDistance;  //VGIU
     private Vector3 startingPos;
     private Quaternion startingRot;
-    public int orderInLevel;   //change this back to use the mini game value, just doing this now to avoid error
     private Color resetColor = Color.white;
 
     //////////////////////////////State
@@ -27,6 +29,7 @@ public class PoolStick : MiniGameElement
     [SerializeField] private Collider2D cueCollider; //VGIU
     public PoolTargetSpawner spawner;
     public PoolHitManager hitManager; 
+    public float speedMultiplier;  //just making this for efficiency purpose, since we don't want to reach for level.difficultyParams.UniversalSpeedMultiplier every frame
     
 
 
@@ -37,19 +40,22 @@ public class PoolStick : MiniGameElement
         spawner = GameObject.FindObjectOfType<PoolTargetSpawner>();
         startingPos = this.transform.position;
         startingRot = this.transform.rotation;
-        orderInLevel = 1;
         thisRB = GetComponent<Rigidbody2D>();
+        speedMultiplier = parentMiniGame.difficultyParams.scaleUpMultiplier;
     }
 
     void Update()
     {
-        if (!Input.GetKey(parentMiniGame.keyForThisGame)  && isDrawingBack == false)
+        if (parentMiniGame.isActive) //this will stop the rotation AND the input if isActive = false
         {
-            transform.RotateAround(ball.transform.position, Vector3.forward, angle * Time.deltaTime * rotationSpeed);
-        }
-        else if (Input.GetKeyDown(parentMiniGame.keyForThisGame))
-        {
-            StartCoroutine(InitiatePullBack());
+            if (!Input.GetKey(parentMiniGame.keyForThisGame)  && isDrawingBack == false)
+            {
+                transform.RotateAround(ball.transform.position, Vector3.forward, (angle * Time.deltaTime * rotationSpeed)* speedMultiplier);
+            }
+            else if (Input.GetKeyDown(parentMiniGame.keyForThisGame))
+            {
+                StartCoroutine(InitiatePullBack());
+            }
         }
     }
 
@@ -66,13 +72,13 @@ public class PoolStick : MiniGameElement
             pullBackDistance = Vector2.Distance(new Vector2(transform.position.x, transform.position.y),pullBackStartPos);
             yield return null;
         }
-        CueHit();
+        OneKeyPlay();
     }
 
-    public void CueHit()
+    public void OneKeyPlay() //this is being given the OneKeyPlay(), because if it's ever called separately, this is what actually generates the force
     {
         float finalHitMultiplier = hitSpeed+ (pullBackDistance * 30); //number here is arbitrary, but it just needs to be high enough to make pulling back the cue stick farther have a distinguishable effect 
-        print("final hit multiplier " + finalHitMultiplier);
+        // print("final hit multiplier " + finalHitMultiplier);
         thisRB.AddForce(transform.up * finalHitMultiplier , ForceMode2D.Impulse);
         //this will always hit the ball (and it must).  from the OnCollEnter from that collision, ResetStickPos() is called
     }

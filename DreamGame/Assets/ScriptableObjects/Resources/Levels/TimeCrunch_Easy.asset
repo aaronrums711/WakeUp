@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d827c105534ee24d8348e15cd0e1718, type: 3}
+  m_Name: TimeCrunch_Easy
+  m_EditorClassIdentifier: 
+  thisLevelType: 0
+  generalDifficulty: 0
+  usesTotalLevelTimerLimit: 1
+  totalGamesInLevel: 3
+  gamesAtOneTime: 3
+  minGamesNeededToWin: 3
+  totalLevelTimeLimitSeconds: 180
+  lagBetweenGamesSeconds: 10
+  gamesStopIfCompleted: 1
+  gamesStopIfFailed: 0
+  miscMultiplier: 0.4
+  secondaryMiscMultiplier: 1
+  timeCrunchVar: 0
+  timerForEachPairSeconds: 0
+  pairsNeededToWin: 0
+  sprintVar: 0
+  secondaryGamesDiffucltyParams: {fileID: 0}
+  totalSkips: 0
+  availableSkips: 0

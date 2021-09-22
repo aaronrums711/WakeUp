@@ -123,61 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &736497439 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8845351484926580475, guid: e9f8142f0ea7dab4896520daff96ff73, type: 3}
-  m_PrefabInstance: {fileID: 872738494}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &736497440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 736497439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecdba188e454dec469dcf928ba8808ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentMiniGame: {fileID: 0}
-  targetLocationPadding: 0.5
-  targetPrefab: {fileID: 5491674968492396711, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
-  targetParent: {fileID: 0}
---- !u!114 &736497441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 736497439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a958d364f176249468d6161f36c1b7f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentMiniGame: {fileID: 0}
-  minWaveAmount: 5
-  maxWaveAmount: 10
-  timeBetweenEachSpawn: 0.22
-  isCurrentWaveOnPlayArea: 0
-  objectsInCurrentWave: []
---- !u!114 &736497442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 736497439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd0d0cbe5abed82459b8d80cb0852f7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentMiniGame: {fileID: 0}
-  growRate: 0.00001
-  growEffectLength: 1
-  endEffectShrinkRate: 10
 --- !u!1 &833003877
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,8 +149,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1183664390}
+  m_Children: []
   m_Father: {fileID: 1071494970}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -342,6 +286,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1071494970}
   - component: {fileID: 1071494969}
+  - component: {fileID: 1071494971}
+  - component: {fileID: 1071494972}
+  - component: {fileID: 1071494973}
+  - component: {fileID: 1071494974}
   m_Layer: 0
   m_Name: MiniGame
   m_TagString: Untagged
@@ -361,13 +309,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2fe6ce5d914bd844a8b53224dd714de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  miniGameName: 
+  inherentComplexity: 0
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   targetColor: {r: 1, g: 0.4362056, b: 0.06132078, a: 1}
   completionPercent: 0.5
-  baseProgression: 0.05
-  displayHeight: 0
-  displayWidth: 0
-  orderInLevel: 2
+  baseProgression: 0.02
+  baseProgressionChunk: 0.015
+  progressionMultiplier: 1
   rateOfDecay: 0.01
   keysToPlay:
   - space
@@ -376,10 +325,16 @@ MonoBehaviour:
   - v
   - m
   keyForThisGame: 
+  orderInLevel: 2
+  level: {fileID: 11400000, guid: 7117fa4a1d85c4d4890a6d08bb8649c0, type: 2}
+  progressionParams: {fileID: 0}
+  difficultyParams: {fileID: 0}
   isActive: 0
   isFrozen: 0
   isComplete: 0
   isTesting: 0
+  displayHeight: 0
+  displayWidth: 0
   playAreaBarriers: []
 --- !u!4 &1071494970
 Transform:
@@ -397,69 +352,69 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1183664389
-PrefabInstance:
+--- !u!114 &1071494971
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 833003878}
-    m_Modifications:
-    - target: {fileID: 5491674968492396711, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
-      propertyPath: initialShrinkRate
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 7916379094448281398, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7916379094448281398, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.93
-      objectReference: {fileID: 0}
-    - target: {fileID: 7916379094448281398, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 7916379094448281398, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7916379094448281398, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.99993163
-      objectReference: {fileID: 0}
-    - target: {fileID: 7916379094448281398, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7916379094448281398, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7916379094448281398, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.011693528
-      objectReference: {fileID: 0}
-    - target: {fileID: 7916379094448281398, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7916379094448281398, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7916379094448281398, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -1.34
-      objectReference: {fileID: 0}
-    - target: {fileID: 7916379094448281399, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
-      propertyPath: m_Name
-      value: KnockEmDownTarget
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
---- !u!4 &1183664390 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7916379094448281398, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
-  m_PrefabInstance: {fileID: 1183664389}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071494968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 731a336cc6a9b804b95ae6ccd3125469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
+  waveManager: {fileID: 0}
+  targetParent: {fileID: 0}
+--- !u!114 &1071494972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071494968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a958d364f176249468d6161f36c1b7f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
+  minWaveAmount: 5
+  maxWaveAmount: 10
+  minTimeBetweenEachSpawn: 0.15
+  maxTimeBetweeenEachSpawn: 0.32
+  isCurrentWaveOnPlayArea: 0
+  objectsInCurrentWave: []
+--- !u!114 &1071494973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071494968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd0d0cbe5abed82459b8d80cb0852f7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
+  growRate: 0.00001
+  growEffectLength: 1
+  endEffectShrinkRate: 10
+--- !u!114 &1071494974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071494968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecdba188e454dec469dcf928ba8808ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
+  targetLocationPadding: 0.5
+  targetPrefab: {fileID: 5491674968492396711, guid: 10050dc18910cf84c91fb49b2b5eb507, type: 3}
+  targetParent: {fileID: 0}

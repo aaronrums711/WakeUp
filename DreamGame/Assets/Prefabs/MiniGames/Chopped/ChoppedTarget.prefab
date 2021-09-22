@@ -144,4 +144,5 @@ MonoBehaviour:
   flashLength: 0.05
   slashEffPrefab: {fileID: 8361297602864394478, guid: 435999aa847e366479b7df55c4bcbc4c, type: 3}
   startingScale: {x: 0, y: 0, z: 0}
+  progressionToSizeMultiplier: 0.008
   startingSprite: {fileID: 0}

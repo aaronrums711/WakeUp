@@ -18,18 +18,13 @@ public class LaserDestroyerRingChanger : MiniGameElement
 	//////////////////////////////State
 	
 	//////////////////////////////Cached Component References
-    private Animator thisAnimator;
+    public Animator thisAnimator;
 	
-	
-	void Awake()
-    {
-        GetParentMiniGame();
-    }
 	
     void Start()
     {
         thisAnimator = GetComponentInParent<Animator>();
-        thisAnimator.Play(anim2);
+        // thisAnimator.Play(anim2);
         StartCoroutine(ContinuallyMovePanels());
     }
 

@@ -96,6 +96,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentMiniGame: {fileID: 0}
-  initialShrinkRate: 0.00045
+  initialShrinkRate: 0.0005
   growEffectLength: 0.09
   endEffectRate: 0.05

@@ -123,6 +123,55 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &14398335
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 14398337}
+  - component: {fileID: 14398336}
+  m_Layer: 0
+  m_Name: LeveManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &14398336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14398335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5a979f933765a44b979647dc48ea6d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisLevel: {fileID: 11400000, guid: 7117fa4a1d85c4d4890a6d08bb8649c0, type: 2}
+  gamesNeededToWin: 0
+  currentGamesWon: 0
+  miniGames: []
+  isLevelFinished: 0
+  isLevelWon: 0
+--- !u!4 &14398337
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14398335}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.008546293, y: -0.3660058, z: -3.0154886}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &40677249
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,8 +404,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentMiniGame: {fileID: 0}
-  baseRot: {x: 0, y: 0, z: 40}
-  rotPlusRandom: {x: 0, y: 0, z: 0}
+  baseRotSpeed: {x: 0, y: 0, z: 40}
+  rotSpeedPlusRandom: {x: 0, y: 0, z: 0}
+  targetRotation: 0
 --- !u!114 &153508369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,6 +420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentMiniGame: {fileID: 0}
+  thisAnimator: {fileID: 0}
 --- !u!1001 &209546415
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1049,6 +1100,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8557769288717211445, guid: b79081fc018e9464faa95148d4994ca5, type: 3}
+      propertyPath: field of view
+      value: 59.1
+      objectReference: {fileID: 0}
     - target: {fileID: 8557769288717211451, guid: b79081fc018e9464faa95148d4994ca5, type: 3}
       propertyPath: m_Name
       value: Main Camera
@@ -1509,6 +1564,7 @@ GameObject:
   - component: {fileID: 1608232655}
   - component: {fileID: 1608232656}
   - component: {fileID: 1608232657}
+  - component: {fileID: 1608232658}
   m_Layer: 0
   m_Name: MiniGameLaserDestroyer
   m_TagString: Untagged
@@ -1546,15 +1602,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2fe6ce5d914bd844a8b53224dd714de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  miniGameName: 
+  miniGameName: LaserDestroyer
+  inherentComplexity: 1
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   targetColor: {r: 0.8962264, g: 0.23313572, b: 0.12259703, a: 1}
   completionPercent: 0.92
   baseProgression: 0.03
+  baseProgressionChunk: 0.05
   progressionMultiplier: 1
-  displayHeight: 0
-  displayWidth: 0
-  orderInLevel: 3
   rateOfDecay: 0.01
   keysToPlay:
   - space
@@ -1563,10 +1618,16 @@ MonoBehaviour:
   - v
   - m
   keyForThisGame: m
+  orderInLevel: 3
+  level: {fileID: 11400000, guid: 7117fa4a1d85c4d4890a6d08bb8649c0, type: 2}
+  progressionParams: {fileID: 0}
+  difficultyParams: {fileID: 0}
   isActive: 0
   isFrozen: 0
   isComplete: 0
   isTesting: 0
+  displayHeight: 0
+  displayWidth: 0
   playAreaBarriers: []
 --- !u!114 &1608232657
 MonoBehaviour:
@@ -1584,6 +1645,19 @@ MonoBehaviour:
   currentActiveEmitter: {fileID: 0}
   currentActiveEmitterChildIndex: 0
   allLaserEmitters: []
+--- !u!114 &1608232658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608232654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57689ec453caa9d46ad33b5cb785fe2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
 --- !u!4 &1619626577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4333559223377392058, guid: e411664cc316b8545a574d4fb774b663, type: 3}

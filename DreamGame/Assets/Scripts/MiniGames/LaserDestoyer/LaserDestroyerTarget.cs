@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserDestroyerTarget : MiniGameElement
+public class LaserDestroyerTarget : MiniGameElement, IProgressionAdder
 {
 
     //////////////////////////////Config
@@ -23,14 +23,18 @@ public class LaserDestroyerTarget : MiniGameElement
 
     void Update()
     {
-        if (isScoreAdding)
+        if (isScoreAdding && parentMiniGame.isActive)
         {
-            parentMiniGame.AddProgress(parentMiniGame.baseProgression * Time.deltaTime);
-            // ps.Play();
+            AddMiniGameProgress();
         }
         else
         {
-            // ps.Stop();
+            
         }
+    }
+
+    public void AddMiniGameProgress()
+    {
+        parentMiniGame.AddProgress((parentMiniGame.baseProgression * Time.deltaTime) * parentMiniGame.progressionParams.universalProgressionMultiplier);
     }
 }

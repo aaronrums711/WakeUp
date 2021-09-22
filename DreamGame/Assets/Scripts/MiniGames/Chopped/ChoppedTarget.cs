@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChoppedTarget : MiniGameElement
+public class ChoppedTarget : MiniGameElement, IProgressionAdder
 {
 	/*****************
 	CreateDate:  8/5/21
@@ -20,8 +20,12 @@ public class ChoppedTarget : MiniGameElement
     public GameObject slashEffPrefab;
 	public Vector3 startingScale;
 
+     [Tooltip("this should be be < 0.02.  it controls how much additional progress is given for destroying larger targets versus smaller ones")] 
+    public float progressionToSizeMultiplier;
+
 	//////////////////////////////State
 	private float startingYPos;
+    public Vector2 velocityAtStop; //used by the stop/start script to store the velocity of each target before it's stopped, then to set it back again if necessary
 
 	//////////////////////////////Cached Component References
     private SpriteRenderer thisSR;
@@ -32,10 +36,10 @@ public class ChoppedTarget : MiniGameElement
 
 	
 	
-	void Awake()
-    {
-        GetParentMiniGame();  //I have not idea why, but this is not getting called automatically like it's supposed to, so I'm calling it here. 
-    }
+	// void Awake()
+    // {
+    //     GetParentMiniGame();  //I have not idea why, but this is not getting called automatically like it's supposed to, so I'm calling it here. 
+    // }
 	
     void Start()
     {
@@ -71,7 +75,7 @@ public class ChoppedTarget : MiniGameElement
         if (currentHealth <= 0)
         {
             spawner.allTargets.RemoveAt(0);
-            parentMiniGame.AddProgress(parentMiniGame.baseProgression * parentMiniGame.progressionMultiplier);
+            AddMiniGameProgress();
             Destroy(this.gameObject);
         }
     }
@@ -123,6 +127,13 @@ public class ChoppedTarget : MiniGameElement
         {
             this.transform.localScale = startingScale * (1+(sizeToHealthMultiplier));
         }
+    }
+
+    public void AddMiniGameProgress()
+    {
+        parentMiniGame.AddProgress((parentMiniGame.baseProgressionChunk + (totalHealth * progressionToSizeMultiplier))  * parentMiniGame.progressionParams.universalProgressionMultiplier);  
+            //award more progress based on the target totalHealth
+            //toggling the progressionToSizeMultiplier is one way to make this game harder
     }
 
 }

@@ -223,6 +223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1343224636}
   - component: {fileID: 1343224635}
+  - component: {fileID: 1343224637}
   m_Layer: 0
   m_Name: Chopped
   m_TagString: Untagged
@@ -243,14 +244,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   miniGameName: 
+  inherentComplexity: 0
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   targetColor: {r: 0, g: 0.42815948, b: 0.8207547, a: 1}
   completionPercent: 0.5
   baseProgression: 0.05
+  baseProgressionChunk: 0.035
   progressionMultiplier: 1.5
-  displayHeight: 0
-  displayWidth: 0
-  orderInLevel: 3
   rateOfDecay: 0.01
   keysToPlay:
   - space
@@ -259,10 +259,16 @@ MonoBehaviour:
   - v
   - m
   keyForThisGame: 
+  orderInLevel: 3
+  level: {fileID: 11400000, guid: 7117fa4a1d85c4d4890a6d08bb8649c0, type: 2}
+  progressionParams: {fileID: 0}
+  difficultyParams: {fileID: 0}
   isActive: 0
   isFrozen: 0
   isComplete: 0
   isTesting: 0
+  displayHeight: 0
+  displayWidth: 0
   playAreaBarriers: []
 --- !u!4 &1343224636
 Transform:
@@ -282,6 +288,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1343224637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343224634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62aa87325644df542bb9d2e2f1304a97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
 --- !u!1 &1734957768
 GameObject:
   m_ObjectHideFlags: 0

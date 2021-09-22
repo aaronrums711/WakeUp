@@ -14,7 +14,11 @@ public class KnockEmDownWaveManager : MiniGameElement
     public int minWaveAmount;
     public int maxWaveAmount;
 
-    [Range(0.1f, 2f)]  public float timeBetweenEachSpawn = 0.3f;
+    // [Range(0.1f, 2f)]  public float timeBetweenEachSpawn = 0.3f;
+    private float timeBetweenEachSpawn;
+
+    public float minTimeBetweenEachSpawn;  //VGIU
+    public float maxTimeBetweeenEachSpawn; //VGIU
 
     //////////////////////////////State
     public bool isCurrentWaveOnPlayArea = false;
@@ -34,6 +38,8 @@ public class KnockEmDownWaveManager : MiniGameElement
 
     public IEnumerator SpawnWave(int min, int max)
     {
+        timeBetweenEachSpawn = Random.Range(minTimeBetweenEachSpawn, maxTimeBetweeenEachSpawn) * parentMiniGame.difficultyParams.scaleDownMultiplier;
+
         yield return new WaitForSeconds(Random.Range(3,6)); //this wait is so that waves don't come immediately after another.  This timer starts when the last target from previous wave is gone
         if (isCurrentWaveOnPlayArea)
         {
@@ -49,12 +55,6 @@ public class KnockEmDownWaveManager : MiniGameElement
         }
         StartCoroutine(MonitorCurrentWave());
     }
-    
-    [ContextMenu("SpawnWaveFromEditor() testing only")] 
-    public void SpawnWaveFromEditor()
-    {
-        StartCoroutine(SpawnWave(minWaveAmount, maxWaveAmount));
-    }
 
     public IEnumerator MonitorCurrentWave()
     {
@@ -66,5 +66,16 @@ public class KnockEmDownWaveManager : MiniGameElement
         StartCoroutine(SpawnWave(minWaveAmount, maxWaveAmount));
     }
     
+
+
+        
+
+
+        
+    [ContextMenu("SpawnWaveFromEditor() testing only")] 
+    public void SpawnWaveFromEditor()
+    {
+        StartCoroutine(SpawnWave(minWaveAmount, maxWaveAmount));
+    }
 
 }
