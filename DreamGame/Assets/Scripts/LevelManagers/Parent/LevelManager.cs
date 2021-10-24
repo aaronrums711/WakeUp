@@ -6,7 +6,7 @@ public class LevelManager : MonoBehaviour
 {
 	/*****************
 	CreateDate: 	9/21/21	
-	Functionality:	observes all of the mini games in the level, as well as the level timer, and determines if/when the level is beaten. 
+	Functionality:	observes all of the mini games in the level, as well as the level timer, and determines if/when the level is beaten.   There will be children of this class that handle level-type specific tasks, that are NOT universal between all level types
 	Notes:			
 	Dependencies:
 	******************/
@@ -56,7 +56,7 @@ public class LevelManager : MonoBehaviour
 		{
 			isLevelWon = true;
 			isLevelFinished = true;
-			print("you've beatent the level, congratulations!");
+			print("you've beaten the level, congratulations!");
 		}
 
 

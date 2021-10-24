@@ -187,6 +187,7 @@ public class MiniGame : MonoBehaviour
         if(isComplete)
         {
             stopStarter.StopMiniGame();
+            print(this.miniGameName + "HAS BEEN BEATEN!!!");
         }
         return isComplete;
     }
