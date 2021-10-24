@@ -62,4 +62,13 @@ public class LevelManager : MonoBehaviour
 
 	}
 
+	public void StopAllMiniGames()
+	{
+		return;
+		/**
+		this needs to correctly stop and start all active mini games(mini games that are currently being played)  in the scene using the IStoppable interface members.   
+		this will be done for pausing, briefly when a mini game is added, and potentially for other future reasons as well
+		**/
+	}
+
 }
