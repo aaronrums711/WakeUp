@@ -7,7 +7,7 @@ public class LevelManager : MonoBehaviour
 	/*****************
 	CreateDate: 	9/21/21	
 	Functionality:	observes all of the mini games in the level, as well as the level timer, and determines if/when the level is beaten.   There will be children of this class that handle level-type specific tasks, that are NOT universal between all level types
-	Notes:			
+	Notes:			I think all level manager scripts will be on this one game object at all time, but only one will be active to match the level that is being played. 
 	Dependencies:
 	******************/
 	
