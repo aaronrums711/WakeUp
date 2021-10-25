@@ -72,7 +72,7 @@ public class LevelManager : MonoBehaviour
 		**/
 	}
 
-
+	//in the future, another parameter could be repeatThreshold.  For levels that have a higher number of total games, we may want to allow more than one instance of the same game in a level.  
 	public List<MiniGame> LoadMiniGames(int numGamesToLoad)
 	{
 		List<MiniGame> allAvailableGames = new List<MiniGame>();
@@ -95,14 +95,5 @@ public class LevelManager : MonoBehaviour
 
 		return gamesForThisLevel;
 	}
-
-
-	/****
-	get list of ALL possible games by looping over the children of the parent GO.
-	for the total num of games we need...
-		select one at random
-		add it to the final miniGames list
-		delete it from total Mini games list list
-	****/
 
 }
