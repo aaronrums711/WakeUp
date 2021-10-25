@@ -24,12 +24,13 @@ public class LevelManager : MonoBehaviour
 	public bool isLevelWon = false;
 	
 	//////////////////////////////Cached Component References
-	
+	public List<MiniGame>  gamesForThisLevel;
 	
     void Start()
     {
         gamesNeededToWin = thisLevel.minGamesNeededToWin;
 	 	miniGames = FindObjectsOfType<MiniGame>(true);
+		LoadMiniGames(thisLevel.totalGamesInLevel);
     }
 
     void Update()
@@ -70,5 +71,38 @@ public class LevelManager : MonoBehaviour
 		this will be done for pausing, briefly when a mini game is added, and potentially for other future reasons as well
 		**/
 	}
+
+
+	public List<MiniGame> LoadMiniGames(int numGamesToLoad)
+	{
+		List<MiniGame> allAvailableGames = new List<MiniGame>();
+
+		Transform miniGamesParent = GameObject.Find("AllMiniGames").GetComponent<Transform>();
+		for (int i = 0; i < miniGamesParent.transform.childCount; i++)
+		{
+			allAvailableGames.Add(miniGamesParent.GetChild(i).GetComponent<MiniGame>());
+		}
+
+		// print(allAvailableGames[0]);
+		// print("all games in initial list: " + allAvailableGames.Count );
+
+		for (int i = 0; i < thisLevel.totalGamesInLevel; i++)
+		{
+			int randInt = Random.Range(0, allAvailableGames.Count);
+			gamesForThisLevel.Add(allAvailableGames[randInt]);
+			allAvailableGames.Remove(allAvailableGames[randInt]);
+		}
+
+		return gamesForThisLevel;
+	}
+
+
+	/****
+	get list of ALL possible games by looping over the children of the parent GO.
+	for the total num of games we need...
+		select one at random
+		add it to the final miniGames list
+		delete it from total Mini games list list
+	****/
 
 }

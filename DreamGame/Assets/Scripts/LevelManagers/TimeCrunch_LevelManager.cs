@@ -26,7 +26,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 	
     void Start()
     {
-        
+        LoadMiniGames(thisLevel.totalGamesInLevel);
     }
 
     void Update()
@@ -38,5 +38,10 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 	{
 		return;
 	}
+
+
+
+
+	
 }
 
