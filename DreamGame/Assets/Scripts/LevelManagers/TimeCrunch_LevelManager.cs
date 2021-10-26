@@ -15,6 +15,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 	public LevelType managingLevelType;
 	private float lagBetweenGames; 
 	public List<Vector3> miniGameSpawnPoints; //VGIU
+	public Transform activeMiniGameParent;
 
 	//////////////////////////////State
 	
@@ -31,6 +32,10 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		lagBetweenGames = thisLevel.lagBetweenGamesSeconds;
         LoadMiniGames(thisLevel.totalGamesInLevel);
 		StartCoroutine(SpawnGames(lagBetweenGames, thisLevel.totalGamesInLevel));
+		activeMiniGameParent = GameObject.Find("ActiveMiniGames").GetComponent<Transform>();
+		if (activeMiniGameParent == null)
+		{Debug.LogError("ActiveMiniGame parent not found, that's an issue");}
+
     }
 
     void Update()
@@ -46,9 +51,13 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 	private IEnumerator SpawnGames(float secondsBetween, int numGames)
 	{
 		float startTime = Time.time;
-		Instantiate(gamesForThisLevel[0], miniGameSpawnPoints[0], Quaternion.identity);
+		MiniGame firstMiniGame = Instantiate(gamesForThisLevel[0], miniGameSpawnPoints[0], Quaternion.identity, activeMiniGameParent);
+		firstMiniGame.gameObject.SetActive(true);
+		firstMiniGame.orderInLevel = 1;
+
+		print("first game should be spawned at : " + Time.time);
 		float timeElapsed = 0f;
-		for (int i = 1; i <= thisLevel.totalGamesInLevel; i++)
+		for (int i = 1; i < thisLevel.totalGamesInLevel; i++)
 		{
 			while(timeElapsed < secondsBetween)
 			{
@@ -56,10 +65,13 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 				timeElapsed += 1f;
 			}
 			timeElapsed = 0;
-			MiniGame newMiniGame = Instantiate(gamesForThisLevel[i], miniGameSpawnPoints[i], Quaternion.identity);
+			print("game number " + (i+1) + " should be spawned.  Time : " + Time.time);
+			MiniGame newMiniGame = Instantiate(gamesForThisLevel[i], miniGameSpawnPoints[i], Quaternion.identity, activeMiniGameParent);
 			newMiniGame.gameObject.SetActive(true);
-			newMiniGame.orderInLevel = i;
+			newMiniGame.orderInLevel = i+1;
 		}
+
+		print("all games have been spawned");
 		
 		/**
 		spawn first game immediately
@@ -69,8 +81,12 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 			set transform
 			set orderInLevel for that game
 			enable it
+			move camera
+
+
+		later on there needs to be more polish to this, all games pausing, the new game appearing, a countdown with visual effect, then all games restarting
+
 		**/
-		yield return new WaitForSeconds(1f);
 	}
 
 
