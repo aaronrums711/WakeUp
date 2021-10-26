@@ -160,6 +160,11 @@ MonoBehaviour:
   isLevelWon: 0
   gamesForThisLevel: []
   managingLevelType: 0
+  miniGameSpawnPoints:
+  - {x: 0, y: 0, z: 0}
+  - {x: 8.5, y: 0, z: 0}
+  - {x: 0, y: -8.5, z: 0}
+  - {x: 8.5, y: -8.5, z: 0}
 --- !u!4 &403593744
 Transform:
   m_ObjectHideFlags: 0
@@ -254,7 +259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8799290901895693864, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.39
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8799290901895693864, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
       propertyPath: m_LocalPosition.y
