@@ -67,8 +67,24 @@ public class PoolTargetSpawner : MiniGameElement
     {
         for(int i =0; i< iterations; i++)
         {
-            // yield return StartCoroutine(SearchForLocation());
-            Vector3 targetDestination = SearchForLocation();
+
+            List<Transform> barriers = new List<Transform>();
+            foreach (GameObject go in parentMiniGame.playAreaBarriers)
+            {
+                barriers.Add(go.transform);;
+            }
+
+            List<Transform> objectsToAvoid = new List<Transform>();
+            foreach (BilliardsTarget target in targetBallParent.GetComponentsInChildren<BilliardsTarget>())
+            {
+                objectsToAvoid.Add(target.transform);
+            }
+            objectsToAvoid.Add(parentMiniGame.GetComponentInChildren<CueBall>().transform);
+
+
+
+            // Vector3 targetDestination = SearchForLocation();
+            Vector3 targetDestination = GetRandomPoint(barriers, targetLocationPadding, objectsToAvoid);
             if (targetDestination.x == 1000f)
             {
                 print("the spawn method failed to return a valid location");
@@ -118,7 +134,7 @@ public class PoolTargetSpawner : MiniGameElement
             //get cueball distance
             distances.Add(Vector3.Distance(targetBallLocation, parentMiniGame.transform.GetComponentInChildren<CueBall>().transform.position));
 
-            if (distances.Min() >0.5)
+            if (distances.Min() >targetLocationPadding)
             {
                 finalTargetBallLocation = targetBallLocation;
             }
