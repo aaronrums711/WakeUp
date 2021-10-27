@@ -203,6 +203,12 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 8, y: 0, z: 0}
   activeMiniGameParent: {fileID: 0}
+  cameraPositions:
+  - {x: 0, y: 0, z: -10}
+  - {x: 4, y: 0, z: -10}
+  - {x: 4, y: -4.2, z: -15}
+  - {x: 4, y: -4.2, z: -15}
+  activeGames: 0
 --- !u!4 &403593744
 Transform:
   m_ObjectHideFlags: 0

@@ -20,8 +20,11 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 
 	public Transform activeMiniGameParent;
 
+	public List<Vector3> cameraPositions;  //ATM there are four entries in this list, even though the third and 4th are the same (turns out the camera keeps the same position regardles of if there are 3 or 4 games on screen)
+
 	//////////////////////////////State
-	
+	public int activeGames;
+
 	//////////////////////////////Cached Component References
 	
 	
@@ -61,9 +64,11 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 
 		float startTime = Time.time;
 		MiniGame firstMiniGame = Instantiate(gamesForThisLevel[0], spawnPointsToUse[0], Quaternion.identity, activeMiniGameParent);
+		firstMiniGame.transform.SetParent(activeMiniGameParent);  //idk why this wasn't working in the above instantiate() call
 		firstMiniGame.gameObject.SetActive(true);
+		firstMiniGame.transform.position = new Vector3(0,0,0);
 		firstMiniGame.orderInLevel = 1;
-
+		activeGames = 1;
 		float timeElapsed = 0f;
 		for (int i = 1; i < thisLevel.totalGamesInLevel; i++)
 		{
@@ -74,8 +79,10 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 			}
 			timeElapsed = 0;
 			MiniGame newMiniGame = Instantiate(gamesForThisLevel[i], spawnPointsToUse[i], Quaternion.identity, activeMiniGameParent);
+			activeGames++;
 			newMiniGame.gameObject.SetActive(true);
 			newMiniGame.orderInLevel = i+1;
+			MoveCamera();
 		}
 
 		print("all games have been spawned");
@@ -93,6 +100,34 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 
 		later on there needs to be more polish to this, all games pausing, the new game appearing, a countdown with visual effect, then all games restarting
 
+		**/
+	}
+
+	private void MoveCamera()
+	{
+		Transform camera = Camera.main.transform;
+		float movementTime = 1f;
+		float elapsed  = 0f;
+		float percent  = 0f;
+
+
+		Vector3 startingPos = camera.position;
+		Vector3 targetPos = cameraPositions[activeGames-1];
+
+		while (percent < 0.99)
+		{
+			this.transform.position = Vector3.Lerp(startingPos, targetPos, percent);
+			elapsed += Time.deltaTime;
+			percent = elapsed/movementTime;
+		}
+		this.transform.position = targetPos;
+		
+		print("camera movement complete");
+
+
+		/**
+		we need to move the camera to the CameraPositions list that is activeGames -1
+		so if there are three active games, it needs to be at position 2
 		**/
 	}
 
