@@ -101,51 +101,51 @@ public class PoolTargetSpawner : MiniGameElement
     }
 
 
-    private Vector3 SearchForLocation()
-    {
-        float maxY = 0;
-        float maxX=  0;
-        float minY = 0;
-        float minX = 0;
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            float testY =  this.transform.GetChild(i).transform.position.y;
-            float testX = this.transform.GetChild(i).transform.position.x;
-            if (testY > maxY) {maxY = testY-targetLocationPadding;}
-            else if(testY< minY){minY = testY+targetLocationPadding;}
+    // private Vector3 SearchForLocation()
+    // {
+    //     float maxY = 0;
+    //     float maxX=  0;
+    //     float minY = 0;
+    //     float minX = 0;
+    //     for (int i = 0; i < transform.childCount; i++)
+    //     {
+    //         float testY =  this.transform.GetChild(i).transform.position.y;
+    //         float testX = this.transform.GetChild(i).transform.position.x;
+    //         if (testY > maxY) {maxY = testY-targetLocationPadding;}
+    //         else if(testY< minY){minY = testY+targetLocationPadding;}
 
-            if (testX > maxX) {maxX = testX-targetLocationPadding;}
-            else if(testX < minX) {minX = testX+targetLocationPadding;}
-        }
+    //         if (testX > maxX) {maxX = testX-targetLocationPadding;}
+    //         else if(testX < minX) {minX = testX+targetLocationPadding;}
+    //     }
 
 
-        Vector3 finalTargetBallLocation = new Vector3(1000,1000,1000);
-        List<float> distances = new List<float>();
-        int iterations = 0;
-        while(finalTargetBallLocation.x == 1000)
-        {
-            distances = new List<float>();
-            Vector3 targetBallLocation = new Vector3(Random.Range(minY, maxY), Random.Range(minX, maxX));
+    //     Vector3 finalTargetBallLocation = new Vector3(1000,1000,1000);
+    //     List<float> distances = new List<float>();
+    //     int iterations = 0;
+    //     while(finalTargetBallLocation.x == 1000)
+    //     {
+    //         distances = new List<float>();
+    //         Vector3 targetBallLocation = new Vector3(Random.Range(minY, maxY), Random.Range(minX, maxX));
             
-            foreach (BilliardsTarget target in parentMiniGame.transform.GetComponentsInChildren<BilliardsTarget>())
-            {   ///get other target ball distances
-                distances.Add(Vector3.Distance(targetBallLocation, target.transform.position));
-            }
-            //get cueball distance
-            distances.Add(Vector3.Distance(targetBallLocation, parentMiniGame.transform.GetComponentInChildren<CueBall>().transform.position));
+    //         foreach (BilliardsTarget target in parentMiniGame.transform.GetComponentsInChildren<BilliardsTarget>())
+    //         {   ///get other target ball distances
+    //             distances.Add(Vector3.Distance(targetBallLocation, target.transform.position));
+    //         }
+    //         //get cueball distance
+    //         distances.Add(Vector3.Distance(targetBallLocation, parentMiniGame.transform.GetComponentInChildren<CueBall>().transform.position));
 
-            if (distances.Min() >targetLocationPadding)
-            {
-                finalTargetBallLocation = targetBallLocation;
-            }
-            else if( iterations >=10)
-            {
-                break;
-            }
-            iterations++;
-        }
-        return finalTargetBallLocation;
-    }
+    //         if (distances.Min() >targetLocationPadding)
+    //         {
+    //             finalTargetBallLocation = targetBallLocation;
+    //         }
+    //         else if( iterations >=10)
+    //         {
+    //             break;
+    //         }
+    //         iterations++;
+    //     }
+    //     return finalTargetBallLocation;
+    // }
 
 
 
