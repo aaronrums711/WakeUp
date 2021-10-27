@@ -82,7 +82,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 			activeGames++;
 			newMiniGame.gameObject.SetActive(true);
 			newMiniGame.orderInLevel = i+1;
-			MoveCamera();
+			StartCoroutine(MoveCamera());
 		}
 
 		print("all games have been spawned");
@@ -103,7 +103,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		**/
 	}
 
-	private void MoveCamera()
+	private IEnumerator MoveCamera()
 	{
 		Transform camera = Camera.main.transform;
 		float movementTime = 1f;
@@ -113,14 +113,15 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 
 		Vector3 startingPos = camera.position;
 		Vector3 targetPos = cameraPositions[activeGames-1];
-
 		while (percent < 0.99)
 		{
-			this.transform.position = Vector3.Lerp(startingPos, targetPos, percent);
+			camera.transform.position = Vector3.Lerp(startingPos, targetPos, percent);
 			elapsed += Time.deltaTime;
 			percent = elapsed/movementTime;
+			print("percent finished : "  + percent);
+			yield return null;
 		}
-		this.transform.position = targetPos;
+		camera.transform.position = targetPos;
 		
 		print("camera movement complete");
 
