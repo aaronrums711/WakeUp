@@ -53,8 +53,14 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 
 	private IEnumerator SpawnGames(float secondsBetween, int numGames)
 	{
+		List<Vector3> spawnPointsToUse = new List<Vector3>();
+		if (thisLevel.totalGamesInLevel == 2) {spawnPointsToUse = miniGameSpawnPoints2;}
+		else if (thisLevel.totalGamesInLevel == 3) {spawnPointsToUse = miniGameSpawnPoints3;}
+		else if (thisLevel.totalGamesInLevel == 4) {spawnPointsToUse = miniGameSpawnPoints4;}
+		else{Debug.LogError("there is less than 2 or more than 4 total games set for this TimeCrunch level.  This should not be!");}
+
 		float startTime = Time.time;
-		MiniGame firstMiniGame = Instantiate(gamesForThisLevel[0], miniGameSpawnPoints4[0], Quaternion.identity, activeMiniGameParent);
+		MiniGame firstMiniGame = Instantiate(gamesForThisLevel[0], spawnPointsToUse[0], Quaternion.identity, activeMiniGameParent);
 		firstMiniGame.gameObject.SetActive(true);
 		firstMiniGame.orderInLevel = 1;
 
@@ -67,7 +73,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 				timeElapsed += 1f;
 			}
 			timeElapsed = 0;
-			MiniGame newMiniGame = Instantiate(gamesForThisLevel[i], miniGameSpawnPoints4[i], Quaternion.identity, activeMiniGameParent);
+			MiniGame newMiniGame = Instantiate(gamesForThisLevel[i], spawnPointsToUse[i], Quaternion.identity, activeMiniGameParent);
 			newMiniGame.gameObject.SetActive(true);
 			newMiniGame.orderInLevel = i+1;
 		}
