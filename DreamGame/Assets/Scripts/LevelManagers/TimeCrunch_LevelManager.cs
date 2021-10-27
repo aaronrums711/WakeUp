@@ -14,7 +14,10 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 	//////////////////////////////Config
 	public LevelType managingLevelType;
 	private float lagBetweenGames; 
-	public List<Vector3> miniGameSpawnPoints; //VGIU
+	public List<Vector3> miniGameSpawnPoints4; //VGIU. each of these represents the locations of mini games for levels with 4, 3 and 2 total games
+	public List<Vector3> miniGameSpawnPoints3; //VGIU
+	public List<Vector3> miniGameSpawnPoints2; //VGIU
+
 	public Transform activeMiniGameParent;
 
 	//////////////////////////////State
@@ -51,11 +54,10 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 	private IEnumerator SpawnGames(float secondsBetween, int numGames)
 	{
 		float startTime = Time.time;
-		MiniGame firstMiniGame = Instantiate(gamesForThisLevel[0], miniGameSpawnPoints[0], Quaternion.identity, activeMiniGameParent);
+		MiniGame firstMiniGame = Instantiate(gamesForThisLevel[0], miniGameSpawnPoints4[0], Quaternion.identity, activeMiniGameParent);
 		firstMiniGame.gameObject.SetActive(true);
 		firstMiniGame.orderInLevel = 1;
 
-		print("first game should be spawned at : " + Time.time);
 		float timeElapsed = 0f;
 		for (int i = 1; i < thisLevel.totalGamesInLevel; i++)
 		{
@@ -65,8 +67,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 				timeElapsed += 1f;
 			}
 			timeElapsed = 0;
-			print("game number " + (i+1) + " should be spawned.  Time : " + Time.time);
-			MiniGame newMiniGame = Instantiate(gamesForThisLevel[i], miniGameSpawnPoints[i], Quaternion.identity, activeMiniGameParent);
+			MiniGame newMiniGame = Instantiate(gamesForThisLevel[i], miniGameSpawnPoints4[i], Quaternion.identity, activeMiniGameParent);
 			newMiniGame.gameObject.SetActive(true);
 			newMiniGame.orderInLevel = i+1;
 		}
