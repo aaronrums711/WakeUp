@@ -44,7 +44,6 @@ public class KnockDownTargetSpawner : MiniGameElement
         }
 
         Vector3 dest = GetRandomPoint(barriers, targetLocationPadding, targetTransforms);
-        print("knockEmDown target location: " + dest);
         return Instantiate(targetPrefab.gameObject, dest, Quaternion.identity, targetParent);
     }
 }
