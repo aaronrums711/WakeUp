@@ -15,11 +15,11 @@ MonoBehaviour:
   thisLevelType: 0
   generalDifficulty: 0
   usesTotalLevelTimerLimit: 1
-  totalGamesInLevel: 4
+  totalGamesInLevel: 3
   gamesAtOneTime: 3
   minGamesNeededToWin: 3
   totalLevelTimeLimitSeconds: 180
-  lagBetweenGamesSeconds: 10
+  lagBetweenGamesSeconds: 3
   gamesStopIfCompleted: 1
   gamesStopIfFailed: 0
   miscMultiplier: 0.4

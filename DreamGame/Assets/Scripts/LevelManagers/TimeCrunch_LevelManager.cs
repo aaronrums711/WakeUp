@@ -37,17 +37,15 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
     {
 		lagBetweenGames = thisLevel.lagBetweenGamesSeconds;
         LoadMiniGames(thisLevel.totalGamesInLevel);
-		StartCoroutine(SpawnGames(lagBetweenGames, thisLevel.totalGamesInLevel));
 		activeMiniGameParent = GameObject.Find("ActiveMiniGames").GetComponent<Transform>();
 		if (activeMiniGameParent == null)
 		{Debug.LogError("ActiveMiniGame parent not found, that's an issue");}
 
+		StartCoroutine(SpawnGames(lagBetweenGames, thisLevel.totalGamesInLevel));
+
+
     }
 
-    void Update()
-    {
-        
-    }
 
 	public void MoveLevelForward()
 	{
@@ -63,10 +61,9 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		else{Debug.LogError("there is less than 2 or more than 4 total games set for this TimeCrunch level.  This should not be!");}
 
 		MiniGame firstMiniGame = Instantiate(gamesForThisLevel[0], spawnPointsToUse[0], Quaternion.identity, activeMiniGameParent);
-		firstMiniGame.transform.SetParent(activeMiniGameParent);  //idk why this wasn't working in the above instantiate() call
 		firstMiniGame.gameObject.SetActive(true);
 		firstMiniGame.orderInLevel = 1;
-		activeGames = 1;
+		activeGames = activeMiniGameParent.childCount;
 
 		float timeElapsed = 0f;
 		for (int i = 1; i < thisLevel.totalGamesInLevel; i++)
@@ -78,7 +75,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 			}
 			timeElapsed = 0;
 			MiniGame newMiniGame = Instantiate(gamesForThisLevel[i], spawnPointsToUse[i], Quaternion.identity, activeMiniGameParent);
-			activeGames++;
+			activeGames = activeMiniGameParent.childCount;
 			newMiniGame.gameObject.SetActive(true);
 			newMiniGame.orderInLevel = i+1;
 			StartCoroutine(MoveCamera());
