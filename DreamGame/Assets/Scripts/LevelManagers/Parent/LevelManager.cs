@@ -17,7 +17,7 @@ public class LevelManager : MonoBehaviour
 	public int currentGamesWon;
 	// public List<MiniGame> allMinigames;
 	public MiniGame[] miniGames;
-	private int executionInterval= 5;
+	[HideInInspector] public int executionInterval= 5;
 
 	//////////////////////////////State
 	public bool isLevelFinished = false;
@@ -33,13 +33,13 @@ public class LevelManager : MonoBehaviour
 		LoadMiniGames(thisLevel.totalGamesInLevel);
     }
 
-    void Update()
-    {
-		if (Time.frameCount % executionInterval == 0) //only execute it every executionInterval frames.  This probably isn't that necessary...but we'll see
-		{
-			CheckAllMiniGames();
-		}
-    }
+    // void Update()
+    // {
+	// 	if (Time.frameCount % executionInterval == 0) //only execute it every executionInterval frames.  This probably isn't that necessary...but we'll see
+	// 	{
+	// 		CheckAllMiniGames();
+	// 	}
+    // }
 
 	public void CheckAllMiniGames()
 	{

@@ -47,6 +47,16 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
     }
 
 
+	
+    void Update()
+    {
+		if (Time.frameCount % executionInterval == 0) //only execute it every executionInterval frames.  This probably isn't that necessary...but we'll see
+		{
+			CheckAllMiniGames();
+		}
+    }
+
+
 	public void MoveLevelForward()
 	{
 		return;
