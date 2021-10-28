@@ -62,13 +62,12 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		else if (thisLevel.totalGamesInLevel == 4) {spawnPointsToUse = miniGameSpawnPoints4;}
 		else{Debug.LogError("there is less than 2 or more than 4 total games set for this TimeCrunch level.  This should not be!");}
 
-		float startTime = Time.time;
 		MiniGame firstMiniGame = Instantiate(gamesForThisLevel[0], spawnPointsToUse[0], Quaternion.identity, activeMiniGameParent);
 		firstMiniGame.transform.SetParent(activeMiniGameParent);  //idk why this wasn't working in the above instantiate() call
 		firstMiniGame.gameObject.SetActive(true);
-		firstMiniGame.transform.position = new Vector3(0,0,0);
 		firstMiniGame.orderInLevel = 1;
 		activeGames = 1;
+
 		float timeElapsed = 0f;
 		for (int i = 1; i < thisLevel.totalGamesInLevel; i++)
 		{
@@ -87,20 +86,6 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 
 		print("all games have been spawned");
 		
-		/**
-		spawn first game immediately
-		for each remaining game...
-			wait secondsBetween amount of seconds
-			spawn game
-			set transform
-			set orderInLevel for that game
-			enable it
-			move camera
-
-
-		later on there needs to be more polish to this, all games pausing, the new game appearing, a countdown with visual effect, then all games restarting
-
-		**/
 	}
 
 	private IEnumerator MoveCamera()
@@ -121,13 +106,6 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 			yield return null;
 		}
 		camera.transform.position = targetPos;
-		
-
-
-		/**
-		we need to move the camera to the CameraPositions list that is activeGames -1
-		so if there are three active games, it needs to be at position 2
-		**/
 	}
 
 
