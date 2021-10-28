@@ -118,12 +118,10 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 			camera.transform.position = Vector3.Lerp(startingPos, targetPos, percent);
 			elapsed += Time.deltaTime;
 			percent = elapsed/movementTime;
-			print("percent finished : "  + percent);
 			yield return null;
 		}
 		camera.transform.position = targetPos;
 		
-		print("camera movement complete");
 
 
 		/**
