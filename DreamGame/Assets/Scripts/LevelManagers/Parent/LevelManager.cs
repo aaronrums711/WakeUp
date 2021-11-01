@@ -15,8 +15,6 @@ public class LevelManager : MonoBehaviour
 	public Level thisLevel;
 	public int gamesNeededToWin;
 	public int currentGamesWon;
-	// public List<MiniGame> allMinigames;
-	public MiniGame[] miniGames;
 	[HideInInspector] public int executionInterval= 5;
 
 	//////////////////////////////State
@@ -24,34 +22,22 @@ public class LevelManager : MonoBehaviour
 	public bool isLevelWon = false;
 	
 	//////////////////////////////Cached Component References
-	public List<MiniGame>  gamesForThisLevel;
-	
-    void Start()
-    {
-        gamesNeededToWin = thisLevel.minGamesNeededToWin;
-	 	miniGames = FindObjectsOfType<MiniGame>(true);
-		LoadMiniGames(thisLevel.totalGamesInLevel);
-    }
+	public List<MiniGame>  allGamesForThisLevel;
+	public List<MiniGame>  gamesActiveInThisLevel;
 
-    // void Update()
-    // {
-	// 	if (Time.frameCount % executionInterval == 0) //only execute it every executionInterval frames.  This probably isn't that necessary...but we'll see
-	// 	{
-	// 		CheckAllMiniGames();
-	// 	}
-    // }
+	
 
 	public void CheckAllMiniGames()
 	{
-		int gamesCompleted = 0;
-		foreach (MiniGame mg in miniGames)
+		currentGamesWon = 0;
+		foreach (MiniGame mg in gamesActiveInThisLevel)
 		{
 			if (mg.isComplete)
 			{
-				gamesCompleted++;
+				currentGamesWon++;
 			}
 		}
-		currentGamesWon = gamesCompleted;
+
 
 		if (currentGamesWon >= gamesNeededToWin)
 		{
@@ -73,6 +59,7 @@ public class LevelManager : MonoBehaviour
 	}
 
 	//in the future, another parameter could be repeatThreshold.  For levels that have a higher number of total games, we may want to allow more than one instance of the same game in a level.  
+	//this method loads a list of mini games that will actually be played IN THIS LEVEL.  
 	public List<MiniGame> LoadMiniGames(int numGamesToLoad)
 	{
 		List<MiniGame> allAvailableGames = new List<MiniGame>();
@@ -89,11 +76,18 @@ public class LevelManager : MonoBehaviour
 		for (int i = 0; i < thisLevel.totalGamesInLevel; i++)
 		{
 			int randInt = Random.Range(0, allAvailableGames.Count);
-			gamesForThisLevel.Add(allAvailableGames[randInt]);
+			allGamesForThisLevel.Add(allAvailableGames[randInt]);
 			allAvailableGames.Remove(allAvailableGames[randInt]);
 		}
 
-		return gamesForThisLevel;
+		return allGamesForThisLevel;
+	}
+
+	///loads games for this level, sets gamesNeededToWin, possibly more stuff in future
+	public void SetUpLevel()
+	{
+		LoadMiniGames(thisLevel.totalGamesInLevel);
+        gamesNeededToWin = thisLevel.minGamesNeededToWin;
 	}
 
 }

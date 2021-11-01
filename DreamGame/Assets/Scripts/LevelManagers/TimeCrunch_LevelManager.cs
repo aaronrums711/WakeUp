@@ -23,31 +23,23 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 	public List<Vector3> cameraPositions;  //ATM there are four entries in this list, even though the third and 4th are the same (turns out the camera keeps the same position regardles of if there are 3 or 4 games on screen)
 
 	//////////////////////////////State
-	public int activeGames;
+	public int activeGamesCount;
 
 	//////////////////////////////Cached Component References
 	
 	
-	void Awake()
-    {
-        
-    }
-	
     void Start()
     {
+		SetUpLevel();
 		lagBetweenGames = thisLevel.lagBetweenGamesSeconds;
-        LoadMiniGames(thisLevel.totalGamesInLevel);
 		activeMiniGameParent = GameObject.Find("ActiveMiniGames").GetComponent<Transform>();
 		if (activeMiniGameParent == null)
 		{Debug.LogError("ActiveMiniGame parent not found, that's an issue");}
 
 		StartCoroutine(SpawnGames(lagBetweenGames, thisLevel.totalGamesInLevel));
-
-
     }
 
 
-	
     void Update()
     {
 		if (Time.frameCount % executionInterval == 0) //only execute it every executionInterval frames.  This probably isn't that necessary...but we'll see
@@ -70,10 +62,11 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		else if (thisLevel.totalGamesInLevel == 4) {spawnPointsToUse = miniGameSpawnPoints4;}
 		else{Debug.LogError("there is less than 2 or more than 4 total games set for this TimeCrunch level.  This should not be!");}
 
-		MiniGame firstMiniGame = Instantiate(gamesForThisLevel[0], spawnPointsToUse[0], Quaternion.identity, activeMiniGameParent);
+		MiniGame firstMiniGame = Instantiate(allGamesForThisLevel[0], spawnPointsToUse[0], Quaternion.identity, activeMiniGameParent);
 		firstMiniGame.gameObject.SetActive(true);
 		firstMiniGame.orderInLevel = 1;
-		activeGames = activeMiniGameParent.childCount;
+		activeGamesCount = activeMiniGameParent.childCount;
+		gamesActiveInThisLevel.Add(firstMiniGame);
 
 		float timeElapsed = 0f;
 		for (int i = 1; i < thisLevel.totalGamesInLevel; i++)
@@ -84,10 +77,11 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 				timeElapsed += 1f;
 			}
 			timeElapsed = 0;
-			MiniGame newMiniGame = Instantiate(gamesForThisLevel[i], spawnPointsToUse[i], Quaternion.identity, activeMiniGameParent);
-			activeGames = activeMiniGameParent.childCount;
+			MiniGame newMiniGame = Instantiate(allGamesForThisLevel[i], spawnPointsToUse[i], Quaternion.identity, activeMiniGameParent);
+			activeGamesCount = activeMiniGameParent.childCount;
 			newMiniGame.gameObject.SetActive(true);
 			newMiniGame.orderInLevel = i+1;
+			gamesActiveInThisLevel.Add(newMiniGame);
 			StartCoroutine(MoveCamera());
 		}
 
@@ -104,7 +98,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 
 
 		Vector3 startingPos = camera.position;
-		Vector3 targetPos = cameraPositions[activeGames-1];
+		Vector3 targetPos = cameraPositions[activeGamesCount-1];
 		while (percent < 0.99)
 		{
 			camera.transform.position = Vector3.Lerp(startingPos, targetPos, percent);
