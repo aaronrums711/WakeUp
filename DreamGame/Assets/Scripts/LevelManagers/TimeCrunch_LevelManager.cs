@@ -18,7 +18,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 	public List<Vector3> miniGameSpawnPoints3; //VGIU
 	public List<Vector3> miniGameSpawnPoints2; //VGIU
 
-	public Transform activeMiniGameParent;
+	// public Transform activeMiniGameParent;
 
 	public List<Vector3> cameraPositions;  //ATM there are four entries in this list, even though the third and 4th are the same (turns out the camera keeps the same position regardles of if there are 3 or 4 games on screen)
 
@@ -32,7 +32,6 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
     {
 		SetUpLevel();
 		lagBetweenGames = thisLevel.lagBetweenGamesSeconds;
-		activeMiniGameParent = GameObject.Find("ActiveMiniGames").GetComponent<Transform>();
 		if (activeMiniGameParent == null)
 		{Debug.LogError("ActiveMiniGame parent not found, that's an issue");}
 

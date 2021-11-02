@@ -24,6 +24,7 @@ public class LevelManager : MonoBehaviour
 	//////////////////////////////Cached Component References
 	public List<MiniGame>  allGamesForThisLevel;
 	public List<MiniGame>  gamesActiveInThisLevel;
+	public Transform activeMiniGameParent;
 
 	
 
@@ -49,13 +50,23 @@ public class LevelManager : MonoBehaviour
 
 	}
 
+	[ContextMenu("stop all games")]
 	public void StopAllMiniGames()
 	{
-		return;
-		/**
-		this needs to correctly stop and start all active mini games(mini games that are currently being played)  in the scene using the IStoppable interface members.   
-		this will be done for pausing, briefly when a mini game is added, and potentially for other future reasons as well
-		**/
+
+		for  (int i =0; i< activeMiniGameParent.childCount; i++)
+		{
+			activeMiniGameParent.GetChild(i).GetComponent<IStoppable>().StopMiniGame();
+		}
+	}
+
+	[ContextMenu("restart all games")]
+	public void RestartAllMiniGames()
+	{
+		for  (int i =0; i< activeMiniGameParent.childCount; i++)
+		{
+			activeMiniGameParent.GetChild(i).GetComponent<IStoppable>().RestartMiniGame();
+		}
 	}
 
 	//in the future, another parameter could be repeatThreshold.  For levels that have a higher number of total games, we may want to allow more than one instance of the same game in a level.  
@@ -70,9 +81,6 @@ public class LevelManager : MonoBehaviour
 			allAvailableGames.Add(miniGamesParent.GetChild(i).GetComponent<MiniGame>());
 		}
 
-		// print(allAvailableGames[0]);
-		// print("all games in initial list: " + allAvailableGames.Count );
-
 		for (int i = 0; i < thisLevel.totalGamesInLevel; i++)
 		{
 			int randInt = Random.Range(0, allAvailableGames.Count);
@@ -83,11 +91,13 @@ public class LevelManager : MonoBehaviour
 		return allGamesForThisLevel;
 	}
 
-	///loads games for this level, sets gamesNeededToWin, possibly more stuff in future
+	///loads games for this level, sets gamesNeededToWin, sets the parent for all spawned mini games, possibly more stuff in future
 	public void SetUpLevel()
 	{
 		LoadMiniGames(thisLevel.totalGamesInLevel);
         gamesNeededToWin = thisLevel.minGamesNeededToWin;
+		activeMiniGameParent = GameObject.Find("ActiveMiniGames").GetComponent<Transform>();
+
 	}
 
 }
