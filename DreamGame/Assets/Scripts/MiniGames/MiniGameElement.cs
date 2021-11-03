@@ -37,10 +37,10 @@ public class MiniGameElement : MonoBehaviour
     ///this method doesn't take into account trying to avoid any other objects
     public Vector3 GetRandomPoint(Transform barrierObjectParent, float padding)
     {
-        float maxY = 0;
-        float maxX=  0;
-        float minY = 0;
-        float minX = 0;
+        float maxY = -1000;
+        float maxX=  -1000;
+        float minY = 1000;
+        float minX = 1000;
         for (int i = 0; i < barrierObjectParent.childCount; i++)
         {
             float testY =  barrierObjectParent.GetChild(i).transform.position.y;
@@ -57,10 +57,10 @@ public class MiniGameElement : MonoBehaviour
 
     public Vector3 GetRandomPoint(List<Transform> barriers, float padding, List<Transform> objectsToAvoid)
     {
-        float maxY = 0;
-        float maxX=  0;
-        float minY = 0;
-        float minX = 0;
+        float maxY = -1000;
+        float maxX=  -1000;
+        float minY = 1000;
+        float minX = 1000;
         for (int i = 0; i < barriers.Count; i++)
         {
             float testY =  barriers[i].position.y;
@@ -78,7 +78,8 @@ public class MiniGameElement : MonoBehaviour
         while(finalTargetLocation.x == 1000)
         {
             distances = new List<float>();
-            Vector3 testTargetLocation = new Vector3(Random.Range(minY, maxY), Random.Range(minX, maxX));
+            // Vector3 testTargetLocation = new Vector3(Random.Range(minY, maxY), Random.Range(minX, maxX));  wow, this was wrong!
+            Vector3 testTargetLocation = new Vector3( Random.Range(minX, maxX), Random.Range(minY, maxY));
             
             for (int i=0; i< objectsToAvoid.Count; i++)
             {
@@ -99,7 +100,6 @@ public class MiniGameElement : MonoBehaviour
             }
             iterations++;
         }
-        // print(finalTargetLocation);
         return finalTargetLocation;
     }
 
