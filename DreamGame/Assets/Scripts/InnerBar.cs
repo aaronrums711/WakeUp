@@ -31,7 +31,7 @@ public class InnerBar : MonoBehaviour
 	}
     void Update()
     {
-        
+        ExtendRectangle();
     }
 
 
