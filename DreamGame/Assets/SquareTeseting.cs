@@ -17,7 +17,11 @@ public class SquareTeseting : MonoBehaviour
 	public float maxScale;
 	public float startingPos;
 	public float startingScale;
+
+	public float tester;
+	public float tester2;
 	
+	public bool boolTest;
 	//////////////////////////////State
 	
 	//////////////////////////////Cached Component References
@@ -28,6 +32,9 @@ public class SquareTeseting : MonoBehaviour
 		thisTransform = this.transform;
 		startingScale = this.transform.localScale.y;
 		startingPos = this.transform.position.y;
+		Testing( tester);
+		print("after method val: " + tester);
+
 	}
 
 
@@ -48,5 +55,13 @@ public class SquareTeseting : MonoBehaviour
 		currentPos.y = newPos;
 		thisTransform.position = currentPos;
 
+	}
+
+
+	public void Testing( float num)
+	{
+		print("starting val within method: " + num);
+		num += tester2;
+		print("new val within method: " + num);
 	}
 }
