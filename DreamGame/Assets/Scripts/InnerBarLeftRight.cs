@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InnerBar : MonoBehaviour
+public class InnerBarLeftRight : MonoBehaviour
 {
 	/*****************
 	CreateDate: 	11/15/21
