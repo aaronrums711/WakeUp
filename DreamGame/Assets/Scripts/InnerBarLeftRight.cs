@@ -16,6 +16,8 @@ public class InnerBarLeftRight : MonoBehaviour
 	public float maxScale;
 	public float startingPos;
 	public float startingScale;
+	public Vector3 startingPosVec;  //VGIU
+	public Vector3 startingScaleVec; //VGIU
 	
 	//////////////////////////////State
 	
@@ -25,7 +27,22 @@ public class InnerBarLeftRight : MonoBehaviour
 	
 	void Start()
 	{
+		if (parentMiniGame == null)
+		{
+			parentMiniGame = GetComponent<MiniGame>(); 
+    		if (parentMiniGame == null)
+			{
+				parentMiniGame = GetComponentInParent<MiniGame>();
+			}
+				if (parentMiniGame == null)
+				{
+					parentMiniGame = GetComponentInParent<Transform>().GetComponentInParent<MiniGame>();  //for scripts on a child's child
+				}
+		}
+
 		thisTransform = this.transform;
+		thisTransform.localPosition = startingPosVec;
+		thisTransform.localScale = startingScaleVec;
 		startingScale = this.transform.localScale.y;
 		startingPos = this.transform.position.y;
 	}

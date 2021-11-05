@@ -27,6 +27,18 @@ public class InnerBarUpDown : MonoBehaviour
 	
 	void Start()
 	{
+		if (parentMiniGame == null)
+		{
+			parentMiniGame = GetComponent<MiniGame>(); 
+    		if (parentMiniGame == null)
+			{
+				parentMiniGame = GetComponentInParent<MiniGame>();
+			}
+				if (parentMiniGame == null)
+				{
+					parentMiniGame = GetComponentInParent<Transform>().GetComponentInParent<MiniGame>();  //for scripts on a child's child
+				}
+		}
 		thisTransform = this.transform;
 		thisTransform.localPosition = startingPosVec;
 		thisTransform.localScale = startingScaleVec;
