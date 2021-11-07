@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InnerBarUpDown : MonoBehaviour
+public class InnerBarUpDown : MonoBehaviour, IInnerBar
 {
 	/*****************
 	CreateDate: 	11/15/21
