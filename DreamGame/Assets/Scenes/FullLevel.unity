@@ -185,12 +185,10 @@ MonoBehaviour:
   thisLevel: {fileID: 11400000, guid: 7117fa4a1d85c4d4890a6d08bb8649c0, type: 2}
   gamesNeededToWin: 0
   currentGamesWon: 0
-  executionInterval: 5
+  miniGames: []
   isLevelFinished: 0
   isLevelWon: 0
-  allGamesForThisLevel: []
-  gamesActiveInThisLevel: []
-  activeMiniGameParent: {fileID: 0}
+  gamesForThisLevel: []
   managingLevelType: 0
   miniGameSpawnPoints4:
   - {x: 0, y: 0, z: 0}
@@ -204,12 +202,13 @@ MonoBehaviour:
   miniGameSpawnPoints2:
   - {x: 0, y: 0, z: 0}
   - {x: 8, y: 0, z: 0}
+  activeMiniGameParent: {fileID: 0}
   cameraPositions:
   - {x: 0, y: 0, z: -10}
   - {x: 4, y: 0, z: -10}
   - {x: 4, y: -4.2, z: -15}
   - {x: 4, y: -4.2, z: -15}
-  activeGamesCount: 0
+  activeGames: 0
 --- !u!4 &403593744
 Transform:
   m_ObjectHideFlags: 0
@@ -350,18 +349,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8799290901895693911, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
-      propertyPath: targetColor.b
-      value: 0.9528302
-      objectReference: {fileID: 0}
-    - target: {fileID: 8799290901895693911, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
-      propertyPath: targetColor.g
-      value: 0.79552335
-      objectReference: {fileID: 0}
-    - target: {fileID: 8799290901895693911, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
-      propertyPath: targetColor.r
-      value: 0.8077344
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
 --- !u!4 &1299380969 stripped
@@ -428,18 +415,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1047094732742780747, guid: 88d0e28d167cb844ab814efca7b82a8a, type: 3}
-      propertyPath: targetColor.b
-      value: 0.8301887
-      objectReference: {fileID: 0}
-    - target: {fileID: 1047094732742780747, guid: 88d0e28d167cb844ab814efca7b82a8a, type: 3}
-      propertyPath: targetColor.g
-      value: 0.8301887
-      objectReference: {fileID: 0}
-    - target: {fileID: 1047094732742780747, guid: 88d0e28d167cb844ab814efca7b82a8a, type: 3}
-      propertyPath: targetColor.r
-      value: 0.8301887
-      objectReference: {fileID: 0}
     - target: {fileID: 8379236634898229302, guid: 88d0e28d167cb844ab814efca7b82a8a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -453,18 +428,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2065524601}
     m_Modifications:
-    - target: {fileID: 3560577365375624952, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
-      propertyPath: targetColor.b
-      value: 0.9245283
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560577365375624952, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
-      propertyPath: targetColor.g
-      value: 0.884883
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560577365375624952, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
-      propertyPath: targetColor.r
-      value: 0.8416696
-      objectReference: {fileID: 0}
     - target: {fileID: 3560577365375624953, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
       propertyPath: m_Name
       value: Chopped
@@ -616,18 +579,6 @@ PrefabInstance:
     - target: {fileID: 2224345864171837185, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2224345864171837215, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
-      propertyPath: targetColor.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2224345864171837215, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
-      propertyPath: targetColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2224345864171837215, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
-      propertyPath: targetColor.r
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
