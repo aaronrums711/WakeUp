@@ -44,7 +44,7 @@ public class InnerBarUpDown : MonoBehaviour
 		thisTransform.localScale = startingScaleVec;
 		startingScale = startingScaleVec.x;
 		startingPos = startingPosVec.x;
-		print("initial local pos: " + startingPosVec);
+		// print("initial local pos: " + startingPosVec);
 	}
     void Update()
     {

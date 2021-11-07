@@ -44,7 +44,9 @@ public class InnerBarLeftRight : MonoBehaviour
 		thisTransform.localPosition = startingPosVec;
 		thisTransform.localScale = startingScaleVec;
 		startingScale = this.transform.localScale.y;
-		startingPos = this.transform.position.y;
+		// startingPos = this.transform.position.y;
+		startingPos = this.transform.localPosition.y;
+
 	}
     void Update()
     {
@@ -60,10 +62,12 @@ public class InnerBarLeftRight : MonoBehaviour
 		currentScale.y = newScale;
 		thisTransform.localScale = currentScale;
 
-		Vector3 currentPos = thisTransform.position;
+		// Vector3 currentPos = thisTransform.position;
+		Vector3 currentPos = thisTransform.localPosition;
 		float newPos = Mathf.Lerp(startingPos, maxPos, parentMiniGame.completionPercent);
 		currentPos.y = newPos;
-		thisTransform.position = currentPos;
+		// thisTransform.position = currentPos;
+		thisTransform.localPosition = currentPos;
 
 	}
 }
