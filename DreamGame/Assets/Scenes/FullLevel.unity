@@ -300,14 +300,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2065524601}
     m_Modifications:
-    - target: {fileID: 8799290901852314532, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8799290901852314532, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
-      propertyPath: clampPoint
-      value: 0.058
-      objectReference: {fileID: 0}
     - target: {fileID: 8799290901895693864, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -355,34 +347,6 @@ PrefabInstance:
     - target: {fileID: 8799290901895693865, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
       propertyPath: m_Name
       value: Pool
-      objectReference: {fileID: 0}
-    - target: {fileID: 8799290901895693865, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8799290901895693908, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
-      propertyPath: slowDownEffectEndRate
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8799290901895693908, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
-      propertyPath: slowDownEffectChangeRate
-      value: 0.94
-      objectReference: {fileID: 0}
-    - target: {fileID: 8799290901895693909, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8799290901895693911, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
-      propertyPath: targetColor.b
-      value: 0.9150943
-      objectReference: {fileID: 0}
-    - target: {fileID: 8799290901895693911, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
-      propertyPath: targetColor.g
-      value: 0.8503471
-      objectReference: {fileID: 0}
-    - target: {fileID: 8799290901895693911, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
-      propertyPath: targetColor.r
-      value: 0.85537314
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
