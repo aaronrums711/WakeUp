@@ -23,6 +23,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 	public List<Vector3> cameraPositions;  //ATM there are four entries in this list, even though the third and 4th are the same (turns out the camera keeps the same position regardles of if there are 3 or 4 games on screen)
 
 	//////////////////////////////State
+	[Tooltip("this could potentially be part of the parent class...but what defines 'active' will be pretty different for each level type")]
 	public int activeGamesCount;
 
 	//////////////////////////////Cached Component References
@@ -35,7 +36,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		if (activeMiniGameParent == null)
 		{Debug.LogError("ActiveMiniGame parent not found, that's an issue");}
 
-		StartCoroutine(SpawnGames(lagBetweenGames, thisLevel.totalGamesInLevel));
+		MoveLevelForward();
     }
 
 
@@ -50,9 +51,11 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 
 	public void MoveLevelForward()
 	{
-		return;
+		StartCoroutine(SpawnGames(lagBetweenGames, thisLevel.totalGamesInLevel));
 	}
 
+	///realizing now that this method only takes into account elapsed time when spawning new games.  In the future we may want to consider the progress of all the games, or most recent added game, or anything like that. 
+	///just a thought for the future.  For the TimeCrunch level type using time only might be fine. 
 	private IEnumerator SpawnGames(float secondsBetween, int numGames)
 	{
 		List<Vector3> spawnPointsToUse = new List<Vector3>();
@@ -84,7 +87,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 			StartCoroutine(MoveCamera());
 		}
 
-		print("all games have been spawned");
+		// print("all games have been spawned");
 		
 	}
 
@@ -108,7 +111,25 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		camera.transform.position = targetPos;
 	}
 
+	
+	public void GameAdditionEffect()
+	{
 
+	}
+
+	/**
+	1. pause all games
+	2. move camera
+	3. instantate new game (potentially with some fade in effect)
+	4. short countdown by flashing all colors white with count down sound
+	5. set all colors back to what they were
+	6. restart all games
+
+	actually now that I think about it....if games are being spawned relatively quickly, the whole timer thing probably isn't necessary, and may even get annoying...
+	so instead of that, we could do just a slow down effect on all active games with a color lerp to grey, then spawn new game, then restart all games and return to normal colors
+	**/
+
+	
 	
 }
 

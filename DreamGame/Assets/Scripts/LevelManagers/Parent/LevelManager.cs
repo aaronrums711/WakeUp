@@ -13,6 +13,11 @@ public class LevelManager : MonoBehaviour
 	
 	//////////////////////////////Config
 	public Level thisLevel;
+	
+	[Tooltip("having these on the parent LevelManager class assumes that all games in all level types will use the same progressionParams and difficultyParams.  This seems likely, and any cases where it's not true can just be dealt with in the child script ")]
+	public ProgressionParams progressionParams;
+    public DifficultyParams difficultyParams;
+	
 	public int gamesNeededToWin;
 	public int currentGamesWon;
 	[HideInInspector] public int executionInterval= 5;
@@ -20,8 +25,10 @@ public class LevelManager : MonoBehaviour
 	//////////////////////////////State
 	public bool isLevelFinished = false;
 	public bool isLevelWon = false;
+
 	
 	//////////////////////////////Cached Component References
+	 [Tooltip("this is simply ALL games that will appear in THIS particular level at any time. ")]  
 	public List<MiniGame>  allGamesForThisLevel;
 	public List<MiniGame>  gamesActiveInThisLevel;
 	public Transform activeMiniGameParent;
@@ -98,6 +105,54 @@ public class LevelManager : MonoBehaviour
         gamesNeededToWin = thisLevel.minGamesNeededToWin;
 		activeMiniGameParent = GameObject.Find("ActiveMiniGames").GetComponent<Transform>();
 
+	}
+
+	
+    public void AssignProgressionParameters()
+    {
+
+        Object[] allProgressionParams = Resources.LoadAll("", typeof(ProgressionParams));
+
+        foreach (ProgressionParams p in allProgressionParams)
+        {
+            if (p.difficultyDescription ==  thisLevel.generalDifficulty)
+            {
+                this.progressionParams = p;
+            }
+        }
+
+        if (progressionParams = null)
+        {
+            Debug.LogError("there was no  matching ProgressionParameter object found.  Something is wrong");
+            return;
+        }
+    }
+
+    public void AssignDifficultyParameters()
+    {
+        Object[] allDifficultyParams = Resources.LoadAll("", typeof(DifficultyParams));
+        
+        foreach (DifficultyParams p in allDifficultyParams)
+        {
+            if (p.difficultyDescription == thisLevel.generalDifficulty)
+            {
+                this.difficultyParams = p;
+                break;
+            }
+        }
+
+        if (this.difficultyParams == null)
+        {
+            Debug.LogError("there was no  matching difficultyParameters object found.  Something is wrong");
+        }
+
+    }
+
+	public void AssignProgressionMetric(MiniGame mg)
+	{
+		mg.rateOfDecay *= progressionParams.universalDragMultiplier;
+        mg.baseProgression *=  progressionParams.universalProgressionMultiplier;
+        mg.baseProgressionChunk *= progressionParams.universalProgressionChunkMultiplier;
 	}
 
 }
