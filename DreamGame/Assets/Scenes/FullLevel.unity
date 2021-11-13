@@ -169,7 +169,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &403593743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,6 +183,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisLevel: {fileID: 11400000, guid: 7117fa4a1d85c4d4890a6d08bb8649c0, type: 2}
+  progressionParams: {fileID: 0}
+  difficultyParams: {fileID: 0}
   gamesNeededToWin: 0
   currentGamesWon: 0
   executionInterval: 5
@@ -298,6 +300,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2065524601}
     m_Modifications:
+    - target: {fileID: 8799290901852314532, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8799290901852314532, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
+      propertyPath: clampPoint
+      value: 0.058
+      objectReference: {fileID: 0}
     - target: {fileID: 8799290901895693864, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -348,6 +358,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8799290901895693865, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8799290901895693908, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
+      propertyPath: slowDownEffectEndRate
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8799290901895693908, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
+      propertyPath: slowDownEffectChangeRate
+      value: 0.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 8799290901895693909, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8799290901895693911, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}

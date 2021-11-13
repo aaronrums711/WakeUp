@@ -12,11 +12,14 @@ public class CueBall : MiniGameElement
 
     //////////////////////////////Cached Component References
     public Rigidbody2D thisRB;
+    private PoolStick poolStick;
+
 
 
 
     void Start()
     {
+        poolStick =  parentMiniGame.GetComponentInChildren<PoolStick>();
         thisRB = GetComponent<Rigidbody2D>();
     }
 
@@ -27,7 +30,7 @@ public class CueBall : MiniGameElement
 
     public void ClampVelocity() //all this does is set the velocity to zero instead of waiting for it to go to 0 natuarlly.  the poolstick the velocity to reappear. 
     {
-        if (thisRB.velocity.sqrMagnitude <= clampPoint)
+        if (thisRB.velocity.sqrMagnitude <= clampPoint && poolStick.isSlowed == false)
         {
             thisRB.velocity = Vector2.zero;
         }
