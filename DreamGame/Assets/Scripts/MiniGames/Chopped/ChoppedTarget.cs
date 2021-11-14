@@ -29,7 +29,8 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
 
 	//////////////////////////////Cached Component References
     private SpriteRenderer thisSR;
-    private Rigidbody2D rb;
+    [HideInInspector]
+    public Rigidbody2D rb;
     private ChoppedTargetSpawner spawner;
     public Sprite startingSprite;
     

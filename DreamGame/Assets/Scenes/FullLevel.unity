@@ -348,6 +348,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pool
       objectReference: {fileID: 0}
+    - target: {fileID: 8799290901895693865, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
 --- !u!4 &1299380969 stripped
@@ -445,7 +449,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3560577365375624953, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
+      propertyPath: slowDownEffectEndRate
+      value: 0.098
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
+      propertyPath: slowDownEffectChangeRate
+      value: 0.97
       objectReference: {fileID: 0}
     - target: {fileID: 3560577365375624959, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
       propertyPath: m_RootOrder
@@ -453,11 +465,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3560577365375624959, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8
+      value: 0.52
       objectReference: {fileID: 0}
     - target: {fileID: 3560577365375624959, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.5
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3560577365375624959, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
       propertyPath: m_LocalPosition.z
