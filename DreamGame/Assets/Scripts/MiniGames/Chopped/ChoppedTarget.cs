@@ -61,7 +61,7 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
     {
         if (this.transform.position.y < startingYPos)
         {
-            spawner.allTargets.RemoveAt(0);
+            spawner.allTargets.Remove(this);
             Destroy(this.gameObject);
         }
     }

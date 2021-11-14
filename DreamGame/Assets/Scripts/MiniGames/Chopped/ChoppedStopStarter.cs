@@ -41,6 +41,8 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 	
 	//////////////////////////////Cached Component References
 	private ChoppedTargetSpawner spawner;
+	///testing
+	public List<string> names;
 	
 
 
@@ -59,6 +61,11 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 		{
 			float speedUpEffectRate = 1 + (1-slowDownEffectChangeRate);
 			StartCoroutine(BringBackToSpeed(speedUpEffectRate));
+		}
+		if (Input.GetKeyDown(KeyCode.A))
+		{
+			names.RemoveAt(0);
+			print(names[0]);
 		}
 	}
 
