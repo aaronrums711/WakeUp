@@ -25,7 +25,9 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
 
 	//////////////////////////////State
 	private float startingYPos;
-    public Vector2 velocityAtStop; //used by the stop/start script to store the velocity of each target before it's stopped, then to set it back again if necessary
+    [HideInInspector]public Vector2 velocityAtStop; //used by the stop/start script to store the velocity of each target before it's stopped, then to set it back again if necessary
+    [HideInInspector]public float  magnitudeAtSpeedChange; //used by stop/start script, but for the slow down method
+    [HideInInspector]public Vector2 velocityAtSpeedChange;
 
 	//////////////////////////////Cached Component References
     private SpriteRenderer thisSR;

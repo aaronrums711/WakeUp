@@ -35,6 +35,7 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 
 	[SerializeField, Range(0.5f, 0.99f), Tooltip("lower value = faster rate of slow down")]
 	float slowDownEffectChangeRate;
+	float rbVelocityForTest;
 	
 	//////////////////////////////State
 	
@@ -53,6 +54,11 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
         if (Input.GetKeyDown(KeyCode.Space))
 		{
 			StartCoroutine(SlowDownMiniGame(slowDownEffectEndRate, slowDownEffectChangeRate));
+		}
+        if (Input.GetKeyDown(KeyCode.Z))
+		{
+			float speedUpEffectRate = 1 + (1-slowDownEffectChangeRate);
+			StartCoroutine(BringBackToSpeed(speedUpEffectRate));
 		}
 	}
 
@@ -90,47 +96,81 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 	public IEnumerator SlowDownMiniGame(float endRate, float changeRate)
 	{
 		spawner.StopAllCoroutines();
-		yield return new WaitForFixedUpdate(); //juuust to be safe, yielding one physics update
-		List <Rigidbody2D> targetRBs =  new List <Rigidbody2D>();
-
-		foreach (ChoppedTarget target in spawner.allTargets )
+		if (spawner.allTargets.Count > 0)
 		{
-			Rigidbody2D rb = target.GetComponent<Rigidbody2D>();
-			targetRBs.Add(rb);
-			rb.gravityScale = 0f;
-			rb.mass = 0.2f;
-		}
-		float rbVelocityForTest = targetRBs[0].velocity.sqrMagnitude * endRate;  	//we only need to use one list element for evaluating in the loop, because they are all being changed at the same rate
-																					//so the [0] here is arbitrary
-		print("target slowed magnitude =  " + rbVelocityForTest);
-		float totalTime = 1f;
-		float startTime = Time.time;
-		float elapsed = 0f;
-		while (elapsed < totalTime/**targetRBs[0].velocity.sqrMagnitude > rbVelocityForTest**/)
-		{
-
-			// foreach (ChoppedTarget target in spawner.allTargets ) //need to recalculate this list every loop, because a target could get destroyed in between
-			// {
-			// 	Rigidbody2D rb = target.GetComponent<Rigidbody2D>();
-			// 	targetRBs.Add(rb);
-			// }
 			for (int i = 0; i < spawner.allTargets.Count; i++)
 			{
-				Vector2 RBVelocity = spawner.allTargets[i].rb.velocity;
-				RBVelocity *= changeRate;
-				spawner.allTargets[i].rb.velocity = RBVelocity;
-				elapsed = Time.time - startTime;
-				yield return new WaitForFixedUpdate();
-				// print("magnitude in loop : " + targetRBs[0].velocity.sqrMagnitude);
+				spawner.allTargets[i].velocityAtSpeedChange = spawner.allTargets[i].rb.velocity;
+				spawner.allTargets[i].magnitudeAtSpeedChange = spawner.allTargets[i].rb.velocity.sqrMagnitude;
+				spawner.allTargets[i].rb.gravityScale = 0.1f;
+				this.gravityScaleAtStop = spawner.allTargets[i].rb.gravityScale; 
 			}
-		
+			rbVelocityForTest = spawner.allTargets[0].rb.velocity.sqrMagnitude * endRate;  			//we only need to use one list element for evaluating in the loop, because they are all being changed at the same rate
+																									//so the [0] here is arbitrary
 		}
-		print("slow down complete!");
+		yield return new WaitForFixedUpdate(); //juuust to be safe, yielding one physics update
+
+		float startTime = Time.time;
+		float totalTimeSeconds = 1f;
+		float elapsed = 0;
+
+		if (spawner.allTargets.Count > 0)
+		{
+
+			while (elapsed < totalTimeSeconds  /***spawner.allTargets[0].rb.velocity.sqrMagnitude > rbVelocityForTest*/)
+				{
+					for (int i = 0; i < spawner.allTargets.Count; i++)
+					{
+						Vector2 RBVelocity = spawner.allTargets[i].rb.velocity;
+						RBVelocity *= changeRate;
+						spawner.allTargets[i].rb.velocity = RBVelocity;
+						yield return new WaitForFixedUpdate();
+					}
+					elapsed = Time.time - startTime;
+					if (spawner.allTargets.Count == 0)
+					{
+						print("slow down loop broken because all targets destroyed!");
+						break;
+					}
+				}
+			print("slow down complete!");
+			
+		}
 	}
 
 	public IEnumerator BringBackToSpeed(float changeRate)
 	{
-		yield return new WaitForFixedUpdate();;
+		StopCoroutine("SlowDownMiniGame");
+		if (spawner.allTargets.Count > 0)
+		{
+			float startTime = Time.time;
+			float totalTimeSeconds = 1f;
+			float elapsed = 0;
+			while (elapsed < totalTimeSeconds  /**elapsed < totalTime **/ /**spawner.allTargets[0].rb.velocity.sqrMagnitude < spawner.allTargets[0].magnitudeAtSpeedChange**/)
+			{
+				for (int i = 0; i < spawner.allTargets.Count; i++)
+				{
+					Vector2 RBVelocity = spawner.allTargets[i].rb.velocity;
+					RBVelocity *= changeRate;
+					spawner.allTargets[i].rb.velocity = RBVelocity;
+					yield return new WaitForFixedUpdate();
+				}
+				elapsed = Time.time - startTime;
+				if (spawner.allTargets.Count == 0)
+				{
+					print("speed up loop broken because all targets destroyed!");
+					break;
+				}
+			}
+
+			for (int i = 0; i < spawner.allTargets.Count; i++)  //set them back exactly to what they were, just in case the above method doesn't do it exactly, since it's based on time elapsed
+			{
+				spawner.allTargets[i].rb.velocity = spawner.allTargets[i].velocityAtSpeedChange;
+			}
+		}
+		print("speed up method complete!");
+
+		StartCoroutine(spawner.GenerateWave());
 	}
 
 }
