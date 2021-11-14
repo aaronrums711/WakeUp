@@ -452,12 +452,36 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
+      propertyPath: names.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
+      propertyPath: names.Array.data[0]
+      value: Joe
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
+      propertyPath: names.Array.data[1]
+      value: Chris
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
+      propertyPath: names.Array.data[2]
+      value: Kate
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
+      propertyPath: names.Array.data[3]
+      value: Adam
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
+      propertyPath: names.Array.data[4]
+      value: Bob
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
       propertyPath: slowDownEffectEndRate
       value: 0.098
       objectReference: {fileID: 0}
     - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
       propertyPath: slowDownEffectChangeRate
-      value: 0.97
+      value: 0.958
       objectReference: {fileID: 0}
     - target: {fileID: 3560577365375624959, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
       propertyPath: m_RootOrder

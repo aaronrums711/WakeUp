@@ -110,6 +110,7 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 				spawner.allTargets[i].velocityAtSpeedChange = spawner.allTargets[i].rb.velocity;
 				spawner.allTargets[i].magnitudeAtSpeedChange = spawner.allTargets[i].rb.velocity.sqrMagnitude;
 				spawner.allTargets[i].rb.gravityScale = 0.1f;
+				spawner.allTargets[i].rb.mass = 0.5f;
 				this.gravityScaleAtStop = spawner.allTargets[i].rb.gravityScale; 
 			}
 			rbVelocityForTest = spawner.allTargets[0].rb.velocity.sqrMagnitude * endRate;  			//we only need to use one list element for evaluating in the loop, because they are all being changed at the same rate
