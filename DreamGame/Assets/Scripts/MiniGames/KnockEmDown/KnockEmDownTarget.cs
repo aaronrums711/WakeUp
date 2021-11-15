@@ -21,7 +21,6 @@ public class KnockEmDownTarget : MiniGameElement
     {
         initialShrinkRate *= parentMiniGame.difficultyParams.scaleUpMultiplier;
         waveManager = parentMiniGame.GetComponentInChildren<KnockEmDownWaveManager>();
-        //initialCoroutine = Shrink(this.transform, initialShrinkRate);
         initialCoroutine = StartCoroutine(Shrink(this.transform, initialShrinkRate));
     }
 
@@ -83,6 +82,18 @@ public class KnockEmDownTarget : MiniGameElement
         float scale = this.transform.localScale.x * 2;  //multiplying by two will roughly be 1 at the start of a targets life, because their X scale is about .5  
         StartCoroutine(DestroyEffect(this.transform,endEffectRate, this ));
         return scale;
+    }
+
+    //only creating this becasue I'm getting a weird "Coroutine Continue Failure" message when I try to stop them from the KnockeEmDownStartStopper script in the slow down method
+    public void StopInitialCoroutine()
+    {
+        StopCoroutine(this.initialCoroutine);
+    }
+
+    //called from StartStopper as well
+    public void RestartInitialCoroutine()
+    {
+        initialCoroutine = StartCoroutine(Shrink(this.transform, initialShrinkRate));
     }
 
 }

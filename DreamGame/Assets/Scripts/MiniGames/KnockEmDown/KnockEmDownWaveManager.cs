@@ -14,7 +14,6 @@ public class KnockEmDownWaveManager : MiniGameElement
     public int minWaveAmount;
     public int maxWaveAmount;
 
-    // [Range(0.1f, 2f)]  public float timeBetweenEachSpawn = 0.3f;
     private float timeBetweenEachSpawn;
 
     public float minTimeBetweenEachSpawn;  //VGIU
@@ -32,7 +31,7 @@ public class KnockEmDownWaveManager : MiniGameElement
     void Start()
     {
         spawner = parentMiniGame.GetComponentInChildren<KnockDownTargetSpawner>();
-        StartCoroutine(SpawnWave(minWaveAmount, maxWaveAmount));
+        StartCoroutine(SpawnWave(minWaveAmount, maxWaveAmount));    
     }
 
 
@@ -66,16 +65,4 @@ public class KnockEmDownWaveManager : MiniGameElement
         StartCoroutine(SpawnWave(minWaveAmount, maxWaveAmount));
     }
     
-
-
-        
-
-
-        
-    [ContextMenu("SpawnWaveFromEditor() testing only")] 
-    public void SpawnWaveFromEditor()
-    {
-        StartCoroutine(SpawnWave(minWaveAmount, maxWaveAmount));
-    }
-
 }

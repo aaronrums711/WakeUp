@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KnockEmDownStartStopper : MiniGameElement, IStoppable 
+public class KnockEmDownStartStopper : MiniGameElement, IStoppable , ISlower
 {
 	/*****************
 	CreateDate: 	8/29/21
@@ -12,8 +12,11 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable
 	******************/
 	
 	//////////////////////////////Config
+	private float slowEffectEndRate = 0.2f;
+	private float slowEffectChangeRate = 1f;  //for this implementation of the ISlower methods, we ARE NOT USING THIS.  there's no need to slowly lerp anything for this mini game 
 	
 	//////////////////////////////State
+	
 	
 	//////////////////////////////Cached Component References
 	public KnockEmDownWaveManager waveManager;
@@ -30,6 +33,16 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable
 		set isActive = true
 		current targets resume shrinking
 		targets spawn again as usual
+
+	SlowDownMiniGame()
+		stop all coroutines.  no further targets should be spawned during this effect
+		set all shrink rates to X percent of their normal
+		stop the shrink coroutine on each target, and re-call it, setting the shrink rate to the new one
+
+	BringBackToSpeed()
+		set all shrink rates back to normal
+		spawn another wave, taking into account how many are already on the screen
+	
 	**/
 
 	void Start()
@@ -37,6 +50,15 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable
 		waveManager = parentMiniGame.GetComponentInChildren<KnockEmDownWaveManager>();
 		targetParent = GameObject.Find("KnockDownTargets").GetComponent<Transform>();
 	}
+
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			StartCoroutine(SlowDownMiniGame(slowEffectEndRate, slowEffectChangeRate));
+		}
+	}
+
 	
 
 	[ContextMenu("StopMiniGame() testing only")] 
@@ -62,5 +84,31 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable
 			float shrinkRate = targetParent.GetChild(i).GetComponent<KnockEmDownTarget>().initialShrinkRate;
 			StartCoroutine(targetParent.GetChild(i).GetComponent<KnockEmDownTarget>().Shrink(targetTrans,shrinkRate));
 		}
+	}
+
+
+	public IEnumerator SlowDownMiniGame(float endRate, float changeRate)
+	{
+		print("slow down method called");
+		waveManager.StopAllCoroutines();
+		if (targetParent.childCount > 0)
+		{
+			float newShrinkRate = targetParent.GetChild(0).GetComponent<KnockEmDownTarget>().initialShrinkRate * endRate;
+
+			for (int i = 0; i<targetParent.childCount; i++)
+			{
+				// StopCoroutine(targetParent.GetChild(i).GetComponent<KnockEmDownTarget>().initialCoroutine);
+				targetParent.GetChild(i).GetComponent<KnockEmDownTarget>().StopInitialCoroutine();
+				Transform targetTrans = targetParent.GetChild(i).GetComponent<Transform>();
+				StartCoroutine(targetParent.GetChild(i).GetComponent<KnockEmDownTarget>().Shrink(targetTrans,newShrinkRate));
+				print("iteration num : " + i);
+			}
+		}
+		yield return null;
+	}
+
+	public IEnumerator BringBackToSpeed(float changeRate)
+	{
+		yield return null;
 	}
 }
