@@ -107,8 +107,6 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 		{
 			for (int i = 0; i < spawner.allTargets.Count; i++)
 			{
-				spawner.allTargets[i].velocityAtSpeedChange = spawner.allTargets[i].rb.velocity;
-				spawner.allTargets[i].magnitudeAtSpeedChange = spawner.allTargets[i].rb.velocity.sqrMagnitude;
 				spawner.allTargets[i].rb.gravityScale = 0.1f;
 				spawner.allTargets[i].rb.mass = 0.5f;
 				this.gravityScaleAtStop = spawner.allTargets[i].rb.gravityScale; 
@@ -173,7 +171,8 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 
 			for (int i = 0; i < spawner.allTargets.Count; i++)  //set them back exactly to what they were, just in case the above method doesn't do it exactly, since it's based on time elapsed
 			{
-				spawner.allTargets[i].rb.velocity = spawner.allTargets[i].velocityAtSpeedChange;
+				spawner.allTargets[i].rb.gravityScale = 1f;
+				spawner.allTargets[i].rb.mass =  1f;
 			}
 		}
 		print("speed up method complete!");

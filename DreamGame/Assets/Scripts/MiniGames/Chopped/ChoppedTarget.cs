@@ -26,8 +26,8 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
 	//////////////////////////////State
 	private float startingYPos;
     [HideInInspector]public Vector2 velocityAtStop; //used by the stop/start script to store the velocity of each target before it's stopped, then to set it back again if necessary
-    [HideInInspector]public float  magnitudeAtSpeedChange; //used by stop/start script, but for the slow down method
-    [HideInInspector]public Vector2 velocityAtSpeedChange;  //same as above, but this is given a default value below in the Start() method for sake of the slow down method
+    // [HideInInspector]public float  magnitudeAtSpeedChange; //used by stop/start script, but for the slow down method
+    // [HideInInspector]public Vector2 velocityAtSpeedChange;  //same as above, but this is given a default value below in the Start() method for sake of the slow down method
 
 	//////////////////////////////Cached Component References
     private SpriteRenderer thisSR;
@@ -54,7 +54,7 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
         spawner = GameObject.Find("LaunchPoints").GetComponent<ChoppedTargetSpawner>();
         startingSprite = thisSR.sprite;
         startingYPos = this.transform.position.y-0.25f;  //subtracting 0.25 just so there's no accidental self destruction right when it's spawned
-        velocityAtSpeedChange = rb.velocity;
+        // velocityAtSpeedChange = rb.velocity;
     }
 
     void Update()
