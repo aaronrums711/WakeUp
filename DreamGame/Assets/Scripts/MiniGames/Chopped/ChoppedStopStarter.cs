@@ -31,43 +31,27 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 	//////////////////////////////Config
 	private float gravityScaleAtStop;
 	[SerializeField, Range(0.05f, 0.9f), Tooltip("lower value = more drastic slow down")]
-	float slowDownEffectEndRate;
+	private float slowDownEffectEndRate;
 
 	[SerializeField, Range(0.5f, 0.99f), Tooltip("lower value = faster rate of slow down")]
-	float slowDownEffectChangeRate;
-	float rbVelocityForTest;
+	private float slowDownEffectChangeRate;
+	private float rbVelocityForTest;
+	private float speedUpEffectRate;
 	
 	//////////////////////////////State
 	
 	//////////////////////////////Cached Component References
 	private ChoppedTargetSpawner spawner;
-	///testing
-	public List<string> names;
+
 	
 
 
 	void Start()
 	{
+		speedUpEffectRate = 1 + (1-slowDownEffectChangeRate);
 		spawner = parentMiniGame.GetComponentInChildren<ChoppedTargetSpawner>();
 	}
 
-	void Update()
-	{
-        if (Input.GetKeyDown(KeyCode.Space))
-		{
-			StartCoroutine(SlowDownMiniGame(slowDownEffectEndRate, slowDownEffectChangeRate));
-		}
-        if (Input.GetKeyDown(KeyCode.Z))
-		{
-			float speedUpEffectRate = 1 + (1-slowDownEffectChangeRate);
-			StartCoroutine(BringBackToSpeed(speedUpEffectRate));
-		}
-		if (Input.GetKeyDown(KeyCode.A))
-		{
-			names.RemoveAt(0);
-			print(names[0]);
-		}
-	}
 
 	[ContextMenu("StopMiniGame()")]
 	public void StopMiniGame()
