@@ -91,7 +91,7 @@ public class KnockEmDownTarget : MiniGameElement
     }
 
     //called from StartStopper as well
-    public void RestartInitialCoroutine()
+    public void RestartInitialCoroutine(Transform transform, float shrinkRate)
     {
         initialCoroutine = StartCoroutine(Shrink(this.transform, initialShrinkRate));
     }

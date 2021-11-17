@@ -414,26 +414,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: KnockEmDown
       objectReference: {fileID: 0}
-    - target: {fileID: 1047094732742780746, guid: 88d0e28d167cb844ab814efca7b82a8a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1047094732742780747, guid: 88d0e28d167cb844ab814efca7b82a8a, type: 3}
-      propertyPath: targetColor.b
-      value: 0.7893378
-      objectReference: {fileID: 0}
-    - target: {fileID: 1047094732742780747, guid: 88d0e28d167cb844ab814efca7b82a8a, type: 3}
-      propertyPath: targetColor.g
-      value: 0.8430746
-      objectReference: {fileID: 0}
-    - target: {fileID: 1047094732742780747, guid: 88d0e28d167cb844ab814efca7b82a8a, type: 3}
-      propertyPath: targetColor.r
-      value: 0.9245283
-      objectReference: {fileID: 0}
-    - target: {fileID: 8379236634898229302, guid: 88d0e28d167cb844ab814efca7b82a8a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88d0e28d167cb844ab814efca7b82a8a, type: 3}
 --- !u!1001 &1909937744

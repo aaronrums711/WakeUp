@@ -57,6 +57,10 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable , ISlower
 		{
 			StartCoroutine(SlowDownMiniGame(slowEffectEndRate, slowEffectChangeRate));
 		}
+		if (Input.GetKeyDown(KeyCode.Z))
+		{
+			StartCoroutine(BringBackToSpeed(0f));
+		}
 	}
 
 	
@@ -76,13 +80,13 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable , ISlower
 		int targetsInPlay = targetParent.childCount;
 		parentMiniGame.isActive = true;
 
-		StartCoroutine(waveManager.SpawnWave(waveManager.minWaveAmount, waveManager.maxWaveAmount-targetsInPlay));
+		StartCoroutine(waveManager.SpawnWave(waveManager.minWaveAmount, waveManager.maxWaveAmount-targetsInPlay, waveManager.minTimeBetweenEachWave, waveManager.maxTimeBetweenEachWave));
 
 		for (int i = 0; i<targetParent.childCount; i++)
 		{
 			Transform targetTrans = targetParent.GetChild(i).GetComponent<Transform>();
 			float shrinkRate = targetParent.GetChild(i).GetComponent<KnockEmDownTarget>().initialShrinkRate;
-			StartCoroutine(targetParent.GetChild(i).GetComponent<KnockEmDownTarget>().Shrink(targetTrans,shrinkRate));
+			targetParent.GetChild(i).GetComponent<KnockEmDownTarget>().RestartInitialCoroutine(targetParent.GetChild(i).GetComponent<Transform>(), shrinkRate);
 		}
 	}
 
@@ -107,8 +111,22 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable , ISlower
 		yield return null;
 	}
 
-	public IEnumerator BringBackToSpeed(float changeRate)
+	public IEnumerator BringBackToSpeed(float changeRate) //this implementation doesn't utilize this change, because we're not slowly lerping stuff like we are in the others. 
 	{
+		int targetsInPlay = targetParent.childCount;
+		StartCoroutine(waveManager.SpawnWave(waveManager.minWaveAmount, waveManager.maxWaveAmount-targetsInPlay, waveManager.minTimeBetweenEachWave, waveManager.maxTimeBetweenEachWave));
+		
+		if (targetParent.childCount > 0)
+		{
+			float shrinkRate = targetParent.GetChild(0).GetComponent<KnockEmDownTarget>().initialShrinkRate;
+			for (int i = 0; i<targetParent.childCount; i++)
+			{
+				targetParent.GetChild(i).GetComponent<KnockEmDownTarget>().StopInitialCoroutine();
+				yield return null; //just to be safe.  Don't know if stopping and starting coroutines right after eachother on the same object will cause weirdness
+				targetParent.GetChild(i).GetComponent<KnockEmDownTarget>().RestartInitialCoroutine(targetParent.GetChild(i).GetComponent<Transform>(), shrinkRate);
+			}
+		}
+
 		yield return null;
 	}
 }
