@@ -372,11 +372,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1047094732742780744, guid: 88d0e28d167cb844ab814efca7b82a8a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.55
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1047094732742780744, guid: 88d0e28d167cb844ab814efca7b82a8a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1047094732742780744, guid: 88d0e28d167cb844ab814efca7b82a8a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -413,6 +413,10 @@ PrefabInstance:
     - target: {fileID: 1047094732742780746, guid: 88d0e28d167cb844ab814efca7b82a8a, type: 3}
       propertyPath: m_Name
       value: KnockEmDown
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047094732742780746, guid: 88d0e28d167cb844ab814efca7b82a8a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88d0e28d167cb844ab814efca7b82a8a, type: 3}
@@ -555,17 +559,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2065524601}
     m_Modifications:
+    - target: {fileID: 2224345863397811167, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2224345864171837184, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2224345864171837184, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8
+      value: 0.36
       objectReference: {fileID: 0}
     - target: {fileID: 2224345864171837184, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.32
       objectReference: {fileID: 0}
     - target: {fileID: 2224345864171837184, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -605,7 +613,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2224345864171837185, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224345864171837213, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: SlowEffectEndRate
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224345864171837213, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: slowEffectChangeRate
+      value: 0.99
       objectReference: {fileID: 0}
     - target: {fileID: 2224345864171837215, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
       propertyPath: targetColor.b
@@ -618,6 +634,10 @@ PrefabInstance:
     - target: {fileID: 2224345864171837215, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
       propertyPath: targetColor.r
       value: 0.9339623
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224345865060967210, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: ClampVelocityModule.separateAxis
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
