@@ -18,6 +18,10 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 	private float InitPSEmissionRateOverTime;
 	private float InitRotatorBaseSpeed;
 	private float InitRotatorBaseSpeedPlusRandom;
+	private float NewPSVelocityOverLifeTimeSpeed;
+	private float NewPSEmissionRateOverTime;
+	private float NewRotatorBaseSpeed;
+	private float NewRotatorBaseSpeedPlusRandom;
 
 	
 	//////////////////////////////State
@@ -57,6 +61,11 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 		InitRotatorBaseSpeed = rotator.baseRotSpeed.z;
 		InitRotatorBaseSpeedPlusRandom  = rotator.rotSpeedPlusRandom.z;
 
+		NewPSVelocityOverLifeTimeSpeed =InitPSVelocityOverLifeTimeSpeed;
+		NewPSEmissionRateOverTime = InitPSEmissionRateOverTime;
+		NewRotatorBaseSpeed = InitRotatorBaseSpeed;
+		NewRotatorBaseSpeedPlusRandom = InitRotatorBaseSpeedPlusRandom;
+
 	}
 
 	void Update()
@@ -95,6 +104,7 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 	public IEnumerator SlowDownMiniGame(float endRate, float changeRate)
 	{
 		print("slow method called");
+		int itCount = 0;
 		 var limitVelocityModule = ps.limitVelocityOverLifetime;
 		 var emissionModule = ps.emission;
 		float startTime = Time.time;
@@ -102,22 +112,25 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 		float elapsed = 0f;
 		while (elapsed<  totalTime)
 		{
-			float newValue1 = InitPSVelocityOverLifeTimeSpeed * changeRate;
-			limitVelocityModule.limit = newValue1;
+			NewPSVelocityOverLifeTimeSpeed *= changeRate;
+			limitVelocityModule.limit = NewPSVelocityOverLifeTimeSpeed;
 
-			float newValue2 = InitPSEmissionRateOverTime * changeRate;
-			emissionModule.rateOverTime = newValue2;
+			NewPSEmissionRateOverTime *= changeRate;
+			emissionModule.rateOverTime = NewPSEmissionRateOverTime;
 
-			float newValue3 = InitRotatorBaseSpeed * changeRate;
-			rotator.baseRotSpeed = new Vector3(0,0, newValue3);
+			NewRotatorBaseSpeed *= changeRate;
+			rotator.baseRotSpeed = new Vector3(0,0, NewRotatorBaseSpeed);
 
-			float newValue4 = InitRotatorBaseSpeedPlusRandom * changeRate;
-			rotator.rotSpeedPlusRandom = new Vector3(0,0, newValue4);
+			NewRotatorBaseSpeedPlusRandom *= changeRate;
+			rotator.rotSpeedPlusRandom = new Vector3(0,0, NewRotatorBaseSpeedPlusRandom);
 
 			elapsed = Time.time-startTime;
+			print("iteration count : " + itCount);
+			itCount ++;
 			yield return null;
 
 		}
+		print("emission module end constant: " + emissionModule.rateOverTime.constant);
 		print("slow method ended");
 	}
 
