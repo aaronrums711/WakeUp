@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserDestroyerStopStarter : MiniGameElement, IStoppable
+public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 {
 	/*****************
 	CreateDate: 	8/29/21
@@ -12,6 +12,13 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable
 	******************/
 	
 	//////////////////////////////Config
+	public float SlowEffectEndRate;
+	public float slowEffectChangeRate;
+	private float InitPSVelocityOverLifeTimeSpeed;
+	private float InitPSEmissionRateOverTime;
+	private float InitRotatorBaseSpeed;
+	private float InitRotatorBaseSpeedPlusRandom;
+
 	
 	//////////////////////////////State
 	
@@ -20,7 +27,10 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable
 	private LaserDestroyerRingChanger ringChanger;
 	private LaserDestroyerInputManager inputManager;
 	private ParticleSystem ps;
-	
+
+
+
+
 	/**
 	StopMiniGame()
 		set isActive = false
@@ -42,6 +52,19 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable
 		ringChanger = parentMiniGame.GetComponentInChildren<LaserDestroyerRingChanger>();
 		inputManager = parentMiniGame.GetComponentInChildren<LaserDestroyerInputManager>();
 		ps = parentMiniGame.GetComponentInChildren<ParticleSystem>();
+		InitPSVelocityOverLifeTimeSpeed = ps.limitVelocityOverLifetime.limit.constant;
+		InitPSEmissionRateOverTime = ps.emission.rateOverTime.constant;
+		InitRotatorBaseSpeed = rotator.baseRotSpeed.z;
+		InitRotatorBaseSpeedPlusRandom  = rotator.rotSpeedPlusRandom.z;
+
+	}
+
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			StartCoroutine(SlowDownMiniGame(SlowEffectEndRate, slowEffectChangeRate));
+		}
 	}
 
 	[ContextMenu("StopMiniGame()")]
@@ -67,5 +90,39 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable
 		ringChanger.thisAnimator.enabled = true;
 		StartCoroutine(ringChanger.ContinuallyMovePanels());
 		inputManager.currentActiveEmitter.CallInitialLaserCast();
+	}
+
+	public IEnumerator SlowDownMiniGame(float endRate, float changeRate)
+	{
+		print("slow method called");
+		 var limitVelocityModule = ps.limitVelocityOverLifetime;
+		 var emissionModule = ps.emission;
+		float startTime = Time.time;
+		float totalTime = 1f;
+		float elapsed = 0f;
+		while (elapsed<  totalTime)
+		{
+			float newValue1 = InitPSVelocityOverLifeTimeSpeed * changeRate;
+			limitVelocityModule.limit = newValue1;
+
+			float newValue2 = InitPSEmissionRateOverTime * changeRate;
+			emissionModule.rateOverTime = newValue2;
+
+			float newValue3 = InitRotatorBaseSpeed * changeRate;
+			rotator.baseRotSpeed = new Vector3(0,0, newValue3);
+
+			float newValue4 = InitRotatorBaseSpeedPlusRandom * changeRate;
+			rotator.rotSpeedPlusRandom = new Vector3(0,0, newValue4);
+
+			elapsed = Time.time-startTime;
+			yield return null;
+
+		}
+		print("slow method ended");
+	}
+
+	public IEnumerator BringBackToSpeed(float changeRate)
+	{
+		yield return null;
 	}
 }
