@@ -40,12 +40,15 @@ public class KnockEmDownWaveManager : MiniGameElement
 
     public IEnumerator SpawnWave(int minCount, int maxCount, int minTimeBetweenWave, int maxTimeBetweenWave)
     {
+        print("spawn wave called");
         timeBetweenEachSpawn = Random.Range(minTimeBetweenEachSpawn, maxTimeBetweeenEachSpawn) * parentMiniGame.difficultyParams.scaleDownMultiplier;
 
         while (isCurrentWaveOnPlayArea)
         {
             yield return new WaitForSeconds(0.1f);
+            isCurrentWaveOnPlayArea = spawner.targetParent.childCount > 0;
         }
+        print("area is clear");
 
         yield return new WaitForSeconds(Random.Range(minTimeBetweenEachWave,maxTimeBetweenEachWave)); //even after isCurrentWaveOnPlayArea = false, wait a little bit
 
