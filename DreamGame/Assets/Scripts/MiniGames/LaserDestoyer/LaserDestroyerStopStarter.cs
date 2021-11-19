@@ -121,13 +121,23 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 
 	public IEnumerator SlowDownMiniGame(float duration, float changeRate)
 	{
-		print("slow method called");
 		initLaserInitializationMultipler = inputManager.allLaserEmitters[0].laserInitializationMultiplier;
 		initLaserReductionMultiplier = inputManager.allLaserEmitters[0].laserReductionMultiplier;
 
-		int itCount = 0;
 		 var limitVelocityModule = ps.limitVelocityOverLifetime;
 		 var emissionModule = ps.emission;
+
+		InitPSVelocityOverLifeTimeSpeed = ps.limitVelocityOverLifetime.limit.constant;  //need to re-assign all these whent the method is called, because the number may be different than when Start() is called
+		InitPSEmissionRateOverTime = ps.emission.rateOverTime.constant;
+		InitRotatorBaseSpeed = rotator.baseRotSpeed.z;
+		InitRotatorBaseSpeedPlusRandom  = rotator.rotSpeedPlusRandom.z;
+		initBaseProgression = parentMiniGame.baseProgression;
+
+		NewPSVelocityOverLifeTimeSpeed =InitPSVelocityOverLifeTimeSpeed;
+		NewPSEmissionRateOverTime = InitPSEmissionRateOverTime;
+		NewRotatorBaseSpeed = InitRotatorBaseSpeed;
+		NewRotatorBaseSpeedPlusRandom = InitRotatorBaseSpeedPlusRandom;
+
 		float startTime = Time.time;
 		float totalTime = duration;
 		float elapsed = 0f;
@@ -154,13 +164,9 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 			parentMiniGame.baseProgression *=changeRate;
 
 			elapsed = Time.time-startTime;
-			print("iteration count : " + itCount);
-			itCount ++;
 			yield return null;
 
 		}
-		print("emission module end constant: " + emissionModule.rateOverTime.constant);
-		print("slow method ended");
 	}
 
 	public IEnumerator BringBackToSpeed(float duration, float changeRate)

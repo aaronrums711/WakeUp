@@ -16,12 +16,15 @@ public class PoolStartStopper : MiniGameElement, IStoppable, ISlower
 	Vector2 cueBallInitialVelocity;
 	float  cueBallInitialMagnitude;
 
-	[SerializeField, Range(0.05f, 0.9f), Tooltip("lower value = more drastic slow down")]
-	float slowDownEffectEndRate;
+	public float slowDownChangeRate;
+	public  float speedUpChangeRate;
+	public float speedChangeDuration;
 
-	[SerializeField, Range(0.5f, 0.99f), Tooltip("lower value = faster rate of slow down")]
-	float slowDownEffectChangeRate;
-	private float speedUpChangeRate;
+	[Range(0.01f,0.1f)]
+	public float speedUpChangeRateAddition;  //for Pool, I think we need to add a bit more speed than we took away, to compensate. That's what this does.  It should be very small, between 0.01 and 0.1 maybe 
+
+	[Range(1f,20f)]
+	public float finalCueBallPush;
 
 	private float cueBallInitialLinearDrag;
 
@@ -39,7 +42,7 @@ public class PoolStartStopper : MiniGameElement, IStoppable, ISlower
 		poolStick =  parentMiniGame.GetComponentInChildren<PoolStick>();
 		poolStickInitialRotateSpeed = poolStick.rotationSpeed;
 		cueBallInitialLinearDrag = cueBall.thisRB.drag;
-		speedUpChangeRate = 1 + (1 - slowDownEffectChangeRate); //this will ensure that it will return to speed at the same rate as it slowed
+		speedUpChangeRate = 1 + (1 - slowDownChangeRate) + speedUpChangeRateAddition; //this will ensure that it will return to speed at the same rate as it slowed
 
     }
 
@@ -47,11 +50,11 @@ public class PoolStartStopper : MiniGameElement, IStoppable, ISlower
     {
         if (Input.GetKeyDown(KeyCode.Space))
 		{
-			StartCoroutine(SlowDownMiniGame(slowDownEffectEndRate, slowDownEffectChangeRate));
+			StartCoroutine(SlowDownMiniGame(speedChangeDuration, slowDownChangeRate));
 		}
 		if (Input.GetKeyDown(KeyCode.Z))
 		{
-			StartCoroutine(BringBackToSpeed( 1f, speedUpChangeRate));
+			StartCoroutine(BringBackToSpeed( speedChangeDuration, speedUpChangeRate));
 		}
     }
 
@@ -69,22 +72,20 @@ public class PoolStartStopper : MiniGameElement, IStoppable, ISlower
 		spawner.InvokeRepeating("AttemptToSpawnTargets", 5f, 10f);
 	}
 
-	//goal here is to quickly but smoothly change the speed of a few items.  End Rate should be between 0 and 1.  Close to 0 will mean objects will come to an almost complete stop
-	//close to 1 will mean they will only slow down a little bit.  Think of endRate as a normalized value that represents the what the slowed speed will be as a percent of the initial speed
-	//changeRate will make the slow down happen faster.  A lower change rate will equal a faster change
 	
-	public IEnumerator SlowDownMiniGame(float endRate, float changeRate)
+	public IEnumerator SlowDownMiniGame(float duration, float changeRate)
 	{	
 		poolStick.isSlowed = true;
-		float poolStickSlowedRotateSpeed = poolStickInitialRotateSpeed * endRate;
 		float poolStickRotateSpeed = poolStickInitialRotateSpeed;
 		cueBallInitialVelocity = cueBall.thisRB.velocity;
 		cueBallInitialMagnitude = cueBall.thisRB.velocity.sqrMagnitude;
 
 		Vector2 cueBallVelocity = cueBallInitialVelocity;
-
+		float startTime = Time.time;
+		float totalTime = duration;
+		float elapsed = 0f;
 		spawner.CancelInvoke("AttemptToSpawnTargets");
-		while (poolStickRotateSpeed >= poolStickSlowedRotateSpeed)
+		while (elapsed<  totalTime)
 		{
 			poolStickRotateSpeed *= changeRate;
 			poolStick.rotationSpeed = poolStickRotateSpeed;
@@ -92,6 +93,7 @@ public class PoolStartStopper : MiniGameElement, IStoppable, ISlower
 			cueBallVelocity = cueBall.thisRB.velocity;
 			cueBallVelocity *= changeRate;
 			cueBall.thisRB.velocity = cueBallVelocity;
+			elapsed = Time.time-startTime;
 
 			yield return new WaitForFixedUpdate();
 		}
@@ -105,10 +107,13 @@ public class PoolStartStopper : MiniGameElement, IStoppable, ISlower
 	{
 		// float changeRate = 1 + (1 - slowDownEffectChangeRate); //this will ensure that it will return to speed at the same rate as it slowed
 		float poolStickRotateSpeed = poolStick.rotationSpeed;
-		float sqrMagnitude = 0;
-		float targetSqrMagnitude = cueBallInitialMagnitude * 0.85f;  //0.85 is arbitrary...but it doesn't make sense for the cue ball to be set back to it's full previous speed, because drag would still effect it
 		Vector2 cueBallVelocity;
-		while (poolStickRotateSpeed < poolStickInitialRotateSpeed || sqrMagnitude < cueBallInitialMagnitude)
+
+		float startTime = Time.time;
+		float totalTime = duration;
+		float elapsed = 0f;
+
+		while (elapsed<  totalTime)
 		{
 			cueBall.thisRB.drag = cueBallInitialLinearDrag;
 			poolStickRotateSpeed *= changeRate;
@@ -116,12 +121,14 @@ public class PoolStartStopper : MiniGameElement, IStoppable, ISlower
 
 			cueBallVelocity = cueBall.thisRB.velocity;
 			cueBallVelocity *= changeRate;
-			sqrMagnitude = cueBallVelocity.sqrMagnitude;
 			cueBall.thisRB.velocity = cueBallVelocity;
-			
+			elapsed = Time.time-startTime;
 			yield return new WaitForFixedUpdate();
 		}
 		poolStick.rotationSpeed = poolStickInitialRotateSpeed;
+		cueBallVelocity = cueBall.thisRB.velocity;
+		cueBallVelocity *= finalCueBallPush;  //this gives it a final push to compensate for the lost ground of slow effect.  the finalCueBallPush is a somewhat arbitrary ball-park figure. 
+		cueBall.thisRB.velocity = cueBallVelocity;
 		
 		poolStick.isSlowed = false;
 		spawner.InvokeRepeating("AttemptToSpawnTargets", 5f, 10f);

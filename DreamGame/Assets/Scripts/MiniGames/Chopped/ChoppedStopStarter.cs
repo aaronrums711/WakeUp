@@ -30,13 +30,12 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 
 	//////////////////////////////Config
 	private float gravityScaleAtStop;
-	[SerializeField, Range(0.05f, 0.9f), Tooltip("lower value = more drastic slow down")]
-	private float slowDownEffectEndRate;
 
-	[SerializeField, Range(0.5f, 0.99f), Tooltip("lower value = faster rate of slow down")]
-	private float slowDownEffectChangeRate;
+	public float slowDownEffectChangeRate;
+	public float speedUpEffectChangeRate;	
+	public float speedChangeDuration;
+
 	private float rbVelocityForTest;
-	private float speedUpEffectRate;
 	
 	//////////////////////////////State
 	
@@ -48,12 +47,23 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 
 	void Start()
 	{
-		speedUpEffectRate = 1 + (1-slowDownEffectChangeRate);
+		speedUpEffectChangeRate = 1 + (1-slowDownEffectChangeRate);
 		spawner = parentMiniGame.GetComponentInChildren<ChoppedTargetSpawner>();
 	}
 
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			StartCoroutine(SlowDownMiniGame(speedChangeDuration, slowDownEffectChangeRate));
+		}
 
-	[ContextMenu("StopMiniGame()")]
+		if (Input.GetKeyDown(KeyCode.Z))
+		{
+			StartCoroutine(BringBackToSpeed(speedChangeDuration, speedUpEffectChangeRate ));
+		}
+	}
+
 	public void StopMiniGame()
 	{
 
@@ -70,7 +80,6 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 		spawner.StopAllCoroutines();
 	}
 
-	[ContextMenu("RestartMiniGame()")]
 	public void RestartMiniGame()
 	{
 		parentMiniGame.isActive = true;
@@ -84,7 +93,7 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 	}
 
 
-	public IEnumerator SlowDownMiniGame(float endRate, float changeRate)
+	public IEnumerator SlowDownMiniGame(float duration, float changeRate)
 	{
 		spawner.StopAllCoroutines();
 		if (spawner.allTargets.Count > 0)
@@ -95,13 +104,11 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 				spawner.allTargets[i].rb.mass = 0.5f;
 				this.gravityScaleAtStop = spawner.allTargets[i].rb.gravityScale; 
 			}
-			rbVelocityForTest = spawner.allTargets[0].rb.velocity.sqrMagnitude * endRate;  			//we only need to use one list element for evaluating in the loop, because they are all being changed at the same rate
-																									//so the [0] here is arbitrary
 		}
 		yield return new WaitForFixedUpdate(); //juuust to be safe, yielding one physics update
 
 		float startTime = Time.time;
-		float totalTimeSeconds = 1f;
+		float totalTimeSeconds = duration;
 		float elapsed = 0;
 
 		if (spawner.allTargets.Count > 0)
@@ -134,9 +141,9 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 		if (spawner.allTargets.Count > 0)
 		{
 			float startTime = Time.time;
-			float totalTimeSeconds = 1f;
+			float totalTimeSeconds = duration;
 			float elapsed = 0;
-			while (elapsed < totalTimeSeconds  /**elapsed < totalTime **/ /**spawner.allTargets[0].rb.velocity.sqrMagnitude < spawner.allTargets[0].magnitudeAtSpeedChange**/)
+			while (elapsed < totalTimeSeconds   /**spawner.allTargets[0].rb.velocity.sqrMagnitude < spawner.allTargets[0].magnitudeAtSpeedChange**/)
 			{
 				for (int i = 0; i < spawner.allTargets.Count; i++)
 				{
