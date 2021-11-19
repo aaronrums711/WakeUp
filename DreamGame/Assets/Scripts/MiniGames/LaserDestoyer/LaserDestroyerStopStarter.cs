@@ -35,7 +35,7 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 	private LaserDestroyerRingChanger ringChanger;
 	private LaserDestroyerInputManager inputManager;
 	private ParticleSystem ps;
-	public List<LaserEmitter> allLaserEmitters;
+	private List<LaserEmitter> allLaserEmitters;
 
 
 
@@ -71,8 +71,7 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 		NewRotatorBaseSpeed = InitRotatorBaseSpeed;
 		NewRotatorBaseSpeedPlusRandom = InitRotatorBaseSpeedPlusRandom;
 
-		// initLaserInitializationMultipler = inputManager.allLaserEmitters[0].laserInitializationMultiplier;
-		// initLaserReductionMultiplier = inputManager.allLaserEmitters[0].laserReductionMultiplier;
+
 
 		speedUpChangeRate = 1 + (1-slowEffectChangeRate);
 
@@ -123,6 +122,9 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 	public IEnumerator SlowDownMiniGame(float endRate, float changeRate)
 	{
 		print("slow method called");
+		initLaserInitializationMultipler = inputManager.allLaserEmitters[0].laserInitializationMultiplier;
+		initLaserReductionMultiplier = inputManager.allLaserEmitters[0].laserReductionMultiplier;
+
 		int itCount = 0;
 		 var limitVelocityModule = ps.limitVelocityOverLifetime;
 		 var emissionModule = ps.emission;
