@@ -12,7 +12,7 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 	******************/
 	
 	//////////////////////////////Config
-	public float SlowEffectEndRate;
+	public float SlowEffectDuration;
 	public float slowEffectChangeRate;
 	private float InitPSVelocityOverLifeTimeSpeed;
 	private float InitPSEmissionRateOverTime;
@@ -24,6 +24,7 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 	private float NewRotatorBaseSpeedPlusRandom;
 	private float initLaserInitializationMultipler;
 	private float initLaserReductionMultiplier;
+	private float initBaseProgression;
 
 	public float speedUpChangeRate;
 
@@ -65,13 +66,12 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 		InitPSEmissionRateOverTime = ps.emission.rateOverTime.constant;
 		InitRotatorBaseSpeed = rotator.baseRotSpeed.z;
 		InitRotatorBaseSpeedPlusRandom  = rotator.rotSpeedPlusRandom.z;
+		initBaseProgression = parentMiniGame.baseProgression;
 
 		NewPSVelocityOverLifeTimeSpeed =InitPSVelocityOverLifeTimeSpeed;
 		NewPSEmissionRateOverTime = InitPSEmissionRateOverTime;
 		NewRotatorBaseSpeed = InitRotatorBaseSpeed;
 		NewRotatorBaseSpeedPlusRandom = InitRotatorBaseSpeedPlusRandom;
-
-
 
 		speedUpChangeRate = 1 + (1-slowEffectChangeRate);
 
@@ -85,12 +85,12 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 	{
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			StartCoroutine(SlowDownMiniGame(SlowEffectEndRate, slowEffectChangeRate));
+			StartCoroutine(SlowDownMiniGame(SlowEffectDuration, slowEffectChangeRate));
 		}
 
 		if (Input.GetKeyDown(KeyCode.Z))
 		{
-			StartCoroutine(BringBackToSpeed(speedUpChangeRate ));
+			StartCoroutine(BringBackToSpeed(SlowEffectDuration, speedUpChangeRate ));
 		}
 	}
 
@@ -119,7 +119,7 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 		inputManager.currentActiveEmitter.CallInitialLaserCast();
 	}
 
-	public IEnumerator SlowDownMiniGame(float endRate, float changeRate)
+	public IEnumerator SlowDownMiniGame(float duration, float changeRate)
 	{
 		print("slow method called");
 		initLaserInitializationMultipler = inputManager.allLaserEmitters[0].laserInitializationMultiplier;
@@ -129,7 +129,7 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 		 var limitVelocityModule = ps.limitVelocityOverLifetime;
 		 var emissionModule = ps.emission;
 		float startTime = Time.time;
-		float totalTime = 1f;
+		float totalTime = duration;
 		float elapsed = 0f;
 		while (elapsed<  totalTime)
 		{
@@ -150,6 +150,8 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 				emitter.laserInitializationMultiplier *= changeRate;
 				emitter.laserReductionMultiplier *= changeRate;
 			}
+
+			parentMiniGame.baseProgression *=changeRate;
 
 			elapsed = Time.time-startTime;
 			print("iteration count : " + itCount);
@@ -161,15 +163,13 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 		print("slow method ended");
 	}
 
-	public IEnumerator BringBackToSpeed(float changeRate)
+	public IEnumerator BringBackToSpeed(float duration, float changeRate)
 	{
-		print("BringBAckToSpeed change rate: " + changeRate );
-		print("BringBackToSpeed method called");
-		int itCount = 0;
+
 		var limitVelocityModule = ps.limitVelocityOverLifetime;
 		var emissionModule = ps.emission;
 		float startTime = Time.time;
-		float totalTime = 1f;
+		float totalTime = duration;
 		float elapsed = 0f;
 		while (elapsed<  totalTime)
 		{
@@ -190,15 +190,11 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 				emitter.laserInitializationMultiplier *= changeRate;
 				emitter.laserReductionMultiplier *= changeRate;
 			}
+			parentMiniGame.baseProgression *=changeRate;
 
 			elapsed = Time.time-startTime;
-			print("iteration count : " + itCount);
-			itCount ++;
 			yield return null;
-
 		}
-		print("emission module end constant: " + emissionModule.rateOverTime.constant);
-		print("BringBackToSpeed() method ended");
-		yield return null;
+		parentMiniGame.baseProgression = initBaseProgression;
 	}
 }

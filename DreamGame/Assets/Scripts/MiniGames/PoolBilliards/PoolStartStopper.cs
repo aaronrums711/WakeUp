@@ -51,7 +51,7 @@ public class PoolStartStopper : MiniGameElement, IStoppable, ISlower
 		}
 		if (Input.GetKeyDown(KeyCode.Z))
 		{
-			StartCoroutine(BringBackToSpeed( speedUpChangeRate));
+			StartCoroutine(BringBackToSpeed( 1f, speedUpChangeRate));
 		}
     }
 
@@ -101,7 +101,7 @@ public class PoolStartStopper : MiniGameElement, IStoppable, ISlower
 
 
 
-	public IEnumerator BringBackToSpeed( float changeRate)
+	public IEnumerator BringBackToSpeed( float duration, float changeRate)
 	{
 		// float changeRate = 1 + (1 - slowDownEffectChangeRate); //this will ensure that it will return to speed at the same rate as it slowed
 		float poolStickRotateSpeed = poolStick.rotationSpeed;

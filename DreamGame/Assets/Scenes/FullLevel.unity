@@ -620,6 +620,10 @@ PrefabInstance:
       value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2224345864171837213, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: SlowEffectDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224345864171837213, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
       propertyPath: slowEffectChangeRate
       value: 0.99
       objectReference: {fileID: 0}

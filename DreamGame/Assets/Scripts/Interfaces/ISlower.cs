@@ -13,6 +13,6 @@ public interface ISlower
 	Dependencies:
 	******************/
 	
-	public IEnumerator SlowDownMiniGame(float endRate, float changeRate);
-	public IEnumerator BringBackToSpeed(float changeRate);  //no endRate is needed because the logic just uses whatever the initial values were when the SlowDownMiniGame method was called
+	public IEnumerator SlowDownMiniGame(float duration, float changeRate);
+	public IEnumerator BringBackToSpeed(float duration, float changeRate);  //no endRate is needed because the logic just uses whatever the initial values were when the SlowDownMiniGame method was called
 }

@@ -128,7 +128,7 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 		}
 	}
 
-	public IEnumerator BringBackToSpeed(float changeRate)
+	public IEnumerator BringBackToSpeed(float duration, float changeRate)
 	{
 		StopCoroutine("SlowDownMiniGame");
 		if (spawner.allTargets.Count > 0)

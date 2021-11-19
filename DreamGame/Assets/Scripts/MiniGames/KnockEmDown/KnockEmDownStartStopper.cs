@@ -59,7 +59,7 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable , ISlower
 		}
 		if (Input.GetKeyDown(KeyCode.Z))
 		{
-			StartCoroutine(BringBackToSpeed(0f));
+			StartCoroutine(BringBackToSpeed(1f, 0f));
 		}
 	}
 
@@ -111,7 +111,7 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable , ISlower
 		yield return null;
 	}
 
-	public IEnumerator BringBackToSpeed(float changeRate) //this implementation doesn't utilize this change, because we're not slowly lerping stuff like we are in the others. 
+	public IEnumerator BringBackToSpeed(float duration, float changeRate) //this implementation doesn't utilize this change, because we're not slowly lerping stuff like we are in the others. 
 	{
 		int targetsInPlay = targetParent.childCount;
 		StartCoroutine(waveManager.SpawnWave(waveManager.minWaveAmount, waveManager.maxWaveAmount-targetsInPlay, waveManager.minTimeBetweenEachWave, waveManager.maxTimeBetweenEachWave));
