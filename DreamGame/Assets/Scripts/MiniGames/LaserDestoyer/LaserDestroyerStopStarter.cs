@@ -22,6 +22,10 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 	private float NewPSEmissionRateOverTime;
 	private float NewRotatorBaseSpeed;
 	private float NewRotatorBaseSpeedPlusRandom;
+	private float initLaserInitializationMultipler;
+	private float initLaserReductionMultiplier;
+
+	public float speedUpChangeRate;
 
 	
 	//////////////////////////////State
@@ -31,6 +35,7 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 	private LaserDestroyerRingChanger ringChanger;
 	private LaserDestroyerInputManager inputManager;
 	private ParticleSystem ps;
+	public List<LaserEmitter> allLaserEmitters;
 
 
 
@@ -66,6 +71,15 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 		NewRotatorBaseSpeed = InitRotatorBaseSpeed;
 		NewRotatorBaseSpeedPlusRandom = InitRotatorBaseSpeedPlusRandom;
 
+		// initLaserInitializationMultipler = inputManager.allLaserEmitters[0].laserInitializationMultiplier;
+		// initLaserReductionMultiplier = inputManager.allLaserEmitters[0].laserReductionMultiplier;
+
+		speedUpChangeRate = 1 + (1-slowEffectChangeRate);
+
+
+
+
+
 	}
 
 	void Update()
@@ -73,6 +87,11 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			StartCoroutine(SlowDownMiniGame(SlowEffectEndRate, slowEffectChangeRate));
+		}
+
+		if (Input.GetKeyDown(KeyCode.Z))
+		{
+			StartCoroutine(BringBackToSpeed(speedUpChangeRate ));
 		}
 	}
 
@@ -124,6 +143,12 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 			NewRotatorBaseSpeedPlusRandom *= changeRate;
 			rotator.rotSpeedPlusRandom = new Vector3(0,0, NewRotatorBaseSpeedPlusRandom);
 
+			foreach (LaserEmitter emitter in inputManager.allLaserEmitters)
+			{
+				emitter.laserInitializationMultiplier *= changeRate;
+				emitter.laserReductionMultiplier *= changeRate;
+			}
+
 			elapsed = Time.time-startTime;
 			print("iteration count : " + itCount);
 			itCount ++;
@@ -136,6 +161,42 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 
 	public IEnumerator BringBackToSpeed(float changeRate)
 	{
+		print("BringBAckToSpeed change rate: " + changeRate );
+		print("BringBackToSpeed method called");
+		int itCount = 0;
+		var limitVelocityModule = ps.limitVelocityOverLifetime;
+		var emissionModule = ps.emission;
+		float startTime = Time.time;
+		float totalTime = 1f;
+		float elapsed = 0f;
+		while (elapsed<  totalTime)
+		{
+			NewPSVelocityOverLifeTimeSpeed *= changeRate;
+			limitVelocityModule.limit = NewPSVelocityOverLifeTimeSpeed;
+
+			NewPSEmissionRateOverTime *= changeRate;
+			emissionModule.rateOverTime = NewPSEmissionRateOverTime;
+
+			NewRotatorBaseSpeed *= changeRate;
+			rotator.baseRotSpeed = new Vector3(0,0, NewRotatorBaseSpeed);
+
+			NewRotatorBaseSpeedPlusRandom *= changeRate;
+			rotator.rotSpeedPlusRandom = new Vector3(0,0, NewRotatorBaseSpeedPlusRandom);
+
+			foreach (LaserEmitter emitter in inputManager.allLaserEmitters)
+			{
+				emitter.laserInitializationMultiplier *= changeRate;
+				emitter.laserReductionMultiplier *= changeRate;
+			}
+
+			elapsed = Time.time-startTime;
+			print("iteration count : " + itCount);
+			itCount ++;
+			yield return null;
+
+		}
+		print("emission module end constant: " + emissionModule.rateOverTime.constant);
+		print("BringBackToSpeed() method ended");
 		yield return null;
 	}
 }
