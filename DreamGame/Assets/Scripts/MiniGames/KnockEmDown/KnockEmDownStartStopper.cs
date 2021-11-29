@@ -16,7 +16,8 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable , ISlower
 	private float slowEffectChangeRate = 1f;  //for this implementation of the ISlower methods, we ARE NOT USING THIS.  there's no need to slowly lerp anything for this mini game 
 	
 	//////////////////////////////State
-	
+	[SerializeField]private  float rateOfDecay;
+	[SerializeField]private float initialRateOfDecay;
 	
 	//////////////////////////////Cached Component References
 	public KnockEmDownWaveManager waveManager;
@@ -49,6 +50,8 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable , ISlower
 	{
 		waveManager = parentMiniGame.GetComponentInChildren<KnockEmDownWaveManager>();
 		targetParent = GameObject.Find("KnockDownTargets").GetComponent<Transform>();
+		rateOfDecay = parentMiniGame.rateOfDecay;
+		initialRateOfDecay = rateOfDecay;
 	}
 
 	void Update()
@@ -95,27 +98,28 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable , ISlower
 	{
 		print("slow down method called");
 		waveManager.StopAllCoroutines();
+		float newRateOfDecay = rateOfDecay * endRate;
+		parentMiniGame.rateOfDecay = newRateOfDecay;
+
 		if (targetParent.childCount > 0)
 		{
 			float newShrinkRate = targetParent.GetChild(0).GetComponent<KnockEmDownTarget>().initialShrinkRate * endRate;
 
 			for (int i = 0; i<targetParent.childCount; i++)
 			{
-				// StopCoroutine(targetParent.GetChild(i).GetComponent<KnockEmDownTarget>().initialCoroutine);
 				targetParent.GetChild(i).GetComponent<KnockEmDownTarget>().StopInitialCoroutine();
 				Transform targetTrans = targetParent.GetChild(i).GetComponent<Transform>();
 				StartCoroutine(targetParent.GetChild(i).GetComponent<KnockEmDownTarget>().Shrink(targetTrans,newShrinkRate));
-				print("iteration num : " + i);
 			}
 		}
 		yield return null;
 	}
 
-	public IEnumerator BringBackToSpeed(float duration, float changeRate) //this implementation doesn't utilize this change, because we're not slowly lerping stuff like we are in the others. 
+	public IEnumerator BringBackToSpeed(float endRate, float changeRate) //this implementation doesn't utilize this changeRate, because we're not slowly lerping stuff like we are in the others. 
 	{
 		int targetsInPlay = targetParent.childCount;
 		StartCoroutine(waveManager.SpawnWave(waveManager.minWaveAmount, waveManager.maxWaveAmount-targetsInPlay, waveManager.minTimeBetweenEachWave, waveManager.maxTimeBetweenEachWave));
-		
+		parentMiniGame.rateOfDecay = initialRateOfDecay;
 		if (targetParent.childCount > 0)
 		{
 			float shrinkRate = targetParent.GetChild(0).GetComponent<KnockEmDownTarget>().initialShrinkRate;
