@@ -27,6 +27,8 @@ public class PoolStartStopper : MiniGameElement, IStoppable, ISlower
 	public float finalCueBallPush;
 
 	private float cueBallInitialLinearDrag;
+	[SerializeField]private  float rateOfDecay;
+	[SerializeField]private float initialRateOfDecay;
 
 	
 	//////////////////////////////Cached Component References
@@ -43,6 +45,8 @@ public class PoolStartStopper : MiniGameElement, IStoppable, ISlower
 		poolStickInitialRotateSpeed = poolStick.rotationSpeed;
 		cueBallInitialLinearDrag = cueBall.thisRB.drag;
 		speedUpChangeRate = 1 + (1 - slowDownChangeRate) + speedUpChangeRateAddition; //this will ensure that it will return to speed at the same rate as it slowed
+		rateOfDecay = parentMiniGame.rateOfDecay;
+		initialRateOfDecay = rateOfDecay;
 
     }
 
@@ -94,6 +98,8 @@ public class PoolStartStopper : MiniGameElement, IStoppable, ISlower
 			cueBallVelocity *= changeRate;
 			cueBall.thisRB.velocity = cueBallVelocity;
 			elapsed = Time.time-startTime;
+			rateOfDecay *= changeRate;
+			parentMiniGame.rateOfDecay = rateOfDecay;
 
 			yield return new WaitForFixedUpdate();
 		}
@@ -123,12 +129,15 @@ public class PoolStartStopper : MiniGameElement, IStoppable, ISlower
 			cueBallVelocity *= changeRate;
 			cueBall.thisRB.velocity = cueBallVelocity;
 			elapsed = Time.time-startTime;
+			rateOfDecay *= changeRate;
+			parentMiniGame.rateOfDecay = rateOfDecay;
 			yield return new WaitForFixedUpdate();
 		}
 		poolStick.rotationSpeed = poolStickInitialRotateSpeed;
 		cueBallVelocity = cueBall.thisRB.velocity;
 		cueBallVelocity *= finalCueBallPush;  //this gives it a final push to compensate for the lost ground of slow effect.  the finalCueBallPush is a somewhat arbitrary ball-park figure. 
 		cueBall.thisRB.velocity = cueBallVelocity;
+		parentMiniGame.rateOfDecay = initialRateOfDecay;
 		
 		poolStick.isSlowed = false;
 		spawner.InvokeRepeating("AttemptToSpawnTargets", 5f, 10f);
