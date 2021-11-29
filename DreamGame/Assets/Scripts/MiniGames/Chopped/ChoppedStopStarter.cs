@@ -36,6 +36,8 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 	public float speedChangeDuration;
 
 	private float rbVelocityForTest;
+	[SerializeField]private  float rateOfDecay;
+	[SerializeField]private float initialRateOfDecay;
 	
 	//////////////////////////////State
 	
@@ -49,6 +51,8 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 	{
 		speedUpEffectChangeRate = 1 + (1-slowDownEffectChangeRate);
 		spawner = parentMiniGame.GetComponentInChildren<ChoppedTargetSpawner>();
+		rateOfDecay = parentMiniGame.rateOfDecay;
+		initialRateOfDecay = rateOfDecay;
 	}
 
 	void Update()
@@ -123,14 +127,17 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 						spawner.allTargets[i].rb.velocity = RBVelocity;
 						yield return new WaitForFixedUpdate();
 					}
+
+					rateOfDecay *= changeRate;
+					parentMiniGame.rateOfDecay = rateOfDecay;
 					elapsed = Time.time - startTime;
 					if (spawner.allTargets.Count == 0)
 					{
-						print("slow down loop broken because all targets destroyed!");
+						// print("slow down loop broken because all targets destroyed!");
 						break;
 					}
 				}
-			print("slow down complete!");
+			// print("slow down complete!");
 			
 		}
 	}
@@ -153,9 +160,11 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 					yield return new WaitForFixedUpdate();
 				}
 				elapsed = Time.time - startTime;
+				rateOfDecay *= changeRate;
+				parentMiniGame.rateOfDecay = rateOfDecay;
 				if (spawner.allTargets.Count == 0)
 				{
-					print("speed up loop broken because all targets destroyed!");
+					// print("speed up loop broken because all targets destroyed!");
 					break;
 				}
 			}
@@ -165,8 +174,10 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 				spawner.allTargets[i].rb.gravityScale = 1f;
 				spawner.allTargets[i].rb.mass =  1f;
 			}
+			parentMiniGame.rateOfDecay = initialRateOfDecay;
+
 		}
-		print("speed up method complete!");
+		// print("speed up method complete!");
 
 		StartCoroutine(spawner.GenerateWave());
 	}
