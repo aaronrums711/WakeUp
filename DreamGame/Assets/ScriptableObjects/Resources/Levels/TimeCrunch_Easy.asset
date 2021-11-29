@@ -25,6 +25,7 @@ MonoBehaviour:
   miscMultiplier: 0.4
   secondaryMiscMultiplier: 1
   timeCrunchVar: 0
+  timeCrunchGamesToStart: 2
   timerForEachPairSeconds: 0
   pairsNeededToWin: 0
   sprintVar: 0
