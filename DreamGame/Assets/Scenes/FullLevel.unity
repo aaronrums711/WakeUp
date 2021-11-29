@@ -348,26 +348,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pool
       objectReference: {fileID: 0}
-    - target: {fileID: 8799290901895693865, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8799290901895693908, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
-      propertyPath: finalCueBallPush
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8799290901895693908, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
-      propertyPath: slowDownChangeRate
-      value: 0.97
-      objectReference: {fileID: 0}
-    - target: {fileID: 8799290901895693908, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
-      propertyPath: speedChangeDuration
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8799290901895693909, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3ce30c1eeef6884089429dfa22c001a, type: 3}
 --- !u!4 &1299380969 stripped
@@ -446,46 +426,6 @@ PrefabInstance:
     - target: {fileID: 3560577365375624953, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
       propertyPath: m_Name
       value: Chopped
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560577365375624953, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
-      propertyPath: names.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
-      propertyPath: names.Array.data[0]
-      value: Joe
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
-      propertyPath: names.Array.data[1]
-      value: Chris
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
-      propertyPath: names.Array.data[2]
-      value: Kate
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
-      propertyPath: names.Array.data[3]
-      value: Adam
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
-      propertyPath: names.Array.data[4]
-      value: Bob
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
-      propertyPath: speedChangeDuration
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
-      propertyPath: slowDownEffectEndRate
-      value: 0.098
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560577365375624958, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
-      propertyPath: slowDownEffectChangeRate
-      value: 0.958
       objectReference: {fileID: 0}
     - target: {fileID: 3560577365375624959, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
       propertyPath: m_RootOrder
@@ -579,10 +519,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2065524601}
     m_Modifications:
-    - target: {fileID: 2224345863397811167, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2224345864171837184, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -630,38 +566,6 @@ PrefabInstance:
     - target: {fileID: 2224345864171837185, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
       propertyPath: m_Name
       value: MiniGameLaserDestroyer
-      objectReference: {fileID: 0}
-    - target: {fileID: 2224345864171837185, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2224345864171837213, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
-      propertyPath: SlowEffectEndRate
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2224345864171837213, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
-      propertyPath: SlowEffectDuration
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2224345864171837213, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
-      propertyPath: slowEffectChangeRate
-      value: 0.99
-      objectReference: {fileID: 0}
-    - target: {fileID: 2224345864171837215, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
-      propertyPath: targetColor.b
-      value: 0.876691
-      objectReference: {fileID: 0}
-    - target: {fileID: 2224345864171837215, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
-      propertyPath: targetColor.g
-      value: 0.88479
-      objectReference: {fileID: 0}
-    - target: {fileID: 2224345864171837215, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
-      propertyPath: targetColor.r
-      value: 0.9339623
-      objectReference: {fileID: 0}
-    - target: {fileID: 2224345865060967210, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
-      propertyPath: ClampVelocityModule.separateAxis
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}

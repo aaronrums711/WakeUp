@@ -36,8 +36,8 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 	public float speedChangeDuration;
 
 	private float rbVelocityForTest;
-	[SerializeField]private  float rateOfDecay;
-	[SerializeField]private float initialRateOfDecay;
+	private  float rateOfDecay;
+	private float initialRateOfDecay;
 	
 	//////////////////////////////State
 	

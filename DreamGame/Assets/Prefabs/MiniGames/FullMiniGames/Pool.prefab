@@ -378,7 +378,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8799290901895693864
 Transform:
   m_ObjectHideFlags: 0
@@ -482,8 +482,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentMiniGame: {fileID: 0}
-  slowDownEffectEndRate: 0.1
-  slowDownEffectChangeRate: 0.94
+  slowDownChangeRate: 0.97
+  speedUpChangeRate: 0
+  speedChangeDuration: 1
+  speedUpChangeRateAddition: 0
+  finalCueBallPush: 3
   cueBall: {fileID: 0}
   poolStick: {fileID: 0}
 --- !u!1 &8799290902175748337

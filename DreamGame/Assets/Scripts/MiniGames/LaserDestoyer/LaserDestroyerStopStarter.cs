@@ -27,9 +27,12 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 	private float initBaseProgression;
 
 	public float speedUpChangeRate;
+	private  float rateOfDecay;
+	private float initialRateOfDecay;
 
 	
 	//////////////////////////////State
+
 	
 	//////////////////////////////Cached Component References
 	private CenterTargetRotator rotator;
@@ -74,8 +77,8 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 		NewRotatorBaseSpeedPlusRandom = InitRotatorBaseSpeedPlusRandom;
 
 		speedUpChangeRate = 1 + (1-slowEffectChangeRate);
-
-
+		rateOfDecay = parentMiniGame.rateOfDecay;
+		initialRateOfDecay = rateOfDecay;
 
 
 
@@ -162,6 +165,8 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 			}
 
 			parentMiniGame.baseProgression *=changeRate;
+			rateOfDecay *= changeRate;
+			parentMiniGame.rateOfDecay = rateOfDecay;
 
 			elapsed = Time.time-startTime;
 			yield return null;
@@ -197,10 +202,13 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 				emitter.laserReductionMultiplier *= changeRate;
 			}
 			parentMiniGame.baseProgression *=changeRate;
+			rateOfDecay *= changeRate;
+			parentMiniGame.rateOfDecay = rateOfDecay;
 
 			elapsed = Time.time-startTime;
 			yield return null;
 		}
 		parentMiniGame.baseProgression = initBaseProgression;
+		parentMiniGame.rateOfDecay = initialRateOfDecay;
 	}
 }

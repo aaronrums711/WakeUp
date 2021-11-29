@@ -16,8 +16,8 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable , ISlower
 	private float slowEffectChangeRate = 1f;  //for this implementation of the ISlower methods, we ARE NOT USING THIS.  there's no need to slowly lerp anything for this mini game 
 	
 	//////////////////////////////State
-	[SerializeField]private  float rateOfDecay;
-	[SerializeField]private float initialRateOfDecay;
+	private  float rateOfDecay;
+	private float initialRateOfDecay;
 	
 	//////////////////////////////Cached Component References
 	public KnockEmDownWaveManager waveManager;
@@ -54,17 +54,7 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable , ISlower
 		initialRateOfDecay = rateOfDecay;
 	}
 
-	void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			StartCoroutine(SlowDownMiniGame(slowEffectEndRate, slowEffectChangeRate));
-		}
-		if (Input.GetKeyDown(KeyCode.Z))
-		{
-			StartCoroutine(BringBackToSpeed(1f, 0f));
-		}
-	}
+
 
 	
 

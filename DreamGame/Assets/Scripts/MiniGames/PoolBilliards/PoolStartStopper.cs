@@ -27,8 +27,8 @@ public class PoolStartStopper : MiniGameElement, IStoppable, ISlower
 	public float finalCueBallPush;
 
 	private float cueBallInitialLinearDrag;
-	[SerializeField]private  float rateOfDecay;
-	[SerializeField]private float initialRateOfDecay;
+	private  float rateOfDecay;
+	private float initialRateOfDecay;
 
 	
 	//////////////////////////////Cached Component References
@@ -50,17 +50,17 @@ public class PoolStartStopper : MiniGameElement, IStoppable, ISlower
 
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-		{
-			StartCoroutine(SlowDownMiniGame(speedChangeDuration, slowDownChangeRate));
-		}
-		if (Input.GetKeyDown(KeyCode.Z))
-		{
-			StartCoroutine(BringBackToSpeed( speedChangeDuration, speedUpChangeRate));
-		}
-    }
+    // void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.Space))
+	// 	{
+	// 		StartCoroutine(SlowDownMiniGame(speedChangeDuration, slowDownChangeRate));
+	// 	}
+	// 	if (Input.GetKeyDown(KeyCode.Z))
+	// 	{
+	// 		StartCoroutine(BringBackToSpeed( speedChangeDuration, speedUpChangeRate));
+	// 	}
+    // }
 
 	[ContextMenu("StopMiniGame()")]
 	public void StopMiniGame()

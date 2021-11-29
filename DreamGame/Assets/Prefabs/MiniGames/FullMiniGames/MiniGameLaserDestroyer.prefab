@@ -723,7 +723,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2224345864171837184
 Transform:
   m_ObjectHideFlags: 0
@@ -757,7 +757,7 @@ MonoBehaviour:
   miniGameName: LaserDestroyer
   inherentComplexity: 1
   baseColor: {r: 1, g: 1, b: 1, a: 1}
-  targetColor: {r: 0.8962264, g: 0.23313572, b: 0.12259703, a: 1}
+  targetColor: {r: 0.9339623, g: 0.88479, b: 0.876691, a: 1}
   completionPercent: 0.92
   baseProgression: 0.03
   baseProgressionChunk: 0.05
@@ -810,6 +810,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentMiniGame: {fileID: 0}
+  SlowEffectDuration: 1
+  slowEffectChangeRate: 0.99
+  speedUpChangeRate: 0
 --- !u!1 &2224345864479507874
 GameObject:
   m_ObjectHideFlags: 0
