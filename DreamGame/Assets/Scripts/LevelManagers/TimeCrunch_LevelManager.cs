@@ -18,8 +18,6 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 	public List<Vector3> miniGameSpawnPoints3; //VGIU
 	public List<Vector3> miniGameSpawnPoints2; //VGIU
 
-	// public Transform activeMiniGameParent;
-
 	public List<Vector3> cameraPositions;  //ATM there are four entries in this list, even though the third and 4th are the same (turns out the camera keeps the same position regardles of if there are 3 or 4 games on screen)
 
 	//////////////////////////////State
@@ -51,12 +49,12 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 
 	public void MoveLevelForward()
 	{
-		StartCoroutine(SpawnGames(lagBetweenGames, thisLevel.totalGamesInLevel));
+		StartCoroutine(SpawnGames(lagBetweenGames, thisLevel.totalGamesInLevel, thisLevel.timeCrunchGamesToStart));
 	}
 
 	///realizing now that this method only takes into account elapsed time when spawning new games.  In the future we may want to consider the progress of all the games, or most recent added game, or anything like that. 
 	///just a thought for the future.  For the TimeCrunch level type using time only might be fine. 
-	private IEnumerator SpawnGames(float secondsBetween, int numGames)
+	private IEnumerator SpawnGames(float secondsBetween, int numGames, int numGamesAtStart)
 	{
 		List<Vector3> spawnPointsToUse = new List<Vector3>();
 		if (thisLevel.totalGamesInLevel == 2) {spawnPointsToUse = miniGameSpawnPoints2;}
@@ -64,14 +62,18 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		else if (thisLevel.totalGamesInLevel == 4) {spawnPointsToUse = miniGameSpawnPoints4;}
 		else{Debug.LogError("there is less than 2 or more than 4 total games set for this TimeCrunch level.  This should not be!");}
 
-		MiniGame firstMiniGame = Instantiate(allGamesForThisLevel[0], spawnPointsToUse[0], Quaternion.identity, activeMiniGameParent);
-		firstMiniGame.gameObject.SetActive(true);
-		firstMiniGame.orderInLevel = 1;
-		activeGamesCount = activeMiniGameParent.childCount;
-		gamesActiveInThisLevel.Add(firstMiniGame);
+		Camera.main.transform.position = cameraPositions[numGamesAtStart-1];
+		for (int i=0; i< numGamesAtStart; i++)
+		{
+			MiniGame miniGame = Instantiate(allGamesForThisLevel[i], spawnPointsToUse[i], Quaternion.identity, activeMiniGameParent);
+			miniGame.gameObject.SetActive(true);
+			miniGame.orderInLevel = i+1;
+			activeGamesCount = activeMiniGameParent.childCount;
+			gamesActiveInThisLevel.Add(miniGame);
+		}
 
 		float timeElapsed = 0f;
-		for (int i = 1; i < thisLevel.totalGamesInLevel; i++)
+		for (int i = numGames - numGamesAtStart; i < numGames; i++)
 		{
 			while(timeElapsed < secondsBetween)
 			{

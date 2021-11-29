@@ -39,6 +39,7 @@ public class Level : ScriptableObject
 
 	[Header("Time Crunch")]
 	public float timeCrunchVar;
+	public int timeCrunchGamesToStart;
 
 	[Header("Doubles")]
 	public int timerForEachPairSeconds;

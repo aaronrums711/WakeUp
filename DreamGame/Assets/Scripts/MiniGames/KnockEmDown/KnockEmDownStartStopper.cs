@@ -12,8 +12,8 @@ public class KnockEmDownStartStopper : MiniGameElement, IStoppable , ISlower
 	******************/
 	
 	//////////////////////////////Config
-	private float slowEffectEndRate = 0.2f;
-	private float slowEffectChangeRate = 1f;  //for this implementation of the ISlower methods, we ARE NOT USING THIS.  there's no need to slowly lerp anything for this mini game 
+	// private float slowEffectEndRate = 0.2f;  //when calling the SlowDown and BringBackToSpeed methods, the first param for this game is going to be different from the others!!! because we are not slowly lerping
+	// private float slowEffectChangeRate = 1f;  //for this implementation of the ISlower methods, we ARE NOT USING THIS.  there's no need to slowly lerp anything for this mini game 
 	
 	//////////////////////////////State
 	private  float rateOfDecay;

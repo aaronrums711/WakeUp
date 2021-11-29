@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour
 	
 	public int gamesNeededToWin;
 	public int currentGamesWon;
-	[HideInInspector] public int executionInterval= 5;
+	[HideInInspector] protected int executionInterval= 5;
 
 	//////////////////////////////State
 	public bool isLevelFinished = false;
