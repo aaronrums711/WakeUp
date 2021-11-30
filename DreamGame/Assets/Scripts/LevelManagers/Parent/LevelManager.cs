@@ -175,20 +175,28 @@ public class LevelManager : MonoBehaviour
 			initColors.Add(sr.color);
 		}
 
+		int innerIterations = 0;
+		int outerIterations = 0;
+		print("renderer count: " + renderers.Count);
+		print("initColors count: " + initColors.Count);
+		print("newColors count: " + newColors.Count);
+
         while(elapsed <= totalTime)
         {
-			elapsed = Time.time-startTime;
-			int iterations = 0;
-			print("renderer count: " + renderers.Count);
-			print("initColors count: " + initColors.Count);
-			print("newColors count: " + newColors.Count);
-
+			
 			for(int i = 0; i< renderers.Count; i++)
 			{
 				renderers[i].color = Color.Lerp(initColors[i], newColors[i], elapsed/duration);
-				iterations++;
-				print("iteration count: " + iterations);
+				elapsed = Time.time-startTime;
+				innerIterations++;
+				yield return null;
+				print("elapsed: " + elapsed);
+				print("duration : " +  duration);
+				print("elapsed over duration : " + elapsed/duration);
+				print("innerIterations: " + innerIterations);
 			}
+			outerIterations++;
+			print("outerIterations: " +outerIterations);
 			
 			yield return null;
 			
