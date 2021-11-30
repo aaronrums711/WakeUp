@@ -50,6 +50,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 			List<Transform> transforms = new List<Transform>();
 			transforms.Add(activeMiniGameParent);
 			spriteRenderers = GetAllSpriteRenderers(transforms);
+			StartCoroutine(FadeOut(spriteRenderers, 1f, additiveColor));
 		}
 
     }

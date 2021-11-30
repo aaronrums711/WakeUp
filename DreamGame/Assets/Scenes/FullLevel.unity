@@ -187,7 +187,7 @@ MonoBehaviour:
   difficultyParams: {fileID: 0}
   gamesNeededToWin: 0
   currentGamesWon: 0
-  executionInterval: 5
+  additiveColor: {r: 197, g: 197, b: 197, a: 0}
   isLevelFinished: 0
   isLevelWon: 0
   allGamesForThisLevel: []
@@ -211,6 +211,7 @@ MonoBehaviour:
   - {x: 4, y: 0, z: -10}
   - {x: 4, y: -4.2, z: -15}
   - {x: 4, y: -4.2, z: -15}
+  spriteRenderers: []
   activeGamesCount: 0
 --- !u!4 &403593744
 Transform:

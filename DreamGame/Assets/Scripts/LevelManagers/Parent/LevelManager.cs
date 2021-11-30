@@ -22,7 +22,7 @@ public class LevelManager : MonoBehaviour
 	public int currentGamesWon;
 	[HideInInspector] protected int executionInterval= 5;
 
-	[SerializeField] private Color additiveColor = new Color(197,197,197,0);
+	[HideInInspector] public Color additiveColor = new Color(197,197,197,0);
 
 	//////////////////////////////State
 	public bool isLevelFinished = false;
@@ -158,7 +158,7 @@ public class LevelManager : MonoBehaviour
 	}
 
 	//this method uses a colorToAdd and adds it to each pre-existing color to get the target color, instead of just lerping all colors to a single constant color.  ColorToAdd should be close to white if the goal is to lighten everything
-	private IEnumerator FadeOut(List<SpriteRenderer> renderers, float duration, Color colorToAdd)
+	public IEnumerator FadeOut(List<SpriteRenderer> renderers, float duration, Color colorToAdd)
     {
 		float startTime = Time.time;
 		float totalTime = duration;
@@ -172,19 +172,26 @@ public class LevelManager : MonoBehaviour
 
 		foreach(SpriteRenderer sr in renderers)
 		{
-			newColors.Add(sr.color);
+			initColors.Add(sr.color);
 		}
-
 
         while(elapsed <= totalTime)
         {
-			elapsed+=Time.deltaTime;
+			elapsed = Time.time-startTime;
+			int iterations = 0;
+			print("renderer count: " + renderers.Count);
+			print("initColors count: " + initColors.Count);
+			print("newColors count: " + newColors.Count);
+
 			for(int i = 0; i< renderers.Count; i++)
 			{
 				renderers[i].color = Color.Lerp(initColors[i], newColors[i], elapsed/duration);
+				iterations++;
+				print("iteration count: " + iterations);
 			}
-			elapsed = Time.time-startTime;
+			
 			yield return null;
+			
         }
     }
 
