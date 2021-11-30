@@ -19,6 +19,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 	public List<Vector3> miniGameSpawnPoints2; //VGIU
 
 	public List<Vector3> cameraPositions;  //ATM there are four entries in this list, even though the third and 4th are the same (turns out the camera keeps the same position regardles of if there are 3 or 4 games on screen)
+	public List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 
 	//////////////////////////////State
 	[Tooltip("this could potentially be part of the parent class...but what defines 'active' will be pretty different for each level type")]
@@ -44,6 +45,13 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		{
 			CheckAllMiniGames();
 		}
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			List<Transform> transforms = new List<Transform>();
+			transforms.Add(activeMiniGameParent);
+			spriteRenderers = GetAllSpriteRenderers(transforms);
+		}
+
     }
 
 

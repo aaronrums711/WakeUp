@@ -22,6 +22,8 @@ public class LevelManager : MonoBehaviour
 	public int currentGamesWon;
 	[HideInInspector] protected int executionInterval= 5;
 
+	[SerializeField] private Color additiveColor = new Color(197,197,197,0);
+
 	//////////////////////////////State
 	public bool isLevelFinished = false;
 	public bool isLevelWon = false;
@@ -154,5 +156,52 @@ public class LevelManager : MonoBehaviour
         mg.baseProgression *=  progressionParams.universalProgressionMultiplier;
         mg.baseProgressionChunk *= progressionParams.universalProgressionChunkMultiplier;
 	}
+
+	//this method uses a colorToAdd and adds it to each pre-existing color to get the target color, instead of just lerping all colors to a single constant color.  ColorToAdd should be close to white if the goal is to lighten everything
+	private IEnumerator FadeOut(List<SpriteRenderer> renderers, float duration, Color colorToAdd)
+    {
+		float startTime = Time.time;
+		float totalTime = duration;
+		float elapsed = 0f;
+        List<Color> newColors = new List<Color>();
+		List<Color> initColors = new List<Color>();
+		foreach(SpriteRenderer sr in renderers)
+		{
+			newColors.Add(sr.color + colorToAdd);
+		}
+
+		foreach(SpriteRenderer sr in renderers)
+		{
+			newColors.Add(sr.color);
+		}
+
+
+        while(elapsed <= totalTime)
+        {
+			elapsed+=Time.deltaTime;
+			for(int i = 0; i< renderers.Count; i++)
+			{
+				renderers[i].color = Color.Lerp(initColors[i], newColors[i], elapsed/duration);
+			}
+			elapsed = Time.time-startTime;
+			yield return null;
+        }
+    }
+
+	//takes in a list of transforms, and gives you a list of SpriteRenderers that are children of those transforms
+	public List<SpriteRenderer> GetAllSpriteRenderers(List<Transform> parents)
+	{
+		List<SpriteRenderer> SRs = new List<SpriteRenderer>();
+		foreach(Transform trans in parents)
+		{
+			SpriteRenderer[] SRsInThisTransform = trans.GetComponentsInChildren<SpriteRenderer>();
+			for (int i = 0; i < SRsInThisTransform.Length; i++)
+			{
+				SRs.Add(SRsInThisTransform[i]);
+			}
+		}
+		return SRs;
+	}
+
 
 }
