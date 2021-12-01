@@ -187,7 +187,8 @@ MonoBehaviour:
   difficultyParams: {fileID: 0}
   gamesNeededToWin: 0
   currentGamesWon: 0
-  additiveColor: {r: 197, g: 197, b: 197, a: 0}
+  additiveColor: {r: 0.22265, g: 0.305, b: 0.26077503, a: 0}
+  colorAlterationDivider: 1.5
   isLevelFinished: 0
   isLevelWon: 0
   allGamesForThisLevel: []
@@ -212,7 +213,7 @@ MonoBehaviour:
   - {x: 4, y: -4.2, z: -15}
   - {x: 4, y: -4.2, z: -15}
   spriteRenderers: []
-  lerpDuration: 3
+  lerpDuration: 1.5
   activeGamesCount: 0
 --- !u!4 &403593744
 Transform:

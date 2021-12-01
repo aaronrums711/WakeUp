@@ -24,7 +24,8 @@ public class LevelManager : MonoBehaviour
 	public int currentGamesWon;
 	[HideInInspector] protected int executionInterval= 5;
 
-	[HideInInspector] public Color additiveColor = new Color(197,197,197,255);
+	public Color additiveColor = new Color(197,197,197,255);
+	public float colorAlterationDivider;
 
 	//////////////////////////////State
 	public bool isLevelFinished = false;
@@ -36,8 +37,6 @@ public class LevelManager : MonoBehaviour
 	public List<MiniGame>  allGamesForThisLevel;
 	public List<MiniGame>  gamesActiveInThisLevel;
 	public Transform activeMiniGameParent;
-
-	
 
 	public void CheckAllMiniGames()
 	{
@@ -168,7 +167,12 @@ public class LevelManager : MonoBehaviour
 		List<Color> initColors = new List<Color>();
 		foreach(SpriteRenderer sr in renderers)
 		{
-			newColors.Add(sr.color + colorToAdd);
+			float hue, sat, val;
+			Color.RGBToHSV(sr.color, out hue, out sat, out val);
+			Color reducedColor = Color.HSVToRGB(hue, sat/colorAlterationDivider, val/colorAlterationDivider );
+
+
+			newColors.Add(reducedColor);
 		}
 
 		foreach(SpriteRenderer sr in renderers)
@@ -176,28 +180,15 @@ public class LevelManager : MonoBehaviour
 			initColors.Add(sr.color);
 		}
 
-		int innerIterations = 0;
-		int outerIterations = 0;
-		print("renderer count: " + renderers.Count);
-		print("initColors count: " + initColors.Count);
-		print("newColors count: " + newColors.Count);
-
         while(elapsed <= duration)
         {
 			
 			for(int i = 0; i< renderers.Count; i++)
 			{
-				renderers[i].color = Color.Lerp(initColors[i], Color.red/**newColors[i]**/, elapsed/duration);
-				
-				innerIterations++;
-				// print("elapsed: " + elapsed);
-				// print("duration : " +  duration);
-				// print("elapsed over duration : " + elapsed/duration);
-				// print("innerIterations: " + innerIterations);
+				renderers[i].color = Color.Lerp(initColors[i], newColors[i], elapsed/duration);
+		
 			}
 			elapsed = Time.time-startTime;
-			outerIterations++;
-			print("outerIterations: " +outerIterations);
 			
 			yield return null;
 			

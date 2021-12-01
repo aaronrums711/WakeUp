@@ -55,18 +55,18 @@ public class ChoppedStopStarter : MiniGameElement, IStoppable, ISlower
 		initialRateOfDecay = rateOfDecay;
 	}
 
-	void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			StartCoroutine(SlowDownMiniGame(speedChangeDuration, slowDownEffectChangeRate));
-		}
+	// void Update()
+	// {
+	// 	if (Input.GetKeyDown(KeyCode.Space))
+	// 	{
+	// 		StartCoroutine(SlowDownMiniGame(speedChangeDuration, slowDownEffectChangeRate));
+	// 	}
 
-		if (Input.GetKeyDown(KeyCode.Z))
-		{
-			StartCoroutine(BringBackToSpeed(speedChangeDuration, speedUpEffectChangeRate ));
-		}
-	}
+	// 	if (Input.GetKeyDown(KeyCode.Z))
+	// 	{
+	// 		StartCoroutine(BringBackToSpeed(speedChangeDuration, speedUpEffectChangeRate ));
+	// 	}
+	// }
 
 	public void StopMiniGame()
 	{
