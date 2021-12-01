@@ -49,8 +49,9 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			List<Transform> transforms = new List<Transform>();
+			List<string> tagsToAvoid = new List<string> {"PlayAreaBarriers"};
 			transforms.Add(activeMiniGameParent);
-			spriteRenderers = GetAllSpriteRenderers(transforms);
+			spriteRenderers = GetAllSpriteRenderers(transforms, tagsToAvoid);
 			StartCoroutine(FadeOut(spriteRenderers, lerpDuration, additiveColor));
 		}
 

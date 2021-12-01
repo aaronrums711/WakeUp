@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class LevelManager : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class LevelManager : MonoBehaviour
 	[Tooltip("having these on the parent LevelManager class assumes that all games in all level types will use the same progressionParams and difficultyParams.  This seems likely, and any cases where it's not true can just be dealt with in the child script ")]
 	public ProgressionParams progressionParams;
     public DifficultyParams difficultyParams;
+	
 	
 	public int gamesNeededToWin;
 	public int currentGamesWon;
@@ -204,7 +206,7 @@ public class LevelManager : MonoBehaviour
     }
 
 	//takes in a list of transforms, and gives you a list of SpriteRenderers that are children of those transforms
-	public List<SpriteRenderer> GetAllSpriteRenderers(List<Transform> parents)
+	public List<SpriteRenderer> GetAllSpriteRenderers(List<Transform> parents, List<string> tagsToAvoid)
 	{
 		List<SpriteRenderer> SRs = new List<SpriteRenderer>();
 		foreach(Transform trans in parents)
@@ -212,7 +214,15 @@ public class LevelManager : MonoBehaviour
 			SpriteRenderer[] SRsInThisTransform = trans.GetComponentsInChildren<SpriteRenderer>();
 			for (int i = 0; i < SRsInThisTransform.Length; i++)
 			{
-				SRs.Add(SRsInThisTransform[i]);
+				if (tagsToAvoid.Contains(SRsInThisTransform[i].tag) )
+				{
+					continue;
+				}
+				else
+				{
+					SRs.Add(SRsInThisTransform[i]);
+				}
+				
 			}
 		}
 		return SRs;
