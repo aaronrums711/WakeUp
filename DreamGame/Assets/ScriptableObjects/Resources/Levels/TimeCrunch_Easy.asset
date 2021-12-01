@@ -16,16 +16,16 @@ MonoBehaviour:
   generalDifficulty: 0
   usesTotalLevelTimerLimit: 1
   totalGamesInLevel: 2
-  gamesAtOneTime: 4
-  minGamesNeededToWin: 4
+  gamesAtOneTime: 2
+  minGamesNeededToWin: 2
   totalLevelTimeLimitSeconds: 180
-  lagBetweenGamesSeconds: 3
+  lagBetweenGamesSeconds: 5
   gamesStopIfCompleted: 1
   gamesStopIfFailed: 0
   miscMultiplier: 0.4
   secondaryMiscMultiplier: 1
   timeCrunchVar: 0
-  timeCrunchGamesToStart: 2
+  timeCrunchGamesToStart: 1
   timerForEachPairSeconds: 0
   pairsNeededToWin: 0
   sprintVar: 0

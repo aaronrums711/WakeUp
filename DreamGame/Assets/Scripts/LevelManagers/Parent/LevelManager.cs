@@ -22,7 +22,7 @@ public class LevelManager : MonoBehaviour
 	public int currentGamesWon;
 	[HideInInspector] protected int executionInterval= 5;
 
-	[HideInInspector] public Color additiveColor = new Color(197,197,197,0);
+	[HideInInspector] public Color additiveColor = new Color(197,197,197,255);
 
 	//////////////////////////////State
 	public bool isLevelFinished = false;
@@ -161,7 +161,6 @@ public class LevelManager : MonoBehaviour
 	public IEnumerator FadeOut(List<SpriteRenderer> renderers, float duration, Color colorToAdd)
     {
 		float startTime = Time.time;
-		float totalTime = duration;
 		float elapsed = 0f;
         List<Color> newColors = new List<Color>();
 		List<Color> initColors = new List<Color>();
@@ -181,26 +180,27 @@ public class LevelManager : MonoBehaviour
 		print("initColors count: " + initColors.Count);
 		print("newColors count: " + newColors.Count);
 
-        while(elapsed <= totalTime)
+        while(elapsed <= duration)
         {
 			
 			for(int i = 0; i< renderers.Count; i++)
 			{
-				renderers[i].color = Color.Lerp(initColors[i], newColors[i], elapsed/duration);
-				elapsed = Time.time-startTime;
+				renderers[i].color = Color.Lerp(initColors[i], Color.red/**newColors[i]**/, elapsed/duration);
+				
 				innerIterations++;
-				yield return null;
-				print("elapsed: " + elapsed);
-				print("duration : " +  duration);
-				print("elapsed over duration : " + elapsed/duration);
-				print("innerIterations: " + innerIterations);
+				// print("elapsed: " + elapsed);
+				// print("duration : " +  duration);
+				// print("elapsed over duration : " + elapsed/duration);
+				// print("innerIterations: " + innerIterations);
 			}
+			elapsed = Time.time-startTime;
 			outerIterations++;
 			print("outerIterations: " +outerIterations);
 			
 			yield return null;
 			
         }
+		print("outer loop exited");
     }
 
 	//takes in a list of transforms, and gives you a list of SpriteRenderers that are children of those transforms
