@@ -13,7 +13,6 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 	
 	//////////////////////////////Config
 	public LevelType managingLevelType;
-	private float lagBetweenGames; 
 	public List<Vector3> miniGameSpawnPoints4; //VGIU. each of these represents the locations of mini games for levels with 4, 3 and 2 total games
 	public List<Vector3> miniGameSpawnPoints3; //VGIU
 	public List<Vector3> miniGameSpawnPoints2; //VGIU
@@ -32,7 +31,6 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
     void Start()
     {
 		SetUpLevel();
-		lagBetweenGames = thisLevel.lagBetweenGamesSeconds;
 		if (activeMiniGameParent == null)
 		{Debug.LogError("ActiveMiniGame parent not found, that's an issue");}
 
@@ -52,7 +50,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 			List<string> tagsToAvoid = new List<string> {"PlayAreaBarriers"};
 			transforms.Add(activeMiniGameParent);
 			spriteRenderers = GetAllSpriteRenderers(transforms, tagsToAvoid);
-			StartCoroutine(FadeOut(spriteRenderers, lerpDuration, additiveColor));
+			StartCoroutine(ColorFade(spriteRenderers, lerpDuration, additiveColor));
 		}
 
     }
@@ -60,7 +58,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 
 	public void MoveLevelForward()
 	{
-		StartCoroutine(SpawnGames(lagBetweenGames, thisLevel.totalGamesInLevel, thisLevel.timeCrunchGamesToStart));
+		StartCoroutine(SpawnGames(thisLevel.lagBetweenGamesSeconds, thisLevel.totalGamesInLevel, thisLevel.timeCrunchGamesToStart));
 	}
 
 	///realizing now that this method only takes into account elapsed time when spawning new games.  In the future we may want to consider the progress of all the games, or most recent added game, or anything like that. 
@@ -84,7 +82,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		}
 
 		float timeElapsed = 0f;
-		for (int i = numGames - numGamesAtStart; i < numGames; i++)
+		for (int i = numGamesAtStart ; i < numGames; i++)
 		{
 			while(timeElapsed < secondsBetween)
 			{

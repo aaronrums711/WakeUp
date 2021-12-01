@@ -159,7 +159,7 @@ public class LevelManager : MonoBehaviour
 	}
 
 	//this method uses a colorToAdd and adds it to each pre-existing color to get the target color, instead of just lerping all colors to a single constant color.  ColorToAdd should be close to white if the goal is to lighten everything
-	public IEnumerator FadeOut(List<SpriteRenderer> renderers, float duration, Color colorToAdd)
+	public IEnumerator ColorFade(List<SpriteRenderer> renderers, float duration, Color colorToAdd)
     {
 		float startTime = Time.time;
 		float elapsed = 0f;
