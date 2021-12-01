@@ -124,7 +124,7 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        if (progressionParams = null)
+        if (progressionParams == null)
         {
             Debug.LogError("there was no  matching ProgressionParameter object found.  Something is wrong");
             return;
@@ -217,6 +217,13 @@ public class LevelManager : MonoBehaviour
 			}
 		}
 		return SRs;
+	}
+
+	public void DistributeParamsAndLevel(MiniGame mg)
+	{
+		mg.level = this.thisLevel;
+		mg.difficultyParams = this.difficultyParams;
+		mg.progressionParams = this.progressionParams;
 	}
 
 

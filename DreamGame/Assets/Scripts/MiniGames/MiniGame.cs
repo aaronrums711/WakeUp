@@ -73,8 +73,10 @@ public class MiniGame : MonoBehaviour
 
     void Start()
     {
+        // rateOfDecay *= progressionParams.universalDragMultiplier;  ///I Think this should go here, but not 100% ATM.  12/1/21
+        // baseProgression *=  progressionParams.universalProgressionMultiplier;
+        // baseProgressionChunk *= progressionParams.universalProgressionChunkMultiplier;
         
-        // isActive = true; //this may be set by manager scripts later on...but for now, whenever a minigame is instantiated, isActive will be set to true;
         completionPercent = 0.5f;
         keyForThisGame = keysToPlay[orderInLevel];  //orderInLevel will eventually be set by a manager class. For now, VGIU
         getPlayAreaBarriers();

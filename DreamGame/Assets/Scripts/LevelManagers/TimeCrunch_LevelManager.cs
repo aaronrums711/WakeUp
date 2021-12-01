@@ -33,7 +33,8 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		SetUpLevel();
 		if (activeMiniGameParent == null)
 		{Debug.LogError("ActiveMiniGame parent not found, that's an issue");}
-
+		base.AssignDifficultyParameters();
+		base.AssignProgressionParameters();
 		MoveLevelForward();
     }
 
