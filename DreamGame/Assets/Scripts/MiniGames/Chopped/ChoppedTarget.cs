@@ -46,7 +46,10 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
 	
     void Start()
     {
-        MiniGameElement.OnSpawnGameElement(this.gameObject);
+        if (MiniGameElement.OnSpawnGameElement is not null)
+        {
+            MiniGameElement.OnSpawnGameElement(this.gameObject);
+        }
         startingScale = this.transform.localScale;
         SetHealthAndSize();
         currentHealth = totalHealth;
@@ -78,7 +81,10 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
         rb.velocity = velocityAtHit;
         if (currentHealth <= 0)
         {
-            MiniGameElement.OnDestroyGameElement(this.gameObject);
+            if (MiniGameElement.OnDestroyGameElement is not null)
+            {
+                MiniGameElement.OnDestroyGameElement(this.gameObject);
+            }
             spawner.allTargets.RemoveAt(0);
             AddMiniGameProgress();
             Destroy(this.gameObject);

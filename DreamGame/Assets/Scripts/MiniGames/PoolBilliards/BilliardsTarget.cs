@@ -21,7 +21,11 @@ public class BilliardsTarget : MiniGameElement
 
     void Start()
     {
-        MiniGameElement.OnSpawnGameElement(this.gameObject);
+        // MiniGameElement.OnSpawnGameElement(this.gameObject);
+        if (MiniGameElement.OnSpawnGameElement is not null)
+        {
+            MiniGameElement.OnSpawnGameElement(this.gameObject);
+        }
         hitManager = parentMiniGame.GetComponentInChildren<PoolHitManager>();
         initialScale = this.transform.localScale.x;
         thisTransform = GetComponent<Transform>();
@@ -53,7 +57,11 @@ public class BilliardsTarget : MiniGameElement
         }
         //in case it's not perfect, at the end of the loops just set scale to 0
         trans.localScale = Vector3.zero;
-        MiniGameElement.OnDestroyGameElement(this.gameObject);
+
+        if (MiniGameElement.OnDestroyGameElement is not null)
+        {
+            MiniGameElement.OnDestroyGameElement(this.gameObject);
+        }
         Destroy(this.gameObject);
     }
 

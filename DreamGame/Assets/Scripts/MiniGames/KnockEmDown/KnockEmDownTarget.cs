@@ -19,7 +19,10 @@ public class KnockEmDownTarget : MiniGameElement
 
     void Start()
     {
-        MiniGameElement.OnSpawnGameElement(this.gameObject);
+        if (MiniGameElement.OnSpawnGameElement is not null)
+        {
+            MiniGameElement.OnSpawnGameElement(this.gameObject);
+        }
         initialShrinkRate *= parentMiniGame.difficultyParams.scaleUpMultiplier;
         waveManager = parentMiniGame.GetComponentInChildren<KnockEmDownWaveManager>();
         initialCoroutine = StartCoroutine(Shrink(this.transform, initialShrinkRate));
@@ -48,6 +51,10 @@ public class KnockEmDownTarget : MiniGameElement
             //in case it's not perfect, at the end of the loops just set scale to 0
             trans.localScale = Vector3.zero;
             waveManager.objectsInCurrentWave.Remove(this.gameObject);
+            if (MiniGameElement.OnDestroyGameElement is not null)
+            {
+                MiniGameElement.OnDestroyGameElement(this.gameObject);
+            }
             Destroy(this.gameObject);
         }
     }
@@ -55,7 +62,10 @@ public class KnockEmDownTarget : MiniGameElement
 
     public IEnumerator DestroyEffect(Transform trans, float rate, KnockEmDownTarget target) 
 	{
-        MiniGameElement.OnDestroyGameElement(this.gameObject);
+        if (MiniGameElement.OnDestroyGameElement is not null)
+        {
+            MiniGameElement.OnDestroyGameElement(this.gameObject);
+        }
         waveManager.objectsInCurrentWave.Remove(this.gameObject);
         StopCoroutine(initialCoroutine);
         float endTime= Time.time + growEffectLength;
