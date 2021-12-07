@@ -21,6 +21,7 @@ public class BilliardsTarget : MiniGameElement
 
     void Start()
     {
+        MiniGameElement.OnSpawnGameElement(this.gameObject);
         hitManager = parentMiniGame.GetComponentInChildren<PoolHitManager>();
         initialScale = this.transform.localScale.x;
         thisTransform = GetComponent<Transform>();
@@ -43,7 +44,7 @@ public class BilliardsTarget : MiniGameElement
 
     public IEnumerator Shrink(Transform trans, float rate) 
     {
-
+        
         Vector3 changeVector = new Vector3(rate, rate, rate);
         while(trans.localScale.x >=0.01)
         {

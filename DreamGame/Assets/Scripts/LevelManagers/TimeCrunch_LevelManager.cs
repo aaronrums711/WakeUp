@@ -18,7 +18,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 	public List<Vector3> miniGameSpawnPoints2; //VGIU
 
 	public List<Vector3> cameraPositions;  //ATM there are four entries in this list, even though the third and 4th are the same (turns out the camera keeps the same position regardles of if there are 3 or 4 games on screen)
-	public List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
+	private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 	[SerializeField] float lerpDuration;
 
 	//////////////////////////////State
@@ -54,7 +54,6 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 			spriteRenderers = GetAllSpriteRenderers(transforms, tagsToAvoid);
 			StartCoroutine(ColorFade(spriteRenderers, lerpDuration, additiveColor));
 		}
-
     }
 
 

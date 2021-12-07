@@ -19,6 +19,7 @@ public class KnockEmDownTarget : MiniGameElement
 
     void Start()
     {
+        MiniGameElement.OnSpawnGameElement(this.gameObject);
         initialShrinkRate *= parentMiniGame.difficultyParams.scaleUpMultiplier;
         waveManager = parentMiniGame.GetComponentInChildren<KnockEmDownWaveManager>();
         initialCoroutine = StartCoroutine(Shrink(this.transform, initialShrinkRate));
@@ -54,6 +55,7 @@ public class KnockEmDownTarget : MiniGameElement
 
     public IEnumerator DestroyEffect(Transform trans, float rate, KnockEmDownTarget target) 
 	{
+        MiniGameElement.OnDestroyGameElement(this.gameObject);
         waveManager.objectsInCurrentWave.Remove(this.gameObject);
         StopCoroutine(initialCoroutine);
         float endTime= Time.time + growEffectLength;
