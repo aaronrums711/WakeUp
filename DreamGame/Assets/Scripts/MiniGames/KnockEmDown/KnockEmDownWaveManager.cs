@@ -34,6 +34,8 @@ public class KnockEmDownWaveManager : MiniGameElement
     void Start()
     {
         spawner = parentMiniGame.GetComponentInChildren<KnockDownTargetSpawner>();
+        if (parentMiniGame.difficultyParams == null)
+        {Debug.LogError("it's null!!!");}
         StartCoroutine(SpawnWave(minWaveAmount, maxWaveAmount, minTimeBetweenEachWave, maxTimeBetweenEachWave));    
     }
 

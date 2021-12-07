@@ -28,13 +28,13 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 	//////////////////////////////Cached Component References
 	
 	
-    void Start()
+    void  Awake() ///Start()
     {
 		SetUpLevel();
 		if (activeMiniGameParent == null)
 		{Debug.LogError("ActiveMiniGame parent not found, that's an issue");}
-		base.AssignDifficultyParameters();
-		base.AssignProgressionParameters();
+		base.GatherDifficultyParameters();
+		base.GatherProgressionParameters();
 		MoveLevelForward();
     }
 
@@ -48,8 +48,9 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			List<Transform> transforms = new List<Transform>();
-			List<string> tagsToAvoid = new List<string> {"PlayAreaBarriers"};
 			transforms.Add(activeMiniGameParent);
+
+			List<string> tagsToAvoid = new List<string> {"PlayAreaBarriers"};
 			spriteRenderers = GetAllSpriteRenderers(transforms, tagsToAvoid);
 			StartCoroutine(ColorFade(spriteRenderers, lerpDuration, additiveColor));
 		}
@@ -77,6 +78,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		{
 			MiniGame miniGame = Instantiate(allGamesForThisLevel[i], spawnPointsToUse[i], Quaternion.identity, activeMiniGameParent);
 			miniGame.gameObject.SetActive(true);
+			base.PassParametersToMiniGame(miniGame);
 			miniGame.orderInLevel = i+1;
 			activeGamesCount = activeMiniGameParent.childCount;
 			gamesActiveInThisLevel.Add(miniGame);
@@ -94,6 +96,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 			MiniGame newMiniGame = Instantiate(allGamesForThisLevel[i], spawnPointsToUse[i], Quaternion.identity, activeMiniGameParent);
 			activeGamesCount = activeMiniGameParent.childCount;
 			newMiniGame.gameObject.SetActive(true);
+			base.PassParametersToMiniGame(newMiniGame);
 			newMiniGame.orderInLevel = i+1;
 			gamesActiveInThisLevel.Add(newMiniGame);
 			StartCoroutine(MoveCamera());
@@ -121,6 +124,11 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 			yield return null;
 		}
 		camera.transform.position = targetPos;
+	}
+
+	public void SlowAllGames()
+	{
+		return;
 	}
 
 	

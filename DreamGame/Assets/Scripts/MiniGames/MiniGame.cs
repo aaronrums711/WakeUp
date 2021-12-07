@@ -64,8 +64,15 @@ public class MiniGame : MonoBehaviour
 
     void Awake()
     {
-        AssignProgressionParameters();
-        AssignDifficultyParameters();
+        if ((this.progressionParams == null || this.difficultyParams == null) && isTesting == true)
+        {
+            Debug.LogWarning(this.miniGameName + " has assigned it's own progression or difficulty params.  This should only happen for testing purposes.");
+            AssignProgressionParameters();
+            AssignDifficultyParameters();
+        }
+
+
+
         stopStarter = GetComponentInChildren<IStoppable>();
         isActive = true; //switched this to Awake from Start()  on 10/24/21.  I don't think this will cause any issue, but juse be aware. 
 
@@ -73,12 +80,11 @@ public class MiniGame : MonoBehaviour
 
     void Start()
     {
-        // rateOfDecay *= progressionParams.universalDragMultiplier;  ///I Think this should go here, but not 100% ATM.  12/1/21
-        // baseProgression *=  progressionParams.universalProgressionMultiplier;
-        // baseProgressionChunk *= progressionParams.universalProgressionChunkMultiplier;
-        
-        completionPercent = 0.5f;
-        keyForThisGame = keysToPlay[orderInLevel];  //orderInLevel will eventually be set by a manager class. For now, VGIU
+        rateOfDecay *= progressionParams.universalDragMultiplier;  //whether the diff/prog params as assigned from the levelManager or above, we are setting the relevant values here in Start()
+        baseProgression *=  progressionParams.universalProgressionMultiplier;
+        baseProgressionChunk *= progressionParams.universalProgressionChunkMultiplier;
+
+        keyForThisGame = keysToPlay[orderInLevel];  
         getPlayAreaBarriers();
         completionPercent = progressionParams != null ? progressionParams.startingProgression : 0.5f;
 

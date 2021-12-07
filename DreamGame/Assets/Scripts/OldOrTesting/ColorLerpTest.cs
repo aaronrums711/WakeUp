@@ -16,16 +16,16 @@ public class ColorLerpTest : MonoBehaviour
 	public Color startingColor;
 	public float duration;
 	//////////////////////////////State
-	
+	public bool lerpAll;
+
 	//////////////////////////////Cached Component References
-	public SpriteRenderer sr;
 	public List<SpriteRenderer> AllSRs;
 	
 	
 
     void Start()
     {
-        startingColor = sr.color;
+        startingColor = Color.white;
 
     }
 
@@ -33,12 +33,25 @@ public class ColorLerpTest : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
 		{
-			StartCoroutine(LerpColor(duration));
+			if(lerpAll == true)
+			{
+				print("color lerp called");
+				StartCoroutine(LerpAll(duration));
+			}
+			if (lerpAll == false)
+			{
+				print("lerp one called");
+				for (int i = 0; i < AllSRs.Count; i++)
+				{
+					StartCoroutine(LerpOne(AllSRs[i])); 
+				}
+			}
+		
 		}
     }
 
 
-	public IEnumerator LerpColor(float duration)
+	public IEnumerator LerpAll(float duration)
 	{
 		// print("coroutine started");
 		float startTime = Time.time;
@@ -55,8 +68,32 @@ public class ColorLerpTest : MonoBehaviour
 			yield return null;
 
 		}
-		// print("loop complete");
+		print("loop complete");
 		yield return new WaitForSeconds(2f);
-		sr.color = startingColor;
+		for (int i = 0; i < AllSRs.Count; i++)
+		{
+			AllSRs[i].color = startingColor;
+		}
 	}
+
+	public IEnumerator LerpOne(SpriteRenderer sr)
+	{
+		float startTime = Time.time;
+		float totalTime = duration;
+		float elapsed = 0f;
+		while (elapsed < totalTime)
+		{
+			sr.color = Color.Lerp(startingColor, targetColor, elapsed/duration);
+			elapsed = Time.time- startTime;
+			yield return null;
+		}
+		print("loop complete");
+		yield return new WaitForSeconds(2f);
+		for (int i = 0; i < AllSRs.Count; i++)
+		{
+			AllSRs[i].color = startingColor;
+		}
+	}
+
+
 }

@@ -111,7 +111,7 @@ public class LevelManager : MonoBehaviour
 	}
 
 	
-    public void AssignProgressionParameters()
+    public void GatherProgressionParameters()
     {
 
         Object[] allProgressionParams = Resources.LoadAll("", typeof(ProgressionParams));
@@ -131,7 +131,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void AssignDifficultyParameters()
+    public void GatherDifficultyParameters()
     {
         Object[] allDifficultyParams = Resources.LoadAll("", typeof(DifficultyParams));
         
@@ -148,15 +148,15 @@ public class LevelManager : MonoBehaviour
         {
             Debug.LogError("there was no  matching difficultyParameters object found.  Something is wrong");
         }
-
     }
 
-	public void AssignProgressionMetric(MiniGame mg)
+	public void PassParametersToMiniGame(MiniGame mg)
 	{
-		mg.rateOfDecay *= progressionParams.universalDragMultiplier;
-        mg.baseProgression *=  progressionParams.universalProgressionMultiplier;
-        mg.baseProgressionChunk *= progressionParams.universalProgressionChunkMultiplier;
+		mg.difficultyParams = this.difficultyParams;
+		mg.progressionParams = this.progressionParams;
 	}
+
+
 
 	//this method uses a colorToAdd and adds it to each pre-existing color to get the target color, instead of just lerping all colors to a single constant color.  ColorToAdd should be close to white if the goal is to lighten everything
 	public IEnumerator ColorFade(List<SpriteRenderer> renderers, float duration, Color colorToAdd)
