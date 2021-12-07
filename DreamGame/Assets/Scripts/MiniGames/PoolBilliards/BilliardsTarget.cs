@@ -53,6 +53,7 @@ public class BilliardsTarget : MiniGameElement
         }
         //in case it's not perfect, at the end of the loops just set scale to 0
         trans.localScale = Vector3.zero;
+        MiniGameElement.OnDestroyGameElement(this.gameObject);
         Destroy(this.gameObject);
     }
 

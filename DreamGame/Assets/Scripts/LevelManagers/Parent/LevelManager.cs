@@ -226,5 +226,14 @@ public class LevelManager : MonoBehaviour
 		mg.progressionParams = this.progressionParams;
 	}
 
+	public void removeObjectFromList<T>(GameObject go, List<T> list)
+	{
+		if (go.TryGetComponent<T>(out T test))
+		{
+			list.Remove(go.GetComponent<T>());
+		}
+		
+	}
+
 
 }

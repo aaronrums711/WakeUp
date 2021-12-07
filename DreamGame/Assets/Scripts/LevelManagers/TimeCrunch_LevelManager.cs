@@ -52,6 +52,8 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 
 			List<string> tagsToAvoid = new List<string> {"PlayAreaBarriers"};
 			spriteRenderers = GetAllSpriteRenderers(transforms, tagsToAvoid);
+			MiniGameElement.OnSpawnGameElement += addSRToList;
+			MiniGameElement.OnDestroyGameElement += removeSRFromList;
 			StartCoroutine(ColorFade(spriteRenderers, lerpDuration, additiveColor));
 		}
     }
@@ -130,6 +132,23 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		return;
 	}
 
+	//this is subscribed to MiniGameElement.OnDestroyGameElement(), so that any time that event is fired, this method is called that the destroyed gameObject's sprite renderer is removed from the list.  This handles the case of objects being destroyed in the middle of the fade coroutine. 
+	public void removeSRFromList(GameObject go)
+	{
+		if (go.TryGetComponent<SpriteRenderer>(out var test))
+		{
+			spriteRenderers.Remove(go.GetComponent<SpriteRenderer>());
+		}
+	}
+
+	//this is subscribed to MiniGameElement.OnSpawnGameElement(), so that any time that event is fired, this method is called and the sprite renderer is added to the list.  This handles the case of objects being spawned in the middle of the fade coroutine
+	public void addSRToList(GameObject go)
+	{
+		if (go.TryGetComponent<SpriteRenderer>(out var test))
+		{
+			spriteRenderers.Add(go.GetComponent<SpriteRenderer>());
+		}
+	}
 	
 	public void GameAdditionEffect()
 	{
