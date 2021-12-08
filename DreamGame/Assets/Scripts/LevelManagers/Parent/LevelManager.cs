@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour
 	//////////////////////////////State
 	public bool isLevelFinished = false;
 	public bool isLevelWon = false;
-
+	protected bool allGamesSlowed = false;
 	
 	//////////////////////////////Cached Component References
 	 [Tooltip("this is simply ALL games that will appear in THIS particular level at any time. ")]  
@@ -161,6 +161,7 @@ public class LevelManager : MonoBehaviour
 	//this method uses a colorToAdd and adds it to each pre-existing color to get the target color, instead of just lerping all colors to a single constant color.  ColorToAdd should be close to white if the goal is to lighten everything
 	public IEnumerator ColorFade(List<SpriteRenderer> renderers, float duration, Color colorToAdd)
     {
+		allGamesSlowed = true;
 		float startTime = Time.time;
 		float elapsed = 0f;
         List<Color> newColors = new List<Color>();
@@ -182,9 +183,10 @@ public class LevelManager : MonoBehaviour
 
         while(elapsed <= duration)
         {
-			
+			print("renderer count: " + renderers.Count);
 			for(int i = 0; i< renderers.Count; i++)
 			{
+				print("iteration: " + i);
 				renderers[i].color = Color.Lerp(initColors[i], newColors[i], elapsed/duration);
 		
 			}
@@ -194,6 +196,7 @@ public class LevelManager : MonoBehaviour
 			
         }
 		print("outer loop exited");
+		allGamesSlowed = false;
     }
 
 	//takes in a list of transforms, and gives you a list of SpriteRenderers that are children of those transforms

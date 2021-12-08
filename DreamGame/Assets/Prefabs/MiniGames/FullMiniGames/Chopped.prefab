@@ -181,8 +181,6 @@ MonoBehaviour:
   slowDownEffectChangeRate: 0.958
   speedUpEffectChangeRate: 0
   speedChangeDuration: 1
-  rateOfDecay: 0
-  initialRateOfDecay: 0
 --- !u!1 &3560577365980310161
 GameObject:
   m_ObjectHideFlags: 0

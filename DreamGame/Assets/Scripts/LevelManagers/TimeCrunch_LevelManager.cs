@@ -18,7 +18,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 	public List<Vector3> miniGameSpawnPoints2; //VGIU
 
 	public List<Vector3> cameraPositions;  //ATM there are four entries in this list, even though the third and 4th are the same (turns out the camera keeps the same position regardles of if there are 3 or 4 games on screen)
-	private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
+	public List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 	[SerializeField] float lerpDuration;
 
 	//////////////////////////////State
@@ -36,6 +36,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		base.GatherDifficultyParameters();
 		base.GatherProgressionParameters();
 		MoveLevelForward();
+		// MiniGameElement.OnSpawnGameElement += addSRToList;
     }
 
 
@@ -54,7 +55,9 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 			spriteRenderers = GetAllSpriteRenderers(transforms, tagsToAvoid);
 			MiniGameElement.OnSpawnGameElement += addSRToList;
 			MiniGameElement.OnDestroyGameElement += removeSRFromList;
+
 			StartCoroutine(ColorFade(spriteRenderers, lerpDuration, additiveColor));
+			// StartCoroutine(WaitToUnsubscribe());
 		}
     }
 
@@ -148,6 +151,18 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		{
 			spriteRenderers.Add(go.GetComponent<SpriteRenderer>());
 		}
+	}
+
+	private IEnumerator WaitToUnsubscribe()
+	{
+		while (base.allGamesSlowed)
+		{
+			yield return null;
+		}
+		MiniGameElement.OnSpawnGameElement -= addSRToList;
+		MiniGameElement.OnDestroyGameElement -= removeSRFromList;
+
+
 	}
 	
 	public void GameAdditionEffect()

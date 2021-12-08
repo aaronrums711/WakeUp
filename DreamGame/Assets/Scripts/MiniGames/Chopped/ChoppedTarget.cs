@@ -46,10 +46,16 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
 	
     void Start()
     {
-        if (MiniGameElement.OnSpawnGameElement != null)
-        {
-            MiniGameElement.OnSpawnGameElement(this.gameObject);
-        }
+        // print("Start() called from chopped target class");
+        // if (MiniGameElement.OnSpawnGameElement != null)
+        // {
+        //     print("OnSpawnGameElement event called from chopped target");
+        //     MiniGameElement.OnSpawnGameElement(this.gameObject);
+        // }
+        // else if  (MiniGameElement.OnSpawnGameElement == null)
+        // {
+        //     print("it IS null?");
+        // }
         startingScale = this.transform.localScale;
         SetHealthAndSize();
         currentHealth = totalHealth;
