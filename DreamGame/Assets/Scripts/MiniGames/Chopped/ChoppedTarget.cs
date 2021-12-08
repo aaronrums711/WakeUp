@@ -46,7 +46,7 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
 	
     void Start()
     {
-        if (MiniGameElement.OnSpawnGameElement is not null)
+        if (MiniGameElement.OnSpawnGameElement != null)
         {
             MiniGameElement.OnSpawnGameElement(this.gameObject);
         }
@@ -81,7 +81,7 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
         rb.velocity = velocityAtHit;
         if (currentHealth <= 0)
         {
-            if (MiniGameElement.OnDestroyGameElement is not null)
+            if (MiniGameElement.OnDestroyGameElement != null)
             {
                 MiniGameElement.OnDestroyGameElement(this.gameObject);
             }

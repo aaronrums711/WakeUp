@@ -19,7 +19,7 @@ public class KnockEmDownTarget : MiniGameElement
 
     void Start()
     {
-        if (MiniGameElement.OnSpawnGameElement is not null)
+        if (MiniGameElement.OnSpawnGameElement != null)
         {
             MiniGameElement.OnSpawnGameElement(this.gameObject);
         }
@@ -51,7 +51,7 @@ public class KnockEmDownTarget : MiniGameElement
             //in case it's not perfect, at the end of the loops just set scale to 0
             trans.localScale = Vector3.zero;
             waveManager.objectsInCurrentWave.Remove(this.gameObject);
-            if (MiniGameElement.OnDestroyGameElement is not null)
+            if (MiniGameElement.OnDestroyGameElement != null)
             {
                 MiniGameElement.OnDestroyGameElement(this.gameObject);
             }
@@ -62,7 +62,7 @@ public class KnockEmDownTarget : MiniGameElement
 
     public IEnumerator DestroyEffect(Transform trans, float rate, KnockEmDownTarget target) 
 	{
-        if (MiniGameElement.OnDestroyGameElement is not null)
+        if (MiniGameElement.OnDestroyGameElement != null)
         {
             MiniGameElement.OnDestroyGameElement(this.gameObject);
         }
