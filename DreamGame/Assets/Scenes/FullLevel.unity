@@ -153,6 +153,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &278766619 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3560577365375624952, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
+  m_PrefabInstance: {fileID: 1909937744}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2fe6ce5d914bd844a8b53224dd714de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &336957712
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,8 +280,10 @@ MonoBehaviour:
   difficultyParams: {fileID: 0}
   gamesNeededToWin: 0
   currentGamesWon: 0
-  additiveColor: {r: 0.22265, g: 0.305, b: 0.26077503, a: 0}
   colorAlterationDivider: 1.5
+  mandatoryMiniGames:
+  - {fileID: 278766619}
+  lerpTargetColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5372549}
   isLevelFinished: 0
   isLevelWon: 0
   allGamesForThisLevel: []
@@ -294,7 +307,8 @@ MonoBehaviour:
   - {x: 4, y: 0, z: -10}
   - {x: 4, y: -4.2, z: -15}
   - {x: 4, y: -4.2, z: -15}
-  lerpDuration: 1.5
+  spriteRenderers: []
+  lerpDuration: 1
   activeGamesCount: 0
 --- !u!4 &403593744
 Transform:
@@ -775,7 +789,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1464866602}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 686b13dce8bab094e9a6538d54723ce6, type: 3}
   m_Name: 
@@ -797,7 +811,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1464866602}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.35, y: -8.17, z: 0}
+  m_LocalPosition: {x: 1.34, y: -7.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 921308019}
@@ -814,11 +828,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1464866602}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86948df5f2ec22e4ab6ccdc1ec7032f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMiniGame: {fileID: 0}
 --- !u!1001 &1909937744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -826,17 +841,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2065524601}
     m_Modifications:
-    - target: {fileID: 3560577365375624952, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
-      propertyPath: isTesting
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3560577365375624953, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
       propertyPath: m_Name
       value: Chopped
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560577365375624953, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3560577365375624959, guid: 8e7f5bf54c4bc4d48b3f046d9bb4066f, type: 3}
       propertyPath: m_RootOrder

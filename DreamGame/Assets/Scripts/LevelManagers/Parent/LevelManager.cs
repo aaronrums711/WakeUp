@@ -27,6 +27,7 @@ public class LevelManager : MonoBehaviour
 	public float colorAlterationDivider;
 	[Tooltip("mostly for testing if you want to play one game specifically, or have one game included in the level at least ")]  
 	public List<MiniGame> mandatoryMiniGames;
+	public Color lerpTargetColor;  //VGIU
 
 	//////////////////////////////State
 	public bool isLevelFinished = false;
@@ -160,29 +161,34 @@ public class LevelManager : MonoBehaviour
 
 
 	//this method uses a colorToAdd and adds it to each pre-existing color to get the target color, instead of just lerping all colors to a single constant color.  ColorToAdd should be close to white if the goal is to lighten everything
-	public IEnumerator ColorFade(List<SpriteRenderer> renderers, float duration)
+	public IEnumerator ColorFade(List<SpriteRenderer> renderers, float duration, Color lerpTargetColor)
     {
 		allGamesSlowed = true;
 		float startTime = Time.time;
 		float elapsed = 0f;
-        List<Color> newColors = new List<Color>();
-		List<Color> initColors = new List<Color>();
-		foreach(SpriteRenderer sr in renderers)
-		{
-			initColors.Add(sr.color);
-			float hue, sat, val;
-			Color.RGBToHSV(sr.color, out hue, out sat, out val);
-			Color reducedColor = Color.HSVToRGB(hue, sat/colorAlterationDivider, val/colorAlterationDivider );
-			reducedColor.a = 0.6f;
 
-			newColors.Add(reducedColor);
-		}
+		//the original idea for this was to get a greyed out version of each existing color.   But that didn't account for new SRs getting added in the midst of the loop. 
+		//it wouldn't be impossible to do that, but simply lerping all SRs to a singular grey color is just fine for now. 
+        // List<Color> newColors = new List<Color>();
+		// List<Color> initColors = new List<Color>();
+		// foreach(SpriteRenderer sr in renderers)
+		// {
+		// 	initColors.Add(sr.color);
+		// 	float hue, sat, val;
+		// 	Color.RGBToHSV(sr.color, out hue, out sat, out val);
+		// 	Color reducedColor = Color.HSVToRGB(hue, sat/colorAlterationDivider, val/colorAlterationDivider );
+		// 	reducedColor.a = 0.6f;
+
+		// 	newColors.Add(reducedColor);
+		// }
+
+
         while(elapsed <= duration)
         {
 			for(int i = 0; i< renderers.Count; i++)
 			{
 				// renderers[i].color = Color.Lerp(initColors[i], newColors[i], elapsed/duration);
-				renderers[i].color = Color.Lerp(Color.black, Color.cyan, elapsed/duration);
+				renderers[i].color = Color.Lerp(renderers[i].color, lerpTargetColor, elapsed/duration);  //I know this isn't the perfect lerp because the first argument moves with each iteration.  but it works
 			}
 			elapsed = Time.time-startTime;
 			yield return null;

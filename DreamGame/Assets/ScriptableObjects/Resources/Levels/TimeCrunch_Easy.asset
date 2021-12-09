@@ -16,8 +16,8 @@ MonoBehaviour:
   generalDifficulty: 0
   usesTotalLevelTimerLimit: 1
   totalGamesInLevel: 4
-  gamesAtOneTime: 4
-  minGamesNeededToWin: 4
+  gamesAtOneTime: 2
+  minGamesNeededToWin: 2
   totalLevelTimeLimitSeconds: 180
   lagBetweenGamesSeconds: 5
   gamesStopIfCompleted: 1

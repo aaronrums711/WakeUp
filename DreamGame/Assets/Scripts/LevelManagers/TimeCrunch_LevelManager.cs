@@ -56,7 +56,7 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 			MiniGameElement.OnSpawnGameElement += addSRToList;
 			MiniGameElement.OnDestroyGameElement += removeSRFromList;
 
-			StartCoroutine(ColorFade(spriteRenderers, lerpDuration));
+			StartCoroutine(ColorFade(spriteRenderers, lerpDuration, base.lerpTargetColor));
 			StartCoroutine(WaitToUnsubscribe());
 		}
     }
