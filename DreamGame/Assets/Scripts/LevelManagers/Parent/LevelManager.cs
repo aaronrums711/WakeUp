@@ -197,7 +197,7 @@ public class LevelManager : MonoBehaviour
 		allGamesSlowed = false;
     }
 
-	//takes in a list of transforms, and gives you a list of SpriteRenderers that are children of those transforms
+	//takes in a list of transforms, and gives you a list of components of type T that are children of those transforms, but not if that object has tag in tagsToAvoid
 	public List<T> GetComponentsFromTransforms<T>(List<Transform> parents, List<string> tagsToAvoid) where T : Component
 	{
 		List<T> SRs = new List<T>();
