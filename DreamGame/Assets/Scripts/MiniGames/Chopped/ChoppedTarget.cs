@@ -26,8 +26,6 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
 	//////////////////////////////State
 	private float startingYPos;
     [HideInInspector]public Vector2 velocityAtStop; //used by the stop/start script to store the velocity of each target before it's stopped, then to set it back again if necessary
-    // [HideInInspector]public float  magnitudeAtSpeedChange; //used by stop/start script, but for the slow down method
-    // [HideInInspector]public Vector2 velocityAtSpeedChange;  //same as above, but this is given a default value below in the Start() method for sake of the slow down method
 
 	//////////////////////////////Cached Component References
     private SpriteRenderer thisSR;
@@ -36,26 +34,13 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
     private ChoppedTargetSpawner spawner;
     public Sprite startingSprite;
     
-
-	
-	
-	// void Awake()
-    // {
-    //     GetParentMiniGame();  //I have not idea why, but this is not getting called automatically like it's supposed to, so I'm calling it here. 
-    // }
 	
     void Start()
     {
-        // print("Start() called from chopped target class");
-        // if (MiniGameElement.OnSpawnGameElement != null)
-        // {
-        //     print("OnSpawnGameElement event called from chopped target");
-        //     MiniGameElement.OnSpawnGameElement(this.gameObject);
-        // }
-        // else if  (MiniGameElement.OnSpawnGameElement == null)
-        // {
-        //     print("it IS null?");
-        // }
+        if (MiniGameElement.OnSpawnGameElement != null)
+        {
+            MiniGameElement.OnSpawnGameElement(this.gameObject);
+        }
         startingScale = this.transform.localScale;
         SetHealthAndSize();
         currentHealth = totalHealth;
@@ -71,6 +56,10 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
     {
         if (this.transform.position.y < startingYPos)
         {
+            if (MiniGameElement.OnDestroyGameElement != null)
+            {
+                MiniGameElement.OnDestroyGameElement(this.gameObject);
+            }
             spawner.allTargets.Remove(this);
             Destroy(this.gameObject);
         }
@@ -89,6 +78,7 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
         {
             if (MiniGameElement.OnDestroyGameElement != null)
             {
+                print("chopped target destroyed");
                 MiniGameElement.OnDestroyGameElement(this.gameObject);
             }
             spawner.allTargets.RemoveAt(0);

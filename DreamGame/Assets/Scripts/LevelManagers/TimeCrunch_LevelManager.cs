@@ -52,12 +52,12 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 			transforms.Add(activeMiniGameParent);
 
 			List<string> tagsToAvoid = new List<string> {"PlayAreaBarriers"};
-			spriteRenderers = GetAllSpriteRenderers(transforms, tagsToAvoid);
+			spriteRenderers = GetComponentsFromTransforms<SpriteRenderer>(transforms, tagsToAvoid);
 			MiniGameElement.OnSpawnGameElement += addSRToList;
 			MiniGameElement.OnDestroyGameElement += removeSRFromList;
 
-			StartCoroutine(ColorFade(spriteRenderers, lerpDuration, additiveColor));
-			// StartCoroutine(WaitToUnsubscribe());
+			StartCoroutine(ColorFade(spriteRenderers, lerpDuration));
+			StartCoroutine(WaitToUnsubscribe());
 		}
     }
 
@@ -80,7 +80,15 @@ public class TimeCrunch_LevelManager : LevelManager, ILevelMover
 		Camera.main.transform.position = cameraPositions[numGamesAtStart-1];
 		for (int i=0; i< numGamesAtStart; i++)
 		{
-			MiniGame miniGame = Instantiate(allGamesForThisLevel[i], spawnPointsToUse[i], Quaternion.identity, activeMiniGameParent);
+			MiniGame miniGame;
+			if (base.mandatoryMiniGames.Count > 0  && base.mandatoryMiniGames.Count-1 >= i)
+			{
+				miniGame = Instantiate(mandatoryMiniGames[i], spawnPointsToUse[i], Quaternion.identity, activeMiniGameParent);
+			}
+			else
+			{
+				miniGame = Instantiate(allGamesForThisLevel[i], spawnPointsToUse[i], Quaternion.identity, activeMiniGameParent);
+			}
 			miniGame.gameObject.SetActive(true);
 			base.PassParametersToMiniGame(miniGame);
 			miniGame.orderInLevel = i+1;

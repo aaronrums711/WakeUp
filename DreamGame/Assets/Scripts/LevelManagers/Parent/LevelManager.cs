@@ -24,8 +24,9 @@ public class LevelManager : MonoBehaviour
 	public int currentGamesWon;
 	[HideInInspector] protected int executionInterval= 5;
 
-	public Color additiveColor = new Color(197,197,197,255);
 	public float colorAlterationDivider;
+	[Tooltip("mostly for testing if you want to play one game specifically, or have one game included in the level at least ")]  
+	public List<MiniGame> mandatoryMiniGames;
 
 	//////////////////////////////State
 	public bool isLevelFinished = false;
@@ -159,7 +160,7 @@ public class LevelManager : MonoBehaviour
 
 
 	//this method uses a colorToAdd and adds it to each pre-existing color to get the target color, instead of just lerping all colors to a single constant color.  ColorToAdd should be close to white if the goal is to lighten everything
-	public IEnumerator ColorFade(List<SpriteRenderer> renderers, float duration, Color colorToAdd)
+	public IEnumerator ColorFade(List<SpriteRenderer> renderers, float duration)
     {
 		allGamesSlowed = true;
 		float startTime = Time.time;
@@ -168,44 +169,35 @@ public class LevelManager : MonoBehaviour
 		List<Color> initColors = new List<Color>();
 		foreach(SpriteRenderer sr in renderers)
 		{
+			initColors.Add(sr.color);
 			float hue, sat, val;
 			Color.RGBToHSV(sr.color, out hue, out sat, out val);
 			Color reducedColor = Color.HSVToRGB(hue, sat/colorAlterationDivider, val/colorAlterationDivider );
-
+			reducedColor.a = 0.6f;
 
 			newColors.Add(reducedColor);
 		}
-
-		foreach(SpriteRenderer sr in renderers)
-		{
-			initColors.Add(sr.color);
-		}
-
         while(elapsed <= duration)
         {
-			print("renderer count: " + renderers.Count);
 			for(int i = 0; i< renderers.Count; i++)
 			{
-				print("iteration: " + i);
-				renderers[i].color = Color.Lerp(initColors[i], newColors[i], elapsed/duration);
-		
+				// renderers[i].color = Color.Lerp(initColors[i], newColors[i], elapsed/duration);
+				renderers[i].color = Color.Lerp(Color.black, Color.cyan, elapsed/duration);
 			}
 			elapsed = Time.time-startTime;
-			
 			yield return null;
-			
         }
 		print("outer loop exited");
 		allGamesSlowed = false;
     }
 
 	//takes in a list of transforms, and gives you a list of SpriteRenderers that are children of those transforms
-	public List<SpriteRenderer> GetAllSpriteRenderers(List<Transform> parents, List<string> tagsToAvoid)
+	public List<T> GetComponentsFromTransforms<T>(List<Transform> parents, List<string> tagsToAvoid) where T : Component
 	{
-		List<SpriteRenderer> SRs = new List<SpriteRenderer>();
+		List<T> SRs = new List<T>();
 		foreach(Transform trans in parents)
 		{
-			SpriteRenderer[] SRsInThisTransform = trans.GetComponentsInChildren<SpriteRenderer>();
+			T[] SRsInThisTransform = trans.GetComponentsInChildren<T>();
 			for (int i = 0; i < SRsInThisTransform.Length; i++)
 			{
 				if (tagsToAvoid.Contains(SRsInThisTransform[i].tag) )
@@ -229,6 +221,8 @@ public class LevelManager : MonoBehaviour
 		mg.progressionParams = this.progressionParams;
 	}
 
+
+	///leaving it here for now, but it's not being used
 	public void removeObjectFromList<T>(GameObject go, List<T> list)
 	{
 		if (go.TryGetComponent<T>(out T test))
