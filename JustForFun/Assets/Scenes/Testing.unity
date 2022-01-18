@@ -178,7 +178,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1191568335}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.92, y: 4.43, z: -0.8597843}
+  m_LocalPosition: {x: -8.04, y: -3.16, z: -0.8597843}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -334,8 +334,8 @@ MonoBehaviour:
   objectParent: {fileID: 555019312}
   itemToSpawn: {fileID: 8423249786488916228, guid: 4a9e1676686e2e048b96f3f2cc0561dc, type: 3}
   startingPosition: {fileID: 1191568336}
-  YSpacing: 1
-  XSpacing: 1
+  YSpacing: 2
+  XSpacing: 2
   numColumns: 5
   numRows: 5
 --- !u!114 &1593877493
