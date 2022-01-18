@@ -76,6 +76,7 @@ public class ItemSpawner : MonoBehaviour
 				spawnX += XSpacing;
 				
 			}
+			spawnX =startingPosition.position.x;  //reset it, because its a new row
 
 			spawnY += YSpacing;
 		}
