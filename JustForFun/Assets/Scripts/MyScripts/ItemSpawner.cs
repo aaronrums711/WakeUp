@@ -21,6 +21,7 @@ public class ItemSpawner : MonoBehaviour
 	public int numRows;
 
 	private Vector3 lastSpawn;
+	
 
 	//////////////////////////////State
 	
@@ -45,31 +46,38 @@ public class ItemSpawner : MonoBehaviour
 
 	public void SpawnItems()
 	{
+		float spawnX = startingPosition.position.x;
+		float spawnY = startingPosition.position.y;
+
 		//destroy any stuff that was made in debug
 		for(int i = 0; i < objectParent.childCount; i++)
 		{
-			Destroy(objectParent.GetChild(i));
+			Destroy(objectParent.GetChild(i).gameObject);
 		}
 
 
 		for (int x = 0; x < numColumns; x++)
 		{
+
 			for (int y=0; y < numRows; y++)
 			{
 				Vector3 spawnPos;
-				if (y == 0)
+				if (x == 0 && y == 0) //if its the very first iteration
 				{
 					spawnPos = startingPosition.position;
 				}
 				else 
 				{
-					float newX = lastSpawn.x + XSpacing;
-					float newY = lastSpawn.y + YSpacing;
-					spawnPos = new Vector3(newX, newY, 0);
+					spawnPos = new Vector3(spawnX, spawnY, 0);
 				}
+				
 				Instantiate(itemToSpawn, spawnPos, Quaternion.identity);
+				lastSpawn = spawnPos;
+				spawnX += XSpacing;
 				
 			}
+
+			spawnY += YSpacing;
 		}
 
 
