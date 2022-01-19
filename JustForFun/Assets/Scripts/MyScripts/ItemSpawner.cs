@@ -15,10 +15,21 @@ public class ItemSpawner : MonoBehaviour
 	public Transform objectParent;
 	public GameObject itemToSpawn;
 	public Transform startingPosition;
+
+	[Range(0.01f,2)]
 	public float YSpacing;
+
+	[Range(0.01f,2)]
 	public float XSpacing;
+
+	[Range(3, 100)]
 	public int numColumns;
+
+	[Range(3, 100)]
 	public int numRows;
+
+	[Range(0.1f, 1.5f)]
+	public float scaleMultiplier;
 
 	private Vector3 lastSpawn;
 	
@@ -30,6 +41,7 @@ public class ItemSpawner : MonoBehaviour
     void Start()
     {
         lastSpawn = startingPosition.position;
+		DeleteExistingItems();
         SpawnItems();
     }
 
@@ -42,12 +54,9 @@ public class ItemSpawner : MonoBehaviour
 	{
 		float spawnX = startingPosition.position.x;
 		float spawnY = startingPosition.position.y;
+		GameObject newGO = itemToSpawn;
+		newGO.transform.localScale *= scaleMultiplier;
 
-		// destroy any stuff that was made in debug
-		for(int i = 0; i < objectParent.childCount; i++)
-		{
-			Destroy(objectParent.GetChild(i).gameObject);
-		}
 
 
 		for (int x = 0; x < numColumns; x++)
@@ -65,7 +74,7 @@ public class ItemSpawner : MonoBehaviour
 					spawnPos = new Vector3(spawnX, spawnY, 0);
 				}
 				
-				Instantiate(itemToSpawn, spawnPos, itemToSpawn.transform.rotation, objectParent);
+				Instantiate(newGO, spawnPos, itemToSpawn.transform.rotation, objectParent);
 				lastSpawn = spawnPos;
 				spawnX += XSpacing;
 				
@@ -77,4 +86,22 @@ public class ItemSpawner : MonoBehaviour
 
 
 	}
+
+	public void DeleteExistingItems()
+	{
+		// destroy any stuff that was made in debug
+		for(int i = 0; i < objectParent.childCount; i++)
+		{
+			Destroy(objectParent.GetChild(i).gameObject);
+		}
+	}
+
+	[ContextMenu("Respawn")]
+	public void DeleteAndRespawn()
+	{
+		lastSpawn = startingPosition.position;
+		DeleteExistingItems();
+        SpawnItems();
+	}
+
 }
