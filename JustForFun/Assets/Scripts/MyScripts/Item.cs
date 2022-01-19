@@ -28,4 +28,22 @@ public class Item : MonoBehaviour
     {
         
     }
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.TryGetComponent(typeof(ItemEffector), out Component eff))
+		{
+			eff.GetComponent<ItemEffector>().AddItem(this.gameObject);
+		}
+	}
+
+	private void OnTriggerExit(Collider other)
+	{
+
+		if (other.gameObject.TryGetComponent(typeof(ItemEffector), out Component eff))
+		{
+			eff.GetComponent<ItemEffector>().RemoveItem(this.gameObject);
+		}
+	}
+
 }

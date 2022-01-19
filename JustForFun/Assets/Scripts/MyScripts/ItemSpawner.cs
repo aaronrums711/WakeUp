@@ -71,7 +71,7 @@ public class ItemSpawner : MonoBehaviour
 					spawnPos = new Vector3(spawnX, spawnY, 0);
 				}
 				
-				Instantiate(itemToSpawn, spawnPos, Quaternion.identity);
+				Instantiate(itemToSpawn, spawnPos, Quaternion.identity, objectParent);
 				lastSpawn = spawnPos;
 				spawnX += XSpacing;
 				

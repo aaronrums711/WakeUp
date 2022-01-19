@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Effector : MonoBehaviour
+public class ItemEffector : MonoBehaviour
 {
 	/*****************
 	CreateDate: 	11/18/22
