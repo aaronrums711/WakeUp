@@ -59,10 +59,10 @@ public class ItemSpawner : MonoBehaviour
 
 
 
-		for (int x = 0; x < numColumns; x++)
+		for (int x = 0; x < numRows; x++)
 		{
 
-			for (int y=0; y < numRows; y++)
+			for (int y=0; y < numColumns; y++)
 			{
 				Vector3 spawnPos;
 				if (x == 0 && y == 0) //if its the very first iteration
