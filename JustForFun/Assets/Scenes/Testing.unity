@@ -199,7 +199,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableItems: []
-  speed: 200
+  speed: 300
+  testItem: {fileID: 984877515}
 --- !u!1 &555019311
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,6 +232,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &984877515 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 956664828, guid: 4a9e1676686e2e048b96f3f2cc0561dc, type: 3}
+  m_PrefabInstance: {fileID: 6280115273883276830}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c47da9d0703fa94a86244ae8407ff6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1191568335
 GameObject:
   m_ObjectHideFlags: 0

@@ -26,6 +26,7 @@ public class ItemRotator : ItemEffector
     void Start()
     {
 		thisTransform = GetComponent<Transform>();
+		Item.triggerExit += CallRotateBack;
     }
 
     void Update()
@@ -55,18 +56,18 @@ public class ItemRotator : ItemEffector
 
 	public IEnumerator RotateItemBackToStart(Item item)
 	{
-		while (item.transform.rotation != item.initRotation)
+		while (item.transform.rotation != item.initRotation && !availableItems.Contains(item))
 		{
 			item.transform.rotation = Quaternion.RotateTowards(item.transform.rotation, item.initRotation, speed * Time.deltaTime);
 			yield return null;
-		}
-	
+		}	
 	}
 
 	[ContextMenu("rotate back")]
-	public void TestCallRotateBack()
+	public Item CallRotateBack(Item item)
 	{
-		StartCoroutine(RotateItemBackToStart(testItem));
+		StartCoroutine(RotateItemBackToStart(item));
+		return item;
 	}
 
 }
