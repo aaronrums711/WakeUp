@@ -422,11 +422,11 @@ MonoBehaviour:
   objectParent: {fileID: 555019312}
   itemToSpawn: {fileID: 8423249786488916228, guid: 4a9e1676686e2e048b96f3f2cc0561dc, type: 3}
   startingPosition: {fileID: 1191568336}
-  YSpacing: 0.29
-  XSpacing: 0.56
-  numColumns: 41
-  numRows: 30
-  scaleMultiplier: 0.44
+  YSpacing: 0.32
+  XSpacing: 0.47
+  numColumns: 33
+  numRows: 26
+  scaleMultiplier: 0.59
 --- !u!4 &1593877494
 Transform:
   m_ObjectHideFlags: 0

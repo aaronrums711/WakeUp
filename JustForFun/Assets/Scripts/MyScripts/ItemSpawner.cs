@@ -45,17 +45,14 @@ public class ItemSpawner : MonoBehaviour
         SpawnItems();
     }
 
-    void Update()
-    {
-        
-    }
-
 	public void SpawnItems()
 	{
+
 		float spawnX = startingPosition.position.x;
 		float spawnY = startingPosition.position.y;
-		GameObject newGO = itemToSpawn;
-		newGO.transform.localScale *= scaleMultiplier;
+
+		itemToSpawn.transform.localScale = new Vector3(1,1,1);  //set it back, because the scale change persist into the editor
+		itemToSpawn.transform.localScale *= scaleMultiplier;
 
 
 
@@ -74,7 +71,7 @@ public class ItemSpawner : MonoBehaviour
 					spawnPos = new Vector3(spawnX, spawnY, 0);
 				}
 				
-				Instantiate(newGO, spawnPos, itemToSpawn.transform.rotation, objectParent);
+				Instantiate(itemToSpawn, spawnPos, itemToSpawn.transform.rotation, objectParent);
 				lastSpawn = spawnPos;
 				spawnX += XSpacing;
 				
