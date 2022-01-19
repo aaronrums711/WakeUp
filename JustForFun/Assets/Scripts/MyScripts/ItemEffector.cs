@@ -18,21 +18,7 @@ public class ItemEffector : MonoBehaviour
 	
 	//////////////////////////////Cached Component References
 	
-	
-	void Awake()
-    {
-        
-    }
-	
-    void Start()
-    {
-        
-    }
 
-    void Update()
-    {
-        
-    }
 
 	public GameObject AddItem(GameObject go)
 	{

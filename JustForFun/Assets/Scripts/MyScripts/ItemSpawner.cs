@@ -49,7 +49,7 @@ public class ItemSpawner : MonoBehaviour
 		float spawnX = startingPosition.position.x;
 		float spawnY = startingPosition.position.y;
 
-		//destroy any stuff that was made in debug
+		// destroy any stuff that was made in debug
 		for(int i = 0; i < objectParent.childCount; i++)
 		{
 			Destroy(objectParent.GetChild(i).gameObject);
@@ -71,7 +71,7 @@ public class ItemSpawner : MonoBehaviour
 					spawnPos = new Vector3(spawnX, spawnY, 0);
 				}
 				
-				Instantiate(itemToSpawn, spawnPos, Quaternion.identity, objectParent);
+				Instantiate(itemToSpawn, spawnPos, itemToSpawn.transform.rotation, objectParent);
 				lastSpawn = spawnPos;
 				spawnX += XSpacing;
 				

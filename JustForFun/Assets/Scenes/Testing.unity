@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 170428510}
   - component: {fileID: 170428512}
   - component: {fileID: 170428511}
-  - component: {fileID: 170428509}
   - component: {fileID: 170428513}
   m_Layer: 0
   m_Name: Projectile
@@ -143,19 +142,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &170428509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 170428508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f8113f5ff711484a9382b389f4e91eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  availableItems: []
 --- !u!4 &170428510
 Transform:
   m_ObjectHideFlags: 0
@@ -164,7 +150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170428508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.24, y: 2.23, z: 0}
+  m_LocalPosition: {x: 4.17, y: 1.98, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1630915245}
@@ -182,8 +168,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.8337566
-  m_Center: {x: 0, y: 0.009535849, z: 0}
+  m_Radius: 1.8
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &170428512
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -212,6 +198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5882fc9ec1c66354dafa0be1715746b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  availableItems: []
+  speed: 20
 --- !u!1 &555019311
 GameObject:
   m_ObjectHideFlags: 0
