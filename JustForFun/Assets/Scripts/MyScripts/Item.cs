@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Item : MonoBehaviour
@@ -7,12 +8,17 @@ public class Item : MonoBehaviour
 	/*****************
 	CreateDate: 	01/18/22
 	Functionality:	
-	Notes:			this class will just add itself to the list on all Effects
+	Notes:			this class will just add and remove itself to the list on all Effects
 	Dependencies:
 	******************/
 	
 	//////////////////////////////Config
 	private Collider thisCollider;
+	[SerializeField] public Quaternion initRotation;
+
+	public static Func< Item, Item> triggerEnter;
+	public static Func< Item, Item> triggerExit;
+	 
 	
 	//////////////////////////////State
 	
@@ -22,6 +28,7 @@ public class Item : MonoBehaviour
     void Start()
     {
         thisCollider = GetComponent<Collider>();
+		initRotation = this.transform.rotation;
     }
 
     void Update()
@@ -33,7 +40,11 @@ public class Item : MonoBehaviour
 	{
 		if (other.gameObject.TryGetComponent(typeof(ItemEffector), out Component eff))
 		{
-			eff.GetComponent<ItemEffector>().AddItem(this.gameObject);
+			eff.GetComponent<ItemEffector>().AddItem(this);
+			if (triggerEnter != null) 
+			{
+				triggerEnter(this);
+			}
 		}
 	}
 
@@ -42,8 +53,18 @@ public class Item : MonoBehaviour
 
 		if (other.gameObject.TryGetComponent(typeof(ItemEffector), out Component eff))
 		{
-			eff.GetComponent<ItemEffector>().RemoveItem(this.gameObject);
+			eff.GetComponent<ItemEffector>().RemoveItem(this);
+			if (triggerExit != null) 
+			{
+				triggerExit(this);
+			}
 		}
+
+	}
+
+	public IEnumerator RotateBackToStart()
+	{
+		yield return null;
 	}
 
 }

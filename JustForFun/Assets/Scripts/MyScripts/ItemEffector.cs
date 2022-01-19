@@ -12,7 +12,7 @@ public class ItemEffector : MonoBehaviour
 	******************/
 	
 	//////////////////////////////Config
-	public List<GameObject> availableItems;
+	public List<Item> availableItems;
 	
 	//////////////////////////////State
 	
@@ -20,13 +20,13 @@ public class ItemEffector : MonoBehaviour
 	
 
 
-	public GameObject AddItem(GameObject go)
+	public Item AddItem(Item go)
 	{
 		availableItems.Add(go);
 		return go;
 	}
 
-	public GameObject RemoveItem(GameObject go)
+	public Item RemoveItem(Item go)
 	{
 		availableItems.Remove(go);
 		return go;

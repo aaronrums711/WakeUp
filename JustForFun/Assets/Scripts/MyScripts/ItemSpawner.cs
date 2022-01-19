@@ -27,16 +27,10 @@ public class ItemSpawner : MonoBehaviour
 	
 	//////////////////////////////Cached Component References
 	
-	
-	void Awake()
-    {
-		lastSpawn = startingPosition.position;
-        SpawnItems();
-    }
-	
     void Start()
     {
-        
+        lastSpawn = startingPosition.position;
+        SpawnItems();
     }
 
     void Update()

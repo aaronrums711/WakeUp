@@ -14,6 +14,8 @@ public class ItemRotator : ItemEffector
 	//////////////////////////////Config
 	private Transform thisTransform;
 	public float speed;
+
+	public Item testItem;
 	
 	//////////////////////////////State
 	
@@ -28,12 +30,11 @@ public class ItemRotator : ItemEffector
 
     void Update()
     {
-		// RotateAllItemsInRange();
-		RotateAllAvailableItems();
+		SlowlyRotate();
     }
 
 	//simple, immediate rotation.  We want something slow
-	public void RotateAllAvailableItems()
+	public void SnapRotate()
 	{
 		for (int i = 0; i< availableItems.Count; i++)
 		{
@@ -41,12 +42,31 @@ public class ItemRotator : ItemEffector
 		}
 	}
 
-	public void RotateAllItemsInRange()
+	public void SlowlyRotate()
 	{
 		for (int i = 0; i< availableItems.Count; i++)
 		{
-			availableItems[i].transform.rotation = Quaternion.RotateTowards(availableItems[i].transform.rotation, this.transform.rotation, speed * Time.deltaTime);
-		}
+			Vector3 lookAtDirection = this.transform.position - availableItems[i].transform.position;
+			Quaternion lookAtRotation = Quaternion.LookRotation(lookAtDirection, Vector3.up);
 
+			availableItems[i].transform.rotation = Quaternion.RotateTowards(availableItems[i].transform.rotation, lookAtRotation, speed * Time.deltaTime);
+		}
 	}
+
+	public IEnumerator RotateItemBackToStart(Item item)
+	{
+		while (item.transform.rotation != item.initRotation)
+		{
+			item.transform.rotation = Quaternion.RotateTowards(item.transform.rotation, item.initRotation, speed * Time.deltaTime);
+			yield return null;
+		}
+	
+	}
+
+	[ContextMenu("rotate back")]
+	public void TestCallRotateBack()
+	{
+		StartCoroutine(RotateItemBackToStart(testItem));
+	}
+
 }
