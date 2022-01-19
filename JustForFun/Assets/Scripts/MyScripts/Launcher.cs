@@ -13,8 +13,7 @@ public class Launcher : MonoBehaviour
 	
 	//////////////////////////////Config
 	public GameObject thingToLaunch;
-	public GameObject test;
-	public float speed;
+	public float launchSpeed;
 	public float circleRadius= 12;
 	public float spawnRate;
 	
@@ -24,7 +23,7 @@ public class Launcher : MonoBehaviour
 	
     void Start()
     {
-        StartCoroutine(RadiusTest());
+		StartCoroutine(LaunchRepeat(thingToLaunch));
     }
 
     void Update()
@@ -32,20 +31,27 @@ public class Launcher : MonoBehaviour
         
     }
 
-	private void Launch(GameObject go)
-	{
-		return;
-	}
 
-	public IEnumerator RadiusTest()
+	public IEnumerator LaunchRepeat(GameObject objectToLaunch)
 	{
+		yield return new WaitForSeconds(3f);
 		while(1==1)
 		{
 			Vector2 spawnPoint = Random.insideUnitCircle.normalized * circleRadius;
-			Instantiate(test, spawnPoint, Quaternion.identity);
+			GameObject newObj = Instantiate(objectToLaunch, spawnPoint, Quaternion.identity);
+			Vector3 launchDirection = Vector3.zero - newObj.transform.position + new Vector3(Random.Range(0,5), Random.Range(0,5), Random.Range(0,5));
+			newObj.GetComponent<Rigidbody>().AddForce(launchDirection * launchSpeed, ForceMode.Impulse);
+			StartCoroutine(WaitAndDestroy(newObj));
 			yield return new WaitForSeconds(spawnRate);
 		}
+	}
 
+	///UPON RETURN:  MOVE THE DESTRUCTION CODE ONTO ItemRotator.cs
+
+	public IEnumerator WaitAndDestroy(GameObject objToDestroy)
+	{
+		yield return new WaitForSeconds(3f);
+		Destroy(objToDestroy);
 	}
 
 }

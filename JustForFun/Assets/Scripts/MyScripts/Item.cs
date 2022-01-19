@@ -54,17 +54,14 @@ public class Item : MonoBehaviour
 		if (other.gameObject.TryGetComponent(typeof(ItemEffector), out Component eff))
 		{
 			eff.GetComponent<ItemEffector>().RemoveItem(this);
+			
+
 			if (triggerExit != null) 
 			{
 				triggerExit(this);
 			}
 		}
 
-	}
-
-	public IEnumerator RotateBackToStart()
-	{
-		yield return null;
 	}
 
 }
