@@ -16,6 +16,7 @@ public class ItemRotator : ItemEffector
 	public float speed;
 
 	public Item testItem;
+	public int destroyDelay;
 	
 	//////////////////////////////State
 	
@@ -27,6 +28,9 @@ public class ItemRotator : ItemEffector
     {
 		thisTransform = GetComponent<Transform>();
 		Item.triggerExit += CallRotateBack;
+
+		StartCoroutine(WaitAndDestroy(this.gameObject, destroyDelay));
+
     }
 
     void Update()
@@ -69,5 +73,15 @@ public class ItemRotator : ItemEffector
 		StartCoroutine(RotateItemBackToStart(item));
 		return item;
 	}
+
+
+
+		public IEnumerator WaitAndDestroy(GameObject objToDestroy, int delay)
+	{
+		yield return new WaitForSeconds(delay);
+		Item.triggerExit -= CallRotateBack;  //unsub
+		Destroy(objToDestroy);
+	}
+
 
 }

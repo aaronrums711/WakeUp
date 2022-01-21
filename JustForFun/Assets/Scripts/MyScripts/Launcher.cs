@@ -41,17 +41,11 @@ public class Launcher : MonoBehaviour
 			GameObject newObj = Instantiate(objectToLaunch, spawnPoint, Quaternion.identity);
 			Vector3 launchDirection = Vector3.zero - newObj.transform.position + new Vector3(Random.Range(0,5), Random.Range(0,5), Random.Range(0,5));
 			newObj.GetComponent<Rigidbody>().AddForce(launchDirection * launchSpeed, ForceMode.Impulse);
-			StartCoroutine(WaitAndDestroy(newObj));
 			yield return new WaitForSeconds(spawnRate);
 		}
 	}
 
 	///UPON RETURN:  MOVE THE DESTRUCTION CODE ONTO ItemRotator.cs
 
-	public IEnumerator WaitAndDestroy(GameObject objToDestroy)
-	{
-		yield return new WaitForSeconds(3f);
-		Destroy(objToDestroy);
-	}
 
 }
