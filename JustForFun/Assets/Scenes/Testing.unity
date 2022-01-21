@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thingToLaunch: {fileID: 5385195469915866927, guid: 406b8a8ca5cfe4e43a04eb78531ecef2, type: 3}
-  launchSpeed: 1.5
+  launchSpeed: 1
   circleRadius: 12
   spawnRate: 3
 --- !u!4 &1593877494
