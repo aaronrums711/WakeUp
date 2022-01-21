@@ -15,7 +15,6 @@ public class ItemRotator : ItemEffector
 	private Transform thisTransform;
 	public float speed;
 
-	public Item testItem;
 	public int destroyDelay;
 	
 	//////////////////////////////State

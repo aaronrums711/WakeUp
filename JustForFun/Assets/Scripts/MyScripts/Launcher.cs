@@ -45,7 +45,6 @@ public class Launcher : MonoBehaviour
 		}
 	}
 
-	///UPON RETURN:  MOVE THE DESTRUCTION CODE ONTO ItemRotator.cs
 
 
 }
