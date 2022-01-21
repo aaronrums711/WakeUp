@@ -55,7 +55,7 @@ public class Item : MonoBehaviour
 		{
 			eff.GetComponent<ItemEffector>().RemoveItem(this);
 			
-
+			
 			if (triggerExit != null) 
 			{
 				triggerExit(this);
