@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1381407366036741398}
   m_Layer: 6
   m_Name: topInnerBar
-  m_TagString: Untagged
+  m_TagString: PlayAreaBarriers
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 4863401047022929391}
   m_Layer: 6
   m_Name: rightInnerBar
-  m_TagString: Untagged
+  m_TagString: PlayAreaBarriers
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 3495841438618274083}
   m_Layer: 6
   m_Name: bottomInnerBar
-  m_TagString: Untagged
+  m_TagString: PlayAreaBarriers
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 5901034923519498660}
   m_Layer: 6
   m_Name: LeftInnerBar
-  m_TagString: Untagged
+  m_TagString: PlayAreaBarriers
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

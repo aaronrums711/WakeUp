@@ -19,9 +19,12 @@ public class KnockEmDownTarget : MiniGameElement
 
     void Start()
     {
+        if (MiniGameElement.OnSpawnGameElement != null)
+        {
+            MiniGameElement.OnSpawnGameElement(this.gameObject);
+        }
         initialShrinkRate *= parentMiniGame.difficultyParams.scaleUpMultiplier;
         waveManager = parentMiniGame.GetComponentInChildren<KnockEmDownWaveManager>();
-        //initialCoroutine = Shrink(this.transform, initialShrinkRate);
         initialCoroutine = StartCoroutine(Shrink(this.transform, initialShrinkRate));
     }
 
@@ -48,6 +51,10 @@ public class KnockEmDownTarget : MiniGameElement
             //in case it's not perfect, at the end of the loops just set scale to 0
             trans.localScale = Vector3.zero;
             waveManager.objectsInCurrentWave.Remove(this.gameObject);
+            if (MiniGameElement.OnDestroyGameElement != null)
+            {
+                MiniGameElement.OnDestroyGameElement(this.gameObject);
+            }
             Destroy(this.gameObject);
         }
     }
@@ -55,6 +62,10 @@ public class KnockEmDownTarget : MiniGameElement
 
     public IEnumerator DestroyEffect(Transform trans, float rate, KnockEmDownTarget target) 
 	{
+        if (MiniGameElement.OnDestroyGameElement != null)
+        {
+            MiniGameElement.OnDestroyGameElement(this.gameObject);
+        }
         waveManager.objectsInCurrentWave.Remove(this.gameObject);
         StopCoroutine(initialCoroutine);
         float endTime= Time.time + growEffectLength;
@@ -83,6 +94,18 @@ public class KnockEmDownTarget : MiniGameElement
         float scale = this.transform.localScale.x * 2;  //multiplying by two will roughly be 1 at the start of a targets life, because their X scale is about .5  
         StartCoroutine(DestroyEffect(this.transform,endEffectRate, this ));
         return scale;
+    }
+
+    //only creating this becasue I'm getting a weird "Coroutine Continue Failure" message when I try to stop them from the KnockeEmDownStartStopper script in the slow down method
+    public void StopInitialCoroutine()
+    {
+        StopCoroutine(this.initialCoroutine);
+    }
+
+    //called from StartStopper as well
+    public void RestartInitialCoroutine(Transform transform, float shrinkRate)
+    {
+        initialCoroutine = StartCoroutine(Shrink(this.transform, initialShrinkRate));
     }
 
 }

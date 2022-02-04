@@ -25,24 +25,22 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
 
 	//////////////////////////////State
 	private float startingYPos;
-    public Vector2 velocityAtStop; //used by the stop/start script to store the velocity of each target before it's stopped, then to set it back again if necessary
+    [HideInInspector]public Vector2 velocityAtStop; //used by the stop/start script to store the velocity of each target before it's stopped, then to set it back again if necessary
 
 	//////////////////////////////Cached Component References
     private SpriteRenderer thisSR;
-    private Rigidbody2D rb;
+    [HideInInspector]
+    public Rigidbody2D rb;
     private ChoppedTargetSpawner spawner;
     public Sprite startingSprite;
     
-
-	
-	
-	// void Awake()
-    // {
-    //     GetParentMiniGame();  //I have not idea why, but this is not getting called automatically like it's supposed to, so I'm calling it here. 
-    // }
 	
     void Start()
     {
+        if (MiniGameElement.OnSpawnGameElement != null)
+        {
+            MiniGameElement.OnSpawnGameElement(this.gameObject);
+        }
         startingScale = this.transform.localScale;
         SetHealthAndSize();
         currentHealth = totalHealth;
@@ -51,14 +49,18 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
         spawner = GameObject.Find("LaunchPoints").GetComponent<ChoppedTargetSpawner>();
         startingSprite = thisSR.sprite;
         startingYPos = this.transform.position.y-0.25f;  //subtracting 0.25 just so there's no accidental self destruction right when it's spawned
-        
+        // velocityAtSpeedChange = rb.velocity;
     }
 
     void Update()
     {
         if (this.transform.position.y < startingYPos)
         {
-            spawner.allTargets.RemoveAt(0);
+            if (MiniGameElement.OnDestroyGameElement != null)
+            {
+                MiniGameElement.OnDestroyGameElement(this.gameObject);
+            }
+            spawner.allTargets.Remove(this);
             Destroy(this.gameObject);
         }
     }
@@ -74,6 +76,11 @@ public class ChoppedTarget : MiniGameElement, IProgressionAdder
         rb.velocity = velocityAtHit;
         if (currentHealth <= 0)
         {
+            if (MiniGameElement.OnDestroyGameElement != null)
+            {
+                print("chopped target destroyed");
+                MiniGameElement.OnDestroyGameElement(this.gameObject);
+            }
             spawner.allTargets.RemoveAt(0);
             AddMiniGameProgress();
             Destroy(this.gameObject);

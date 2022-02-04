@@ -64,8 +64,15 @@ public class MiniGame : MonoBehaviour
 
     void Awake()
     {
-        AssignProgressionParameters();
-        AssignDifficultyParameters();
+        if ((this.progressionParams == null || this.difficultyParams == null) && isTesting == true)
+        {
+            Debug.LogWarning(this.miniGameName + " has assigned it's own progression or difficulty params.  This should only happen for testing purposes.");
+            AssignProgressionParameters();
+            AssignDifficultyParameters();
+        }
+
+
+
         stopStarter = GetComponentInChildren<IStoppable>();
         isActive = true; //switched this to Awake from Start()  on 10/24/21.  I don't think this will cause any issue, but juse be aware. 
 
@@ -73,10 +80,11 @@ public class MiniGame : MonoBehaviour
 
     void Start()
     {
-        
-        // isActive = true; //this may be set by manager scripts later on...but for now, whenever a minigame is instantiated, isActive will be set to true;
-        completionPercent = 0.5f;
-        keyForThisGame = keysToPlay[orderInLevel];  //orderInLevel will eventually be set by a manager class. For now, VGIU
+        rateOfDecay *= progressionParams.universalDragMultiplier;  //whether the diff/prog params as assigned from the levelManager or above, we are setting the relevant values here in Start()
+        baseProgression *=  progressionParams.universalProgressionMultiplier;
+        baseProgressionChunk *= progressionParams.universalProgressionChunkMultiplier;
+
+        keyForThisGame = keysToPlay[orderInLevel];  
         getPlayAreaBarriers();
         completionPercent = progressionParams != null ? progressionParams.startingProgression : 0.5f;
 
@@ -90,7 +98,7 @@ public class MiniGame : MonoBehaviour
             DecayCompletion();
         } 
         
-        TrackColorWithCompletionPercent();
+        // TrackColorWithCompletionPercent();  //commented out on 12/1/21
     }
 
 
@@ -118,28 +126,6 @@ public class MiniGame : MonoBehaviour
         Destroy(GameObject.Find("test"));
     }
 
-    // [ContextMenu("stop game")]
-    // public void StopGame()
-    // //as of 8/26 this is not getting called anywhere, becauase the new IStoppable interface is being implemented in each mini game
-    // //it was previously being called below in CheckCompletion()
-    // {
-    //     isActive = false;
-    //     print("StopGame() method has been called from " + this.name);
-    //     List <Rigidbody2D> allRBs = GetComponentsInChildren<Rigidbody2D>().ToList();
-    //     List <MonoBehaviour> allScripts = GetComponentsInChildren<MonoBehaviour>().ToList();
-    //     allScripts.Remove(this); //this script, the MiniGame script, should not be in this list. 
-    //     foreach (Rigidbody2D rb in allRBs)
-    //     {
-    //         rb.gravityScale = 0f;  //rigidbodies can't be disabled, so, doing this. 
-    //         rb.bodyType = RigidbodyType2D.Static;
-    //     }
-    //     foreach (MonoBehaviour script in allScripts)
-    //     {
-    //         script.StopAllCoroutines();
-    //         script.enabled = false;
-    //         print(script.GetType());
-    //     }
-    // }
 
     public void TrackColorWithCompletionPercent()
     {

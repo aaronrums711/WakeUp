@@ -357,8 +357,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentMiniGame: {fileID: 0}
-  clampPoint: 0.093
-  thisRB: {fileID: 0}
+  clampPoint: 0.058
+  thisRB: {fileID: 8799290901852314533}
 --- !u!1 &8799290901895693865
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,7 +378,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8799290901895693864
 Transform:
   m_ObjectHideFlags: 0
@@ -410,9 +410,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   miniGameName: Pool
-  inherentComplexity: 0
+  inherentComplexity: 1
   baseColor: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
-  targetColor: {r: 0.06716209, g: 0, b: 0.8584906, a: 1}
+  targetColor: {r: 0.85537314, g: 0.8503471, b: 0.9150943, a: 1}
   completionPercent: 0
   baseProgression: 0.05
   baseProgressionChunk: 0.05
@@ -482,6 +482,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentMiniGame: {fileID: 0}
+  slowDownChangeRate: 0.97
+  speedUpChangeRate: 0
+  speedChangeDuration: 1
+  speedUpChangeRateAddition: 0
+  finalCueBallPush: 3
+  cueBall: {fileID: 0}
+  poolStick: {fileID: 0}
 --- !u!1 &8799290902175748337
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,6 +541,7 @@ MonoBehaviour:
   hitSpeed: 60
   maxAllowedPullbackDistance: 1.498
   isDrawingBack: 0
+  isSlowed: 0
   ball: {fileID: 8799290901852314532}
   thisRB: {fileID: 0}
   cueCollider: {fileID: 8799290901052647546}

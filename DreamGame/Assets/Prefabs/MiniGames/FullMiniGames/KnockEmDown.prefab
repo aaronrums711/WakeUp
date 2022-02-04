@@ -52,7 +52,7 @@ MonoBehaviour:
   miniGameName: KnockEmDown
   inherentComplexity: 0
   baseColor: {r: 1, g: 1, b: 1, a: 1}
-  targetColor: {r: 1, g: 0.4362056, b: 0.06132078, a: 1}
+  targetColor: {r: 0.9245283, g: 0.8430746, b: 0.7893378, a: 1}
   completionPercent: 0.5
   baseProgression: 0.02
   baseProgressionChunk: 0.015
@@ -108,6 +108,8 @@ MonoBehaviour:
   maxWaveAmount: 10
   minTimeBetweenEachSpawn: 0.15
   maxTimeBetweeenEachSpawn: 0.32
+  minTimeBetweenEachWave: 2
+  maxTimeBetweenEachWave: 5
   isCurrentWaveOnPlayArea: 0
   objectsInCurrentWave: []
 --- !u!114 &1047094732742780751

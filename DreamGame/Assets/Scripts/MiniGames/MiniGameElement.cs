@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class MiniGameElement : MonoBehaviour
 {
     public MiniGame parentMiniGame;
+    public static  Action<GameObject> OnDestroyGameElement;  //these can't be events because they need to be called from child scripts.  Events can only be calle from the class that created them. 
+    public static  Action<GameObject> OnSpawnGameElement;
 
     void Awake()
     {
@@ -51,7 +54,7 @@ public class MiniGameElement : MonoBehaviour
             if (testX > maxX) {maxX = testX-padding;}
             else if(testX < minX) {minX = testX+padding;}
         }
-        Vector3 targetLocation = new Vector3(Random.Range(minY, maxY), Random.Range(minX, maxX));
+        Vector3 targetLocation = new Vector3(UnityEngine.Random.Range(minY, maxY), UnityEngine.Random.Range(minX, maxX));
         return targetLocation;
     }
 
@@ -79,7 +82,7 @@ public class MiniGameElement : MonoBehaviour
         {
             distances = new List<float>();
             // Vector3 testTargetLocation = new Vector3(Random.Range(minY, maxY), Random.Range(minX, maxX));  wow, this was wrong!
-            Vector3 testTargetLocation = new Vector3( Random.Range(minX, maxX), Random.Range(minY, maxY));
+            Vector3 testTargetLocation = new Vector3( UnityEngine.Random.Range(minX, maxX), UnityEngine.Random.Range(minY, maxY));
             
             for (int i=0; i< objectsToAvoid.Count; i++)
             {

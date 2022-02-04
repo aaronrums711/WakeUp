@@ -23,6 +23,9 @@ public class PoolStick : MiniGameElement, IOneKeyPlay
     //////////////////////////////State
     public bool isDrawingBack = false;
 
+    [HideInInspector]
+    public bool isSlowed;  //this is set from PoolStartStopper, and it's used to delay the reappearance of the pool stick
+
     //////////////////////////////Cached Component References
     public CueBall ball; //VGIU
     public Rigidbody2D thisRB;
@@ -78,7 +81,6 @@ public class PoolStick : MiniGameElement, IOneKeyPlay
     public void OneKeyPlay() //this is being given the OneKeyPlay(), because if it's ever called separately, this is what actually generates the force
     {
         float finalHitMultiplier = hitSpeed+ (pullBackDistance * 30); //number here is arbitrary, but it just needs to be high enough to make pulling back the cue stick farther have a distinguishable effect 
-        // print("final hit multiplier " + finalHitMultiplier);
         thisRB.AddForce(transform.up * finalHitMultiplier , ForceMode2D.Impulse);
         //this will always hit the ball (and it must).  from the OnCollEnter from that collision, ResetStickPos() is called
     }
@@ -102,7 +104,7 @@ public class PoolStick : MiniGameElement, IOneKeyPlay
             StartCoroutine(FadeOut(this.transform.GetChild(i).GetComponent<SpriteRenderer>(), 0.5f, 1,0));
         }
 
-        while (ball.thisRB.velocity.sqrMagnitude > ball.clampPoint) //keep yielding one frame until the ball stops, THEN set the stick position
+        while (ball.thisRB.velocity.sqrMagnitude > ball.clampPoint  || isSlowed) //keep yielding one frame until the ball stops, THEN set the stick position
         {
             yield return null;
         }
