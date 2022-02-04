@@ -11,7 +11,7 @@ public class Pathfinding : MonoBehaviour
 	Dependencies:
 	******************/
 	
-	public Grid grid;
+	private Grid grid;
 	public Transform seeker;
 	public Transform target; 
 
@@ -52,6 +52,7 @@ public class Pathfinding : MonoBehaviour
 
 			if (currentNode == targetNode)
 			{
+				RetracePath(startNode, targetNode);
 				return;
 			}
 			
@@ -100,7 +101,7 @@ public class Pathfinding : MonoBehaviour
 
 		}
 		path.Reverse();  //the calculated path starts with the end, so this just reverses it so the path[0] is the startingNode;
-
+		grid.path = path;
 
 	}
 
