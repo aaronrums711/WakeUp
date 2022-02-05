@@ -15,8 +15,9 @@ public class Node
 	public bool walkable;
 	public Vector3 worldPosition;
 
-	public int Gcost;  //distance from this node to starting node
-	public int Hcost;  //distance  this node to the destination
+	public int Gcost;  	//distance from this node to starting node
+	public int Hcost;  	//distance  this node to the destination
+						//these are set by the pathFinding class, because they are relative to the start and destination
 
 	public int gridX; //this is the X coord of this node in the larger grid
 	public int gridY; //this is the Y coord of this node in the larger grid
