@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+    /// <summary>
+    /// this simply generates a grid using some given parameters.  It doesn't necessarily have anything to do with pathfinding in particular, except for when it 
+	/// checks if a node is walkable or not.  
+    /// </summary>
 public class Grid : MonoBehaviour
 {
 	/*****************
-	CreateDate: 
-	Functionality:
+	CreateDate: 	2/3/22
+	Functionality:	represents a grid of nodes, the underlying data for our pathfinding
 	Notes:
 	Dependencies:
 	******************/
@@ -21,15 +25,29 @@ public class Grid : MonoBehaviour
 	public Transform player;
 	public LayerMask unwalkableMask;
 
-	public float nodeRadius;
-	public Vector2 gridWorldSize;
+	[Tooltip("for some reason, setting this field to >= 1 stops the path from being drawn in black.  I don't know why")]
+	public float nodeRadius;	 //VGIU
+	public Vector2 gridWorldSize;// VGIU
 
 	float nodeDiameter;
-	int gridSizeX, gridSizeY;
+	int gridSizeX, gridSizeY;   //these are the grid size IN NODES.  
 
 	public bool markPlayerNode;  //for testing only, it shows exactly what node the player will be assigned to. 
 
 	public List<Node> path;
+
+
+
+
+	void Start()
+	{
+		nodeDiameter = nodeRadius * 2;
+		gridSizeX = Mathf.RoundToInt(gridWorldSize.x/nodeDiameter);  //we are taking the WORLD size here and converting it into Nodes for X and Y
+		gridSizeY = Mathf.RoundToInt(gridWorldSize.y/nodeDiameter);
+		print("the grid is " + gridSizeX + " nodes by " + gridSizeY + " nodes");
+		CreateGrid();
+	}
+
 
 	void OnDrawGizmos()
 	{
@@ -60,18 +78,12 @@ public class Grid : MonoBehaviour
 	}
 
 	
-	void Start()
-	{
-		nodeDiameter = nodeRadius * 2;
-		gridSizeX = Mathf.RoundToInt(gridWorldSize.x/nodeDiameter);
-		gridSizeY = Mathf.RoundToInt(gridWorldSize.y/nodeDiameter);
-		CreateGrid();
-	}
-
+	//this simply fills in the nodeGrid object, which is a 2D list of nodes that is the underlying data.  
 	void CreateGrid()
 	{
 		nodeGrid = new Node[gridSizeX, gridSizeY];
 		Vector3 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x/2 - Vector3.forward * gridWorldSize.y/2;  //this gives us the bottom left corner of our world...I don't know how. 
+		print("world bottom left " + worldBottomLeft);
 		for (int x = 0; x<gridSizeX; x++)
 		{
 			for (int y = 0; y<gridSizeY; y++)
@@ -83,6 +95,7 @@ public class Grid : MonoBehaviour
 		}
 	}
 
+	//give it a world point, it gives you the corresponding node
 	public Node NodeFromWorldPoint(Vector3 worldPos)
 	{
 		float percentX = (worldPos.x + gridWorldSize.x/2) / gridWorldSize.x; //this is a value between 0 and 1 for how far along the passed in vector is on the X axis

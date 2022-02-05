@@ -11,11 +11,6 @@ public class Node
 	Dependencies:
 	******************/
 	
-	//////////////////////////////Config
-	
-	//////////////////////////////State
-	
-	//////////////////////////////Cached Component References
 	
 	public bool walkable;
 	public Vector3 worldPosition;
@@ -27,8 +22,6 @@ public class Node
 	public int gridY; //this is the Y coord of this node in the larger grid
 
 	public Node parentNode;
-
-	
 
 	public Node(bool _walkable, Vector3 _worldPosition, int _gridX, int _gridY)
 	{
