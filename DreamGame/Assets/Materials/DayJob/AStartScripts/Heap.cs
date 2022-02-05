@@ -38,12 +38,18 @@ public class Heap<T> where T : IHeapItem<T>
 			T parentItem = items[parentIndex];
 			if (item.CompareTo(parentItem) > 0)
 			{
-				
+				Swap(item, parentItem);
 			}
+			else
+			{
+				break;
+			}
+			parentIndex = (item.HeapIndex-1)/2;
 		}
 
 	}
 
+	////UPON RETURN: I stopped around 9:00 of the above video
 
 	void Swap (T itemA, T itemB)
 	{
