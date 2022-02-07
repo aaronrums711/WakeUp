@@ -27,6 +27,7 @@ public class Pathfinding_Heap : MonoBehaviour
 	{
 		if (Input.GetKeyDown("space"))
 		{
+			print("FindPath called");
 			FindPath(seeker.position, target.position);
 		}
 		
