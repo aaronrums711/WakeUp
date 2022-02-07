@@ -118,6 +118,11 @@ public class Pathfinding_Heap : MonoBehaviour
 	}
 
 
+	
+
+
+
+
 
 
 	//this method just creates a list of Nodes that represent the found path. 

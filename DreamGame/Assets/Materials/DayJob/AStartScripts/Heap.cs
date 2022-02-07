@@ -77,43 +77,35 @@ public class Heap<T> where T : IHeapItem<T>
 	}
 
 	//UPON RETURN: this still doesnt match the video yet, it needs to be changed. 
-	void SortDown(T item)
-	{
-		while (true)
-		{
-			int childIndexLeft = item.HeapIndex*2 + 1;
-			int childIndexRight = item.HeapIndex*2 + 2;
+	void SortDown(T item) {
+		while (true) {
+			int childIndexLeft = item.HeapIndex * 2 + 1;
+			int childIndexRight = item.HeapIndex * 2 + 2;
 			int swapIndex = 0;
-			
-			if (childIndexLeft < currentItemCount)
-			{
+
+			if (childIndexLeft < currentItemCount) {
 				swapIndex = childIndexLeft;
 
-				if (childIndexRight < currentItemCount)
-				{
-					if (items[childIndexLeft].CompareTo(items[childIndexRight]) < 0 ) 	//this actually compares the two children.  this is only executed if both childIndexLeft and childIndexRight are < currentItemCount, meaning, 
-																						//both those calculated indexes actually exist in this heap.  If ChildIndexRight was 20 and currentItemCount was 16, then we would know that childIndexRight is not valid and doesn't actually exist
-					{
+				if (childIndexRight < currentItemCount) {
+					if (items[childIndexLeft].CompareTo(items[childIndexRight]) < 0) {
 						swapIndex = childIndexRight;
-					} 
-					if (item.CompareTo(items[swapIndex])<0)
-					{
-						Swap(item, items[swapIndex]);
 					}
-					else 
-					{
-						return;
-					}					
 				}
+
+				if (item.CompareTo(items[swapIndex]) < 0) {
+					Swap (item,items[swapIndex]);
+				}
+				else {
+					return;
+				}
+
 			}
-			else
-			{
-				return; //this is if it has no children. In that case, it's already in the right place and we can stop
+			else {
+				return;
 			}
 
 		}
 	}
-
 	public int Count
 	{
 		get{return currentItemCount;}
