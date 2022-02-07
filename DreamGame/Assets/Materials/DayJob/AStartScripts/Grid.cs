@@ -30,7 +30,7 @@ public class Grid : MonoBehaviour
 	public Vector2 gridWorldSize;// VGIU
 
 	float nodeDiameter;
-	int gridSizeX, gridSizeY;   //these are the grid size IN NODES.  
+	public int gridSizeX, gridSizeY;   //these are the grid size IN NODES.  
 
 	public bool markPlayerNode;  //for testing only, it shows exactly what node the player will be assigned to. 
 
