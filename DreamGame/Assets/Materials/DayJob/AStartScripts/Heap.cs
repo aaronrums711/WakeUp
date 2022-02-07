@@ -76,7 +76,6 @@ public class Heap<T> where T : IHeapItem<T>
 
 	}
 
-	//UPON RETURN: this still doesnt match the video yet, it needs to be changed. 
 	void SortDown(T item) {
 		while (true) {
 			int childIndexLeft = item.HeapIndex * 2 + 1;
