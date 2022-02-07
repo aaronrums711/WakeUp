@@ -20,11 +20,13 @@ public class Pathfinding_Heap : MonoBehaviour
 
 	void Awake()
 	{
+		print("awake called");
 		grid = GetComponent<Grid>();
 	}
 
 	void Update()
 	{
+		print("update called");
 		if (Input.GetKeyDown("space"))
 		{
 			print("FindPath called");
@@ -42,8 +44,9 @@ public class Pathfinding_Heap : MonoBehaviour
 		
 		HashSet<Node> closedSet  = new HashSet<Node>(); //holds all the nodes that have already been "picked" as the path at some point in the algorithm. 
 														//this means that, at some point, these nodes had the lowest Fcost of all the known nodes
-
+		print("about to call Add");
 		openSet.Add(startNode);							//first we add the startNode to a list. 
+		print("node added");
 
 		/*
 		to sum up this while loop....
