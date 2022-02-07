@@ -14,6 +14,7 @@ public class Pathfinding_Heap : MonoBehaviour
 	private Grid grid;
 	public Transform seeker;
 	public Transform target; 
+	private int itCount;
 
 
 
@@ -24,7 +25,11 @@ public class Pathfinding_Heap : MonoBehaviour
 
 	void Update()
 	{
-		FindPath(seeker.position, target.position);
+		if (Input.GetKeyDown("space"))
+		{
+			FindPath(seeker.position, target.position);
+		}
+		
 	}
 
 	void FindPath(Vector3 startPos, Vector3 endPos)
@@ -70,6 +75,7 @@ public class Pathfinding_Heap : MonoBehaviour
 
 		while (openSet.Count > 0)						//in each iterat
 		{
+			print("pathfinding iteration count:"+ itCount);
 			Node currentNode = openSet.RemoveFirst();
 			closedSet.Add(currentNode);					
 
@@ -99,6 +105,7 @@ public class Pathfinding_Heap : MonoBehaviour
 					}
 				}
 			}
+			itCount++;
 		}
 
 
