@@ -49,7 +49,7 @@ public class Pathfinding : MonoBehaviour
 		then we check if the currentNode == targetNode.  If not, keep going
 
 		then in the foreach we loop through all the neighbors and, if they are walkable or are not in closeSet, we 
-			give each of them a Gcost, Hcost and set the parent to the currentNode (the center of the 3x3 grid of nodes)
+			give each of them a Gcost, Hcost and set their parent to the currentNode (the center of the 3x3 grid of nodes)
 			then we add each neighbor to openSet
 
 		then the while loop repeats, but now openSet contains all the neighbors of the startNode

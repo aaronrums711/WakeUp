@@ -57,20 +57,20 @@ public class Heap<T> where T : IHeapItem<T>
 	//
 	void Swap (T itemA, T itemB)
 	{
-		items[itemA.HeapIndex] = itemB;
-		items[itemB.HeapIndex] = itemA;
+		items[itemA.HeapIndex] = itemB; //at the heapIndex of itemA, place itemB
+		items[itemB.HeapIndex] = itemA;	//at the heapIndex of itemB, place itemA
 
 		int itemAIndex = itemA.HeapIndex;
-		itemA.HeapIndex = itemB.HeapIndex;
-		itemB.HeapIndex = itemAIndex;
+		itemA.HeapIndex = itemB.HeapIndex; 	//give itemA the heapIndex of itemB, since that's where it is now
+		itemB.HeapIndex = itemAIndex;		//give itemB the heapIndex of itemA
 	}
 
 	public T RemoveFirst()
 	{
-		T firstItem = items[0];
+		T firstItem = items[0]; 	//save a ref of the first item
 		currentItemCount--;
-		items[0] = items[currentItemCount];
-		items[0].HeapIndex = 0;
+		items[0] = items[currentItemCount];	//set last item as the first in the heap
+		items[0].HeapIndex = 0;				//set the heapIndex of that item to match it's new location in the list
 		SortDown(items[0]);
 		return firstItem;
 
@@ -91,15 +91,42 @@ public class Heap<T> where T : IHeapItem<T>
 
 				if (childIndexRight < currentItemCount)
 				{
-					if (items[childIndexLeft].CompareTo(items[childIndexRight]) < 0 )
+					if (items[childIndexLeft].CompareTo(items[childIndexRight]) < 0 ) 	//this actually compares the two children.  this is only executed if both childIndexLeft and childIndexRight are < currentItemCount, meaning, 
+																						//both those calculated indexes actually exist in this heap.  If ChildIndexRight was 20 and currentItemCount was 16, then we would know that childIndexRight is not valid and doesn't actually exist
 					{
 						swapIndex = childIndexRight;
-
+					} 
+					if (item.CompareTo(items[swapIndex])<0)
+					{
+						Swap(item, items[swapIndex]);
 					}
+					else 
+					{
+						return;
+					}					
 				}
+			}
+			else
+			{
+				return; //this is if it has no children. In that case, it's already in the right place and we can stop
 			}
 
 		}
+	}
+
+	public int Count
+	{
+		get{return currentItemCount;}
+	}
+
+	public bool Contains(T item)
+	{
+		return Equals(items[item.HeapIndex], item);
+	}
+
+	public void UpdateItem(T item)
+	{
+		SortUp(item);
 	}
 
 }
