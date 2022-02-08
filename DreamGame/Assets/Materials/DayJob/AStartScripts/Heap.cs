@@ -10,8 +10,14 @@ public class Heap<T> where T : IHeapItem<T>
 	Functionality:	this creates a generic heap data structure  ---- https://www.youtube.com/watch?v=3Dw5d7PlcTM&list=PLFt_AvWsXl0cq5Umv3pMC9SPnKjfp9eGW&index=4  for a great explanation on heaps
 	Notes:			it is not strictly necessary for pathfinding, but it makes it faster because, using a heap, the pathfinding algorithm won't have to loop through EVERY SINGLE node in openSet to find the one with the lowest Fcost
 
-					the main rule of a heap is that each index has up to 2 chilren, and each parent must be less than each of it's children.  In reverse, each child must be greater than it's parent
-	
+					the main rule of a heap is that each index has up to 2 children, and each parent must be less than each of it's children.  In reverse, each child must be greater than it's parent
+
+					To put it another way - the main advantage of using this heap instead of just looping through all the nodes in openSet to find the lowest FCost, is
+					that it is basically self contained and self-sorting.  
+
+					Any entity that needs to grab the item with the highest priority (which will be defined by the CompareTo method from the IComparable interface,
+					in our case the item with the LOWEST Fcost is the HIGHEST priority) can just call Heap.RemoveFirst().   Then the heap will re-organize itself to replace that item,
+					and will adjust the positions of any other items as needed.  
 	
 	
 	Dependencies:
