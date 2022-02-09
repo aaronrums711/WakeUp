@@ -108,8 +108,11 @@ public static class Clock
 		gameClockOn = false;
 		shutOffTime = DateTime.Now;
 		return gameClockOn;
-		
 	}
+
+	/**
+	UPON RETURN:  set up an event that gets called every half hour and shouts out the hour and minute.  
+	**/
 
 
 
