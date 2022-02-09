@@ -20,7 +20,7 @@ public class DayJobLevelManager : MonoBehaviour
 	
 	void Awake()
     {
-        Clock.InitializeGameClock(new System.DateTime(2022,09,01,09,01,01), 10, 3);  ///september 1st, 9:00 AM
+        Clock.InitializeGameClock(new System.DateTime(2022,09,01,09,01,01), 300, 1);  ///september 1st, 9:00 AM
 		StartCoroutine(Clock.UpdateGameClockContinuously());
 		StartCoroutine(DisplayGameTime());
     }

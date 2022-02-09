@@ -16,32 +16,54 @@ public static class Clock
 	
 	
 	//////////////////////////////State
-	[Range(1f,30f), Tooltip("this determines how fast the in-game time will pass")]
+	
 	public static int realLifeUpdateInterval;  	//how frequently, in real life seconds, will the game clock be updated
-	public static float timeSpeed;				
-	private static DateTime initializedAtRealTime;
-	private static DateTime lastUpdateRealTime;
 
+	[Range(1f,30f)]		
+	public static int timeSpeed;				//how fast relative to real-time will the game-clock advance				
+	private static DateTime initializedAtRealTime;
 	public static DateTime gameDateTime;
+	public static DateTime gameAutoKillTime;
+	public static DateTime shutOffTime;
+
 	public static int gameYear;
 	public static int gameMonth;
 	public static int gameDay;
 	public static int gameHour;
 	public static int gameMinuteWithinHour;
 	public static bool gameClockOn = false;
+	public static bool autoKillAtEndTime = false;
+
+	public static TimeSpan RealTimeSinceStart
+	{
+		get{return DateTime.Now - initializedAtRealTime;}
+	}
+
 	
 
 
 	//this can be used like a constructor; 
-	public static void InitializeGameClock(DateTime gameStartTime, float _timeSpeed, int updateInterval)
+	public static void InitializeGameClock(DateTime _gameDateTime, int _timeSpeed, int _realLifeUpdateInterval)
 	{
 		timeSpeed = _timeSpeed;
 		initializedAtRealTime = DateTime.Now;
-		lastUpdateRealTime = DateTime.Now;
-		realLifeUpdateInterval = updateInterval;
+		realLifeUpdateInterval = _realLifeUpdateInterval;
+
+		gameDateTime = _gameDateTime;
+		gameClockOn = true;
+	}
+
+		public static void InitializeGameClock(DateTime gameStartTime, int _timeSpeed, int _realLifeUpdateInterval, DateTime _endDateTime)
+	{
+		timeSpeed = _timeSpeed;
+		initializedAtRealTime = DateTime.Now;
+		realLifeUpdateInterval = _realLifeUpdateInterval;
 
 		gameDateTime = gameStartTime;
 		gameClockOn = true;
+		gameAutoKillTime = _endDateTime;
+		autoKillAtEndTime = true;
+		
 	}
 
 
@@ -56,34 +78,39 @@ public static class Clock
 
 	private static DateTime UpdateGameClock()
 	{
-		TimeSpan ts = DateTime.Now - lastUpdateRealTime;
-
-
-		//UPON RETURN; there is something wrong with these two lines. without them, it's properly returning the elapsed time of the gameStartTime.  But with them, the time is not moving
-		int newSeconds = (int)(ts.Seconds * timeSpeed);
-		ts = new TimeSpan(0,0,newSeconds);  //this constr is hours, minutes seconds, 
+		int secondsElapsed = (int)(realLifeUpdateInterval * timeSpeed);  //becasue the UpdateGameClockContinuously() is using realLifeUpdateInterval as its yield, we know that thats how many seconds have elapsed
+		TimeSpan ts = new TimeSpan(0,0,secondsElapsed);  //this constr is hours, minutes seconds, 
 
 		gameDateTime += ts;
-		lastUpdateRealTime = DateTime.Now;
 		UpdateValues(gameDateTime);
 		return gameDateTime;
 	}
 
 
-	public  static IEnumerator  UpdateGameClockContinuously()
+	public static IEnumerator  UpdateGameClockContinuously()
 	{
 		while (gameClockOn)
 		{
 			UpdateGameClock();
-			yield return realLifeUpdateInterval; 
+			if (autoKillAtEndTime)
+			{
+				if (gameDateTime > gameAutoKillTime)
+				{
+					TurnOffClock();
+				}
+			}
+			yield return new WaitForSeconds(realLifeUpdateInterval);
 		}
-		
 	}
 
 	public static bool TurnOffClock()
 	{
 		gameClockOn = false;
+		shutOffTime = DateTime.Now;
 		return gameClockOn;
+		
 	}
+
+
 
 }
