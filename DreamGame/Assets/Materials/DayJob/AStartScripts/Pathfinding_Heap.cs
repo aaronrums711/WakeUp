@@ -31,8 +31,9 @@ public class Pathfinding_Heap : MonoBehaviour
 		
 	}
 
-	void FindPath(Vector3 startPos, Vector3 endPos)
+	List<Vector3>  FindPath(Vector3 startPos, Vector3 endPos)
 	{
+		List<Vector3> pathWaypoints = new List<Vector3>();
 		Node startNode = grid.NodeFromWorldPoint(startPos);	
 		Node targetNode = grid.NodeFromWorldPoint(endPos);
 
@@ -78,8 +79,7 @@ public class Pathfinding_Heap : MonoBehaviour
 
 			if (currentNode == targetNode)  //if the current evaluated node == targetNode, stop everything, we've got it
 			{
-				RetracePath(startNode, targetNode);
-				return;
+				break;
 			}
 			
 			foreach (Node neighbor in grid.GetNeighbors(currentNode))  //now we check all the neighbors of currentNode.  
@@ -99,14 +99,20 @@ public class Pathfinding_Heap : MonoBehaviour
 					if (!openSet.Contains(neighbor))
 					{
 						openSet.Add(neighbor);
+						continue;
 					}
 				}
 			}
 		}
+		
+		pathWaypoints = RetracePath(startNode, targetNode);
 
+		foreach(Vector3 point in pathWaypoints)
+		{
+			print("point on path: " + point);
+		}
 
-
-
+		return pathWaypoints;
 	}
 
 
@@ -114,19 +120,22 @@ public class Pathfinding_Heap : MonoBehaviour
 	//this method just creates a list of Nodes that represent the found path. 
 	//so it just keeps getting the parent nodes of the EndNode, until the parentNode = startNode, then you've got the whole path
 	//it is only called once in the FindPath() method
-	void RetracePath(Node startNode, Node endNode)
+	List<Vector3> RetracePath(Node startNode, Node endNode)
 	{
+		List<Vector3> pathWaypoints = new List<Vector3>();
 		List<Node> path = new List<Node>();
 		Node currentNode = endNode;
 		while (currentNode != startNode)
 		{
 			path.Add(currentNode);
+			pathWaypoints.Add(currentNode.worldPosition);
 			currentNode = currentNode.parentNode;
 
 		}
 		path.Reverse();  //the calculated path starts with the end, so this just reverses it so the path[0] is the startingNode;
+		pathWaypoints.Reverse();
 		grid.path = path;
-		
+		return pathWaypoints;
 	}
 
 
