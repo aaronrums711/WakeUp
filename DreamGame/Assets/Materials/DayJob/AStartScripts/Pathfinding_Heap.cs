@@ -14,22 +14,18 @@ public class Pathfinding_Heap : MonoBehaviour
 	private Grid grid;
 	public Transform seeker;
 	public Transform target; 
-	private int itCount;
 
 
 
 	void Awake()
 	{
-		print("awake called");
 		grid = GetComponent<Grid>();
 	}
 
 	void Update()
 	{
-		print("update called");
 		if (Input.GetKeyDown("space"))
 		{
-			print("FindPath called");
 			FindPath(seeker.position, target.position);
 		}
 		
@@ -44,9 +40,7 @@ public class Pathfinding_Heap : MonoBehaviour
 		
 		HashSet<Node> closedSet  = new HashSet<Node>(); //holds all the nodes that have already been "picked" as the path at some point in the algorithm. 
 														//this means that, at some point, these nodes had the lowest Fcost of all the known nodes
-		print("about to call Add");
 		openSet.Add(startNode);							//first we add the startNode to a list. 
-		print("node added");
 
 		/*
 		to sum up this while loop....
@@ -69,17 +63,16 @@ public class Pathfinding_Heap : MonoBehaviour
 
 			all the un-selected nodes REMAIN IN OPENSET because at a later iteration, they may actually be the node with the lowest Fcost. 
 
-			This is what happened in the first map example in Sebastian Lagues first YT tutorial. 
-			The path initiall went up and to the left, but then later on it realized that going up and to the right was better, even though
-				initially that route appeared to have a higher Fcost
+				This is what happened in the first map example in Sebastian Lagues first YT tutorial. 
+				The path initiall went up and to the left, but then later on it realized that going up and to the right was better, even though
+					initially that route appeared to have a higher Fcost
 
 
 		*/
 
 
-		while (openSet.Count > 0)						//in each iterat
+		while (openSet.Count > 0)						
 		{
-			print("pathfinding iteration count:"+ itCount);
 			Node currentNode = openSet.RemoveFirst();
 			closedSet.Add(currentNode);					
 
@@ -109,19 +102,12 @@ public class Pathfinding_Heap : MonoBehaviour
 					}
 				}
 			}
-			itCount++;
 		}
 
 
 
 
 	}
-
-
-	
-
-
-
 
 
 
@@ -140,7 +126,7 @@ public class Pathfinding_Heap : MonoBehaviour
 		}
 		path.Reverse();  //the calculated path starts with the end, so this just reverses it so the path[0] is the startingNode;
 		grid.path = path;
-
+		
 	}
 
 
