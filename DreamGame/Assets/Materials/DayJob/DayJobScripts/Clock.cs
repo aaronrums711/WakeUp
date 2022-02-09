@@ -17,40 +17,73 @@ public static class Clock
 	
 	//////////////////////////////State
 	[Range(1f,30f), Tooltip("this determines how fast the in-game time will pass")]
-	public static float timeSpeed;
-	private static DateTime realLifeStartTime;
+	public static int realLifeUpdateInterval;  	//how frequently, in real life seconds, will the game clock be updated
+	public static float timeSpeed;				
+	private static DateTime initializedAtRealTime;
+	private static DateTime lastUpdateRealTime;
 
-	public static DateTime startDateTime;
 	public static DateTime gameDateTime;
 	public static int gameYear;
 	public static int gameMonth;
 	public static int gameDay;
 	public static int gameHour;
 	public static int gameMinuteWithinHour;
+	public static bool gameClockOn = false;
 	
 
-	
-
-	static void UpdateValues()
-	{
-		gameYear = gameDateTime.Year;
-		gameMonth = gameDateTime.Month;
-		gameDay = gameDateTime.Day;
-		gameHour = gameDateTime.Hour;
-		gameMinuteWithinHour = gameDateTime.Minute;
-	}
 
 	//this can be used like a constructor; 
-	public static void InitializeGameClock(DateTime gameStartTime)
+	public static void InitializeGameClock(DateTime gameStartTime, float _timeSpeed, int updateInterval)
 	{
-		realLifeStartTime = DateTime.Now;
+		timeSpeed = _timeSpeed;
+		initializedAtRealTime = DateTime.Now;
+		lastUpdateRealTime = DateTime.Now;
+		realLifeUpdateInterval = updateInterval;
+
 		gameDateTime = gameStartTime;
+		gameClockOn = true;
 	}
 
-	/**
-	UPON RETURN:  use a TimeSpan elapsed to determine the difference between the DateTime.Now and the realLifeStartTime. 
-	Then multiply the seconds by timeSpeed, and  gameDateTime += elapsed;
 
-	this should pass the time realistically, but at a faster speed governed by timeSpeed;
-	**/
+	private static void UpdateValues(DateTime dt)
+	{
+		gameYear = dt.Year;
+		gameMonth = dt.Month;
+		gameDay = dt.Day;
+		gameHour = dt.Hour;
+		gameMinuteWithinHour = dt.Minute;
+	}
+
+	private static DateTime UpdateGameClock()
+	{
+		TimeSpan ts = DateTime.Now - lastUpdateRealTime;
+
+
+		//UPON RETURN; there is something wrong with these two lines. without them, it's properly returning the elapsed time of the gameStartTime.  But with them, the time is not moving
+		int newSeconds = (int)(ts.Seconds * timeSpeed);
+		ts = new TimeSpan(0,0,newSeconds);  //this constr is hours, minutes seconds, 
+
+		gameDateTime += ts;
+		lastUpdateRealTime = DateTime.Now;
+		UpdateValues(gameDateTime);
+		return gameDateTime;
+	}
+
+
+	public  static IEnumerator  UpdateGameClockContinuously()
+	{
+		while (gameClockOn)
+		{
+			UpdateGameClock();
+			yield return realLifeUpdateInterval; 
+		}
+		
+	}
+
+	public static bool TurnOffClock()
+	{
+		gameClockOn = false;
+		return gameClockOn;
+	}
+
 }

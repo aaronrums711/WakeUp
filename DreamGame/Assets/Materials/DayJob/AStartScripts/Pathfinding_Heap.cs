@@ -106,12 +106,6 @@ public class Pathfinding_Heap : MonoBehaviour
 		}
 		
 		pathWaypoints = RetracePath(startNode, targetNode);
-
-		foreach(Vector3 point in pathWaypoints)
-		{
-			print("point on path: " + point);
-		}
-
 		return pathWaypoints;
 	}
 
