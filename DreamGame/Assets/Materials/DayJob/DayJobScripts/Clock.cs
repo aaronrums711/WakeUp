@@ -24,7 +24,7 @@ public static class Clock
 	private static DateTime initializedAtRealTime;
 	public static DateTime gameDateTime;
 	public static DateTime gameAutoKillTime;
-	public static DateTime shutOffTime;
+	public static DateTime shutOffRealTime;			
 
 	public static int gameYear;
 	public static int gameMonth;
@@ -33,6 +33,12 @@ public static class Clock
 	public static int gameMinuteWithinHour;
 	public static bool gameClockOn = false;
 	public static bool autoKillAtEndTime = false;
+
+	private static bool eventCalledForThisHour = false;
+	private static bool eventCalledForThisHalfHour = true;
+	public static int lastHour;
+
+	public static Action<DateTime> halfHourTimer; //this will get called every half hour, or on the update closest to that.  
 
 	public static TimeSpan RealTimeSinceStart
 	{
@@ -43,37 +49,29 @@ public static class Clock
 
 
 	//this can be used like a constructor; 
-	public static void InitializeGameClock(DateTime _gameDateTime, int _timeSpeed, int _realLifeUpdateInterval)
+	public static void InitializeGameClock(DateTime _gameDateTime, int _timeSpeed, int _realLifeUpdateInterval, bool _autoKillAtEndTime, DateTime _endDateTime)
 	{
 		timeSpeed = _timeSpeed;
 		initializedAtRealTime = DateTime.Now;
 		realLifeUpdateInterval = _realLifeUpdateInterval;
-
 		gameDateTime = _gameDateTime;
+		lastHour = (gameDateTime.AddHours(-1)).Hour;
 		gameClockOn = true;
+
+		if (_autoKillAtEndTime)
+		{
+			gameAutoKillTime = _endDateTime;
+			autoKillAtEndTime = _autoKillAtEndTime;
+		}
 	}
 
-		public static void InitializeGameClock(DateTime gameStartTime, int _timeSpeed, int _realLifeUpdateInterval, DateTime _endDateTime)
+	private static void UpdateValues()
 	{
-		timeSpeed = _timeSpeed;
-		initializedAtRealTime = DateTime.Now;
-		realLifeUpdateInterval = _realLifeUpdateInterval;
-
-		gameDateTime = gameStartTime;
-		gameClockOn = true;
-		gameAutoKillTime = _endDateTime;
-		autoKillAtEndTime = true;
-		
-	}
-
-
-	private static void UpdateValues(DateTime dt)
-	{
-		gameYear = dt.Year;
-		gameMonth = dt.Month;
-		gameDay = dt.Day;
-		gameHour = dt.Hour;
-		gameMinuteWithinHour = dt.Minute;
+		gameYear = gameDateTime.Year;
+		gameMonth = gameDateTime.Month;
+		gameDay = gameDateTime.Day;
+		gameHour = gameDateTime.Hour;
+		gameMinuteWithinHour = gameDateTime.Minute;
 	}
 
 	private static DateTime UpdateGameClock()
@@ -82,16 +80,19 @@ public static class Clock
 		TimeSpan ts = new TimeSpan(0,0,secondsElapsed);  //this constr is hours, minutes seconds, 
 
 		gameDateTime += ts;
-		UpdateValues(gameDateTime);
+		UpdateValues();
 		return gameDateTime;
 	}
 
 
-	public static IEnumerator  UpdateGameClockContinuously()
+	//the purpose of these params, only to then be passed in to InitializeGameClock() is so that any manager script only has to call UpdateGameClockContinuously, instead ofInitializeGameClock() AND  UpdateGameClockContinuously().  And I couldn't call StartCoroutine() in InitializegameClock because this isn't a monobehavior
+	public static IEnumerator  UpdateGameClockContinuously(DateTime _gameDateTime, int _timeSpeed, int _realLifeUpdateInterval, bool _autoKillAtEndTime, DateTime _endDateTime)
 	{
+		InitializeGameClock(_gameDateTime, _timeSpeed, _realLifeUpdateInterval, _autoKillAtEndTime, _endDateTime);  
 		while (gameClockOn)
 		{
 			UpdateGameClock();
+			CallEventPeriodically();
 			if (autoKillAtEndTime)
 			{
 				if (gameDateTime > gameAutoKillTime)
@@ -106,13 +107,70 @@ public static class Clock
 	public static bool TurnOffClock()
 	{
 		gameClockOn = false;
-		shutOffTime = DateTime.Now;
+		shutOffRealTime = DateTime.Now;
 		return gameClockOn;
 	}
 
-	/**
-	UPON RETURN:  set up an event that gets called every half hour and shouts out the hour and minute.  
-	**/
+
+	//the DateTime we want to pass into the event is the gameDateTime ROUNDED to the nearest hour or half hour.  
+	public static void CallEventPeriodically()
+	{
+		if (gameDateTime.Hour > lastHour)
+		{
+			eventCalledForThisHour = false;
+			eventCalledForThisHalfHour = false;
+			lastHour = gameDateTime.Hour;
+		}
+		
+		if (eventCalledForThisHour == false && gameMinuteWithinHour > 0 && gameMinuteWithinHour < 30)
+		{
+			if (halfHourTimer != null)
+			{
+				DateTime dt = new DateTime(gameDateTime.Year,gameDateTime.Month, gameDateTime.Day, gameDateTime.Hour, 0, 0);
+				halfHourTimer(dt);
+			}
+			eventCalledForThisHour = true;
+		}
+
+		if (eventCalledForThisHalfHour == false && gameMinuteWithinHour > 30)
+		{
+			if (halfHourTimer != null)
+			{
+				DateTime dt = new DateTime(gameDateTime.Year,gameDateTime.Month, gameDateTime.Day, gameDateTime.Hour, 30, 0);
+				halfHourTimer(dt);
+			}
+			eventCalledForThisHalfHour = true;
+		}
+
+
+
+
+
+
+		// if (eventCalledForThisHour == false && gameMinuteWithinHour > 0)
+		// {
+		// 	if (halfHourTimer != null)
+		// 	{
+		// 		DateTime dt = new DateTime(gameDateTime.Year,gameDateTime.Month, gameDateTime.Day, gameDateTime.Hour, 0, 0);
+		// 		halfHourTimer(dt);
+		// 	}
+		// 	eventCalledForThisHour = true;
+		// 	eventCalledForThisHalfHour = false;
+		// }
+
+		// if (eventCalledForThisHalfHour == false && gameMinuteWithinHour > 30)
+		// {
+		// 	if (halfHourTimer != null)
+		// 	{
+		// 		DateTime dt = new DateTime(gameDateTime.Year,gameDateTime.Month, gameDateTime.Day, gameDateTime.Hour, 30, 0);
+		// 		halfHourTimer(dt);
+		// 	}
+		// 	eventCalledForThisHour = false;
+		// 	eventCalledForThisHalfHour = true;
+
+		// }
+
+	}
 
 
 

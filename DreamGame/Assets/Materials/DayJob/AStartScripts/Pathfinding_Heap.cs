@@ -24,10 +24,10 @@ public class Pathfinding_Heap : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown("space"))
-		{
+		// if (Input.GetKeyDown("space"))
+		// {
 			FindPath(seeker.position, target.position);
-		}
+		// }
 		
 	}
 
