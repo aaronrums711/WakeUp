@@ -92,7 +92,7 @@ public static class Clock
 		while (gameClockOn)
 		{
 			UpdateGameClock();
-			CallEventPeriodically();
+			CheckToCallEvent();
 			if (autoKillAtEndTime)
 			{
 				if (gameDateTime > gameAutoKillTime)
@@ -113,7 +113,7 @@ public static class Clock
 
 
 	//the DateTime we want to pass into the event is the gameDateTime ROUNDED to the nearest hour or half hour.  
-	public static void CallEventPeriodically()
+	public static void CheckToCallEvent()
 	{
 		if (gameDateTime.Hour > lastHour)
 		{
@@ -141,35 +141,6 @@ public static class Clock
 			}
 			eventCalledForThisHalfHour = true;
 		}
-
-
-
-
-
-
-		// if (eventCalledForThisHour == false && gameMinuteWithinHour > 0)
-		// {
-		// 	if (halfHourTimer != null)
-		// 	{
-		// 		DateTime dt = new DateTime(gameDateTime.Year,gameDateTime.Month, gameDateTime.Day, gameDateTime.Hour, 0, 0);
-		// 		halfHourTimer(dt);
-		// 	}
-		// 	eventCalledForThisHour = true;
-		// 	eventCalledForThisHalfHour = false;
-		// }
-
-		// if (eventCalledForThisHalfHour == false && gameMinuteWithinHour > 30)
-		// {
-		// 	if (halfHourTimer != null)
-		// 	{
-		// 		DateTime dt = new DateTime(gameDateTime.Year,gameDateTime.Month, gameDateTime.Day, gameDateTime.Hour, 30, 0);
-		// 		halfHourTimer(dt);
-		// 	}
-		// 	eventCalledForThisHour = false;
-		// 	eventCalledForThisHalfHour = true;
-
-		// }
-
 	}
 
 
