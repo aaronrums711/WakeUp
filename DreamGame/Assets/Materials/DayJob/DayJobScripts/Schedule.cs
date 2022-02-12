@@ -9,7 +9,7 @@ public class Schedule : ScriptableObject
 {
 	/*****************
 	CreateDate: 	2/11/22
-	Functionality:	an instance of this object should store a list of    Datetime and Transform key value pairs
+	Functionality:	an instance of this object should store a list of Vectors3 (serving as Day Hour Minute) and strings which correspond to locationNames of allthe PathfindingLocation objects on the map
 	Notes:
 	Dependencies:
 	******************/
@@ -72,5 +72,11 @@ public class Schedule : ScriptableObject
 			Debug.Log("Item " + i + ": " + schedule[i].Key + "   "  + schedule[i].Value);
 		}
 	}
+
+
+	/**
+	UPON RETURN:  	switch the second list to be a list of strings, then check against the list from DayJobLevelManager to make sure it exists there.  Then 
+					add the position for that PathfindingLocation to schedule
+	**/
 	
 }

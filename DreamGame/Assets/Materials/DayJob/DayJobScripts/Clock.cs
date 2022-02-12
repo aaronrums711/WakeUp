@@ -113,6 +113,7 @@ public static class Clock
 
 
 	//the DateTime we want to pass into the event is the gameDateTime ROUNDED to the nearest hour or half hour.  
+	//the logic here assumes that the time will never pass into the next day.  If it does, you'll need to incorporate that
 	public static void CheckToCallEvent()
 	{
 		if (gameDateTime.Hour > lastHour)
