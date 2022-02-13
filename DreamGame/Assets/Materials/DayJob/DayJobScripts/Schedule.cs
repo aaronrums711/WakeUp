@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Specialized;
 using System;
 
 [CreateAssetMenu(fileName = "new schedule", menuName = "schedule")]
@@ -16,23 +15,15 @@ public class Schedule : ScriptableObject
 	
 	public int itemsInSchedule {get {return schedule.Count;}}
 	
-	private List<KeyValuePair<DateTime, PathfindingLocation>> schedule = new List<KeyValuePair<DateTime, PathfindingLocation>>();
+	public List<KeyValuePair<DateTime, PathfindingLocation>> schedule = new List<KeyValuePair<DateTime, PathfindingLocation>>();
 
 
 	//these lists need to be made so that new Schedule objects can easily be made in the editor. Dictionaries (and OrderedDictionaries) don't show in the inspector. 
 	
 	[Tooltip("hour, minute")]
-	[SerializeField] private List<Vector2> times;  //we are using vector3 to conveniently use three ints to represent hour and minute.  The Year and Month just come from the Clock class. This should make it easier to construct schedules in the editor
-	[SerializeField] private List<String> destinations;
+	[SerializeField] public List<Vector2> times;  //we are using vector3 to conveniently use three ints to represent hour and minute.  The Year and Month just come from the Clock class. This should make it easier to construct schedules in the editor
+	[SerializeField] public List<String> destinations;
 	
-
-
-	void Start()
-	{
-		ConstructSchedule(times, destinations);
-		PrintFinalSchedule();
-	}
-
 
 	public void ConstructSchedule(List<Vector2> _times, List<String> _destinations)
 	{
@@ -56,7 +47,7 @@ public class Schedule : ScriptableObject
 					break;
 				}
 			}
-		}
+		} 
 
 
 		// for (int i =0; i < _times.Count; i++)

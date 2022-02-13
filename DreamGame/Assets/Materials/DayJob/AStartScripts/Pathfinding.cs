@@ -11,7 +11,7 @@ public class Pathfinding : MonoBehaviour
 	Dependencies:
 	******************/
 	
-	private Grid grid;
+	private _Grid grid;
 	public Transform seeker;
 	public Transform target; 
 
@@ -19,7 +19,7 @@ public class Pathfinding : MonoBehaviour
 
 	void Awake()
 	{
-		grid = GetComponent<Grid>();
+		grid = GetComponent<_Grid>();
 	}
 
 	void Update()

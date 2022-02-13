@@ -21,12 +21,13 @@ public class Officer : NPC
 	
 	void Awake()
     {
-        
+    
     }
 	
     void Start()
     {
-        
+        schedule.ConstructSchedule(schedule.times, schedule.destinations);
+		schedule.PrintFinalSchedule();
     }
 
     void Update()
