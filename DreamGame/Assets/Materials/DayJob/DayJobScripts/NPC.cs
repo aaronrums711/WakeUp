@@ -12,9 +12,13 @@ public class NPC : MonoBehaviour
 	******************/
 	
 	//////////////////////////////Config
+	public Coroutine movementCoroutine;
+	public float movementSpeed;
+
 	
 	//////////////////////////////State
-	
+	public bool canMove;
+
 	//////////////////////////////Cached Component References
 	
 }

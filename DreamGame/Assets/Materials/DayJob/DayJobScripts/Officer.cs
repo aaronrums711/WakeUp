@@ -13,6 +13,12 @@ public class Officer : NPC
 	
 	//////////////////////////////Config
 	public Schedule schedule;
+	public enum movementState
+	{
+		followingPath
+	};
+
+
 	
 	//////////////////////////////State
 	
@@ -34,4 +40,7 @@ public class Officer : NPC
     {
         
     }
+
+
+
 }
