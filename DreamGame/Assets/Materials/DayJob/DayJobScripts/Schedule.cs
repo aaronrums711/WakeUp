@@ -29,14 +29,14 @@ public class Schedule : ScriptableObject
 	{
 		if(!ValidateSchedule(_times, _destinations))
 		{
-			Debug.LogError("there is something wrong with the schedule on this object: " + this.name);
+			Debug.LogError("there is something wrong with the this schedule: " + this.name);
+			return;
 		}
 
 		List<String> pathfindingLocationNames = new List<string>();
 		int indexCounter = 0;
 		foreach (String _locationName in destinations)
 		{
-			
 			foreach (PathfindingLocation pfl in DayJobLevelManager.pfLocations)
 			{
 				if (_locationName == pfl.locationName)
@@ -81,6 +81,26 @@ public class Schedule : ScriptableObject
 			tempDT = dt;
 		}
 
+		
+		foreach (String _locationName in destinations)
+		{
+			bool tempBool = false;
+			foreach (PathfindingLocation pfl in DayJobLevelManager.pfLocations)
+			{
+				if (_locationName == pfl.locationName)
+				{
+					tempBool = true;
+					break;
+				}
+			}
+			if (tempBool == false) //after each _locationName, check the temp variable.  If it never got set to true, something is wrong
+			{
+				Debug.LogError("one of the location names isn't valid!");
+				scheduleIsValid = false;
+				return scheduleIsValid;
+			}
+		} 
+
 		scheduleIsValid = true;
 		return scheduleIsValid;
 
@@ -92,7 +112,7 @@ public class Schedule : ScriptableObject
 		Debug.Log("total items in schedule: " + schedule.Count);
 		for (int i =0; i < schedule.Count; i++)
 		{
-			Debug.Log("Item " + i + ": " + schedule[i].Key + "   "  + schedule[i].Value);
+			Debug.Log("Item " + i + ": " + schedule[i].Key + "   "  + schedule[i].Value.locationName);
 		}
 	}
 
