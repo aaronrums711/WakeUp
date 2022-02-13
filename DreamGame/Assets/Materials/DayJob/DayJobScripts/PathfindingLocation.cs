@@ -11,5 +11,5 @@ public class PathfindingLocation : MonoBehaviour
 	Dependencies:
 	******************/
 
-	public string LocationName;
+	public string locationName;
 }
