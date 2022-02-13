@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f962b7069ad75f4cbf6e6a5d36c8019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locationName: 
+  locationName: bathroom
 --- !u!1 &270191088
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,7 +590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f962b7069ad75f4cbf6e6a5d36c8019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locationName: 
+  locationName: desk
 --- !u!1 &602547529
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,6 +603,7 @@ GameObject:
   - component: {fileID: 602547532}
   - component: {fileID: 602547531}
   - component: {fileID: 602547530}
+  - component: {fileID: 602547534}
   m_Layer: 0
   m_Name: Seeker
   m_TagString: Untagged
@@ -687,6 +688,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &602547534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602547529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff3634622e7b093469b160fe22d5b98c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  schedule: {fileID: 11400000, guid: c919a2dfefacdb546a7b183f4c071ad1, type: 2}
 --- !u!1 &729706111
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,7 +777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f962b7069ad75f4cbf6e6a5d36c8019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locationName: 
+  locationName: office
 --- !u!1 &1246564419
 GameObject:
   m_ObjectHideFlags: 0

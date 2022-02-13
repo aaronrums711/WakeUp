@@ -9,8 +9,8 @@ public class Schedule : ScriptableObject
 {
 	/*****************
 	CreateDate: 	2/11/22
-	Functionality:	an instance of this object should store a list of Vectors3 (serving as Day Hour Minute) and strings which correspond to locationNames of allthe PathfindingLocation objects on the map
-	Notes:
+	Functionality:	an instance of this object should store a list of Vector2s (serving as Hour Minute) and strings which correspond to locationNames of allthe PathfindingLocation objects on the map
+	Notes:			currently the ConstructScheule method assumes that a schedule will never stretch into a new day (or year/Month), and therefore is just uses the Clock class to get the year, month and day
 	Dependencies:
 	******************/
 	
@@ -21,19 +21,20 @@ public class Schedule : ScriptableObject
 
 	//these lists need to be made so that new Schedule objects can easily be made in the editor. Dictionaries (and OrderedDictionaries) don't show in the inspector. 
 	
-	[Tooltip("day, hour, minute")]
-	[SerializeField] public List<Vector3> times;  //we are using vector3 to conveniently use three ints to represent day, hour and minute.  The Year and Month just come from the Clock class. This should make it easier to construct schedules in the editor
-	[SerializeField] public List<String> destinations;
+	[Tooltip("hour, minute")]
+	[SerializeField] private List<Vector2> times;  //we are using vector3 to conveniently use three ints to represent hour and minute.  The Year and Month just come from the Clock class. This should make it easier to construct schedules in the editor
+	[SerializeField] private List<String> destinations;
 	
 
 
 	void Start()
 	{
 		ConstructSchedule(times, destinations);
+		PrintFinalSchedule();
 	}
 
 
-	public void ConstructSchedule(List<Vector3> _times, List<String> _destinations)
+	public void ConstructSchedule(List<Vector2> _times, List<String> _destinations)
 	{
 		if(!ValidateSchedule(_times, _destinations))
 		{
@@ -49,7 +50,7 @@ public class Schedule : ScriptableObject
 			{
 				if (_locationName == pfl.locationName)
 				{
-					DateTime dt = new DateTime(Clock.gameDateTime.Year, Clock.gameDateTime.Month, (int)_times[indexCounter].x, (int)_times[indexCounter].y, (int)_times[indexCounter].z, 0);
+					DateTime dt = new DateTime(Clock.gameDateTime.Year, Clock.gameDateTime.Month, Clock.gameDateTime.Day, (int)_times[indexCounter].x, (int)_times[indexCounter].y, 0);
 					schedule.Insert(indexCounter, new KeyValuePair<DateTime, PathfindingLocation>(dt, pfl));
 					indexCounter++;
 					break;
@@ -66,7 +67,7 @@ public class Schedule : ScriptableObject
 	}
 
 
-	public bool ValidateSchedule(List<Vector3> _times, List<String> _destinations)
+	public bool ValidateSchedule(List<Vector2> _times, List<String> _destinations)
 	{
 		bool scheduleIsValid;
 		DateTime tempDT = DateTime.MinValue;
@@ -79,7 +80,7 @@ public class Schedule : ScriptableObject
 
 		for (int i =0; i < _times.Count; i++)
 		{
-			DateTime dt = new DateTime(Clock.gameDateTime.Year, Clock.gameDateTime.Month, (int)_times[i].x, (int)_times[i].y, (int)_times[i].z, 0);
+			DateTime dt = new DateTime(Clock.gameDateTime.Year, Clock.gameDateTime.Month,  Clock.gameDateTime.Day,(int)_times[i].x, (int)_times[i].y, 0);
 			if (dt < tempDT)
 			{
 				Debug.LogError("the dates are not in ascending order!");
@@ -105,9 +106,6 @@ public class Schedule : ScriptableObject
 	}
 
 
-	/**
-	UPON RETURN:  	switch the second list to be a list of strings, then check against the list from DayJobLevelManager to make sure it exists there.  Then 
-					add the position for that PathfindingLocation to schedule
-	**/
+
 	
 }

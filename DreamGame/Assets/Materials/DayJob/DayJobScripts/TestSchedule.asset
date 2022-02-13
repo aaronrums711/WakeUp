@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: TestSchedule
   m_EditorClassIdentifier: 
   times:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  - {x: 10, y: 30}
+  - {x: 12, y: 0}
+  - {x: 14, y: 30}
   destinations:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - office
+  - bathroom
+  - desk

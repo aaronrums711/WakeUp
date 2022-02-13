@@ -44,7 +44,7 @@ public class Grid : MonoBehaviour
 		nodeDiameter = nodeRadius * 2;
 		gridSizeX = Mathf.RoundToInt(gridWorldSize.x/nodeDiameter);  //we are taking the WORLD size here and converting it into Nodes for X and Y
 		gridSizeY = Mathf.RoundToInt(gridWorldSize.y/nodeDiameter);
-		print("the grid is " + gridSizeX + " nodes by " + gridSizeY + " nodes");
+		// print("the grid is " + gridSizeX + " nodes by " + gridSizeY + " nodes");
 		CreateGrid();
 	}
 
@@ -83,7 +83,7 @@ public class Grid : MonoBehaviour
 	{
 		nodeGrid = new Node[gridSizeX, gridSizeY];
 		Vector3 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x/2 - Vector3.forward * gridWorldSize.y/2;  //this gives us the bottom left corner of our world...I don't know how. 
-		print("world bottom left " + worldBottomLeft);
+		// print("world bottom left " + worldBottomLeft);
 		for (int x = 0; x<gridSizeX; x++)
 		{
 			for (int y = 0; y<gridSizeY; y++)
