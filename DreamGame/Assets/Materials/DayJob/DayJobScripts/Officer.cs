@@ -27,7 +27,7 @@ public class Officer : NPC
     void Start()
     {
         schedule.ConstructSchedule(schedule.times, schedule.destinations);
-		schedule.PrintFinalSchedule();
+		// schedule.PrintFinalSchedule();
     }
 
     void Update()

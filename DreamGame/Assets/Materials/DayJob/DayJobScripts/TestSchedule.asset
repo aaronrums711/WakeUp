@@ -18,5 +18,5 @@ MonoBehaviour:
   - {x: 14, y: 30}
   destinations:
   - office
-  - bathroom
+  - desk
   - desk
