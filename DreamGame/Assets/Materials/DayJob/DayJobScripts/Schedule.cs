@@ -20,6 +20,8 @@ public class Schedule : ScriptableObject
 
 
 	//these lists need to be made so that new Schedule objects can easily be made in the editor. Dictionaries (and OrderedDictionaries) don't show in the inspector. 
+	
+	[Tooltip("day, hour, minute")]
 	[SerializeField] public List<Vector3> times;  //we are using vector3 to conveniently use three ints to represent day, hour and minute.  The Year and Month just come from the Clock class. This should make it easier to construct schedules in the editor
 	[SerializeField] public List<String> destinations;
 	
