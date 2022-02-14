@@ -17,22 +17,18 @@ public class Officer : NPC
 	public MovementState state = MovementState.notStartedPath;
 
 
-
 	
 	//////////////////////////////State
 	
 	//////////////////////////////Cached Component References
 	
 	
-	void Awake()
-    {
-    
-    }
-	
     void Start()
     {
+		pathfinding = GameObject.Find("Astar").GetComponent<Pathfinding_Heap>();
         schedule.ConstructSchedule(schedule.times, schedule.destinations);
 		// schedule.PrintFinalSchedule();
+		StartCoroutine(MoveThroughSchedule(this.schedule, movementSpeed, 0.25f));
     }
 
     void Update()
@@ -50,14 +46,19 @@ public class Officer : NPC
 	**/
 	public IEnumerator MoveThroughSchedule(Schedule _schedule, float speed, float distanceThreshold)
 	{
+		state = MovementState.followingPath;
 		int startingScheduleIndex = GetNextOnSchedule(schedule);
 		for (int i = startingScheduleIndex; i < schedule.itemsInSchedule; i++)
 		{
-			Vector3 waypoint = _schedule.schedule[i].Value.transform.position;
+			List<Vector3> pointsAlongPath = pathfinding.FindPath(this.transform.position, _schedule.schedule[i].Value.transform.position);
 			DateTime time = _schedule.schedule[i].Key;
-			while (moveToPoint(this.transform.position, waypoint,  speed, distanceThreshold) == false)
+
+			for (int i2 = 0; i2 < pointsAlongPath.Count; i2++)
 			{
-				yield return null;
+				while (moveToPoint(this.transform.position, pointsAlongPath[i2],  speed, distanceThreshold) == false)
+				{
+					yield return null;
+				}
 				if (checkTime(_schedule.schedule[i].Key))
 				{
 					break;

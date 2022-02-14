@@ -28,10 +28,9 @@ public class Pathfinding_Heap : MonoBehaviour
 		// {
 			FindPath(seeker.position, target.position);
 		// }
-		
 	}
 
-	List<Vector3>  FindPath(Vector3 startPos, Vector3 endPos)
+	public List<Vector3>  FindPath(Vector3 startPos, Vector3 endPos)
 	{
 		List<Vector3> pathWaypoints = new List<Vector3>();
 		Node startNode = grid.NodeFromWorldPoint(startPos);	

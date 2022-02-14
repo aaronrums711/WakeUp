@@ -14,6 +14,7 @@ public class NPC : MonoBehaviour
 	//////////////////////////////Config
 	public Coroutine movementCoroutine;
 	public float movementSpeed;
+	public Pathfinding_Heap pathfinding;
 
 	
 	//////////////////////////////State
