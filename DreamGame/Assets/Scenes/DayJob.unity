@@ -520,6 +520,7 @@ GameObject:
   - component: {fileID: 461953856}
   - component: {fileID: 461953855}
   - component: {fileID: 461953854}
+  - component: {fileID: 461953857}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -603,6 +604,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 461953852}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &461953857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461953852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f962b7069ad75f4cbf6e6a5d36c8019, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationName: kitchen
 --- !u!1 &517640501
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,6 +822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 3
+  pathfinding: {fileID: 0}
   canMove: 1
   loopPath: 0
   schedule: {fileID: 11400000, guid: c919a2dfefacdb546a7b183f4c071ad1, type: 2}
@@ -857,6 +872,7 @@ GameObject:
   - component: {fileID: 1067218319}
   - component: {fileID: 1067218318}
   - component: {fileID: 1067218317}
+  - component: {fileID: 1067218320}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -940,6 +956,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1067218315}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1067218320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067218315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f962b7069ad75f4cbf6e6a5d36c8019, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationName: office
 --- !u!1 &1246564419
 GameObject:
   m_ObjectHideFlags: 0
@@ -1251,6 +1280,7 @@ GameObject:
   - component: {fileID: 1478047975}
   - component: {fileID: 1478047974}
   - component: {fileID: 1478047973}
+  - component: {fileID: 1478047976}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -1334,6 +1364,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1478047971}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1478047976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1478047971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f962b7069ad75f4cbf6e6a5d36c8019, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationName: bathroom
 --- !u!1 &1558980769
 GameObject:
   m_ObjectHideFlags: 0
