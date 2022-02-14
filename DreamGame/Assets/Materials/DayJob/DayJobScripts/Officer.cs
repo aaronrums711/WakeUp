@@ -48,6 +48,8 @@ public class Officer : NPC
 	{
 		state = MovementState.followingPath;
 		int startingScheduleIndex = GetNextOnSchedule(schedule);
+		print("fist dest:" + _schedule.schedule[startingScheduleIndex].Value.transform.position);
+
 		for (int i = startingScheduleIndex; i < schedule.itemsInSchedule; i++)
 		{
 			List<Vector3> pointsAlongPath = pathfinding.FindPath(this.transform.position, _schedule.schedule[i].Value.transform.position);
