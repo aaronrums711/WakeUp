@@ -800,7 +800,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff3634622e7b093469b160fe22d5b98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementSpeed: 3
+  canMove: 1
+  loopPath: 0
   schedule: {fileID: 11400000, guid: c919a2dfefacdb546a7b183f4c071ad1, type: 2}
+  state: 0
 --- !u!1 &729706111
 GameObject:
   m_ObjectHideFlags: 0

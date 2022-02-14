@@ -18,6 +18,7 @@ public class NPC : MonoBehaviour
 	
 	//////////////////////////////State
 	public bool canMove;
+	public bool loopPath;
 
 	//////////////////////////////Cached Component References
 	

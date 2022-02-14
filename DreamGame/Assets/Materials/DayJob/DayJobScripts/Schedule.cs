@@ -48,13 +48,6 @@ public class Schedule : ScriptableObject
 				}
 			}
 		} 
-
-
-		// for (int i =0; i < _times.Count; i++)
-		// {
-		// 	DateTime dt = new DateTime(Clock.gameDateTime.Year, Clock.gameDateTime.Month, (int)_times[i].x, (int)_times[i].y, (int)_times[i].z, 0);
-		// 	schedule.Insert(i, new KeyValuePair<DateTime, Transform>(dt, _destinations[i]));
-		// }
 	}
 
 
