@@ -16,12 +16,9 @@ public class Officer : NPC
 	public Schedule schedule;
 	public MovementState state = MovementState.notStartedPath;
 
-
-	
 	//////////////////////////////State
 	
 	//////////////////////////////Cached Component References
-	
 	
     void Start()
     {
@@ -31,45 +28,8 @@ public class Officer : NPC
 
     }
 
-    void Update()
-    {
-        
-    }
-
-	/**
-	need to check the time, then execute moveToPoint, but also need to check if the time for the next point has occurred.
-
-	Also, design decision.  If the time for next schedule item comes before the previous waypoint is reached, should the unit stop and switch waypoints, or 
-	finish the current path?  
-
-	For now, they are stopping.  
-	**/
-	// public IEnumerator MoveThroughSchedule(Schedule _schedule, float speed, float distanceThreshold)
-	// {
-	// 	state = MovementState.followingPath;
-	// 	int startingScheduleIndex = GetNextOnSchedule(schedule);
-
-	// 	for (int i = startingScheduleIndex; i < schedule.itemsInSchedule; i++)
-	// 	{
-	// 		List<Vector3> pointsAlongPath = pathfinding.FindPath(this.transform.position, _schedule.schedule[i].Value.transform.position);
-	// 		DateTime time = _schedule.schedule[i].Key;
-
-	// 		for (int i2 = 0; i2 < pointsAlongPath.Count; i2++)
-	// 		{
-	// 			while (moveToPoint(this.transform.position, pointsAlongPath[i2],  speed, distanceThreshold) == false)
-	// 			{
-	// 				yield return null;
-	// 			}
-	// 			if (checkTime(_schedule.schedule[i].Key))
-	// 			{
-	// 				break;
-	// 			}
-	// 		}
-	// 	}
-	// }
-
 	//just a little convenience method.  moves this object, then returns true if the distance between start and end is small enough, else returns false
-	public bool moveToPoint(Vector3 startPos, Vector3 endPos, float speed, float distanceThreshold)
+	public bool MoveToPoint(Vector3 startPos, Vector3 endPos, float speed, float distanceThreshold)
 	{
 		this.transform.position = Vector3.MoveTowards(startPos, endPos, speed * Time.deltaTime);
 		if (Vector3.Distance(startPos, endPos) < distanceThreshold)
@@ -77,17 +37,7 @@ public class Officer : NPC
 		else {return false;}
 	}
 
-	public bool checkTime(DateTime timeToCheck)
-	{
-		if ((Clock.gameDateTime - timeToCheck).Seconds > Clock.timeSpeed*2)  //the multiplier just gives an extra window for this to return true
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+
 
 	//you will often just pass in the Clock.gameDateTime here, but you may also pass in a future date if you want to find out what the next item on _schedule is at that time
 	public int GetNextOnSchedule(Schedule _schedule, DateTime timeToCompare)
@@ -105,14 +55,7 @@ public class Officer : NPC
 				break;
 			}
 		}
-		if (nextScheduleIndex == _schedule.itemsInSchedule)
-		{
-			Clock.halfHourTimer -= ClockEventListner;
-			print("schedule finished, event unsubscribed");		
-		}
 		return nextScheduleIndex;
-
-		
 	}
 
 
@@ -130,19 +73,29 @@ public class Officer : NPC
 			if (movementCoroutine != null)  {StopCoroutine(movementCoroutine);}
 
 			List<Vector3> pointsAlongPath = pathfinding.FindPath(this.transform.position, schedule.schedule[nextScheduleIndex].Value.transform.position);
-			movementCoroutine = StartCoroutine(moveToPoint2(pointsAlongPath, base.movementSpeed, 0.25f));
+			movementCoroutine = StartCoroutine(MoveThroughPoints(pointsAlongPath, base.movementSpeed, 0.1f));
+
+			if (nextScheduleIndex == schedule.itemsInSchedule-1) //placing this here means that the unsubscribe will happen as soon as the unit starts moving to it's final location, NOT when it's gotten there.  Not sure if this would ever be a problem, but just heads up
+			{
+				Clock.halfHourTimer -= ClockEventListner;
+			}
 		}
 	}
 
-	//loop through each vector3, move towards it until distance < distanceThreshold, then move to next item in list
-	public IEnumerator moveToPoint2(List<Vector3> pointsAlongPath, float speed, float distanceThreshold)
+	public IEnumerator MoveThroughPoints(List<Vector3> pointsAlongPath, float speed, float distanceThreshold)
 	{
 		for (int i = 0; i <pointsAlongPath.Count; i++) 
 		{
-			while (moveToPoint(this.transform.position, pointsAlongPath[i],  speed, distanceThreshold) == false)
+			while (MoveToPoint(this.transform.position, pointsAlongPath[i],  speed, distanceThreshold) == false)
 			{
 				yield return null;
 			}
+			//this doesn't seem to be needed now, but keeping it here for future
+			// if (i == pointsAlongPath.Count-1)
+			// {
+			// 	print("final position set");
+			// 	this.transform.position = pointsAlongPath[i];
+			// }
 		}
 	}
 

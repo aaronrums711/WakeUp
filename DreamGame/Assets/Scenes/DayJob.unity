@@ -821,7 +821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff3634622e7b093469b160fe22d5b98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 1
+  movementSpeed: 4
   pathfinding: {fileID: 0}
   canMove: 1
   loopPath: 0
@@ -1255,6 +1255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb3d20506570fdc41adc0cc378fe5f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeScale: 505
 --- !u!114 &1351078298
 MonoBehaviour:
   m_ObjectHideFlags: 0

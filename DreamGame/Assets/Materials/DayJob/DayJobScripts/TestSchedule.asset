@@ -15,7 +15,7 @@ MonoBehaviour:
   times:
   - {x: 10, y: 0}
   - {x: 11, y: 0}
-  - {x: 14, y: 30}
+  - {x: 13, y: 30}
   destinations:
   - office
   - bathroom
