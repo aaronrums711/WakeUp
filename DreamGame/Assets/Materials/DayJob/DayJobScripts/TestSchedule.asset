@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: TestSchedule
   m_EditorClassIdentifier: 
   times:
-  - {x: 10, y: 30}
-  - {x: 12, y: 0}
+  - {x: 10, y: 0}
+  - {x: 11, y: 0}
   - {x: 14, y: 30}
   destinations:
   - office

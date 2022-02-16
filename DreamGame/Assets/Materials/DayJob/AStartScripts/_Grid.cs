@@ -39,12 +39,11 @@ public class _Grid : MonoBehaviour
 
 
 
-	void Start()
+	void Awake()
 	{
 		nodeDiameter = nodeRadius * 2;
 		gridSizeX = Mathf.RoundToInt(gridWorldSize.x/nodeDiameter);  //we are taking the WORLD size here and converting it into Nodes for X and Y
 		gridSizeY = Mathf.RoundToInt(gridWorldSize.y/nodeDiameter);
-		// print("the grid is " + gridSizeX + " nodes by " + gridSizeY + " nodes");
 		CreateGrid();
 	}
 
