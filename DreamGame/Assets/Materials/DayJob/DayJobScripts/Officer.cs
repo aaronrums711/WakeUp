@@ -22,6 +22,7 @@ public class Officer : NPC
 	
     void Start()
     {
+		state = MovementState.notStartedPath;
 		pathfinding = GameObject.Find("Astar").GetComponent<Pathfinding_Heap>();
         schedule.ConstructSchedule(schedule.times, schedule.destinations);
 		Clock.halfHourTimer += ClockEventListner;
@@ -71,12 +72,13 @@ public class Officer : NPC
 		if (currentHour == scheduleHour && currentMinute == scheduleMinute)
 		{
 			if (movementCoroutine != null)  {StopCoroutine(movementCoroutine);}
-
+			state = MovementState.followingPath;
 			List<Vector3> pointsAlongPath = pathfinding.FindPath(this.transform.position, schedule.schedule[nextScheduleIndex].Value.transform.position);
 			movementCoroutine = StartCoroutine(MoveThroughPoints(pointsAlongPath, base.movementSpeed, 0.1f));
 
-			if (nextScheduleIndex == schedule.itemsInSchedule-1) //placing this here means that the unsubscribe will happen as soon as the unit starts moving to it's final location, NOT when it's gotten there.  Not sure if this would ever be a problem, but just heads up
+			if (nextScheduleIndex == schedule.itemsInSchedule-1) //placing this here means that the unsubscribe and state change will happen as soon as the unit starts moving to it's final location, NOT when it's gotten there.  Not sure if this would ever be a problem, but just heads up
 			{
+				state = MovementState.finishedAllWaypoints;
 				Clock.halfHourTimer -= ClockEventListner;
 			}
 		}
@@ -97,6 +99,7 @@ public class Officer : NPC
 			// 	this.transform.position = pointsAlongPath[i];
 			// }
 		}
+		state = MovementState.waitingAtWaypoint;
 	}
 
 
