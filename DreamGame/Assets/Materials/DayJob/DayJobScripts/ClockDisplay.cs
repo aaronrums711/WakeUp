@@ -27,7 +27,7 @@ public class ClockDisplay : MonoBehaviour
 
     void Update()
     {
-        string newString = Clock.gameDateTime.Hour.ToString("00") + ":" + Clock.gameDateTime.Minute.ToString("00");
-		clockText.text = newString;
+        string timeOnly = Clock.gameDateTime.ToString("t");
+		clockText.text = timeOnly;
     }
 }
