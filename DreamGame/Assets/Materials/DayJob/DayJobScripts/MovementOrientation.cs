@@ -23,8 +23,6 @@ public class MovementOrientation:ScriptableObject
 
 	public MovementOrientation nextMovementOrientation;
 	public MovementOrientation previousMovementOrientation;
-
-	
 }
 
 

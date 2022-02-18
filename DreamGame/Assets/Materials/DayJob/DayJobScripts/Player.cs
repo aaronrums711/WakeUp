@@ -12,7 +12,8 @@ public class Player : MonoBehaviour
 	******************/
 	
 	//////////////////////////////Config
-	int movementSpeed;
+	[SerializeField] private int movementSpeed = 2;
+	[SerializeField] private MovementOrientation currentMO;
 
 	//////////////////////////////State
 	
@@ -31,6 +32,31 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        
+        Move(currentMO);
+		SwitchOrientation();
     }
+
+	public void Move(MovementOrientation MO)
+	{
+		if (Input.GetKey(KeyCode.D))
+		{
+			this.transform.Translate(currentMO.rightWorldDirection * movementSpeed * Time.deltaTime, Space.World);
+		}
+		else if (Input.GetKey(KeyCode.A))
+		{
+			this.transform.Translate(currentMO.leftWorldDirection * movementSpeed * Time.deltaTime, Space.World);
+		}
+	}
+
+
+	public void SwitchOrientation()
+	{
+		if (Input.GetKeyDown(KeyCode.E))
+		{
+			currentMO = currentMO.nextMovementOrientation;
+		}		
+
+	}
+
+
 }
