@@ -42,3 +42,11 @@ public enum InherentComplexity
 {
 	simple, average, complex
 }
+
+
+//used by the Officer class
+public enum MovementState
+{
+	notStartedPath, followingPath, waitingAtWaypoint, finishedAllWaypoints
+	//an officer will start at notStartedPath, and flip between followingPath and waitingAtWaypoint as they go through and wait at different waypoints, then finally go to finishedAllWaypoints
+};
