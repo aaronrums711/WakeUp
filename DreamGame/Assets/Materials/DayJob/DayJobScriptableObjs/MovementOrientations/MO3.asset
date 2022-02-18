@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39fe80aeba960b04a8df2764140a39ca, type: 3}
+  m_Name: MO3
+  m_EditorClassIdentifier: 
+  description: right is -X
+  rightWorldDirection: {x: -1, y: 0, z: 0}
+  nextMovementOrientation: {fileID: 11400000, guid: 738258b1d8970534bbbf33340b3f046c, type: 2}
+  previousMovementOrientation: {fileID: 11400000, guid: 0b557adc383cd8240a6f1ad82fa8e835, type: 2}
