@@ -15,6 +15,7 @@ public class MovementOrientation:ScriptableObject
 	
 	//////////////////////////////Config
 	public string description;
+	public int order;
 	public Vector3 rightWorldDirection;
 	public Vector3 leftWorldDirection
 	{
