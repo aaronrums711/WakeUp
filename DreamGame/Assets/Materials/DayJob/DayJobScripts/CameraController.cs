@@ -47,8 +47,8 @@ public class CameraController : MonoBehaviour
 		float elapsed = 0;
 		while (elapsed <= totalTime)
 		{
-			float lerpFactor = LerpCurves.HardInSoftOut10  (elapsed/totalTime);
-			this.transform.localRotation = Quaternion.Lerp(currentRot, targetRot, elapsed/totalTime);
+			float lerpFactor = LerpCurves.SoftestInSoftOut01  (elapsed/totalTime);
+			this.transform.localRotation = Quaternion.Lerp(currentRot, targetRot,lerpFactor);
 			elapsed += Time.deltaTime;
 			yield return null;
 		}

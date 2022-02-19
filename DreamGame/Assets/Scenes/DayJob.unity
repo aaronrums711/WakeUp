@@ -1418,6 +1418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
+  totalRotTime: 1.5
   lerper: 0
 --- !u!1 &1246564419
 GameObject:

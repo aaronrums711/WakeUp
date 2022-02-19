@@ -41,6 +41,7 @@ public static class LerpCurves{
  
     public    static float Linear01                ( float valueFrom0to1) { return        valueFrom0to1;                                                        }    //        x
  
+	//these 4 below work in reverse...so basically, they don't work.  I think they return 1 first then move to 0
     public    static float SoftInHardOut01        ( float valueFrom0to1) { return        1-Mathf.Pow(valueFrom0to1,3);                                        }    //        x^3
     public    static float SoftInHardOut10        ( float valueFrom0to1) { return        1-Mathf.Pow(valueFrom0to1,3);                                        }    //    1-   x^3
     public    static float HardInSoftOut01        ( float valueFrom0to1) { return        Mathf.Pow(1-valueFrom0to1,3);                                        }    //     (1-x)^3
