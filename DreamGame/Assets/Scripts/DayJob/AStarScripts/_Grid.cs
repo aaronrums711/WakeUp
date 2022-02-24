@@ -28,12 +28,10 @@ public class _Grid : MonoBehaviour
 	[Tooltip("for some reason, setting this field to >= 1 stops the path from being drawn in black.  I don't know why")]
 	public float nodeRadius;	 //VGIU
 	public Vector2 gridWorldSize;// VGIU
-
 	float nodeDiameter;
 	public int gridSizeX, gridSizeY;   //these are the grid size IN NODES.  
-
 	public bool markPlayerNode;  //for testing only, it shows exactly what node the player will be assigned to. 
-
+	public bool drawGridGizmos;
 	public List<Node> path;
 
 
@@ -70,7 +68,10 @@ public class _Grid : MonoBehaviour
 						Gizmos.color = Color.black;
 					}
 				}
-				Gizmos.DrawCube(n.worldPosition,  Vector3.one * (nodeDiameter - 0.1f)); // minus 0.1 is just for spacing the cubes out 
+				if (drawGridGizmos)
+				{
+					Gizmos.DrawCube(n.worldPosition,  Vector3.one * (nodeDiameter - 0.1f)); // minus 0.1 is just for spacing the cubes out 
+				}
 
 			}
 		}

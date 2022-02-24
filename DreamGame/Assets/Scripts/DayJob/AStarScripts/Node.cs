@@ -6,7 +6,7 @@ public class Node : IHeapItem<Node>
 {
 	/*****************
 	CreateDate: 	2/3/22
-	Functionality:
+	Functionality:	one node is one element of the _Grid.nodeGrid
 	Notes:
 	Dependencies:
 	******************/
@@ -53,18 +53,5 @@ public class Node : IHeapItem<Node>
 
 	public int Fcost{ get {return Gcost + Hcost;}}
 	
-	void Awake()
-    {
-        
-    }
-	
-    void Start()
-    {
-        
-    }
 
-    void Update()
-    {
-        
-    }
 }
