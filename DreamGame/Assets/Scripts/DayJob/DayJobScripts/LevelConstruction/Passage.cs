@@ -61,11 +61,28 @@ public class Passage : MonoBehaviour
 		print("bound: " + thisCollider.bounds.ToString());
 		List <Vector3> ends = GetEnds(this.thisCollider.bounds);
 
-		for (int i = 0; i < ends.Count; i++)
+		// for (int i = 0; i < ends.Count; i++)
+		// {
+		// 	GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+		// 	go.transform.position = ends[i];
+		// }
+		List<Vector3> newEnds = GetNearestNodePos( thisCollider.bounds);
+		float distance = Vector3.Distance(newEnds[0], newEnds[1]);
+		this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y, distance);  // add (- (grid.nodeRadius*2)) if you want to make the ends of the passage  snap to the end of the node, not the middle of them. 
+	}
+
+	public List<Vector3>  GetNearestNodePos(Bounds bounds)
+	{
+		List<Vector3> ends = GetEnds(bounds);
+		List<Vector3> newEnds = new List<Vector3>();
+		foreach(Vector3 V in ends)
 		{
-			GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-			go.transform.position = ends[i];
+			Vector3 equivalentNodePos = grid.NodeFromWorldPoint(V).worldPosition;
+			newEnds.Add(equivalentNodePos);
+			// print("node pos: " + equivalentNodePos);
 		}
+		return newEnds;
+
 
 	}
 
