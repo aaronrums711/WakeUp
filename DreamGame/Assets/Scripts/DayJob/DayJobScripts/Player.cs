@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
 	[SerializeField] private int movementSpeed = 2;
 	[SerializeField] private MovementOrientation currentMO;
 	public static event Action<MovementOrientation>  ChangeOrientation;
+
+	[SerializeField] private KeyCode rotateCounterClockwiseKey;
+	[SerializeField] private KeyCode rotateClockwiseKey;
 	//////////////////////////////State
 	
 	//////////////////////////////Cached Component References
@@ -52,18 +55,16 @@ public class Player : MonoBehaviour
 
 	public void SwitchOrientation()
 	{
-		if (Input.GetKeyDown(KeyCode.E))
+		if (Input.GetKeyDown(rotateCounterClockwiseKey))
 		{
-
 			ChangeOrientation?.Invoke(currentMO.nextMovementOrientation);
 			currentMO = currentMO.nextMovementOrientation;
-			/**
-			rules:  
-			if nextMOOrder > currentMOOrder   OR nextMOOrder = 1     --the OR is for if the currentMOOrder = 4, only then will the next one be 1
-				rotate -90
-			**/
-
-		}		
+		}	
+		else if (Input.GetKeyDown(rotateClockwiseKey))
+		{
+			ChangeOrientation?.Invoke(currentMO.previousMovementOrientation);
+			currentMO = currentMO.previousMovementOrientation;
+		}	
 
 	}
 
