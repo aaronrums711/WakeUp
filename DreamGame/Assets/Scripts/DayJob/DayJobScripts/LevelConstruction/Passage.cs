@@ -24,24 +24,26 @@ public class Passage : MonoBehaviour
 	
     void Start()
     {
+		this.transform.localScale = new Vector3(0.3f, 0.3f, this.transform.localScale.z); //this makes it a skinny rectangle if it's not already
         thisCollider = GetComponent<BoxCollider>();
-		Constrain(); 
-    }
-
-    void Update()
-    {
-        
+		SnapRotation(); 
+		SnapScale();
+		SnapPosition();
     }
 
 
-	private void SnapToGrid()
+
+	//snaps the Z scale so that each end is in the middle of a node. 
+	private void SnapScale()
 	{
-
+		List<Vector3> newEnds = GetEndNodePositions( thisCollider.bounds);
+		float distance = Vector3.Distance(newEnds[0], newEnds[1]);
+		this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y, distance);  // add (- (grid.nodeRadius*2)) if you want to make the ends of the passage  snap to the end of the node, not the middle of them. 
 	}
 
-	public void Constrain()
+	//snaps the rotation to either 0 or 90, since that's all we want for this application. 
+	public void SnapRotation()
 	{
-		this.transform.localScale = new Vector3(0.5f, 0.5f, this.transform.localScale.z); //this makes it a skinny rectangle if it's not already
 		List<int> rotationConstraints = new List<int> () {0,90};
 		int constrainedRotation = 0;
 		float minDistance = 500;
@@ -59,19 +61,18 @@ public class Passage : MonoBehaviour
 	void OnMouseDown()
 	{
 		print("bound: " + thisCollider.bounds.ToString());
-		List <Vector3> ends = GetEnds(this.thisCollider.bounds);
-
-		// for (int i = 0; i < ends.Count; i++)
-		// {
-		// 	GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-		// 	go.transform.position = ends[i];
-		// }
-		List<Vector3> newEnds = GetNearestNodePos( thisCollider.bounds);
-		float distance = Vector3.Distance(newEnds[0], newEnds[1]);
-		this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y, distance);  // add (- (grid.nodeRadius*2)) if you want to make the ends of the passage  snap to the end of the node, not the middle of them. 
+		Start();
 	}
 
-	public List<Vector3>  GetNearestNodePos(Bounds bounds)
+	//snaps this object to the nearest grid node
+	private void SnapPosition()
+	{
+		Vector3 newPos = grid.NodeFromWorldPoint(this.transform.position).worldPosition;
+		this.transform.position = newPos;
+	}
+
+	//gets the node positions at each of the ends, and returns a list with the two Vector3s
+	public List<Vector3>  GetEndNodePositions(Bounds bounds)
 	{
 		List<Vector3> ends = GetEnds(bounds);
 		List<Vector3> newEnds = new List<Vector3>();
@@ -79,13 +80,13 @@ public class Passage : MonoBehaviour
 		{
 			Vector3 equivalentNodePos = grid.NodeFromWorldPoint(V).worldPosition;
 			newEnds.Add(equivalentNodePos);
-			// print("node pos: " + equivalentNodePos);
 		}
 		return newEnds;
-
-
 	}
 
+	//gets the ends of the bounds of a bounds.  For this application, the assumption is that we will only be dealing with long rectangles that are scaled on the 
+	//Z axis and just rotated as needed
+	//remember that bounds.extents returns a vector3 for the length that the bounds box stretches from the center of the bounds box, in WORLD space, NOT relative to rotation
 	private List<Vector3> GetEnds(Bounds bounds)
 	{
 		List<Vector3> ends = new List<Vector3>();
@@ -121,24 +122,19 @@ public class Passage : MonoBehaviour
 			default: 
 				Debug.LogError("something is wrong, there was no suitable VectorIndex chosen");
 				return ends;
-			
 		}
-		
 	}
 
+	//spwans a sphere at each end for visual clarity that the ends are being calculated correctly
+	private void SpawnSpheresAtEnds()
+	{
+		print("bound: " + thisCollider.bounds.ToString());
+		List <Vector3> ends = GetEnds(this.thisCollider.bounds);
+		for (int i = 0; i < ends.Count; i++)
+		{
+			GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+			go.transform.position = ends[i];
+		}
+	}
 
-	/**
-	TODO:
-		snap this object to the grid
-		snap length to grid on each side
-		generate planes on node wide along the width of the
-	**/
-
-	/**
-	remember, the extents.x/y/z is the length from the center to one end of the bounds box
-	when rotation is 90, check extents.X
-	when rotation is 0, check extents.z
-
-		OR, just use the MAX extent.  since the shape will always be a skinny rectangle, one component of the vector3 will always be much larger than the other 2
-	**/
 }
