@@ -61,6 +61,7 @@ public class Passage : MonoBehaviour
 	/**
 	TODO:
 		snap this object to the grid
+		snap length to grid on each side
 		generate planes on node wide along the width of the
 	**/
 }
