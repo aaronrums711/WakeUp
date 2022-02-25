@@ -14,7 +14,10 @@ public class Passage : MonoBehaviour
 	
 	//////////////////////////////Config
 	public int passageWidth;   //this is the passage width, IN GRID NODES, not world space
+	public int numWallTilesHigh;
 	public BoxCollider thisCollider;
+	public GameObject passageWallPrefab;  //VGIU
+
 	
 	//////////////////////////////State
 	
@@ -141,6 +144,27 @@ public class Passage : MonoBehaviour
 	{
 		print("bound: " + thisCollider.bounds.ToString());
 		Start();
-		
 	}
+
+
+
+	public void SpawnWallTiles(Passage passage, int NumTilesHigh)
+	{
+		Vector3 adjustedTileScale = passageWallPrefab.transform.localScale;
+		adjustedTileScale.x = grid.nodeRadius*2; 	//adjusting these so that they will be one grid node wide(x) and tall(y)
+		adjustedTileScale.y = grid.nodeRadius*2;
+
+		/**
+		steps: 
+			foreach side of the passage : this will always be to, and the width will be determined by passageWidth;
+				numTilesNeeded =  calculate the number of tiles needed to span the length of the passage;
+					for (int i=0; i < numTilesNeeded; i+)
+						for (int i=0; i < NumTilesHigh; i+)    //numTilesHigh will probably be between 2 and...5 maybe
+		**/
+	}
+
+
+
+
+
 }
