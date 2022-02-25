@@ -143,7 +143,7 @@ public class Passage : MonoBehaviour
 		List <Vector3> ends = GetEnds(this.thisCollider.bounds);
 		for (int i = 0; i < ends.Count; i++)
 		{
-			GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+			GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
 			go.transform.position = ends[i];
 		}
 	}
@@ -156,6 +156,15 @@ public class Passage : MonoBehaviour
 		print(GetEnds(thisCollider.bounds)[0] + "  "  + GetEnds(thisCollider.bounds)[1]);
 		print("node ends");
 		print(GetEndNodePositions(thisCollider.bounds)[0] + "  "  + GetEndNodePositions(thisCollider.bounds)[1]);
+
+		List<Vector3> test = GetEndNodePositions(thisCollider.bounds);
+		for (int i = 0; i < test.Count; i++)
+		{
+			GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+			go.transform.position = test[i];
+		}
+
+		SpawnSpheresAtEnds();
 
 	}
 
