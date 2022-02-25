@@ -35,12 +35,24 @@ public class Passage : MonoBehaviour
 		
     }
 
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			SpawnWallTiles(this, 1);
+		}
+	}
+
+
 	//snaps the Z scale so that each end is in the middle of a node. 
 	private void SnapScale()
 	{
 		List<Vector3> newEnds = GetEndNodePositions( thisCollider.bounds);
-		float distance = Vector3.Distance(newEnds[0], newEnds[1]);
-		this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y, distance);  // add (- (grid.nodeRadius*2)) if you want to make the ends of the passage  snap to the end of the node, not the middle of them. 
+		thisCollider.bounds.SetMinMax(newEnds[0], newEnds[1]);
+
+		List<Vector3> newEnds2 = GetEndNodePositions( thisCollider.bounds);
+		float distance = Vector3.Distance(newEnds2[0], newEnds2[1]);
+		this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y,  distance );//distance - (grid.nodeRadius*2));  // add (- (grid.nodeRadius*2)) if you want to make the ends of the passage  snap to the end of the node, not the middle of them. 
 	}
 
 	//snaps the rotation to either 0 or 90, since that's all we want for this application. 
@@ -50,18 +62,14 @@ public class Passage : MonoBehaviour
 		int constrainedRotation = 0;
 		float minDistance = 500;
 		float currentRot = this.transform.localRotation.eulerAngles.y;
-		print("currentRot: "+ currentRot);
 		for (int i = 0; i < rotationConstraints.Count; i ++)
 		{
 			if (Mathf.Abs(currentRot-rotationConstraints[i]) < minDistance)
 			{
 				minDistance = currentRot-rotationConstraints[i];
 				constrainedRotation = rotationConstraints[i];
-				print("iteration " + i + " minDistance is " + minDistance);
 			}
 		}
-		print("rotation snapping to Y: " + constrainedRotation);
-
 		float newRot = Mathf.Round(currentRot/90) * 90;  	//this formula was taken from https://answers.unity.com/questions/21909/rounding-rotation-to-nearest-90-degrees.html.  
 															//I don't get why it works but it does, and it handles negative values better
 		this.transform.localRotation = Quaternion.Euler(this.transform.localRotation.x, newRot, this.transform.localRotation.z);
@@ -144,6 +152,11 @@ public class Passage : MonoBehaviour
 	{
 		print("bound: " + thisCollider.bounds.ToString());
 		Start();
+		print("regular ends");
+		print(GetEnds(thisCollider.bounds)[0] + "  "  + GetEnds(thisCollider.bounds)[1]);
+		print("node ends");
+		print(GetEndNodePositions(thisCollider.bounds)[0] + "  "  + GetEndNodePositions(thisCollider.bounds)[1]);
+
 	}
 
 
@@ -153,10 +166,37 @@ public class Passage : MonoBehaviour
 		Vector3 adjustedTileScale = passageWallPrefab.transform.localScale;
 		adjustedTileScale.x = grid.nodeRadius*2; 	//adjusting these so that they will be one grid node wide(x) and tall(y)
 		adjustedTileScale.y = grid.nodeRadius*2;
+		passageWallPrefab.transform.localScale = adjustedTileScale;
+
+
+		List <Vector3> ends = GetEnds(this.thisCollider.bounds);
+		float lengthOfPassage = Vector3.Distance(ends[0], ends[1]);
+
+		Vector3 end = GetEnds(thisCollider.bounds)[0];  //doesn't really  matter which end this is, I don't think
+		Vector3 wallStart1 = end + this.transform.right * ((grid.nodeRadius * 2) * passageWidth);
+		Vector3 wallStart2 = end - this.transform.right * ((grid.nodeRadius * 2) * passageWidth);
+
+		List<Vector3> wallStarts = new List<Vector3>() { wallStart1,wallStart2};
+
+		for (int i = 0; i < wallStarts.Count; i++)
+		{
+			GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+			go.transform.position = wallStarts[i];
+		}
+	
+
+
+
+		
+
+
+		
 
 		/**
 		steps: 
-			numTilesNeeded =  calculate the number of tiles needed to span the length of the passage;  This should be the same as the nodes between.  You could 
+			calculate the 2 Vector3s where the walls will start. These will each be passageWidth nodes away from the Passage itself.  
+				the walls will always be placed on the local left and right of the passage, and they will be spawned along the Passage's forward direction
+			numTilesNeeded =  calculate the number of tiles needed to span the length of the passage;  This should be the same as the nodes between.  You could get the distance between the ends and then use division and divide by nodeRadius/2
 			foreach side of the passage : this will always be to, and the width will be determined by passageWidth;
 				
 					for (int i=0; i < numTilesNeeded; i+)
