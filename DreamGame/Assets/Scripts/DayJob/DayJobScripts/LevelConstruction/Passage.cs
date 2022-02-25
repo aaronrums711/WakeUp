@@ -59,7 +59,8 @@ public class Passage : MonoBehaviour
 		}
 		print("rotation snapping to Y: " + constrainedRotation);
 
-		float newRot = Mathf.Round(currentRot/90) * 90;
+		float newRot = Mathf.Round(currentRot/90) * 90;  	//this formula was taken from https://answers.unity.com/questions/21909/rounding-rotation-to-nearest-90-degrees.html.  
+															//I don't get why it works but it does, and it handles negative values better
 		this.transform.localRotation = Quaternion.Euler(this.transform.localRotation.x, newRot, this.transform.localRotation.z);
 	}
 
