@@ -39,7 +39,11 @@ public class Passage : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			SpawnWallTiles(this, 1);
+			List<Vector3> nodePositions = GetEndNodePositions(thisCollider.bounds);
+			SpawnPrimativeAtPoints(nodePositions, PrimitiveType.Sphere);
+
+			List<Vector3> endPositions = GetEnds(thisCollider.bounds);
+			SpawnPrimativeAtPoints(endPositions,PrimitiveType.Cube);
 		}
 	}
 
@@ -138,13 +142,14 @@ public class Passage : MonoBehaviour
 	}
 
 	//spwans a sphere at each end for visual clarity that the ends are being calculated correctly
-	private void SpawnSpheresAtEnds()
+	private void SpawnPrimativeAtPoints(List<Vector3> points, PrimitiveType type)
 	{
-		List <Vector3> ends = GetEnds(this.thisCollider.bounds);
-		for (int i = 0; i < ends.Count; i++)
+		
+		for (int i = 0; i < points.Count; i++)
 		{
-			GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
-			go.transform.position = ends[i];
+			GameObject go = GameObject.CreatePrimitive(type);
+			go.transform.localScale *= 0.5f;
+			go.transform.position = points[i];
 		}
 	}
 
@@ -156,16 +161,6 @@ public class Passage : MonoBehaviour
 		print(GetEnds(thisCollider.bounds)[0] + "  "  + GetEnds(thisCollider.bounds)[1]);
 		print("node ends");
 		print(GetEndNodePositions(thisCollider.bounds)[0] + "  "  + GetEndNodePositions(thisCollider.bounds)[1]);
-
-		List<Vector3> test = GetEndNodePositions(thisCollider.bounds);
-		for (int i = 0; i < test.Count; i++)
-		{
-			GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-			go.transform.position = test[i];
-		}
-
-		SpawnSpheresAtEnds();
-
 	}
 
 
