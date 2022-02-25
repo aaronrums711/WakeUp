@@ -32,8 +32,6 @@ public class Passage : MonoBehaviour
 		
     }
 
-
-
 	//snaps the Z scale so that each end is in the middle of a node. 
 	private void SnapScale()
 	{
@@ -49,15 +47,20 @@ public class Passage : MonoBehaviour
 		int constrainedRotation = 0;
 		float minDistance = 500;
 		float currentRot = this.transform.localRotation.eulerAngles.y;
+		print("currentRot: "+ currentRot);
 		for (int i = 0; i < rotationConstraints.Count; i ++)
 		{
 			if (Mathf.Abs(currentRot-rotationConstraints[i]) < minDistance)
 			{
 				minDistance = currentRot-rotationConstraints[i];
 				constrainedRotation = rotationConstraints[i];
+				print("iteration " + i + " minDistance is " + minDistance);
 			}
 		}
-		this.transform.localRotation = Quaternion.Euler(this.transform.localRotation.x, constrainedRotation, this.transform.localRotation.z);
+		print("rotation snapping to Y: " + constrainedRotation);
+
+		float newRot = Mathf.Round(currentRot/90) * 90;
+		this.transform.localRotation = Quaternion.Euler(this.transform.localRotation.x, newRot, this.transform.localRotation.z);
 	}
 
 
