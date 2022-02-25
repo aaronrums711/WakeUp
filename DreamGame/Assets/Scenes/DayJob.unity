@@ -2219,7 +2219,7 @@ MonoBehaviour:
   gridSizeX: 0
   gridSizeY: 0
   markPlayerNode: 1
-  drawGridGizmos: 1
+  drawGridGizmos: 0
 --- !u!4 &1773911848
 Transform:
   m_ObjectHideFlags: 0

@@ -27,8 +27,9 @@ public class Passage : MonoBehaviour
 		this.transform.localScale = new Vector3(0.3f, 0.3f, this.transform.localScale.z); //this makes it a skinny rectangle if it's not already
         thisCollider = GetComponent<BoxCollider>();
 		SnapRotation(); 
-		SnapScale();
 		SnapPosition();
+		SnapScale();
+		
     }
 
 
@@ -58,11 +59,7 @@ public class Passage : MonoBehaviour
 		}
 		this.transform.localRotation = Quaternion.Euler(this.transform.localRotation.x, constrainedRotation, this.transform.localRotation.z);
 	}
-	void OnMouseDown()
-	{
-		print("bound: " + thisCollider.bounds.ToString());
-		Start();
-	}
+
 
 	//snaps this object to the nearest grid node
 	private void SnapPosition()
@@ -90,7 +87,7 @@ public class Passage : MonoBehaviour
 	private List<Vector3> GetEnds(Bounds bounds)
 	{
 		List<Vector3> ends = new List<Vector3>();
-		float maxExtent=-100;
+		float maxExtent= float.MinValue;
 		int vectorIndex = -1;
 		Vector3 extents = bounds.extents;
 		for (int i=0; i < 3; i++)
@@ -114,8 +111,8 @@ public class Passage : MonoBehaviour
 				Debug.LogError("something is wrong, the Y component should not get chosen as the max, it should only be X or Z");
 				return ends;
 			case 2:
-				Vector3 Yend1 = bounds.center + new Vector3(0, 0, bounds.extents.y);
-				Vector3 Yend2 = bounds.center - new Vector3(0, 0, bounds.extents.y);
+				Vector3 Yend1 = bounds.center + new Vector3(0, 0, bounds.extents.z);
+				Vector3 Yend2 = bounds.center - new Vector3(0, 0, bounds.extents.z);
 				ends.Add(Yend1);
 				ends.Add(Yend2);
 				return ends;
@@ -128,7 +125,6 @@ public class Passage : MonoBehaviour
 	//spwans a sphere at each end for visual clarity that the ends are being calculated correctly
 	private void SpawnSpheresAtEnds()
 	{
-		print("bound: " + thisCollider.bounds.ToString());
 		List <Vector3> ends = GetEnds(this.thisCollider.bounds);
 		for (int i = 0; i < ends.Count; i++)
 		{
@@ -137,4 +133,10 @@ public class Passage : MonoBehaviour
 		}
 	}
 
+	void OnMouseDown()
+	{
+		print("bound: " + thisCollider.bounds.ToString());
+		Start();
+		
+	}
 }
