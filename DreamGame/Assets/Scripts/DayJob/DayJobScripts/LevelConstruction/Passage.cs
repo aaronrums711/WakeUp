@@ -156,8 +156,9 @@ public class Passage : MonoBehaviour
 
 		/**
 		steps: 
+			numTilesNeeded =  calculate the number of tiles needed to span the length of the passage;  This should be the same as the nodes between.  You could 
 			foreach side of the passage : this will always be to, and the width will be determined by passageWidth;
-				numTilesNeeded =  calculate the number of tiles needed to span the length of the passage;
+				
 					for (int i=0; i < numTilesNeeded; i+)
 						for (int i=0; i < NumTilesHigh; i+)    //numTilesHigh will probably be between 2 and...5 maybe
 		**/
