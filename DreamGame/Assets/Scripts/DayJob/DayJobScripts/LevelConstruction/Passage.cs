@@ -87,7 +87,7 @@ public class Passage : MonoBehaviour
 		this.transform.position = newPos;
 	}
 
-	//gets the node positions at each of the ends, and returns a list with the two Vector3s
+	//gets the node positions at each of the ends, and returns a list with the two Vector3s.   The two nodes must be equi-distant from the center.  If they aren't then a position is moved and we try again. 
 	public List<Vector3>  GetEndNodePositions(Bounds bounds)
 	{
 		List<Vector3> ends = GetEnds(bounds);
@@ -96,6 +96,42 @@ public class Passage : MonoBehaviour
 		{
 			Vector3 equivalentNodePos = grid.NodeFromWorldPoint(V).worldPosition;
 			newEnds.Add(equivalentNodePos);
+		}
+
+		float distance1 = Vector3.Distance(bounds.center, newEnds[0]);
+		float distance2 = Vector3.Distance(bounds.center, newEnds[1]);
+		float maxDistance;
+
+		if (Mathf.Abs(distance1 - distance2)  >  0.2f )
+		{
+			Vector3 closerNode;
+			if (distance1 < distance2)
+			{
+				closerNode = newEnds[0];
+				maxDistance = distance2;
+			}
+			else 
+			{
+				closerNode = newEnds[1];
+				maxDistance = distance1;
+			}
+			//but positive forward or negative forward?
+			RaycastHit hit;
+			if ( Physics.Raycast(this.transform.position, this.transform.forward,  out hit, maxDistance+3 ))
+			{
+				print("raycast hit something");
+				if (hit.transform.position == closerNode)
+				{	
+					print("raycast hit the closer node, push it out in the forward direction");
+					//push closerNode in forward direction because we hit the closer node with a raycast going forward
+				}
+				else 
+				{
+					print("raycast did not hit the closer node, so push it in the negative forward direction");
+					//push out in negative forward direction becasue we didn't hit the closer node with a raycast going forward, which means it's "behind" this object. 
+				}
+			}
+
 		}
 		return newEnds;
 	}
