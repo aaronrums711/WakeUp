@@ -15,7 +15,7 @@ public class Passage : MonoBehaviour
 	//////////////////////////////Config
 	public int passageWidth;   //this is the passage width, IN GRID NODES, not world space
 	public int numWallTilesHigh;
-	public BoxCollider thisCollider;
+	public BoxCollider collider;
 	public GameObject passageWallPrefab;  //VGIU
 
 	
@@ -28,51 +28,31 @@ public class Passage : MonoBehaviour
     void Start()
     {
 		this.transform.localScale = new Vector3(0.3f, 0.3f, this.transform.localScale.z); //this makes it a skinny rectangle if it's not already
-        thisCollider = GetComponent<BoxCollider>();
+        collider = GetComponent<BoxCollider>();
 
     }
+
+	void OnMouseDown() //use this to snap the scale again if it's incorrect
+	{
+		print("bound: " + collider.bounds.ToString());
+		SnapRotation(); 
+		SnapPosition();
+		SnapScale();
+	}
 
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			List<Vector3> nodePositions = GetEndNodePositions(thisCollider.bounds);
-			SpawnPrimativeAtPoints(nodePositions, PrimitiveType.Sphere);
-
-			// List<Vector3> endPositions = GetEnds(thisCollider.bounds);
-			// SpawnPrimativeAtPoints(endPositions,PrimitiveType.Cube);
+			SpawnWallTiles(this, 3);
 		}
-		if (Input.GetKeyDown(KeyCode.R))
-		{
-
-			print("raycast fired");
-			RaycastHit hit;
-			if ( Physics.Raycast(this.transform.position, this.transform.forward,  out hit, 10f ))
-			{
-				print("the raycast hit: " + hit.collider.name + " at " + hit.transform.position);
-
-			}
-		}
-	}
-
-	
-	void OnMouseDown()
-	{
-		print("bound: " + thisCollider.bounds.ToString());
-		SnapRotation(); 
-		SnapPosition();
-		SnapScale();
-		// print("regular ends");
-		// print(GetEnds(thisCollider.bounds)[0] + "  "  + GetEnds(thisCollider.bounds)[1]);
-		// print("node ends");
-		// print(GetEndNodePositions(thisCollider.bounds)[0] + "  "  + GetEndNodePositions(thisCollider.bounds)[1]);
 	}
 
 
 	//snaps the Z scale so that each end is in the middle of a node. 
 	private void SnapScale()
 	{
-		List<Vector3> newEnds2 = GetEndNodePositions( thisCollider.bounds);
+		List<Vector3> newEnds2 = GetEndNodePositions( collider.bounds);
 		float distance = Vector3.Distance(newEnds2[0], newEnds2[1]);
 		this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y,  distance );//distance - (grid.nodeRadius*2));  // add (- (grid.nodeRadius*2)) if you want to make the ends of the passage  snap to the end of the node, not the middle of them. 
 	}
@@ -106,16 +86,7 @@ public class Passage : MonoBehaviour
 	}
 
 
-
-
 	//gets the node positions at each of the ends, and returns a list with the two Vector3s.   The two nodes must be equi-distant from the center.  If they aren't then the nearest one is scooted up one node width and we try again
-	/**
-		see if the ends aren't equi-distant from the center
-			if they aren't, cache a reference to the closest one and the farthest one
-		
-		scoot the nearest one one node width in the correct direction
-			re-evaluate
-	**/
 	public List<Vector3>  GetEndNodePositions(Bounds bounds)
 	{
 		List<Vector3> ends = GetEnds(bounds);
@@ -125,11 +96,9 @@ public class Passage : MonoBehaviour
 			Vector3 equivalentNodePos = grid.NodeFromWorldPoint(V).worldPosition;
 			newEnds.Add(equivalentNodePos);
 		}
-		print("           ");
-		print("           ");
-		print("           ");
-		print("initial node positions");
-		print(newEnds[0] + "   "  + newEnds[1]  );
+
+		// print("initial node positions");
+		// print(newEnds[0] + "   "  + newEnds[1]  );
 
 		float minDistance = 1000;	
 		float maxDistance = -1000;
@@ -143,7 +112,7 @@ public class Passage : MonoBehaviour
 		if (Mathf.Abs(distance1 - distance2)  >  0.2f ) 
 		{
 			int iterator=-1;
-			print("distances not equal, their difference is " + Mathf.Abs(distance1 - distance2));
+			// print("distances not equal, their difference is " + Mathf.Abs(distance1 - distance2));
 			foreach (Vector3 V in newEnds)
 			{
 				iterator++;
@@ -164,16 +133,16 @@ public class Passage : MonoBehaviour
 			Vector3 directionToCloserVector = (closerVector - bounds.center).normalized;
 			Vector3 alteredCloserVector = grid.NodeFromWorldPoint(closerVector + (directionToCloserVector * grid.nodeRadius*2)).worldPosition;   
 			List<Vector3> comparisonList = new List<Vector3>() {alteredCloserVector, fartherVector};
-			print("new node positions");
-			print(comparisonList[1] + "   "  + comparisonList[0]  );
+			// print("new node positions");
+			// print(comparisonList[1] + "   "  + comparisonList[0]  );
 
 			return comparisonList;
 		}
 		else 
 		{
-			print("the distances are about the same, the initially found node are correct");
-			print("final node positions");
-			print(newEnds[0] + "   "  + newEnds[1]  );
+			// print("the distances are about the same, the initially found node are correct");
+			// print("final node positions");
+			// print(newEnds[0] + "   "  + newEnds[1]  );
 			return newEnds;
 		}
 	}
@@ -235,7 +204,7 @@ public class Passage : MonoBehaviour
 
 
 
-
+	//spawns walls along the forward axis of a passage
 	public void SpawnWallTiles(Passage passage, int NumTilesHigh)
 	{
 		Vector3 adjustedTileScale = passageWallPrefab.transform.localScale;
@@ -244,37 +213,31 @@ public class Passage : MonoBehaviour
 		passageWallPrefab.transform.localScale = adjustedTileScale;
 
 
-		List <Vector3> ends = GetEnds(this.thisCollider.bounds);
+		List <Vector3> ends = GetEnds(passage.collider.bounds);  //no need to call GetEndNodePositions() because this already should be snapped
 		float lengthOfPassage = Vector3.Distance(ends[0], ends[1]);
+		int numTiles = Mathf.RoundToInt(lengthOfPassage/(grid.nodeRadius*2));
 
-		Vector3 end = GetEnds(thisCollider.bounds)[0];  //doesn't really  matter which end this is, I don't think
+		Vector3 end = GetEnds(collider.bounds)[0];  //doesn't really  matter which end this is, I don't think
 		Vector3 wallStart1 = end + this.transform.right * ((grid.nodeRadius * 2) * passageWidth);
 		Vector3 wallStart2 = end - this.transform.right * ((grid.nodeRadius * 2) * passageWidth);
 
 		List<Vector3> wallStarts = new List<Vector3>() { wallStart1,wallStart2};
 
-		for (int i = 0; i < wallStarts.Count; i++)
-		{
-			GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-			go.transform.position = wallStarts[i];
-		}
+		SpawnPrimativeAtPoints(wallStarts, PrimitiveType.Capsule);
+
+
+
+
+
 	
-
-
-
-		
-
-
-		
-
 		/**
 		steps: 
 			calculate the 2 Vector3s where the walls will start. These will each be passageWidth nodes away from the Passage itself.  
 				the walls will always be placed on the local left and right of the passage, and they will be spawned along the Passage's forward direction
-			numTilesNeeded =  calculate the number of tiles needed to span the length of the passage;  This should be the same as the nodes between.  You could get the distance between the ends and then use division and divide by nodeRadius/2
-			foreach side of the passage : this will always be to, and the width will be determined by passageWidth;
+			numTiles =  calculate the number of tiles needed to span the length of the passage;  This should be the same as the nodes between.  You could get the distance between the ends and then use division and divide by nodeRadius/2
+			foreach side of the passage : this will always be two, and the width will be determined by passageWidth;
 				
-					for (int i=0; i < numTilesNeeded; i+)
+					for (int i=0; i < numTiles; i+)
 						for (int i=0; i < NumTilesHigh; i+)    //numTilesHigh will probably be between 2 and...5 maybe
 		**/
 	}
