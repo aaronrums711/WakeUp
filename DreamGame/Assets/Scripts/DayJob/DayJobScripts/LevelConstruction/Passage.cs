@@ -29,10 +29,7 @@ public class Passage : MonoBehaviour
     {
 		this.transform.localScale = new Vector3(0.3f, 0.3f, this.transform.localScale.z); //this makes it a skinny rectangle if it's not already
         thisCollider = GetComponent<BoxCollider>();
-		SnapRotation(); 
-		SnapPosition();
-		SnapScale();
-		
+
     }
 
 	void Update()
@@ -42,18 +39,39 @@ public class Passage : MonoBehaviour
 			List<Vector3> nodePositions = GetEndNodePositions(thisCollider.bounds);
 			SpawnPrimativeAtPoints(nodePositions, PrimitiveType.Sphere);
 
-			List<Vector3> endPositions = GetEnds(thisCollider.bounds);
-			SpawnPrimativeAtPoints(endPositions,PrimitiveType.Cube);
+			// List<Vector3> endPositions = GetEnds(thisCollider.bounds);
+			// SpawnPrimativeAtPoints(endPositions,PrimitiveType.Cube);
 		}
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+
+			print("raycast fired");
+			RaycastHit hit;
+			if ( Physics.Raycast(this.transform.position, this.transform.forward,  out hit, 10f ))
+			{
+				print("the raycast hit: " + hit.collider.name + " at " + hit.transform.position);
+
+			}
+		}
+	}
+
+	
+	void OnMouseDown()
+	{
+		print("bound: " + thisCollider.bounds.ToString());
+		SnapRotation(); 
+		SnapPosition();
+		SnapScale();
+		// print("regular ends");
+		// print(GetEnds(thisCollider.bounds)[0] + "  "  + GetEnds(thisCollider.bounds)[1]);
+		// print("node ends");
+		// print(GetEndNodePositions(thisCollider.bounds)[0] + "  "  + GetEndNodePositions(thisCollider.bounds)[1]);
 	}
 
 
 	//snaps the Z scale so that each end is in the middle of a node. 
 	private void SnapScale()
 	{
-		List<Vector3> newEnds = GetEndNodePositions( thisCollider.bounds);
-		thisCollider.bounds.SetMinMax(newEnds[0], newEnds[1]);
-
 		List<Vector3> newEnds2 = GetEndNodePositions( thisCollider.bounds);
 		float distance = Vector3.Distance(newEnds2[0], newEnds2[1]);
 		this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y,  distance );//distance - (grid.nodeRadius*2));  // add (- (grid.nodeRadius*2)) if you want to make the ends of the passage  snap to the end of the node, not the middle of them. 
@@ -87,7 +105,17 @@ public class Passage : MonoBehaviour
 		this.transform.position = newPos;
 	}
 
-	//gets the node positions at each of the ends, and returns a list with the two Vector3s.   The two nodes must be equi-distant from the center.  If they aren't then a position is moved and we try again. 
+
+
+
+	//gets the node positions at each of the ends, and returns a list with the two Vector3s.   The two nodes must be equi-distant from the center.  If they aren't then the nearest one is scooted up one node width and we try again
+	/**
+		see if the ends aren't equi-distant from the center
+			if they aren't, cache a reference to the closest one and the farthest one
+		
+		scoot the nearest one one node width in the correct direction
+			re-evaluate
+	**/
 	public List<Vector3>  GetEndNodePositions(Bounds bounds)
 	{
 		List<Vector3> ends = GetEnds(bounds);
@@ -97,43 +125,57 @@ public class Passage : MonoBehaviour
 			Vector3 equivalentNodePos = grid.NodeFromWorldPoint(V).worldPosition;
 			newEnds.Add(equivalentNodePos);
 		}
+		print("           ");
+		print("           ");
+		print("           ");
+		print("initial node positions");
+		print(newEnds[0] + "   "  + newEnds[1]  );
+
+		float minDistance = 1000;	
+		float maxDistance = -1000;
 
 		float distance1 = Vector3.Distance(bounds.center, newEnds[0]);
 		float distance2 = Vector3.Distance(bounds.center, newEnds[1]);
-		float maxDistance;
+		Vector3 closerVector = new Vector3();
+		Vector3 fartherVector= new Vector3();
+		int indexToReplace = 0;
 
-		if (Mathf.Abs(distance1 - distance2)  >  0.2f )
+		if (Mathf.Abs(distance1 - distance2)  >  0.2f ) 
 		{
-			Vector3 closerNode;
-			if (distance1 < distance2)
+			int iterator=-1;
+			print("distances not equal, their difference is " + Mathf.Abs(distance1 - distance2));
+			foreach (Vector3 V in newEnds)
 			{
-				closerNode = newEnds[0];
-				maxDistance = distance2;
-			}
-			else 
-			{
-				closerNode = newEnds[1];
-				maxDistance = distance1;
-			}
-			//but positive forward or negative forward?
-			RaycastHit hit;
-			if ( Physics.Raycast(this.transform.position, this.transform.forward,  out hit, maxDistance+3 ))
-			{
-				print("raycast hit something");
-				if (hit.transform.position == closerNode)
-				{	
-					print("raycast hit the closer node, push it out in the forward direction");
-					//push closerNode in forward direction because we hit the closer node with a raycast going forward
-				}
-				else 
+				iterator++;
+				float distance = Vector3.Distance(bounds.center, V);
+				if (distance < minDistance) 
 				{
-					print("raycast did not hit the closer node, so push it in the negative forward direction");
-					//push out in negative forward direction becasue we didn't hit the closer node with a raycast going forward, which means it's "behind" this object. 
+					minDistance = distance;
+					closerVector = V; 	//correctionVector will be the closer of the two ends
+					indexToReplace = iterator;
 				}
-			}
+				if (distance > maxDistance)
+				{
+					maxDistance = distance;
+					fartherVector = V;
+				}
 
+			}
+			Vector3 directionToCloserVector = (closerVector - bounds.center).normalized;
+			Vector3 alteredCloserVector = grid.NodeFromWorldPoint(closerVector + (directionToCloserVector * grid.nodeRadius*2)).worldPosition;   
+			List<Vector3> comparisonList = new List<Vector3>() {alteredCloserVector, fartherVector};
+			print("new node positions");
+			print(comparisonList[1] + "   "  + comparisonList[0]  );
+
+			return comparisonList;
 		}
-		return newEnds;
+		else 
+		{
+			print("the distances are about the same, the initially found node are correct");
+			print("final node positions");
+			print(newEnds[0] + "   "  + newEnds[1]  );
+			return newEnds;
+		}
 	}
 
 	//gets the ends of the bounds of a bounds.  For this application, the assumption is that we will only be dealing with long rectangles that are scaled on the 
@@ -178,26 +220,19 @@ public class Passage : MonoBehaviour
 	}
 
 	//spwans a sphere at each end for visual clarity that the ends are being calculated correctly
-	private void SpawnPrimativeAtPoints(List<Vector3> points, PrimitiveType type)
+	private List<GameObject> SpawnPrimativeAtPoints(List<Vector3> points, PrimitiveType type)
 	{
-		
+		List<GameObject> goList  = new List<GameObject>();
 		for (int i = 0; i < points.Count; i++)
 		{
 			GameObject go = GameObject.CreatePrimitive(type);
 			go.transform.localScale *= 0.5f;
 			go.transform.position = points[i];
+			goList.Add(go);
 		}
+		return goList;
 	}
 
-	void OnMouseDown()
-	{
-		print("bound: " + thisCollider.bounds.ToString());
-		Start();
-		print("regular ends");
-		print(GetEnds(thisCollider.bounds)[0] + "  "  + GetEnds(thisCollider.bounds)[1]);
-		print("node ends");
-		print(GetEndNodePositions(thisCollider.bounds)[0] + "  "  + GetEndNodePositions(thisCollider.bounds)[1]);
-	}
 
 
 

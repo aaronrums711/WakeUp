@@ -70,7 +70,7 @@ public class _Grid : MonoBehaviour
 				}
 				if (drawGridGizmos)
 				{
-					Gizmos.DrawCube(n.worldPosition,  Vector3.one * (nodeDiameter - 0.1f)); // minus 0.1 is just for spacing the cubes out 
+					Gizmos.DrawCube(n.worldPosition,  new Vector3(0.3f, 0.3f, 0.3f));        //Vector3.one * (nodeDiameter - 0.1f)); // minus 0.1 is just for spacing the cubes out 
 				}
 
 			}
