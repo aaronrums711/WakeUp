@@ -17,9 +17,12 @@ public class Passage : MonoBehaviour
 	public int numWallTilesHigh;
 	public BoxCollider collider;
 	public GameObject passageWallPrefab;  //VGIU
+	public Vector3 rearVector {get { return GetRearVector(this);}}
+	public List<PassageWall> walls;
 
 	
 	//////////////////////////////State
+	public bool isWallsConstructed;
 	
 	//////////////////////////////Cached Component References
 	[SerializeField] private _Grid grid;
@@ -45,6 +48,7 @@ public class Passage : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			SpawnWallTiles(this, 3);
+			GetRearVector(this);
 		}
 	}
 
@@ -205,31 +209,43 @@ public class Passage : MonoBehaviour
 
 
 	//spawns walls along the forward axis of a passage
-	public void SpawnWallTiles(Passage passage, int NumTilesHigh)
+	public void SpawnWallTiles(Passage passage, int numTilesHigh)
 	{
-		Vector3 adjustedTileScale = passageWallPrefab.transform.localScale;
-		adjustedTileScale.x = grid.nodeRadius*2; 	//adjusting these so that they will be one grid node wide(x) and tall(y)
-		adjustedTileScale.y = grid.nodeRadius*2;
-		passageWallPrefab.transform.localScale = adjustedTileScale;
+		// Vector3 adjustedTileScale = passageWallPrefab.transform.localScale;
+		// adjustedTileScale.x = grid.nodeRadius*2; 	//adjusting these so that they will be one grid node wide(x) and tall(y)
+		// adjustedTileScale.y = grid.nodeRadius*2;
+		// passageWallPrefab.transform.localScale = adjustedTileScale;
 
 
 		List <Vector3> ends = GetEnds(passage.collider.bounds);  //no need to call GetEndNodePositions() because this already should be snapped
 		float lengthOfPassage = Vector3.Distance(ends[0], ends[1]);
 		int numTiles = Mathf.RoundToInt(lengthOfPassage/(grid.nodeRadius*2));
 
-		Vector3 end = GetEnds(collider.bounds)[0];  //doesn't really  matter which end this is, I don't think
-		Vector3 wallStart1 = end + this.transform.right * ((grid.nodeRadius * 2) * passageWidth);
-		Vector3 wallStart2 = end - this.transform.right * ((grid.nodeRadius * 2) * passageWidth);
+		Vector3 wallStart1 = rearVector + this.transform.right * ((grid.nodeRadius * 2) * passageWidth);
+		Vector3 wallStart2 = rearVector - this.transform.right * ((grid.nodeRadius * 2) * passageWidth);
 
 		List<Vector3> wallStarts = new List<Vector3>() { wallStart1,wallStart2};
 
 		SpawnPrimativeAtPoints(wallStarts, PrimitiveType.Capsule);
 
 
+		foreach (Vector3 V in wallStarts)
+		{
+			Vector3 spawnPos = V;
+
+			for (int i = 0; i < numTiles; i++)
+			{
+				GameObject go = GameObject.Instantiate(passageWallPrefab, spawnPos, Quaternion.identity);
+;				spawnPos += this.transform.forward * (grid.nodeRadius*2);
+				// for (int i2 = 0; i2 < numTilesHigh; i2++)
+				// {
+					
+				// }
+			}
+		}
+		isWallsConstructed = true;
 
 
-
-	
 		/**
 		steps: 
 			calculate the 2 Vector3s where the walls will start. These will each be passageWidth nodes away from the Passage itself.  
@@ -242,6 +258,30 @@ public class Passage : MonoBehaviour
 		**/
 	}
 
+
+	public Vector3 GetRearVector(Passage passage)
+	{
+		Vector3 forwardDirection = this.transform.forward;
+		List<Vector3> ends = GetEnds(collider.bounds);
+		Vector3 rearVector = new Vector3(999,999,999);
+
+		//need to calculate the normalized vector from each end pointing to the center.  Whichever one is pointing the same way as the forward directiong of the passage is the rear vector
+
+		foreach (Vector3 V in ends)
+		{
+			Vector3 endToCenter = (passage.collider.bounds.center - V).normalized;
+			if (endToCenter == forwardDirection)
+			{
+				rearVector = V;
+				
+			}
+		}
+		if (rearVector.x == 999)
+		{
+			Debug.LogError("logic is wrong, no rear vector is assigned");
+		}
+		return rearVector;
+	}
 
 
 
