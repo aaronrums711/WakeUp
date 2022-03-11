@@ -221,26 +221,30 @@ public class Passage : MonoBehaviour
 		float lengthOfPassage = Vector3.Distance(ends[0], ends[1]);
 		int numTiles = Mathf.RoundToInt(lengthOfPassage/(grid.nodeRadius*2));
 
-		Vector3 wallStart1 = rearVector + this.transform.right * ((grid.nodeRadius * 2) * passageWidth);
-		Vector3 wallStart2 = rearVector - this.transform.right * ((grid.nodeRadius * 2) * passageWidth);
+		Vector3 wallStart1 = rearVector + this.transform.right * ((grid.nodeRadius * 2) * passageWidth)  + new Vector3(0f,grid.nodeRadius,0f);
+		Vector3 wallStart2 = rearVector - this.transform.right * ((grid.nodeRadius * 2) * passageWidth) + new Vector3(0f,grid.nodeRadius,0f);
 
 		List<Vector3> wallStarts = new List<Vector3>() { wallStart1,wallStart2};
 
-		SpawnPrimativeAtPoints(wallStarts, PrimitiveType.Capsule);
+		List<Vector3> passageWallRotations = new List<Vector3>() {passage.transform.right*-1, passage.transform.right };
 
-
-		foreach (Vector3 V in wallStarts)
+		for (int a = 0; a < wallStarts.Count; a++)
 		{
-			Vector3 spawnPos = V;
-
-			for (int i = 0; i < numTiles; i++)
+			Vector3 initPos = wallStarts[a];
+			Vector3 horizontalPos = initPos;
+			Vector3 finalPos = new Vector3();
+			Vector3 rotation = passageWallRotations[a];
+			
+			for (int b = 0; b < numTiles+1; b++)
 			{
-				GameObject go = GameObject.Instantiate(passageWallPrefab, spawnPos, Quaternion.identity);
-;				spawnPos += this.transform.forward * (grid.nodeRadius*2);
-				// for (int i2 = 0; i2 < numTilesHigh; i2++)
-				// {
-					
-				// }
+				finalPos =  horizontalPos;
+				for (int c = 0; c < numTilesHigh; c++)
+				{
+					GameObject go = GameObject.Instantiate(passageWallPrefab, finalPos, Quaternion.identity);
+					go.transform.forward = rotation;
+					finalPos += new Vector3(0f,grid.nodeRadius*2,0f);
+				}
+				horizontalPos += this.transform.forward * (grid.nodeRadius*2);
 			}
 		}
 		isWallsConstructed = true;
