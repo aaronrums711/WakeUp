@@ -54,7 +54,7 @@ public class Passage : MonoBehaviour
 
 
 	//snaps the Z scale so that each end is in the middle of a node. 
-	private void SnapScale()
+	public void SnapScale()
 	{
 		List<Vector3> newEnds2 = GetEndNodePositions( collider.bounds);
 		float distance = Vector3.Distance(newEnds2[0], newEnds2[1]);
@@ -83,7 +83,7 @@ public class Passage : MonoBehaviour
 
 
 	//snaps this object to the nearest grid node
-	private void SnapPosition()
+	public void SnapPosition()
 	{
 		Vector3 newPos = grid.NodeFromWorldPoint(this.transform.position).worldPosition;
 		this.transform.position = newPos;
