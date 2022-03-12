@@ -13,8 +13,8 @@ public class PassageOpening : MonoBehaviour
 	******************/
 	
 	//////////////////////////////Config
-	[HideInInspector]public bool left;
-	[HideInInspector]public bool right;
+	public bool left;
+	public bool right;
 	public int openingWidth;
 	public Passage attachedPassage;
 	[Range(0f, 1f)] public float posAlongPath;
@@ -42,7 +42,8 @@ public class PassageOpening : MonoBehaviour
 
 	public void CreateOpening()
 	{
-		if (Physics.Raycast(this.transform.position,  this.transform.right,out RaycastHit hitInfo, 10f))
+		float raycastLength = attachedPassage.passageWidth * (attachedPassage.grid.nodeRadius *2) +2;  //+2 is just a failsafe
+		if (Physics.Raycast(this.transform.position,  this.transform.right,out RaycastHit hitInfo, raycastLength))
 		{
 			print("Raycast hit: " + hitInfo.transform.gameObject.name);
 			if (hitInfo.transform.TryGetComponent<PassageWall> (out PassageWall hitWall))
@@ -64,5 +65,19 @@ public class PassageOpening : MonoBehaviour
 			List<Vector3> ends = attachedPassage.Ends;
 			this.transform.position = Vector3.Lerp(ends[0], ends[1], posAlongPath);
 		}
+	}
+
+	public List<Vector3> GetDirections()
+	{
+		List<Vector3> directions = new List<Vector3>();
+		if (left == true)
+		{
+			directions.Add(-this.transform.right);
+		}
+		if (right == true)
+		{
+			directions.Add(this.transform.right);
+		}
+		return directions;
 	}
 }

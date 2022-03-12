@@ -43,6 +43,7 @@ public class LevelConstruction : MonoBehaviour
 	public void AllignAllPassages()
 	{
 		if (grid.nodeGrid == null) {grid.CreateGrid();}
+		AssignGridtoPassages();
 		foreach (Passage p in GetAllPassages())
 		{
 			p.SnapRotation();
@@ -56,9 +57,10 @@ public class LevelConstruction : MonoBehaviour
 	public void SpawnWallsOnAllPassages()
 	{
 		if (grid.nodeGrid == null) {grid.CreateGrid();}
+		AssignGridtoPassages();
 		foreach (Passage p in GetAllPassages())
 		{
-			p.SpawnWallTiles(p, wallHeight);
+			p.SpawnWallTiles(p, p.numWallTilesHigh);
 		}
 	}
 
@@ -72,4 +74,33 @@ public class LevelConstruction : MonoBehaviour
 		}
 	}
 
+	public void AssignGridtoPassages()
+	{
+		foreach (Passage p in GetAllPassages())
+		{
+			if (p.grid == null)
+			{
+				p.grid = grid;
+			}
+		}
+
+	}
+
+	private IEnumerator Reset()
+	{
+		DestroyAllWalls();
+		// yield return new WaitForSeconds(0.5f);   //these WaitForSeconds dont work out of play mode
+		AllignAllPassages();
+		// yield return new WaitForSeconds(1f);
+		AllignAllPassages();
+		// yield return new WaitForSeconds(1f);
+		SpawnWallsOnAllPassages();
+		yield return new WaitForSeconds(1f);
+	}
+
+	[ContextMenu("Reset()")]
+	public void CallReset()
+	{
+		StartCoroutine(Reset());
+	}
 }

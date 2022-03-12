@@ -15,7 +15,7 @@ public class Passage : MonoBehaviour
 	
 	//////////////////////////////Config
 	public int passageWidth;   //this is the passage width, IN GRID NODES, not world space
-	public int numWallTilesHigh;
+	public int numWallTilesHigh = 3;
 	public BoxCollider thisCollider;
 	public GameObject passageWallPrefab;  //VGIU
 	public GameObject passageOpeningPrefab; //VGIU
@@ -30,7 +30,7 @@ public class Passage : MonoBehaviour
 	public bool isWallsConstructed;
 	
 	//////////////////////////////Cached Component References
-	[SerializeField] private _Grid grid;
+	[SerializeField] public _Grid grid;
 	
 	
     void Start()
