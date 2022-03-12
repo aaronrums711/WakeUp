@@ -22,7 +22,7 @@ public class _Grid : MonoBehaviour
 	
 	//////////////////////////////Cached Component References
 	
-	Node[,] nodeGrid;
+	public Node[,] nodeGrid;
 	public Transform player;
 	public LayerMask unwalkableMask;
 
@@ -81,7 +81,7 @@ public class _Grid : MonoBehaviour
 	
 	//this simply fills in the nodeGrid object, which is a 2D list of nodes that is the underlying data.  
 	[ContextMenu("CreateGrid()")]
-	void CreateGrid()
+	public void CreateGrid()
 	{
 		nodeGrid = new Node[gridSizeX, gridSizeY];
 		Vector3 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x/2 - Vector3.forward * gridWorldSize.y/2;  //this gives us the bottom left corner of our world...I don't know how. 

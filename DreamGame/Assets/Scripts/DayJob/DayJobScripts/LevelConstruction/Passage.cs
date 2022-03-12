@@ -215,7 +215,7 @@ public class Passage : MonoBehaviour
 
 
 	//spawns walls along the forward axis of a passage
-	public void SpawnWallTiles(Passage passage, int numTilesHigh)
+	public async void SpawnWallTiles(Passage passage, int numTilesHigh)
 	{
 		// Vector3 adjustedTileScale = passageWallPrefab.transform.localScale;
 		// adjustedTileScale.x = grid.nodeRadius*2; 	//adjusting these so that they will be one grid node wide(x) and tall(y)
@@ -226,9 +226,9 @@ public class Passage : MonoBehaviour
 		List <Vector3> ends = GetEnds(passage.thisCollider.bounds);  //no need to call GetEndNodePositions() because this already should be snapped
 		float lengthOfPassage = Vector3.Distance(ends[0], ends[1]);
 		int numTiles = Mathf.RoundToInt(lengthOfPassage/(grid.nodeRadius*2));
-
-		Vector3 wallStart1 = rearVector + this.transform.right * ((grid.nodeRadius * 2) * passageWidth)  + new Vector3(0f,grid.nodeRadius,0f);
-		Vector3 wallStart2 = rearVector - this.transform.right * ((grid.nodeRadius * 2) * passageWidth) + new Vector3(0f,grid.nodeRadius,0f);
+																											//bumps the wall up slightly		//moves the walls over so they fall exactly on the grid lines
+		Vector3 wallStart1 = rearVector + this.transform.right * ((grid.nodeRadius * 2) * passageWidth)  + new Vector3(0f,grid.nodeRadius,0f) + (this.transform.right* grid.nodeRadius);
+		Vector3 wallStart2 = rearVector - this.transform.right * ((grid.nodeRadius * 2) * passageWidth) + new Vector3(0f,grid.nodeRadius,0f) - (this.transform.right* grid.nodeRadius);
 
 		List<Vector3> wallStarts = new List<Vector3>() { wallStart1,wallStart2};
 

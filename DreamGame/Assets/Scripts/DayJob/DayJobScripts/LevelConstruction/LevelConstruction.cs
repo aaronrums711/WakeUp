@@ -16,20 +16,16 @@ public class LevelConstruction : MonoBehaviour
 	public List<Passage> allPassages {get{ return  GetAllPassages();}}
 	
 	[Range(1, 10)]public int wallHeight;
+	public _Grid grid;
 	
 	//////////////////////////////State
 	
 	//////////////////////////////Cached Component References
 	
 	
-	void Awake()
-    {
-        
-    }
-	
     void Start()
     {
-        
+        grid = FindObjectOfType<_Grid>();
     }
 
     void Update()
@@ -46,6 +42,7 @@ public class LevelConstruction : MonoBehaviour
 	[ContextMenu("AllignAllPassages()")]
 	public void AllignAllPassages()
 	{
+		if (grid.nodeGrid == null) {grid.CreateGrid();}
 		foreach (Passage p in GetAllPassages())
 		{
 			p.SnapRotation();
@@ -58,6 +55,7 @@ public class LevelConstruction : MonoBehaviour
 	[ContextMenu("SpawnWallsOnAllPassages()")]
 	public void SpawnWallsOnAllPassages()
 	{
+		if (grid.nodeGrid == null) {grid.CreateGrid();}
 		foreach (Passage p in GetAllPassages())
 		{
 			p.SpawnWallTiles(p, wallHeight);
