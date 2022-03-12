@@ -175,5 +175,6 @@ MonoBehaviour:
   collider: {fileID: 0}
   passageWallPrefab: {fileID: 2195917849309066454, guid: a3af89a690a2daa45894f581663e3e8b, type: 3}
   walls: []
+  wallParent: {fileID: 5974366474320954971}
   isWallsConstructed: 0
   grid: {fileID: 0}

@@ -19,6 +19,7 @@ public class Passage : MonoBehaviour
 	public GameObject passageWallPrefab;  //VGIU
 	public Vector3 rearVector {get { return GetRearVector(this);}}
 	public List<PassageWall> walls;
+	public Transform wallParent;  //VGIU, should be set in prefab
 
 	
 	//////////////////////////////State
@@ -31,7 +32,9 @@ public class Passage : MonoBehaviour
     void Start()
     {
 		this.transform.localScale = new Vector3(0.3f, 0.3f, this.transform.localScale.z); //this makes it a skinny rectangle if it's not already
-        collider = GetComponent<BoxCollider>();
+        this.transform.position = new Vector3(this.transform.position.x, 0, this.transform.position.z);  //snaps this to the floor when it's dragged in as a prefab
+		
+		collider = GetComponent<BoxCollider>();
 
     }
 
@@ -43,14 +46,14 @@ public class Passage : MonoBehaviour
 		SnapScale();
 	}
 
-	void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			SpawnWallTiles(this, 3);
-			GetRearVector(this);
-		}
-	}
+	// void Update()
+	// {
+	// 	if (Input.GetKeyDown(KeyCode.Space))
+	// 	{
+	// 		SpawnWallTiles(this, 3);
+	// 		GetRearVector(this);
+	// 	}
+	// }
 
 
 	//snaps the Z scale so that each end is in the middle of a node. 
@@ -286,6 +289,7 @@ public class Passage : MonoBehaviour
 		}
 		return rearVector;
 	}
+
 
 
 

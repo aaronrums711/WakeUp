@@ -15,6 +15,8 @@ public class LevelConstruction : MonoBehaviour
 	//////////////////////////////Config
 	public List<Passage> allPassages {get{ return  GetAllPassages();}}
 	
+	[Range(1, 10)]public int wallHeight;
+	
 	//////////////////////////////State
 	
 	//////////////////////////////Cached Component References
@@ -41,6 +43,7 @@ public class LevelConstruction : MonoBehaviour
 		return allPassages;
 	}
 
+	[ContextMenu("AllignAllPassages()")]
 	public void AllignAllPassages()
 	{
 		foreach (Passage p in GetAllPassages())
@@ -49,6 +52,15 @@ public class LevelConstruction : MonoBehaviour
 			p.SnapPosition();
 			p.SnapScale();
 			p.SnapScale();
+		}
+	}
+
+	[ContextMenu("SpawnWallsOnAllPassages()")]
+	public void SpawnWallsOnAllPassages()
+	{
+		foreach (Passage p in GetAllPassages())
+		{
+			p.SpawnWallTiles(p, wallHeight);
 		}
 	}
 
