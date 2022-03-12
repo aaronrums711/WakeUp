@@ -18,9 +18,12 @@ public class Passage : MonoBehaviour
 	public int numWallTilesHigh;
 	public BoxCollider thisCollider;
 	public GameObject passageWallPrefab;  //VGIU
+	public GameObject passageOpeningPrefab; //VGIU
 	public Vector3 rearVector {get { return GetRearVector(this);}}
 	public List<PassageWall> walls;
 	public Transform wallParent;  //VGIU, should be set in prefab
+	public List<PassageOpening> openings;
+	public List<Vector3> Ends {get{return GetEnds(thisCollider.bounds);}}
 
 	
 	//////////////////////////////State
@@ -215,7 +218,7 @@ public class Passage : MonoBehaviour
 
 
 	//spawns walls along the forward axis of a passage
-	public async void SpawnWallTiles(Passage passage, int numTilesHigh)
+	public void SpawnWallTiles(Passage passage, int numTilesHigh)
 	{
 		// Vector3 adjustedTileScale = passageWallPrefab.transform.localScale;
 		// adjustedTileScale.x = grid.nodeRadius*2; 	//adjusting these so that they will be one grid node wide(x) and tall(y)
@@ -291,6 +294,20 @@ public class Passage : MonoBehaviour
 			Debug.LogError("logic is wrong, no rear vector is assigned");
 		}
 		return rearVector;
+	}
+
+
+	[ContextMenu("CreateOpening()")]
+	public GameObject CreateOpening()
+	{
+		GameObject go = Instantiate(passageOpeningPrefab);
+		PassageOpening opening = go.GetComponent<PassageOpening>();
+		opening.attachedPassage = this;
+		openings.Add(opening);
+		opening.transform.parent = this.transform;
+		opening.transform.right = this.transform.right;
+		
+		return go;
 	}
 
 
