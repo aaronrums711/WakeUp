@@ -80,6 +80,7 @@ public class _Grid : MonoBehaviour
 
 	
 	//this simply fills in the nodeGrid object, which is a 2D list of nodes that is the underlying data.  
+	[ContextMenu("CreateGrid()")]
 	void CreateGrid()
 	{
 		nodeGrid = new Node[gridSizeX, gridSizeY];
