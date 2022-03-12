@@ -6,6 +6,7 @@ using UnityEngine;
     /// this simply generates a grid using some given parameters.  It doesn't necessarily have anything to do with pathfinding in particular, except for when it 
 	/// checks if a node is walkable or not.  
     /// </summary>
+[ExecuteAlways]
 public class _Grid : MonoBehaviour
 {
 	/*****************

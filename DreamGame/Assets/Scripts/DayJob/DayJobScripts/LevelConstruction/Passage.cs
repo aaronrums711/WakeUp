@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteAlways]
 public class Passage : MonoBehaviour
 {
 	/*****************
@@ -15,7 +16,7 @@ public class Passage : MonoBehaviour
 	//////////////////////////////Config
 	public int passageWidth;   //this is the passage width, IN GRID NODES, not world space
 	public int numWallTilesHigh;
-	public BoxCollider collider;
+	public BoxCollider thisCollider;
 	public GameObject passageWallPrefab;  //VGIU
 	public Vector3 rearVector {get { return GetRearVector(this);}}
 	public List<PassageWall> walls;
@@ -34,13 +35,13 @@ public class Passage : MonoBehaviour
 		this.transform.localScale = new Vector3(0.3f, 0.3f, this.transform.localScale.z); //this makes it a skinny rectangle if it's not already
         this.transform.position = new Vector3(this.transform.position.x, 0, this.transform.position.z);  //snaps this to the floor when it's dragged in as a prefab
 		
-		collider = GetComponent<BoxCollider>();
+		thisCollider = GetComponent<BoxCollider>();
 
     }
 
 	void OnMouseDown() //use this to snap the scale again if it's incorrect
 	{
-		print("bound: " + collider.bounds.ToString());
+		print("bound: " + thisCollider.bounds.ToString());
 		SnapRotation(); 
 		SnapPosition();
 		SnapScale();
@@ -59,7 +60,7 @@ public class Passage : MonoBehaviour
 	//snaps the Z scale so that each end is in the middle of a node. 
 	public void SnapScale()
 	{
-		List<Vector3> newEnds2 = GetEndNodePositions( collider.bounds);
+		List<Vector3> newEnds2 = GetEndNodePositions( thisCollider.bounds);
 		float distance = Vector3.Distance(newEnds2[0], newEnds2[1]);
 		this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y,  distance );//distance - (grid.nodeRadius*2));  // add (- (grid.nodeRadius*2)) if you want to make the ends of the passage  snap to the end of the node, not the middle of them. 
 	}
@@ -220,7 +221,7 @@ public class Passage : MonoBehaviour
 		// passageWallPrefab.transform.localScale = adjustedTileScale;
 
 
-		List <Vector3> ends = GetEnds(passage.collider.bounds);  //no need to call GetEndNodePositions() because this already should be snapped
+		List <Vector3> ends = GetEnds(passage.thisCollider.bounds);  //no need to call GetEndNodePositions() because this already should be snapped
 		float lengthOfPassage = Vector3.Distance(ends[0], ends[1]);
 		int numTiles = Mathf.RoundToInt(lengthOfPassage/(grid.nodeRadius*2));
 
@@ -243,7 +244,7 @@ public class Passage : MonoBehaviour
 				finalPos =  horizontalPos;
 				for (int c = 0; c < numTilesHigh; c++)
 				{
-					GameObject go = GameObject.Instantiate(passageWallPrefab, finalPos, Quaternion.identity);
+					GameObject go = GameObject.Instantiate(passageWallPrefab, finalPos, Quaternion.identity, wallParent);
 					go.transform.forward = rotation;
 					finalPos += new Vector3(0f,grid.nodeRadius*2,0f);
 				}
@@ -269,14 +270,14 @@ public class Passage : MonoBehaviour
 	public Vector3 GetRearVector(Passage passage)
 	{
 		Vector3 forwardDirection = this.transform.forward;
-		List<Vector3> ends = GetEnds(collider.bounds);
+		List<Vector3> ends = GetEnds(thisCollider.bounds);
 		Vector3 rearVector = new Vector3(999,999,999);
 
 		//need to calculate the normalized vector from each end pointing to the center.  Whichever one is pointing the same way as the forward directiong of the passage is the rear vector
 
 		foreach (Vector3 V in ends)
 		{
-			Vector3 endToCenter = (passage.collider.bounds.center - V).normalized;
+			Vector3 endToCenter = (passage.thisCollider.bounds.center - V).normalized;
 			if (endToCenter == forwardDirection)
 			{
 				rearVector = V;

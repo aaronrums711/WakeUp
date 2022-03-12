@@ -64,4 +64,29 @@ public class LevelConstruction : MonoBehaviour
 		}
 	}
 
+	[ContextMenu("DestroyAllWalls()")]
+	public void DestroyAllWalls()
+	{
+		// if(GetAllPassages().Any())
+		// {
+		// 	foreach (Passage p in GetAllPassages())
+		// 	{
+		// 		print("child count: " + p.wallParent.childCount);
+		// 		foreach (Transform child in p.wallParent)
+		// 		{
+		// 			DestroyImmediate(child.gameObject);
+		// 		}
+		// 	}
+		// }
+
+		List<PassageWall> walls = GameObject.FindObjectsOfType<PassageWall>().ToList();
+		foreach (PassageWall wall in walls)
+		{
+			DestroyImmediate(wall.gameObject);
+		}
+
+
+
+	}
+
 }
