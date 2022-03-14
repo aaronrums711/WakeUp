@@ -306,6 +306,7 @@ public class Passage : MonoBehaviour
 		openings.Add(opening);
 		opening.transform.parent = this.transform;
 		opening.transform.right = this.transform.right;
+		opening.openingWidth = 2;
 		
 		return go;
 	}

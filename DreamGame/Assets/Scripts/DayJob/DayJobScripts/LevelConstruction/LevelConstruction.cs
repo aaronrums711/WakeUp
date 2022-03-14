@@ -90,18 +90,22 @@ public class LevelConstruction : MonoBehaviour
 	private void Reset()
 	{
 		DestroyAllWalls();
-		// yield return new WaitForSeconds(0.5f);   //these WaitForSeconds dont work out of play mode
 		AllignAllPassages();
-		// yield return new WaitForSeconds(1f);
 		AllignAllPassages();
-		// yield return new WaitForSeconds(1f);
 		SpawnWallsOnAllPassages();
-		// yield return new WaitForSeconds(1f);
+		CreateAllOpenings();
+	}
+
+	[ContextMenu("CreateAllOpenings()")]
+	public void CreateAllOpenings()
+	{
+		List<PassageOpening> openings = GameObject.FindObjectsOfType<PassageOpening>().ToList();
+		print("openings found: " + openings.Count);
+		foreach (PassageOpening p in openings)
+		{
+			p.CreateOpening();
+		}
 	}
 
 	
-	// public void CallReset()
-	// {
-	// 	StartCoroutine(Reset());
-	// }
 }
