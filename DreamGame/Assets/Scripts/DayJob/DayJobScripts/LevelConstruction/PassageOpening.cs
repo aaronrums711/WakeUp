@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [ExecuteAlways]
 public class PassageOpening : MonoBehaviour
@@ -43,19 +44,34 @@ public class PassageOpening : MonoBehaviour
 	public void CreateOpening()
 	{
 		float raycastLength = attachedPassage.passageWidth * (attachedPassage.grid.nodeRadius *2) +2;  //+2 is just a failsafe
-		if (Physics.Raycast(this.transform.position,  this.transform.right,out RaycastHit hitInfo, raycastLength))
+		foreach (Vector3 V in GetDirections())
 		{
-			print("Raycast hit: " + hitInfo.transform.gameObject.name);
-			if (hitInfo.transform.TryGetComponent<PassageWall> (out PassageWall hitWall))
+			if (Physics.Raycast(this.transform.position,  V ,out RaycastHit hitInfo, raycastLength))
 			{
-				print("wall destroyed");
-				DestroyImmediate(hitWall.gameObject);
+				if (hitInfo.transform.TryGetComponent<PassageWall> (out PassageWall hitWall))  //if we hit a wall, destroy the above tiles as well based on the wall heigh
+				{
+					Vector3 initialHitPos = hitInfo.transform.position;
+					DestroyImmediate(hitWall.gameObject);
+					float boxRadius = attachedPassage.grid.nodeRadius/2;
+					for (int i =1; i < attachedPassage.numWallTilesHigh; i++)
+					{
+						print(initialHitPos);
+						Vector3 additionVector = new Vector3(0, (attachedPassage.grid.nodeRadius*2) * i, 0);
+						Collider[] colls = Physics.OverlapBox(initialHitPos + additionVector, new Vector3(boxRadius, boxRadius, boxRadius));
+						if (colls.Length > 0)  //the count should really ever only be 1 or 0
+						{
+							foreach (Collider coll in colls )
+							{
+								DestroyImmediate(coll.gameObject);
+							}
+						}
+
+					}
+				}
 			}
 		}
-		else
-		{
-			Debug.LogWarning("a PassageOpening object didn't hit any wall on it's raycast");
-		}
+
+		
 	}
 
 	private void SetPosition()

@@ -36,6 +36,7 @@ public class LevelConstruction : MonoBehaviour
 	private List<Passage> GetAllPassages()
 	{
 		List<Passage> allPassages = GameObject.FindObjectsOfType<Passage>().ToList();
+		print("passage count: " + allPassages.Count);
 		return allPassages;
 	}
 
@@ -86,7 +87,8 @@ public class LevelConstruction : MonoBehaviour
 
 	}
 
-	private IEnumerator Reset()
+	[ContextMenu("Reset()")]
+	private void Reset()
 	{
 		DestroyAllWalls();
 		// yield return new WaitForSeconds(0.5f);   //these WaitForSeconds dont work out of play mode
@@ -95,12 +97,12 @@ public class LevelConstruction : MonoBehaviour
 		AllignAllPassages();
 		// yield return new WaitForSeconds(1f);
 		SpawnWallsOnAllPassages();
-		yield return new WaitForSeconds(1f);
+		// yield return new WaitForSeconds(1f);
 	}
 
-	[ContextMenu("Reset()")]
-	public void CallReset()
-	{
-		StartCoroutine(Reset());
-	}
+	
+	// public void CallReset()
+	// {
+	// 	StartCoroutine(Reset());
+	// }
 }
