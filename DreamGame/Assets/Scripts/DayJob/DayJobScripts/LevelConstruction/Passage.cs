@@ -35,7 +35,6 @@ public class Passage : MonoBehaviour
 	
     void Start()
     {
-		print("start called");
 		this.transform.localScale = new Vector3(0.3f, 0.3f, this.transform.localScale.z); //this makes it a skinny rectangle if it's not already
         this.transform.position = new Vector3(this.transform.position.x, 0, this.transform.position.z);  //snaps this to the floor when it's dragged in as a prefab
 		

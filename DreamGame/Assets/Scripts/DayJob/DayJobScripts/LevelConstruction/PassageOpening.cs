@@ -50,8 +50,10 @@ public class PassageOpening : MonoBehaviour
     }
 
 	[ContextMenu("CreateOpening()")]
-	public void CreateOpening()
+	public  void CreateOpening()
 	{
+
+
 		float raycastLength = attachedPassage.passageWidth * (attachedPassage.grid.nodeRadius *2) +2;  //+2 is just a failsafe
 		foreach (Vector3 V in GetDirections())
 		{
@@ -60,6 +62,15 @@ public class PassageOpening : MonoBehaviour
 				if (hitInfo.transform.TryGetComponent<PassageWall> (out PassageWall hitWall))  //if we hit a wall, destroy the above tiles as well based on the wall heigh
 				{
 					Vector3 initialHitPos = hitInfo.transform.position;
+					List<Vector3> columnsToCheck = new List<Vector3>();
+					Vector3 horizontalAdditionVector = new Vector3((attachedPassage.grid.nodeRadius*2), 0, 0);
+					columnsToCheck.Add(initialHitPos);
+
+					for (int a = 1; a < openingWidth; a++)
+					{
+						columnsToCheck.Add(this.transform.forward * ((attachedPassage.grid.nodeRadius*2) * a));
+					}
+
 					DestroyImmediate(hitWall.gameObject);
 					float boxRadius = attachedPassage.grid.nodeRadius/2;
 					for (int i =1; i < attachedPassage.numWallTilesHigh; i++)
@@ -73,8 +84,9 @@ public class PassageOpening : MonoBehaviour
 								DestroyImmediate(coll.gameObject);
 							}
 						}
-
 					}
+					// DestroyAbove(columnsToCheck);
+
 				}
 			}
 		}
@@ -101,5 +113,33 @@ public class PassageOpening : MonoBehaviour
 			directions.Add(this.transform.right);
 		}
 		return directions;
+	}
+
+	//this is just a convenience method to tidy up the CreateOpening() method
+	//for each of the bottom positions, for each wallHeight, check Physics.Overlap to check if a wall tile is there, and if it is, destroy it
+	public void DestroyAbove(List<Vector3> bottomPositions)
+	{		
+	
+		float boxRadius = attachedPassage.grid.nodeRadius/2;  //we want this to be small enough to only detect one wall tile, and not have any chance of accidentally detecting 2 or more
+		for (int a = 0; a < bottomPositions.Count; a++)
+		{
+			Vector3 verticalAdditionVector = new Vector3(0, (attachedPassage.grid.nodeRadius*2) * a, 0);
+			for (int b =0; b < attachedPassage.numWallTilesHigh; b++)
+			{
+				Collider[] colls = Physics.OverlapBox(bottomPositions[a] + verticalAdditionVector * b, new Vector3(boxRadius, boxRadius, boxRadius));
+				if (colls.Length > 0)  //the count should really ever only be 1 or 0
+				{
+					foreach (Collider coll in colls )
+					{
+						if (coll.transform.TryGetComponent<PassageWall>(out PassageWall hitWall) )
+						{
+							DestroyImmediate(coll.gameObject);
+						}
+						
+					}
+				}
+			}
+
+		}
 	}
 }

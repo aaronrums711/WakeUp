@@ -36,7 +36,6 @@ public class LevelConstruction : MonoBehaviour
 	private List<Passage> GetAllPassages()
 	{
 		List<Passage> allPassages = GameObject.FindObjectsOfType<Passage>().ToList();
-		print("passage count: " + allPassages.Count);
 		return allPassages;
 	}
 
