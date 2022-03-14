@@ -218,6 +218,7 @@ public class Passage : MonoBehaviour
 
 
 	//spawns walls along the forward axis of a passage
+	[ContextMenu("SpawnWallTiles")]
 	public void SpawnWallTiles(Passage passage, int numTilesHigh)
 	{
 		// Vector3 adjustedTileScale = passageWallPrefab.transform.localScale;

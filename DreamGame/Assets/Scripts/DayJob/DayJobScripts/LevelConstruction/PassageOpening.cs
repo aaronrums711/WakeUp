@@ -16,7 +16,7 @@ public class PassageOpening : MonoBehaviour
 	//////////////////////////////Config
 	public bool left;
 	public bool right;
-	public int openingWidth;
+	public int openingWidth = 2;
 	public Passage attachedPassage;
 	[Range(0f, 1f)] public float posAlongPath;
 	
@@ -24,6 +24,14 @@ public class PassageOpening : MonoBehaviour
 	
 	//////////////////////////////Cached Component References
 	
+	void OnDrawGizmosSelected()
+	{
+		Vector3 additionVector = new Vector3(0, 1, 0);
+		foreach (Vector3 V in GetDirections())
+		{
+			Debug.DrawRay(this.transform.position + additionVector, V * 3, Color.black, 0.1f);
+		}
+	}
 	
 	void Awake()
     {
@@ -38,9 +46,10 @@ public class PassageOpening : MonoBehaviour
     void Update()
     {
 		SetPosition();
-		CreateOpening();
+		// CreateOpening();
     }
 
+	[ContextMenu("CreateOpening()")]
 	public void CreateOpening()
 	{
 		float raycastLength = attachedPassage.passageWidth * (attachedPassage.grid.nodeRadius *2) +2;  //+2 is just a failsafe
@@ -55,7 +64,6 @@ public class PassageOpening : MonoBehaviour
 					float boxRadius = attachedPassage.grid.nodeRadius/2;
 					for (int i =1; i < attachedPassage.numWallTilesHigh; i++)
 					{
-						print(initialHitPos);
 						Vector3 additionVector = new Vector3(0, (attachedPassage.grid.nodeRadius*2) * i, 0);
 						Collider[] colls = Physics.OverlapBox(initialHitPos + additionVector, new Vector3(boxRadius, boxRadius, boxRadius));
 						if (colls.Length > 0)  //the count should really ever only be 1 or 0
@@ -70,8 +78,6 @@ public class PassageOpening : MonoBehaviour
 				}
 			}
 		}
-
-		
 	}
 
 	private void SetPosition()
