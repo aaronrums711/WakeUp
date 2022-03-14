@@ -9,7 +9,7 @@ public class PassageOpening : MonoBehaviour
 	/*****************
 	CreateDate: 	3/12/2022
 	Functionality:	this class creates openings in walls as it slides up and down the forward direction of a passage
-	Notes:
+	Notes:			as of 3/13, this only creates an opening in the exact column that is hit by the raycast.  The ability to destroy multiple columns of wall tiles could definitely be implemented...I'm just tired
 	Dependencies:
 	******************/
 	
