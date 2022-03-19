@@ -25,7 +25,7 @@ public class PassageV2 : MonoBehaviour
 	{
 		if (ends.Count == 2)
 		{
-			Gizmos.DrawLine(ends[0].transform.position, ends[0].transform.position);
+			Gizmos.DrawLine(endPositions[0], endPositions[1]);
 		}				
 		
 	}
@@ -37,12 +37,10 @@ public class PassageV2 : MonoBehaviour
 	
     void Start()
     {
-        
     }
 
     void Update()
     {
-        
     }
 
 	private List<Vector3> GetEndPositions()
@@ -65,4 +63,10 @@ public class PassageV2 : MonoBehaviour
 			}
 		}
 	}
+
+	private void SetPosToMidpoint()
+	{
+		this.transform.position = Vector3.Lerp(endPositions[0], endPositions[1], 0.5f);
+	}
+
 }
