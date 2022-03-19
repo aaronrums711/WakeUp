@@ -55,6 +55,7 @@ public class PassageEnd : MonoBehaviour
 		}
 	}
 
+
 	void OnDestroy()
 	{
 		if (this.transform.parent.TryGetComponent<PassageV2>(out PassageV2 parentPassage))
