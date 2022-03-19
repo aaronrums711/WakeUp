@@ -81,7 +81,9 @@ public class PassageV2 : MonoBehaviour
 	}
 
 
-
+	/**
+	UPON RETURN:  get the wall spwaning to work on this new PassageV2 object.  shouldn't be too hard
+	**/
 
 	// 	[ContextMenu("SpawnWallTiles")]
 	// public void SpawnWallTiles(Passage passage, int numTilesHigh)
