@@ -18,7 +18,7 @@ public class PassageEnd : MonoBehaviour
 	public bool snap = false;
 	
 	//////////////////////////////Cached Component References
-		[SerializeField] public _Grid grid;
+	[SerializeField] public _Grid grid;
 
 	
 	
