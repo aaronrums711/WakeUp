@@ -14,11 +14,13 @@ public class PassageV2 : MonoBehaviour
 	
 	//////////////////////////////Config
 	public List<PassageEnd> ends;
-	private List<Vector3> endPositions {get{ return GetEndPositions();}}
+	public List<Vector3> endPositions {get{ return GetEndPositions();}}
 	[SerializeField] private GameObject endPrefab;
 	public GameObject passageWallPrefab;
 	public int passageWidth = 2;   //this is the passage width, IN GRID NODES, not world space
-
+	public Transform wallParentObject;
+	public int numWallTilesHigh = 3;
+	public Vector3 passageDirection;
 	
 	//////////////////////////////State
 	public bool isWallsConstructed;
@@ -39,6 +41,13 @@ public class PassageV2 : MonoBehaviour
     void Start()
     {
 		grid = FindObjectOfType<_Grid>();
+		for(int i = 0; i < this.transform.childCount; i++)
+		{
+			if (this.transform.GetChild(i).name == "Walls")
+			{
+				wallParentObject = this.transform.GetChild(i).gameObject.transform;
+			}
+		}
 
     }
 
@@ -80,6 +89,8 @@ public class PassageV2 : MonoBehaviour
 		{
 			end.transform.forward = target;
 		}
+		ends[1].isRear = true;
+
 	}
 
 
@@ -89,15 +100,15 @@ public class PassageV2 : MonoBehaviour
 
 	public void SpawnWallTiles(PassageV2 passage, int numTilesHigh)
 	{
-
-		List <Vector3> ends = endPositions;  //no need to call GetEndNodePositions() because this already should be snapped
+		Vector3 rearVector = GetRearPassageVector();
+		List <Vector3> ends = endPositions;  
 		float lengthOfPassage = Vector3.Distance(ends[0], ends[1]);
 		int numTiles = Mathf.RoundToInt(lengthOfPassage/(grid.nodeRadius*2));
 																											//bumps the wall up slightly		//moves the walls over so they fall exactly on the grid lines
-		Vector3 wallStart1 = ends[0] + this.transform.right * ((grid.nodeRadius * 2) * passageWidth)  + new Vector3(0f,grid.nodeRadius,0f) + (this.transform.right* grid.nodeRadius);
-		Vector3 wallStart2 = ends[0] - this.transform.right * ((grid.nodeRadius * 2) * passageWidth) + new Vector3(0f,grid.nodeRadius,0f) - (this.transform.right* grid.nodeRadius);
+		Vector3 wallStart1 = rearVector + this.ends[0].transform.right * ((grid.nodeRadius * 2) * passageWidth)  + new Vector3(0f,grid.nodeRadius,0f) + (this.ends[0].transform.right* grid.nodeRadius);
+		Vector3 wallStart2 = rearVector - this.ends[0].transform.right * ((grid.nodeRadius * 2) * passageWidth) + new Vector3(0f,grid.nodeRadius,0f) - (this.ends[0].transform.right* grid.nodeRadius);
 
-		List<Vector3> wallStarts = new List<Vector3>() { wallStart1,wallStart2};
+		List<Vector3> wallStarts = new List<Vector3>() { wallStart2,wallStart1};
 
 																	//it doesn't matter which PassageEnd we use to get this rotation because they both face the same direction
 		List<Vector3> passageWallRotations = new List<Vector3>() {this.ends[0].transform.right*-1, this.ends[0].transform.right };
@@ -118,7 +129,7 @@ public class PassageV2 : MonoBehaviour
 					go.transform.forward = rotation;
 					finalPos += new Vector3(0f,grid.nodeRadius*2,0f);
 				}
-				horizontalPos += this.transform.forward * (grid.nodeRadius*2);
+				horizontalPos += this.ends[0].transform.forward * (grid.nodeRadius*2);
 			}
 		}
 		isWallsConstructed = true;
@@ -128,7 +139,21 @@ public class PassageV2 : MonoBehaviour
 	[ContextMenu("SpawnWallTilesV2")]
 	public void SpawnWallsFromMenu()
 	{
-		SpawnWallTiles(this, 3);
+		SpawnWallTiles(this, numWallTilesHigh);
 
+	}
+
+
+	private Vector3 GetRearPassageVector()
+	{
+		Vector3 rearVector = new Vector3();
+		foreach (PassageEnd end in ends)
+		{
+			if (end.isRear == true)
+			{
+				rearVector = end.transform.position;
+			}
+		}
+		return rearVector;
 	}
 }

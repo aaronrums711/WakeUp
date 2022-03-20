@@ -17,7 +17,7 @@ public class PassageOpening : MonoBehaviour
 	public bool left;
 	public bool right;
 	public int openingWidth = 2;
-	public Passage attachedPassage;
+	public PassageV2 attachedPassage;
 	[Range(0f, 1f)] public float posAlongPath;
 	
 	//////////////////////////////State
@@ -95,7 +95,7 @@ public class PassageOpening : MonoBehaviour
 	{
 		if (attachedPassage != null)
 		{
-			List<Vector3> ends = attachedPassage.Ends;
+			List<Vector3> ends = attachedPassage.endPositions;
 			this.transform.position = Vector3.Lerp(ends[0], ends[1], posAlongPath);
 		}
 	}
