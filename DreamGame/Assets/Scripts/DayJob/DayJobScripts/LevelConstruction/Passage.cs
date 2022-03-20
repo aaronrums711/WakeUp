@@ -302,7 +302,7 @@ public class Passage : MonoBehaviour
 	{
 		GameObject go = Instantiate(passageOpeningPrefab);
 		PassageOpening opening = go.GetComponent<PassageOpening>();
-		opening.attachedPassage = this;
+		// opening.attachedPassage = this;
 		openings.Add(opening);
 		opening.transform.parent = this.transform;
 		opening.transform.right = this.transform.right;
