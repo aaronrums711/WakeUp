@@ -16,17 +16,19 @@ public class PassageV2 : MonoBehaviour
 	public List<PassageEnd> ends;
 	public List<Vector3> endPositions {get{ return GetEndPositions();}}
 	[SerializeField] private GameObject endPrefab;
-	public GameObject passageWallPrefab;
 	public int passageWidth = 2;   //this is the passage width, IN GRID NODES, not world space
-	public Transform wallParentObject;
 	public int numWallTilesHigh = 3;
-	public Vector3 passageDirection;
-	
+	List<PassageOpening> openings = new List<PassageOpening>();
+
 	//////////////////////////////State
 	public bool isWallsConstructed;
 	
 	//////////////////////////////Cached Component References
-	[SerializeField] public _Grid grid;
+	public _Grid grid;
+	public GameObject passageOpeningPrefab;
+	public Vector3 passageDirection;
+	private Transform wallParent; 
+	public GameObject passageWallPrefab;
 	
 	void OnDrawGizmos()
 	{
@@ -40,14 +42,10 @@ public class PassageV2 : MonoBehaviour
 	
     void Start()
     {
+		this.transform.parent = GameObject.Find("Passages").transform;
+		this.transform.position = new Vector3(this.transform.position.x, 0, this.transform.position.z);
 		grid = FindObjectOfType<_Grid>();
-		for(int i = 0; i < this.transform.childCount; i++)
-		{
-			if (this.transform.GetChild(i).name == "Walls")
-			{
-				wallParentObject = this.transform.GetChild(i).gameObject.transform;
-			}
-		}
+		wallParent = Utils.SearchByNameFromParent("Walls", this.transform);
 
     }
 
@@ -66,22 +64,6 @@ public class PassageV2 : MonoBehaviour
 		return endPositions;
 	}
 
-	private void SpawnEnd()
-	{
-		if (ends.Count < 2)
-		{
-			for (int i = ends.Count; i < 2; i++)
-			{
-				GameObject.Instantiate(endPrefab, this.transform.position, Quaternion.identity, this.transform);
-			}
-		}
-	}
-
-	private void SetPosToMidpoint()
-	{
-		this.transform.position = Vector3.Lerp(endPositions[0], endPositions[1], 0.5f);
-	}
-
 	private void SetEndRotations()
 	{
 		Vector3 target = endPositions[0] - endPositions[1];
@@ -93,18 +75,18 @@ public class PassageV2 : MonoBehaviour
 
 	}
 
-
-	/**
-	UPON RETURN:  get the wall spwaning to work on this new PassageV2 object.  shouldn't be too hard
-	**/
-
 	public void SpawnWallTiles(PassageV2 passage, int numTilesHigh)
 	{
+		if (this.isWallsConstructed)
+		{
+			Utils.DestroyAllChildren(wallParent, true);
+			isWallsConstructed = false;
+		}
 		Vector3 rearVector = GetRearPassageVector();
 		List <Vector3> ends = endPositions;  
 		float lengthOfPassage = Vector3.Distance(ends[0], ends[1]);
 		int numTiles = Mathf.RoundToInt(lengthOfPassage/(grid.nodeRadius*2));
-																											//bumps the wall up slightly		//moves the walls over so they fall exactly on the grid lines
+																													//bumps the wall up slightly		//moves the walls over so they fall exactly on the grid lines
 		Vector3 wallStart1 = rearVector + this.ends[0].transform.right * ((grid.nodeRadius * 2) * passageWidth)  + new Vector3(0f,grid.nodeRadius,0f) + (this.ends[0].transform.right* grid.nodeRadius);
 		Vector3 wallStart2 = rearVector - this.ends[0].transform.right * ((grid.nodeRadius * 2) * passageWidth) + new Vector3(0f,grid.nodeRadius,0f) - (this.ends[0].transform.right* grid.nodeRadius);
 
@@ -125,7 +107,7 @@ public class PassageV2 : MonoBehaviour
 				finalPos =  horizontalPos;
 				for (int c = 0; c < numTilesHigh; c++)
 				{
-					GameObject go = GameObject.Instantiate(passageWallPrefab, finalPos, Quaternion.identity, this.transform);
+					GameObject go = GameObject.Instantiate(passageWallPrefab, finalPos, Quaternion.identity, wallParent);
 					go.transform.forward = rotation;
 					finalPos += new Vector3(0f,grid.nodeRadius*2,0f);
 				}
@@ -133,7 +115,6 @@ public class PassageV2 : MonoBehaviour
 			}
 		}
 		isWallsConstructed = true;
-
 	}
 
 	[ContextMenu("SpawnWallTilesV2")]
@@ -142,7 +123,6 @@ public class PassageV2 : MonoBehaviour
 		SpawnWallTiles(this, numWallTilesHigh);
 
 	}
-
 
 	private Vector3 GetRearPassageVector()
 	{
@@ -156,4 +136,20 @@ public class PassageV2 : MonoBehaviour
 		}
 		return rearVector;
 	}
+
+
+	[ContextMenu("CreateOpening()")]
+	public GameObject CreateOpening()
+	{
+		GameObject go = Instantiate(passageOpeningPrefab);
+		PassageOpening opening = go.GetComponent<PassageOpening>();
+		opening.attachedPassage = this;
+		openings.Add(opening);
+		opening.transform.parent = this.transform;
+		opening.transform.right = this.transform.right;
+		opening.openingWidth = 2;
+		
+		return go;
+	}
+
 }

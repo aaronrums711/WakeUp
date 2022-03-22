@@ -33,11 +33,6 @@ public class PassageOpening : MonoBehaviour
 		}
 	}
 	
-	void Awake()
-    {
-        
-    }
-	
     void Start()
     {
         SetPosition();
@@ -68,24 +63,7 @@ public class PassageOpening : MonoBehaviour
 					{
 						columnsToCheck.Add(this.transform.forward * ((attachedPassage.grid.nodeRadius*2) * a));
 					}
-
-					// DestroyImmediate(hitWall.gameObject);
-					// float boxRadius = attachedPassage.grid.nodeRadius/2;
-					// for (int i =1; i < attachedPassage.numWallTilesHigh; i++)
-					// {
-					// 	Vector3 additionVector = new Vector3(0, (attachedPassage.grid.nodeRadius*2) * i, 0);
-					// 	Collider[] colls = Physics.OverlapBox(initialHitPos + additionVector, new Vector3(boxRadius, boxRadius, boxRadius));
-					// 	if (colls.Length > 0)  //the count should really ever only be 1 or 0
-					// 	{
-					// 		foreach (Collider coll in colls )
-					// 		{
-					// 			DestroyImmediate(coll.gameObject);
-					// 		}
-					// 	}
-					// }
-					// DestroyAbove(columnsToCheck);
 					CreateOpeningFromHit(initialHitPos, openingWidth, attachedPassage.numWallTilesHigh);
-
 				}
 			}
 		}
