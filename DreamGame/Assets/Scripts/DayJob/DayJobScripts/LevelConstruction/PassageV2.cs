@@ -146,7 +146,7 @@ public class PassageV2 : MonoBehaviour
 		opening.attachedPassage = this;
 		openings.Add(opening);
 		opening.transform.parent = this.transform;
-		opening.transform.right = this.transform.right;
+		opening.transform.forward = ends[0].transform.forward;
 		opening.openingWidth = 2;
 		
 		return go;
