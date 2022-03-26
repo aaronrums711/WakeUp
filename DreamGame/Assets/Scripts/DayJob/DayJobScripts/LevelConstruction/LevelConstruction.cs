@@ -13,7 +13,7 @@ public class LevelConstruction : MonoBehaviour
 	******************/
 	
 	//////////////////////////////Config
-	public List<Passage> allPassages {get{ return  GetAllPassages();}}
+	public List<PassageV2> allPassages {get{ return  GetAllPassages();}}
 	
 	[Range(1, 10)]public int wallHeight;
 	public _Grid grid;
@@ -28,37 +28,20 @@ public class LevelConstruction : MonoBehaviour
         grid = FindObjectOfType<_Grid>();
     }
 
-    void Update()
-    {
-        
-    }
 
-	private List<Passage> GetAllPassages()
+	private List<PassageV2> GetAllPassages()
 	{
-		List<Passage> allPassages = GameObject.FindObjectsOfType<Passage>().ToList();
+		List<PassageV2> allPassages = GameObject.FindObjectsOfType<PassageV2>().ToList();
 		return allPassages;
 	}
 
-	[ContextMenu("AllignAllPassages()")]
-	public void AllignAllPassages()
-	{
-		if (grid.nodeGrid == null) {grid.CreateGrid();}
-		AssignGridtoPassages();
-		foreach (Passage p in GetAllPassages())
-		{
-			p.SnapRotation();
-			p.SnapPosition();
-			p.SnapScale();
-			p.SnapScale();
-		}
-	}
 
 	[ContextMenu("SpawnWallsOnAllPassages()")]
 	public void SpawnWallsOnAllPassages()
 	{
 		if (grid.nodeGrid == null) {grid.CreateGrid();}
 		AssignGridtoPassages();
-		foreach (Passage p in GetAllPassages())
+		foreach (PassageV2 p in allPassages)
 		{
 			p.SpawnWallTiles(p, p.numWallTilesHigh);
 		}
@@ -76,22 +59,19 @@ public class LevelConstruction : MonoBehaviour
 
 	public void AssignGridtoPassages()
 	{
-		foreach (Passage p in GetAllPassages())
+		foreach (PassageV2 p in GetAllPassages())
 		{
 			if (p.grid == null)
 			{
 				p.grid = grid;
 			}
 		}
-
 	}
 
 	[ContextMenu("Reset()")]
 	private void Reset()
 	{
 		DestroyAllWalls();
-		AllignAllPassages();
-		AllignAllPassages();
 		SpawnWallsOnAllPassages();
 		CreateAllOpenings();
 	}

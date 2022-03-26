@@ -15,18 +15,19 @@ public class PassageV2 : MonoBehaviour
 	//////////////////////////////Config
 	public List<PassageEnd> ends;
 	public List<Vector3> endPositions {get{ return GetEndPositions();}}
-	[SerializeField] private GameObject endPrefab;
 	public int passageWidth = 2;   //this is the passage width, IN GRID NODES, not world space
 	public int numWallTilesHigh = 3;
 	List<PassageOpening> openings = new List<PassageOpening>();
 
 	//////////////////////////////State
 	public bool isWallsConstructed;
+	public bool forwardEndCap;
+	public bool rearEndCap;
 	
 	//////////////////////////////Cached Component References
 	public _Grid grid;
 	public GameObject passageOpeningPrefab;
-	public Vector3 passageDirection;
+	[SerializeField] private GameObject endPrefab;
 	private Transform wallParent; 
 	public GameObject passageWallPrefab;
 	
@@ -151,5 +152,41 @@ public class PassageV2 : MonoBehaviour
 		
 		return go;
 	}
+
+
+	/***
+		need functionality of two toggles, one for each end of the passage. 
+			when toggled on, walls will spawn at the end of the hall to cap it off.  When toggled off, they will be destroyed
+
+		if the passageEnd.isRear, then move back have a unit and spawn there
+			if not, move forward half a unit
+	****/
+
+	[ContextMenu("SpawnEndCap()")]
+	public void SpawnEndCap()
+	{
+		///for now, lets just test on the forward
+		PassageEnd forwardEnd = new PassageEnd();
+		foreach (PassageEnd end in ends)
+		{
+			if (!end.isRear)
+			{
+				forwardEnd = end;
+			}
+		}
+
+		Vector3 forwardPos = forwardEnd.transform.position + (forwardEnd.transform.forward * grid.nodeRadius) + new Vector3(0, grid.nodeRadius, 0);
+		//just spawn one column vertically to start
+		
+		for (int i = 0; i < numWallTilesHigh; i++)
+		{
+			GameObject endCapWall = Instantiate(passageWallPrefab, forwardPos, Quaternion.identity, wallParent);
+			endCapWall.transform.forward = this.transform.right;
+			forwardPos += new Vector3(0, grid.nodeRadius*2, 0);
+		}
+
+
+	}
+
 
 }
