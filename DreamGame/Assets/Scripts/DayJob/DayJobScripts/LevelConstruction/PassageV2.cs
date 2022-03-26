@@ -23,14 +23,18 @@ public class PassageV2 : MonoBehaviour
 	//////////////////////////////State
 	public bool isWallsConstructed;
 	public bool forwardEndCap;
+
 	public bool rearEndCap;
 	
 	//////////////////////////////Cached Component References
-	public _Grid grid;
+	[HideInInspector] public _Grid grid;
 	public GameObject passageOpeningPrefab;
-	// [SerializeField] private GameObject endPrefab;
-	private Transform wallParent; 
 	public GameObject passageWallPrefab;
+	private Transform wallParent; 
+	private Transform openingParent;
+	private Transform forwardEndCapParent;
+	private Transform RearEndCapParent;
+
 	
 	void OnDrawGizmos()
 	{
@@ -48,7 +52,9 @@ public class PassageV2 : MonoBehaviour
 		this.transform.position = new Vector3(this.transform.position.x, 0, this.transform.position.z);
 		grid = FindObjectOfType<_Grid>();
 		wallParent = Utils.SearchByNameFromParent("Walls", this.transform);
-
+		openingParent = Utils.SearchByNameFromParent("Openings", this.transform);
+		forwardEndCapParent = Utils.SearchByNameFromParent("ForwardEndCaps", this.transform);
+		RearEndCapParent  = Utils.SearchByNameFromParent("RearEndCaps", this.transform);
     }
 
     void Update()
@@ -152,7 +158,7 @@ public class PassageV2 : MonoBehaviour
 		PassageOpening opening = go.GetComponent<PassageOpening>();
 		opening.attachedPassage = this;
 		openings.Add(opening);
-		opening.transform.parent = this.transform;
+		opening.transform.parent = openingParent;
 		opening.transform.forward = ends[0].transform.forward;
 		opening.openingWidth = 2;
 		
@@ -198,7 +204,7 @@ public class PassageV2 : MonoBehaviour
 				for (int i = 0; i < numWallTilesHigh; i++)
 				{
 					
-					GameObject endCapWall = Instantiate(passageWallPrefab, spawnPos, Quaternion.identity, wallParent);
+					GameObject endCapWall = Instantiate(passageWallPrefab, spawnPos, Quaternion.identity, forwardEndCapParent);
 					endCapWall.transform.forward = forwardEnd.transform.forward;
 					spawnPos +=  new Vector3(0, grid.nodeRadius*2, 0);
 					
@@ -208,7 +214,7 @@ public class PassageV2 : MonoBehaviour
 		}
 		else if (!forwardEndCap)
 		{
-			//delete all 
+			Utils.DestroyAllChildren(forwardEndCapParent, true);
 		}
 		if (rearEndCap)
 		{
