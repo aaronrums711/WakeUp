@@ -15,7 +15,8 @@ public class PassageV2 : MonoBehaviour
 	//////////////////////////////Config
 	public List<PassageEnd> ends;
 	public List<Vector3> endPositions {get{ return GetEndPositions();}}
-	public int passageWidth = 2;   //this is the passage width, IN GRID NODES, not world space
+	public int passageWidth = 2;   //this is the passage width, but it's not really exact.  
+	[SerializeField] private int passageNodeWidth;   //remove this from inspector later
 	public int numWallTilesHigh = 3;
 	List<PassageOpening> openings = new List<PassageOpening>();
 
@@ -90,6 +91,8 @@ public class PassageV2 : MonoBehaviour
 																													//bumps the wall up slightly		//moves the walls over so they fall exactly on the grid lines
 		Vector3 wallStart1 = rearVector + this.ends[0].transform.right * ((grid.nodeRadius * 2) * passageWidth)  + new Vector3(0f,grid.nodeRadius,0f) + (this.ends[0].transform.right* grid.nodeRadius);
 		Vector3 wallStart2 = rearVector - this.ends[0].transform.right * ((grid.nodeRadius * 2) * passageWidth) + new Vector3(0f,grid.nodeRadius,0f) - (this.ends[0].transform.right* grid.nodeRadius);
+		passageNodeWidth = Mathf.RoundToInt(Vector3.Distance(wallStart1, wallStart2) / (grid.nodeRadius*2));
+		
 
 		List<Vector3> wallStarts = new List<Vector3>() { wallStart2,wallStart1};
 
@@ -160,33 +163,49 @@ public class PassageV2 : MonoBehaviour
 
 		if the passageEnd.isRear, then move back have a unit and spawn there
 			if not, move forward half a unit
+
+
+		if its the forwardEnd, to get the corner position...
+			scoot it local forward  half a unit   (forwardEnd.transform.forward * grid.nodeRadius)
+			scoot it up half a unit 				+ new Vector3(0, grid.nodeRadius, 0);
+			then move it local left * passageNodeWidth/2
+			then move it local right * grid.nodeRadius
+
 	****/
 
 	[ContextMenu("SpawnEndCap()")]
 	public void SpawnEndCap()
 	{
-		///for now, lets just test on the forward
-		PassageEnd forwardEnd = new PassageEnd();
-		foreach (PassageEnd end in ends)
+		if (forwardEndCap)
 		{
-			if (!end.isRear)
+			PassageEnd forwardEnd = new PassageEnd();
+			foreach (PassageEnd end in ends)
 			{
-				forwardEnd = end;
+				if (!end.isRear)
+				{
+					forwardEnd = end;
+				}
+			}
+			Vector3 leftCornerPos = forwardEnd.transform.position + new Vector3(0, grid.nodeRadius, 0) + (forwardEnd.transform.forward * grid.nodeRadius) + ((forwardEnd.transform.right * -1) * passageNodeWidth/2 ) + (forwardEnd.transform.right * grid.nodeRadius);
+			
+			//just spawn one column vertically to start
+			for (int a = 0; a < passageNodeWidth; a ++)
+			{
+				for (int i = 0; i < numWallTilesHigh; i++)
+				{
+					Vector3 spawnPos = leftCornerPos;
+					GameObject endCapWall = Instantiate(passageWallPrefab, leftCornerPos, Quaternion.identity, wallParent);
+					endCapWall.transform.forward = forwardEnd.transform.forward;
+					endCapWall.GetComponent<PassageWall>().isEndCapWall = true;
+					spawnPos += forwardEnd.transform.right * grid.nodeRadius*2;
+					
+				}
+				leftCornerPos += new Vector3(0, grid.nodeRadius*2, 0);
 			}
 		}
-
-		Vector3 forwardPos = forwardEnd.transform.position + (forwardEnd.transform.forward * grid.nodeRadius) + new Vector3(0, grid.nodeRadius, 0);
-		//just spawn one column vertically to start
-		
-		for (int i = 0; i < numWallTilesHigh; i++)
+		if (rearEndCap)
 		{
-			GameObject endCapWall = Instantiate(passageWallPrefab, forwardPos, Quaternion.identity, wallParent);
-			endCapWall.transform.forward = this.transform.right;
-			forwardPos += new Vector3(0, grid.nodeRadius*2, 0);
+			//spawn rear end cap
 		}
-
-
 	}
-
-
 }

@@ -14,6 +14,7 @@ public class PassageWall : MonoBehaviour
 	//////////////////////////////Config
 	[SerializeField] Passage parentPassage;
 	//////////////////////////////State
+	public bool isEndCapWall;
 	
 	//////////////////////////////Cached Component References
 	
