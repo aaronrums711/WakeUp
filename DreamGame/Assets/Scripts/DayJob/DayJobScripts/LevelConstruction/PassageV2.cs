@@ -44,7 +44,7 @@ public class PassageV2 : MonoBehaviour
 	
     void Start()
     {
-		this.transform.parent = GameObject.Find("Passages").transform;
+		// this.transform.parent = GameObject.Find("Passages").transform;
 		this.transform.position = new Vector3(this.transform.position.x, 0, this.transform.position.z);
 		grid = FindObjectOfType<_Grid>();
 		wallParent = Utils.SearchByNameFromParent("Walls", this.transform);
