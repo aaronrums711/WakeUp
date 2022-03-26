@@ -28,7 +28,7 @@ public class PassageV2 : MonoBehaviour
 	//////////////////////////////Cached Component References
 	public _Grid grid;
 	public GameObject passageOpeningPrefab;
-	[SerializeField] private GameObject endPrefab;
+	// [SerializeField] private GameObject endPrefab;
 	private Transform wallParent; 
 	public GameObject passageWallPrefab;
 	
@@ -81,8 +81,11 @@ public class PassageV2 : MonoBehaviour
 	{
 		if (this.isWallsConstructed)
 		{
-			Utils.DestroyAllChildren(wallParent, true);
-			isWallsConstructed = false;
+			if (wallParent != null)
+			{
+				Utils.DestroyAllChildren(wallParent, true);
+				isWallsConstructed = false;
+			}
 		}
 		Vector3 rearVector = GetRearPassageVector();
 		List <Vector3> ends = endPositions;  
@@ -191,17 +194,21 @@ public class PassageV2 : MonoBehaviour
 			//just spawn one column vertically to start
 			for (int a = 0; a < passageNodeWidth; a ++)
 			{
+				Vector3 spawnPos = leftCornerPos;
 				for (int i = 0; i < numWallTilesHigh; i++)
 				{
-					Vector3 spawnPos = leftCornerPos;
-					GameObject endCapWall = Instantiate(passageWallPrefab, leftCornerPos, Quaternion.identity, wallParent);
+					
+					GameObject endCapWall = Instantiate(passageWallPrefab, spawnPos, Quaternion.identity, wallParent);
 					endCapWall.transform.forward = forwardEnd.transform.forward;
-					endCapWall.GetComponent<PassageWall>().isEndCapWall = true;
-					spawnPos += forwardEnd.transform.right * grid.nodeRadius*2;
+					spawnPos +=  new Vector3(0, grid.nodeRadius*2, 0);
 					
 				}
-				leftCornerPos += new Vector3(0, grid.nodeRadius*2, 0);
+				leftCornerPos += forwardEnd.transform.right * grid.nodeRadius*2;
 			}
+		}
+		else if (!forwardEndCap)
+		{
+			//delete all 
 		}
 		if (rearEndCap)
 		{

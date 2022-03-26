@@ -66,7 +66,6 @@ public class Utils
 			{
 				GameObject.Destroy(parent.GetChild(i).gameObject);
 			}
-			
 		}
 	}
 
