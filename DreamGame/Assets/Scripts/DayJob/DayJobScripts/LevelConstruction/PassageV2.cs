@@ -80,8 +80,19 @@ public class PassageV2 : MonoBehaviour
 			end.transform.forward = target;
 		}
 		ends[1].isRear = true;
-
 	}
+
+	// private PassageEnd GetRearEnd()
+	// {
+
+	// 	foreach (PassageEnd end in ends)
+	// 	{
+	// 		if (end.isRear)
+	// 		{
+	// 			return end;
+	// 		}
+	// 	}
+	// }
 
 	public void SpawnWallTiles(PassageV2 passage, int numTilesHigh)
 	{
@@ -187,7 +198,7 @@ public class PassageV2 : MonoBehaviour
 	{
 		if (forwardEndCap)
 		{
-			PassageEnd forwardEnd = new PassageEnd();
+			PassageEnd forwardEnd = ends[0];  //defualt, to avoid "new..." warning
 			foreach (PassageEnd end in ends)
 			{
 				if (!end.isRear)
@@ -216,9 +227,37 @@ public class PassageV2 : MonoBehaviour
 		{
 			Utils.DestroyAllChildren(forwardEndCapParent, true);
 		}
+
+
 		if (rearEndCap)
 		{
-			//spawn rear end cap
+			PassageEnd rearEnd = ends[0];  //defualt, to avoid "new..." warning
+			foreach (PassageEnd end in ends)
+			{
+				if (end.isRear)
+				{
+					rearEnd = end;
+				}
+			}
+
+			Vector3 leftCornerPos = rearEnd.transform.position + new Vector3(0, grid.nodeRadius, 0) + ((rearEnd.transform.forward * -1) * grid.nodeRadius) + (rearEnd.transform.right * passageNodeWidth/2 ) + ((rearEnd.transform.right * -1) * grid.nodeRadius);
+			for (int a = 0; a < passageNodeWidth; a ++)
+			{
+				Vector3 spawnPos = leftCornerPos;
+				for (int i = 0; i < numWallTilesHigh; i++)
+				{
+					
+					GameObject endCapWall = Instantiate(passageWallPrefab, spawnPos, Quaternion.identity, forwardEndCapParent);
+					endCapWall.transform.forward = rearEnd.transform.forward;
+					spawnPos +=  new Vector3(0, grid.nodeRadius*2, 0);
+				}
+				leftCornerPos += (rearEnd.transform.right * -1)* grid.nodeRadius*2;
+			}
+		}
+
+		else if (!rearEndCap)
+		{
+			Utils.DestroyAllChildren(RearEndCapParent, true);
 		}
 	}
 }
