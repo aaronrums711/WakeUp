@@ -57,6 +57,7 @@ public class LevelConstruction : MonoBehaviour
 		}
 	}
 
+	[ContextMenu("AssignGridtoPassages()")]
 	public void AssignGridtoPassages()
 	{
 		foreach (PassageV2 p in GetAllPassages())
