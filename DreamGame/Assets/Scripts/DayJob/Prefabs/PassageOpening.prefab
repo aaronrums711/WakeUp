@@ -111,8 +111,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   left: 0
   right: 0
-  rightDirection: {x: 0, y: 0, z: 0}
-  leftDirection: {x: 0, y: 0, z: 0}
-  openingWidth: 0
+  openingWidth: 3
   attachedPassage: {fileID: 0}
   posAlongPath: 0.55

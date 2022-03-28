@@ -21445,6 +21445,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3772986441573585293, guid: 1ca912cfe48f47e47ae28e65ac11f71f, type: 3}
+      propertyPath: grid
+      value: 
+      objectReference: {fileID: 1773911847}
+    - target: {fileID: 4816750420764242031, guid: 1ca912cfe48f47e47ae28e65ac11f71f, type: 3}
+      propertyPath: grid
+      value: 
+      objectReference: {fileID: 1773911847}
     - target: {fileID: 6059863042787816705, guid: 1ca912cfe48f47e47ae28e65ac11f71f, type: 3}
       propertyPath: grid
       value: 
