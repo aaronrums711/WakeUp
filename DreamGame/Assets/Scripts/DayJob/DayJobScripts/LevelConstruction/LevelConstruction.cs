@@ -35,6 +35,12 @@ public class LevelConstruction : MonoBehaviour
 		return allPassages;
 	}
 
+	private List<PassageEnd> GetAllPassageEnds()
+	{
+		List<PassageEnd> allPassageEnds = GameObject.FindObjectsOfType<PassageEnd>().ToList();
+		return allPassageEnds;
+	}
+
 
 	[ContextMenu("SpawnWallsOnAllPassages()")]
 	public void SpawnWallsOnAllPassages()
@@ -57,7 +63,7 @@ public class LevelConstruction : MonoBehaviour
 		}
 	}
 
-	[ContextMenu("AssignGridtoPassages()")]
+	[ContextMenu("AssignGridtoPassages and Ends")]
 	public void AssignGridtoPassages()
 	{
 		foreach (PassageV2 p in GetAllPassages())
@@ -65,6 +71,14 @@ public class LevelConstruction : MonoBehaviour
 			if (p.grid == null)
 			{
 				p.grid = grid;
+			}
+		}
+
+		foreach (PassageEnd pe in GetAllPassageEnds())
+		{
+			if (pe.grid == null)
+			{
+				pe.grid = grid;
 			}
 		}
 	}
