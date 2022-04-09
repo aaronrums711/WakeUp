@@ -6,6 +6,7 @@ using UnityEngine;
     /// this simply generates a grid using some given parameters.  It doesn't necessarily have anything to do with pathfinding in particular, except for when it 
 	/// checks if a node is walkable or not.  
     /// </summary>
+[ExecuteAlways]
 public class _Grid : MonoBehaviour
 {
 	/*****************
@@ -21,7 +22,7 @@ public class _Grid : MonoBehaviour
 	
 	//////////////////////////////Cached Component References
 	
-	Node[,] nodeGrid;
+	public Node[,] nodeGrid;
 	public Transform player;
 	public LayerMask unwalkableMask;
 
@@ -70,7 +71,7 @@ public class _Grid : MonoBehaviour
 				}
 				if (drawGridGizmos)
 				{
-					Gizmos.DrawCube(n.worldPosition,  Vector3.one * (nodeDiameter - 0.1f)); // minus 0.1 is just for spacing the cubes out 
+					Gizmos.DrawCube(n.worldPosition,  new Vector3(0.3f, 0.3f, 0.3f));        //Vector3.one * (nodeDiameter - 0.1f)); // minus 0.1 is just for spacing the cubes out 
 				}
 
 			}
@@ -79,7 +80,8 @@ public class _Grid : MonoBehaviour
 
 	
 	//this simply fills in the nodeGrid object, which is a 2D list of nodes that is the underlying data.  
-	void CreateGrid()
+	[ContextMenu("CreateGrid()")]
+	public void CreateGrid()
 	{
 		nodeGrid = new Node[gridSizeX, gridSizeY];
 		Vector3 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x/2 - Vector3.forward * gridWorldSize.y/2;  //this gives us the bottom left corner of our world...I don't know how. 
@@ -103,7 +105,8 @@ public class _Grid : MonoBehaviour
 		percentX = Mathf.Clamp01(percentX);
 		percentY = Mathf.Clamp01(percentY);
 
-		int x = Mathf.RoundToInt((gridSizeX - 1) * percentX);
+		// int x = Mathf.RoundToInt((gridSizeX - 1) * percentX);
+		int x = Mathf.FloorToInt(Mathf.Clamp((gridSizeX) * percentX, 0, gridSizeX - 1));
 		int y = Mathf.RoundToInt((gridSizeY - 1) * percentY);
 		return nodeGrid[x, y];
 	}
