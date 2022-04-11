@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 	
 	//////////////////////////////Config
 	[Range(0.001f, 1f)]
-	// [SerializeField] private float;
+	[SerializeField] private float movementSpeed;
 	[SerializeField] private MovementOrientation currentMO;
 	public static event Action<MovementOrientation>  ChangeOrientation;
 
@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
 
 		if (Input.GetKey(KeyCode.D))
 		{
-			movementLerp +=
+			// movementLerp +=
 		}
 		else if (Input.GetKey(KeyCode.A))
 		{
