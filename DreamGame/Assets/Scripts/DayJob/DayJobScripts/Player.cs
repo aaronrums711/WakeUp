@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
 
 	[SerializeField] private KeyCode rotateCounterClockwiseKey;
 	[SerializeField] private KeyCode rotateClockwiseKey;
+	[SerializeField] float openingFindRaycastLength = 2;
 
 
 
@@ -27,9 +28,13 @@ public class Player : MonoBehaviour
 	[SerializeField] private PassageV2 currentPassage;
 	private Vector3 nearMoveTarget;
 	private Vector3 farMoveTarget;
+	private bool isSetOnPassage; 
+	[SerializeField] private bool forwardOpeningAvailable;
+	[SerializeField] private bool rearOpeningAvailable;
+
 
 	[Range(0f, 1f)]
-	private float movementLerp;
+	[SerializeField]private float movementLerp;
 		
 
 
@@ -58,6 +63,7 @@ public class Player : MonoBehaviour
     {
 		SwitchOrientation();
 		MoveAlongPassage(currentPassage);
+		SearchForOpenings();
     }
 
 	//this will probably get deprecated.  movement is now based on the current PassageV2 object that the player is on
@@ -75,19 +81,26 @@ public class Player : MonoBehaviour
 
 	private void MoveAlongPassage(PassageV2 passage)
 	{
+		if (!isSetOnPassage)
+		{
+			movementLerp = Vector3.Distance(this.transform.position, farMoveTarget)/  Vector3.Distance(nearMoveTarget, farMoveTarget);
+			this.transform.position = Vector3.Lerp(nearMoveTarget, farMoveTarget, movementLerp);
+			isSetOnPassage = true;
+			print("initial player position set");
+		}
 		//player distance to end/total distance between two ends
-		float lerp = Vector3.Distance(this.transform.position, farMoveTarget)/  Vector3.Distance(nearMoveTarget, farMoveTarget);
 
 		if (Input.GetKey(KeyCode.D))
 		{
-			// movementLerp +=
+			movementLerp += movementSpeed * Time.deltaTime;
+			this.transform.position = Vector3.Lerp(nearMoveTarget, farMoveTarget, movementLerp);
 		}
 		else if (Input.GetKey(KeyCode.A))
 		{
-			this.transform.Translate(currentMO.leftWorldDirection * movementSpeed * Time.deltaTime, Space.World);
+			movementLerp -= movementSpeed * Time.deltaTime;
+			this.transform.position = Vector3.Lerp(nearMoveTarget, farMoveTarget, movementLerp);
 		}
 
-		this.transform.position = Vector3.Lerp(this.transform.position, farMoveTarget, lerp);
 	}
 
 
@@ -112,12 +125,16 @@ public class Player : MonoBehaviour
 			nearMoveTarget = Utils.GetNearestVector(currentPassage.endPositions, this.transform.position);
 			if (nearMoveTarget == currentPassage.endPositions[0])
 			{
-				farMoveTarget =  currentPassage.endPositions[1];
+				farMoveTarget =  currentPassage.endPositions[1] + new Vector3(0,1,0);
 			}
 			else
 			{
-				farMoveTarget =  currentPassage.endPositions[0];
+				farMoveTarget =  currentPassage.endPositions[0] + new Vector3(0,1,0);
 			}
+			nearMoveTarget += new Vector3(0,1,0);
+			print("near move target:  " + nearMoveTarget);
+			print("far move target:  " + farMoveTarget);
+
 		}
 		else
 		{
@@ -125,6 +142,52 @@ public class Player : MonoBehaviour
 		}
 
 	}
+
+
+
+	/**
+	need to raycast in forwards and backwards directions in Update() (maybe at some small interval, don't really need to do it EVERY frame).  If a wall is immediately hit, then there is no passage available. 
+	if there isn't a wall hit, then there is a turn available in that direction. 
+	Make sure to actually rotate the player object when it turns, so that the forward and backward directions will always find the openings
+	**/
+	void OnDrawGizmos()
+	{
+		// Debug.DrawRay(this.transform.position, this.transform.forward * openingFindRaycastLength, Color.red, 1f);
+		// Debug.DrawRay(this.transform.position, this.transform.forward * -openingFindRaycastLength, Color.red, 1f);
+
+	}
+
+
+	private void SearchForOpenings()
+	{
+		
+		//forward
+		if (Physics.Raycast(this.transform.position,  this.transform.forward,out RaycastHit forwardHitInfo,openingFindRaycastLength ))
+		{
+
+			forwardOpeningAvailable = false;
+			Debug.DrawRay(this.transform.position, this.transform.forward * openingFindRaycastLength, Color.red, 0.2f);
+		}
+		else
+		{
+			forwardOpeningAvailable = true;
+			Debug.DrawRay(this.transform.position, this.transform.forward * openingFindRaycastLength, Color.green, 0.2f);
+		}
+
+		//rear
+		if (Physics.Raycast(this.transform.position,  this.transform.forward * -1,out RaycastHit rearHitInfo, openingFindRaycastLength))
+		{
+			rearOpeningAvailable = false;
+			Debug.DrawRay(this.transform.position, this.transform.forward * -openingFindRaycastLength, Color.red, 0.2f);
+
+		}
+		else
+		{
+			rearOpeningAvailable = true;
+			Debug.DrawRay(this.transform.position, this.transform.forward * -openingFindRaycastLength, Color.green, 0.2f);
+		}
+	}
+
 
 
 }

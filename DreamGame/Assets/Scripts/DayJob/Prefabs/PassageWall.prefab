@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2195917849309066452}
   - component: {fileID: 2195917849309066453}
   - component: {fileID: 594817772005746041}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PassageWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
