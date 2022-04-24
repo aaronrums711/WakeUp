@@ -150,14 +150,6 @@ public class Player : MonoBehaviour
 	if there isn't a wall hit, then there is a turn available in that direction. 
 	Make sure to actually rotate the player object when it turns, so that the forward and backward directions will always find the openings
 	**/
-	void OnDrawGizmos()
-	{
-		// Debug.DrawRay(this.transform.position, this.transform.forward * openingFindRaycastLength, Color.red, 1f);
-		// Debug.DrawRay(this.transform.position, this.transform.forward * -openingFindRaycastLength, Color.red, 1f);
-
-	}
-
-
 	private void SearchForOpenings()
 	{
 		
@@ -186,6 +178,22 @@ public class Player : MonoBehaviour
 			rearOpeningAvailable = true;
 			Debug.DrawRay(this.transform.position, this.transform.forward * -openingFindRaycastLength, Color.green, 0.2f);
 		}
+	}
+
+		
+
+	/**
+	to determine which Passage the player is about to switch too
+
+		get all PassageBases.
+		LineCast between the two ends of all of them. 
+		whichever linecast hits the player, that's the passage that the player should move to
+
+		
+	**/	
+	public void SwitchPassages()
+	{
+
 	}
 
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [ExecuteAlways]
 public class PassageV2 : MonoBehaviour
@@ -260,4 +261,17 @@ public class PassageV2 : MonoBehaviour
 			Utils.DestroyAllChildren(RearEndCapParent, true);
 		}
 	}
+
+
+	// public static PassageV2 FindObjectBetweenPassages(Collider searchObject)
+	// {
+	// 	 Transform passageParent = GameObject.Find("Passages").transform;
+	// 	List<PassageV2> allPassages = passageParent.transform.GetComponentsInChildren<PassageV2>().ToList();
+
+	// 	foreach (PassageV2 passage in allPassages)
+	// 	{
+			
+	// 		Physics.Linecast(passage.endPositions[0], passage.endPositions[1]);
+	// 	}
+	// }
 }
