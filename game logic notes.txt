@@ -1,0 +1,4 @@
+if the hallway is traveling in the same direction as the LevelCenter forward, 
+	then the camera is going to be facing LevelCenter.right or negative right  (perpendicular to the direction of the hallway)
+	
+right or negative right will be determined by if the center of the hallway is to the right or to the left of the LevelCenter
