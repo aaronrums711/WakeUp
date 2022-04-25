@@ -191,9 +191,12 @@ public class Player : MonoBehaviour
 
 		
 	**/	
+
+	[ContextMenu("SwitchPassage()")]
 	public void SwitchPassages()
 	{
-
+		currentPassage = PassageV2.FindObjectBetweenPassages("Player", new List<PassageV2>() {currentPassage}); //pass in list of one element
+		SetMoveTargets();
 	}
 
 

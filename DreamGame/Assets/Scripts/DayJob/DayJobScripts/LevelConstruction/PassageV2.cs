@@ -263,15 +263,34 @@ public class PassageV2 : MonoBehaviour
 	}
 
 
-	// public static PassageV2 FindObjectBetweenPassages(Collider searchObject)
-	// {
-	// 	 Transform passageParent = GameObject.Find("Passages").transform;
-	// 	List<PassageV2> allPassages = passageParent.transform.GetComponentsInChildren<PassageV2>().ToList();
+	public static PassageV2 FindObjectBetweenPassages(string layerName, List<PassageV2> passagesToIgnore)
+	{
+		Transform passageParent = GameObject.Find("Passages").transform;
+		List<PassageV2> allPassages = passageParent.transform.GetComponentsInChildren<PassageV2>().ToList();
+		foreach (PassageV2 p in passagesToIgnore)
+		{
+			allPassages.Remove(p);
+		}
+		int layerIndex = LayerMask.NameToLayer(layerName);
+		int layerMask = (1 << layerIndex);
+		PassageV2 _passage = allPassages[0];
 
-	// 	foreach (PassageV2 passage in allPassages)
-	// 	{
-			
-	// 		Physics.Linecast(passage.endPositions[0], passage.endPositions[1]);
-	// 	}
-	// }
+		if (layerIndex == -1)
+		{
+			Debug.LogError("layer not found, returning first passage found");
+		}
+		else
+		{
+			foreach (PassageV2 passage in allPassages)
+			{
+				if (Physics.Linecast(passage.endPositions[0], passage.endPositions[1], out RaycastHit hitInfo, layerMask))
+				{
+					_passage = passage;
+					break;
+				}	
+					
+			}
+		}
+		return _passage;
+	}
 }
