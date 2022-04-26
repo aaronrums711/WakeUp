@@ -132,8 +132,8 @@ public class Player : MonoBehaviour
 				farMoveTarget =  currentPassage.endPositions[0] + new Vector3(0,1,0);
 			}
 			nearMoveTarget += new Vector3(0,1,0);
-			print("near move target:  " + nearMoveTarget);
-			print("far move target:  " + farMoveTarget);
+			// print("near move target:  " + nearMoveTarget);
+			// print("far move target:  " + farMoveTarget);
 
 		}
 		else

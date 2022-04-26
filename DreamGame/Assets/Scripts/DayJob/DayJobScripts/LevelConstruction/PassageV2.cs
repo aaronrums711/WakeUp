@@ -20,6 +20,7 @@ public class PassageV2 : MonoBehaviour
 	[SerializeField] private int passageNodeWidth;   //remove this from inspector later
 	public int numWallTilesHigh = 3;
 	List<PassageOpening> openings = new List<PassageOpening>();
+	
 
 	//////////////////////////////State
 	public bool isWallsConstructed;
@@ -274,6 +275,7 @@ public class PassageV2 : MonoBehaviour
 		int layerIndex = LayerMask.NameToLayer(layerName);
 		int layerMask = (1 << layerIndex);
 		PassageV2 _passage = allPassages[0];
+		bool isPlayerHit = false;
 
 		if (layerIndex == -1)
 		{
@@ -281,16 +283,37 @@ public class PassageV2 : MonoBehaviour
 		}
 		else
 		{
+			
 			foreach (PassageV2 passage in allPassages)
 			{
-				if (Physics.Linecast(passage.endPositions[0], passage.endPositions[1], out RaycastHit hitInfo, layerMask))
+				List<Vector3> endPoints = passage.GetEndPositionsExtended();
+				endPoints[0] += new Vector3(0,1,0);
+				endPoints[1] += new Vector3(0,1,0);
+				if (Physics.Linecast(endPoints[0], endPoints[1], out RaycastHit hitInfo, layerMask))
 				{
+					Debug.DrawLine(endPoints[0], endPoints[1], Color.red, 5f);
 					_passage = passage;
+					isPlayerHit = true;
 					break;
 				}	
-					
+				else
+				{
+					Debug.DrawLine(endPoints[0], endPoints[1], Color.black, 5f);
+				}
 			}
 		}
+		if(isPlayerHit == false) { Debug.LogWarning("player was not found");}
 		return _passage;
+	}
+
+	public List<Vector3> GetEndPositionsExtended()
+	{
+		Vector3 passageForward = ends[0].transform.forward;
+		
+		Vector3 end1 = endPositions[0] + passageForward * passageWidth*3;
+		Vector3 end2 = endPositions[1] + (passageForward* -1 ) * passageWidth*3;
+
+		List<Vector3> endsExtended = new List<Vector3>() {end1, end2};
+		return endsExtended;
 	}
 }

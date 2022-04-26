@@ -11,7 +11,6 @@ public class TextDisplay : MonoBehaviour
 	**/
 
 	//Config
-	private string testingText = "today is going to be a great day";
 	public  float textSpeed = 0.03f;
 	[SerializeField] private AudioClip textSoundClip;
 	
