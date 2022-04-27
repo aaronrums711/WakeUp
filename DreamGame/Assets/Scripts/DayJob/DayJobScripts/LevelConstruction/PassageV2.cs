@@ -26,9 +26,10 @@ public class PassageV2 : MonoBehaviour
 	//////////////////////////////State
 	public bool isWallsConstructed;
 	public bool forwardEndCap;
-
 	public bool rearEndCap;
+	public MovementOrientation movementOrientation;
 	
+
 	//////////////////////////////Cached Component References
 	[HideInInspector] public _Grid grid;
 	public GameObject passageOpeningPrefab;
@@ -38,7 +39,7 @@ public class PassageV2 : MonoBehaviour
 	private Transform forwardEndCapParent;
 	private Transform RearEndCapParent;
 	public Transform levelCenter;
-	public Transform test;
+	public List<MovementOrientation> allMO;
 	
 	void OnDrawGizmos()
 	{
@@ -60,7 +61,7 @@ public class PassageV2 : MonoBehaviour
 		forwardEndCapParent = Utils.SearchByNameFromParent("ForwardEndCaps", this.transform);
 		RearEndCapParent  = Utils.SearchByNameFromParent("RearEndCaps", this.transform);
 		levelCenter = GameObject.Find("LevelCenter").transform;
-		test = GameObject.Find("Test").transform;
+		AssignMoveOrientation();
     }
 
     void Update()
@@ -87,18 +88,6 @@ public class PassageV2 : MonoBehaviour
 		}
 		ends[1].isRear = true;
 	}
-
-	// private PassageEnd GetRearEnd()
-	// {
-
-	// 	foreach (PassageEnd end in ends)
-	// 	{
-	// 		if (end.isRear)
-	// 		{
-	// 			return end;
-	// 		}
-	// 	}
-	// }
 
 	public void SpawnWallTiles(PassageV2 passage, int numTilesHigh)
 	{
@@ -333,19 +322,52 @@ public class PassageV2 : MonoBehaviour
 	
 	right or negative right will be determined by if the center of the hallway is to the right or to the left of the LevelCenter
 	**/
+
+	[ContextMenu("AssignMoveOrientation()")]
 	public void AssignMoveOrientation()
 	{
 		Vector3 passageDirectionBase = endPositions[0] - endPositions[1];
 		//rounding and getting Abs value so it doesn't matter which order the end positions are in
 		Vector3 passageDirection = new Vector3(Mathf.Abs(Mathf.Round(passageDirectionBase.x)), Mathf.Abs(Mathf.Round(passageDirectionBase.y))  , Mathf.Abs(Mathf.Round(passageDirectionBase.z)));
+		passageDirection = passageDirection.normalized;
 
 		if (passageDirection == levelCenter.forward)
 		{
-			//camera movement will be either 270 or 90
+			//camera movement will be either 270 or 90.  This hallway should be parallel to the levelCenter.forward
+			Vector3 midpoint = new Vector3 (this.Midpoint.x, 0, this.Midpoint.z);
+			//scoot up the leveCenter to be equal on the Z axis.  now it will be easy to compare the two
+			Vector3 levelCenterAdjusted = new Vector3(levelCenter.position.x, 0, midpoint.z);
+			Vector3 midpointToCenter = (levelCenterAdjusted - midpoint).normalized;
+														// Utils.SpawnPrimativeAtPoints(new List<Vector3>() {midpoint, levelCenterAdjusted}, PrimitiveType.Sphere);
+														// print("direction from passage midpoint to adjusted center:  " + midpointToCenter);
+
+			List<MovementOrientation> newMO = 
+				(from mo in allMO
+				where mo.cameraViewingDirection == midpointToCenter
+				select mo).ToList();
+
+			if (newMO.Count > 1)
+			{
+				Debug.Log("something is wrong, this query should only ever return one MovementOrientation");
+			}
+			movementOrientation = newMO[0];
 		}
 		else 
 		{
-			//camera movement will be either 0 or 180.  this hallway should be perpendicular to the levelCenter
+			//camera movement will be either 0 or 180.  this hallway should be perpendicular to the levelCenter.forward
+			Vector3 midpoint = new Vector3 (this.Midpoint.x, 0, this.Midpoint.z);
+			Vector3 levelCenterAdjusted = new Vector3(midpoint.x, 0, levelCenter.position.z);
+			Vector3 midpointToCenter = (levelCenterAdjusted - midpoint).normalized;
+			List<MovementOrientation> newMO = 
+				(from mo in allMO
+				where mo.cameraViewingDirection == midpointToCenter
+				select mo).ToList();
+
+			if (newMO.Count > 1)
+			{
+				Debug.Log("something is wrong, this query should only ever return one MovementOrientation");
+			}
+			movementOrientation = newMO[0];
 		}
 	}
 

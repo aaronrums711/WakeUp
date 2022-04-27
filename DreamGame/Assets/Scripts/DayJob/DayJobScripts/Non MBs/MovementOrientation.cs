@@ -16,8 +16,10 @@ public class MovementOrientation:ScriptableObject
 	//////////////////////////////Config
 	public string description;
 	public int order;
+	public string position;
 	public int Yrotation;
 	public Vector3 rightWorldDirection;
+	public Vector3 cameraViewingDirection;
 	public Vector3 leftWorldDirection
 	{
 		get{return -rightWorldDirection;}

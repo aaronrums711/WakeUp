@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: right is -X
   order: 3
+  position: top
   Yrotation: 180
   rightWorldDirection: {x: -1, y: 0, z: 0}
+  cameraViewingDirection: {x: 0, y: 0, z: -1}
   nextMovementOrientation: {fileID: 11400000, guid: 0b557adc383cd8240a6f1ad82fa8e835, type: 2}
   previousMovementOrientation: {fileID: 11400000, guid: 738258b1d8970534bbbf33340b3f046c, type: 2}

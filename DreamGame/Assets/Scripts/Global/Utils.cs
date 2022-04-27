@@ -70,7 +70,7 @@ public class Utils
 	}
 
 
-	private List<GameObject> SpawnPrimativeAtPoints(List<Vector3> points, PrimitiveType type)
+	public static List<GameObject> SpawnPrimativeAtPoints(List<Vector3> points, PrimitiveType type)
 	{
 		List<GameObject> goList  = new List<GameObject>();
 		for (int i = 0; i < points.Count; i++)

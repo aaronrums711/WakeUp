@@ -243,9 +243,16 @@ MonoBehaviour:
   isWallsConstructed: 0
   forwardEndCap: 0
   rearEndCap: 0
+  currentMO: {fileID: 0}
   grid: {fileID: 0}
   passageOpeningPrefab: {fileID: 1205897899646456896, guid: acd11fc55824a0d4f97a5449aa605fbb, type: 3}
   passageWallPrefab: {fileID: 2195917849309066454, guid: a3af89a690a2daa45894f581663e3e8b, type: 3}
+  levelCenter: {fileID: 0}
+  allMO:
+  - {fileID: 11400000, guid: 3d9599e2cc10c8c408a06a08201e7582, type: 2}
+  - {fileID: 11400000, guid: 738258b1d8970534bbbf33340b3f046c, type: 2}
+  - {fileID: 11400000, guid: 3e81a808a9d55e24ca6cd83d28a9631f, type: 2}
+  - {fileID: 11400000, guid: 0b557adc383cd8240a6f1ad82fa8e835, type: 2}
 --- !u!1001 &2449486033690036333
 PrefabInstance:
   m_ObjectHideFlags: 0
