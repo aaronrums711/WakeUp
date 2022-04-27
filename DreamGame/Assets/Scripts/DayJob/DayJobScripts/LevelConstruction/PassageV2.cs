@@ -16,6 +16,7 @@ public class PassageV2 : MonoBehaviour
 	//////////////////////////////Config
 	public List<PassageEnd> ends;
 	public List<Vector3> endPositions {get{ return GetEndPositions();}}
+	public Vector3 Midpoint {get{return GetPassageMidpoint();}}
 	public int passageWidth = 2;   //this is the passage width, but it's not really exact.  
 	[SerializeField] private int passageNodeWidth;   //remove this from inspector later
 	public int numWallTilesHigh = 3;
@@ -36,7 +37,8 @@ public class PassageV2 : MonoBehaviour
 	private Transform openingParent;
 	private Transform forwardEndCapParent;
 	private Transform RearEndCapParent;
-
+	public Transform levelCenter;
+	public Transform test;
 	
 	void OnDrawGizmos()
 	{
@@ -57,6 +59,8 @@ public class PassageV2 : MonoBehaviour
 		openingParent = Utils.SearchByNameFromParent("Openings", this.transform);
 		forwardEndCapParent = Utils.SearchByNameFromParent("ForwardEndCaps", this.transform);
 		RearEndCapParent  = Utils.SearchByNameFromParent("RearEndCaps", this.transform);
+		levelCenter = GameObject.Find("LevelCenter").transform;
+		test = GameObject.Find("Test").transform;
     }
 
     void Update()
@@ -316,4 +320,34 @@ public class PassageV2 : MonoBehaviour
 		List<Vector3> endsExtended = new List<Vector3>() {end1, end2};
 		return endsExtended;
 	}
+
+	private Vector3 GetPassageMidpoint()
+	{
+		Vector3 center = Vector3.Lerp(endPositions[0], endPositions[1], 0.5f);
+		return center;
+	}
+
+	/**
+	if the hallway is traveling in the same direction as the LevelCenter forward, 
+		then the camera is going to be facing LevelCenter.right or negative right  (perpendicular to the direction of the hallway)
+	
+	right or negative right will be determined by if the center of the hallway is to the right or to the left of the LevelCenter
+	**/
+	public void AssignMoveOrientation()
+	{
+		Vector3 passageDirectionBase = endPositions[0] - endPositions[1];
+		//rounding and getting Abs value so it doesn't matter which order the end positions are in
+		Vector3 passageDirection = new Vector3(Mathf.Abs(Mathf.Round(passageDirectionBase.x)), Mathf.Abs(Mathf.Round(passageDirectionBase.y))  , Mathf.Abs(Mathf.Round(passageDirectionBase.z)));
+
+		if (passageDirection == levelCenter.forward)
+		{
+			//camera movement will be either 270 or 90
+		}
+		else 
+		{
+			//camera movement will be either 0 or 180.  this hallway should be perpendicular to the levelCenter
+		}
+	}
+
+
 }

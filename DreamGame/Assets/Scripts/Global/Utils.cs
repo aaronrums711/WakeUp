@@ -69,4 +69,18 @@ public class Utils
 		}
 	}
 
+
+	private List<GameObject> SpawnPrimativeAtPoints(List<Vector3> points, PrimitiveType type)
+	{
+		List<GameObject> goList  = new List<GameObject>();
+		for (int i = 0; i < points.Count; i++)
+		{
+			GameObject go = GameObject.CreatePrimitive(type);
+			go.transform.localScale *= 0.5f;
+			go.transform.position = points[i];
+			goList.Add(go);
+		}
+		return goList;
+	}
+
 }

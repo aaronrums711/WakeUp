@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: right is -Z
   order: 4
-  Yrotation: -270
+  Yrotation: 90
   rightWorldDirection: {x: 0, y: 0, z: -1}
   nextMovementOrientation: {fileID: 11400000, guid: 3d9599e2cc10c8c408a06a08201e7582, type: 2}
   previousMovementOrientation: {fileID: 11400000, guid: 3e81a808a9d55e24ca6cd83d28a9631f, type: 2}
