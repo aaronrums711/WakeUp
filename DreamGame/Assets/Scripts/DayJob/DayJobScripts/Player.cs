@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
 
 		if (Input.GetKey(KeyCode.D))
 		{
-			movementLerp += movementSpeed * Time.deltaTime;
+			movementLerp += Mathf.Clamp01(movementSpeed * Time.deltaTime);
 			this.transform.position = Vector3.Lerp(nearMoveTarget, farMoveTarget, movementLerp);
 		}
 		else if (Input.GetKey(KeyCode.A))
@@ -188,17 +188,38 @@ public class Player : MonoBehaviour
 		get all PassageBases.
 		LineCast between the two ends of all of them. 
 		whichever linecast hits the player, that's the passage that the player should move to
-
-		
 	**/	
 
 	[ContextMenu("SwitchPassage()")]
 	public void SwitchPassages()
 	{
-		currentPassage = PassageV2.FindObjectBetweenPassages("Player", new List<PassageV2>() {currentPassage}); //pass in list of one element
-		SetMoveTargets();
+		if (forwardOpeningAvailable || rearOpeningAvailable)
+		{
+			PassageV2 passage = PassageV2.FindObjectBetweenPassages("Player", new List<PassageV2>() {currentPassage}, currentPassage);
+			if (currentPassage != passage) //if a new passage was returned, not the defaultu passage
+			{
+				currentPassage = passage;
+				SetMoveTargets();
+				ChangeOrientation?.Invoke(currentPassage.movementOrientation);
+				this.transform.right = currentPassage.ends[0].transform.forward;
+			}
+		}
+		else
+		{
+			Debug.LogWarning("you are trying to switch passages but none are available");
+		}
+	
 	}
 
+
+	/**
+	need to switch the movement logic, can't use lerp because the speed will vary depending on the distance between the two ends. 
+		the shorter the distance, the slower the speed
+
+	can just use Vector3.MoveTowards.  
+	First, though, need to have each passaage determine it's "right" most (relative to the camera viewing angle) end. Use the PassageV2.MovementOrientation.RightWorldDirection to help with that 
+		Then the MoveTowards can always have the rightmost passage passed in, but simply flip the step parameter to negative if the player is moving locally left. 
+	**/
 
 
 }

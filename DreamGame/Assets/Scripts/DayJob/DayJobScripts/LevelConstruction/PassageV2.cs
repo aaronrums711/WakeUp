@@ -257,7 +257,7 @@ public class PassageV2 : MonoBehaviour
 	}
 
 
-	public static PassageV2 FindObjectBetweenPassages(string layerName, List<PassageV2> passagesToIgnore)
+	public static PassageV2 FindObjectBetweenPassages(string layerName, List<PassageV2> passagesToIgnore, PassageV2 defaultPassage)
 	{
 		Transform passageParent = GameObject.Find("Passages").transform;
 		List<PassageV2> allPassages = passageParent.transform.GetComponentsInChildren<PassageV2>().ToList();
@@ -295,7 +295,11 @@ public class PassageV2 : MonoBehaviour
 				}
 			}
 		}
-		if(isPlayerHit == false) { Debug.LogWarning("player was not found");}
+		if(isPlayerHit == false)
+		{ 
+			Debug.LogWarning("player was not found, returning default passage");
+			return defaultPassage;	
+		}
 		return _passage;
 	}
 
