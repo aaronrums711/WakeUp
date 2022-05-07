@@ -196,7 +196,7 @@ public class Player : MonoBehaviour
 		if (forwardOpeningAvailable || rearOpeningAvailable)
 		{
 			PassageV2 passage = PassageV2.FindObjectBetweenPassages("Player", new List<PassageV2>() {currentPassage}, currentPassage);
-			if (currentPassage != passage) //if a new passage was returned, not the defaultu passage
+			if (currentPassage != passage) //if a new passage was returned, not the default passage
 			{
 				currentPassage = passage;
 				SetMoveTargets();
@@ -219,6 +219,9 @@ public class Player : MonoBehaviour
 	can just use Vector3.MoveTowards.  
 	First, though, need to have each passaage determine it's "right" most (relative to the camera viewing angle) end. Use the PassageV2.MovementOrientation.RightWorldDirection to help with that 
 		Then the MoveTowards can always have the rightmost passage passed in, but simply flip the step parameter to negative if the player is moving locally left. 
+	
+	also consider having the player determine the extents in each direction.  Each passage might be constructed differently, so 
+		it might just be easier to have the player do it with a Raycast or something else
 	**/
 
 

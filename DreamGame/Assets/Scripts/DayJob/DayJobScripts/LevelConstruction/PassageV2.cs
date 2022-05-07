@@ -375,5 +375,32 @@ public class PassageV2 : MonoBehaviour
 		}
 	}
 
+	public static Transform LocalRightmostObject(PassageV2 passage, List<Transform> objects)
+	{
+
+		MovementOrientation mo = passage.movementOrientation;
+		if (mo.rightWorldDirection == Vector3.right)
+		{
+			//return the transform with the highest X value
+		}
+		else if (mo.rightWorldDirection == -Vector3.right)
+		{
+			//return the transform with the lowest X value
+		}
+		else if (mo.rightWorldDirection == Vector3.forward)
+		{
+			//return the transform with the highest Z value
+		}
+		else if (mo.rightWorldDirection == -Vector3.forward)
+		{	
+			//return the transform with the lowest Z value
+		}
+		else 
+		{
+			Debug.LogError("this passage's movementOrientation doesn't make sense");
+		}
+		return objects[0]; //just to compile for now
+	}
+
 
 }
