@@ -153,11 +153,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisLevel: {fileID: 11400000, guid: 7117fa4a1d85c4d4890a6d08bb8649c0, type: 2}
+  progressionParams: {fileID: 0}
+  difficultyParams: {fileID: 0}
   gamesNeededToWin: 0
   currentGamesWon: 0
-  miniGames: []
+  colorAlterationDivider: 0
+  mandatoryMiniGames: []
+  lerpTargetColor: {r: 0, g: 0, b: 0, a: 0}
   isLevelFinished: 0
   isLevelWon: 0
+  allGamesForThisLevel: []
+  gamesActiveInThisLevel: []
+  activeMiniGameParent: {fileID: 0}
 --- !u!4 &14398337
 Transform:
   m_ObjectHideFlags: 0
@@ -168,10 +175,31 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.008546293, y: -0.3660058, z: -3.0154886}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &435936261 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2224345863158680500, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+  m_PrefabInstance: {fileID: 2224345863512783311}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &442873490 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2224345865060967210, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+  m_PrefabInstance: {fileID: 2224345863512783311}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &532587425 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2224345864655649088, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+  m_PrefabInstance: {fileID: 2224345863512783311}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &642938816 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2224345863543936590, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+  m_PrefabInstance: {fileID: 2224345863512783311}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &978670155
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -278,10 +306,36 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.52282804, y: -0.08685255, z: 1.9298713}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1359876974 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2224345863730334870, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+  m_PrefabInstance: {fileID: 2224345863512783311}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1602425253 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2224345863984512527, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+  m_PrefabInstance: {fileID: 2224345863512783311}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1721695135 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2224345864952156173, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+  m_PrefabInstance: {fileID: 2224345863512783311}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1752402101 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2224345864527134289, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+  m_PrefabInstance: {fileID: 2224345863512783311}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2097290098 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2224345863796307923, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+  m_PrefabInstance: {fileID: 2224345863512783311}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2224345863512783311
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -289,6 +343,54 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2224345863357818002, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224345863397811166, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: waitTimeAfterChange
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224345863397811166, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: waitTimeBetweenChange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224345863397811166, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: allRingPieces.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224345863397811166, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: allRingPieces.Array.data[0]
+      value: 
+      objectReference: {fileID: 2097290098}
+    - target: {fileID: 2224345863397811166, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: allRingPieces.Array.data[1]
+      value: 
+      objectReference: {fileID: 435936261}
+    - target: {fileID: 2224345863397811166, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: allRingPieces.Array.data[2]
+      value: 
+      objectReference: {fileID: 532587425}
+    - target: {fileID: 2224345863397811166, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: allRingPieces.Array.data[3]
+      value: 
+      objectReference: {fileID: 1721695135}
+    - target: {fileID: 2224345863397811166, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: allRingPieces.Array.data[4]
+      value: 
+      objectReference: {fileID: 1752402101}
+    - target: {fileID: 2224345863397811166, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: allRingPieces.Array.data[5]
+      value: 
+      objectReference: {fileID: 1359876974}
+    - target: {fileID: 2224345863397811166, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: allRingPieces.Array.data[6]
+      value: 
+      objectReference: {fileID: 642938816}
+    - target: {fileID: 2224345863397811166, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: allRingPieces.Array.data[7]
+      value: 
+      objectReference: {fileID: 1602425253}
     - target: {fileID: 2224345864171837184, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -337,5 +439,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: MiniGameLaserDestroyer
       objectReference: {fileID: 0}
+    - target: {fileID: 2224345864171837185, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224345864171837215, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: difficultyParams
+      value: 
+      objectReference: {fileID: 11400000, guid: 004b9df9f1ece8543be724b23bb13ab8, type: 2}
+    - target: {fileID: 2224345864171837215, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: progressionParams
+      value: 
+      objectReference: {fileID: 11400000, guid: f23a26888880521458adfc9cfef934a4, type: 2}
+    - target: {fileID: 2224345864479507902, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}
+      propertyPath: ps
+      value: 
+      objectReference: {fileID: 442873490}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f61744fde0711c4b949c7428a349ee0, type: 3}

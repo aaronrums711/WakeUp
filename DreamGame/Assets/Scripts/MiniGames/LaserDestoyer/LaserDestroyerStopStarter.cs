@@ -105,7 +105,6 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 																					//so when this method is called, we are just setting the rotation to whatever it's final rotation was going to be for that chunk
 		rotator.StopAllCoroutines();
 		ringChanger.StopAllCoroutines();
-		ringChanger.thisAnimator.enabled = false;
 
 		inputManager.currentActiveEmitter.StopAllCoroutines();
 		ps.Pause();
@@ -117,8 +116,7 @@ public class LaserDestroyerStopStarter : MiniGameElement, IStoppable, ISlower
 	{
 		parentMiniGame.isActive = true;
 		StartCoroutine(rotator.ContinuallyRotate());
-		ringChanger.thisAnimator.enabled = true;
-		StartCoroutine(ringChanger.ContinuallyMovePanels());
+		StartCoroutine(ringChanger.ChangeRings());
 		inputManager.currentActiveEmitter.CallInitialLaserCast();
 	}
 

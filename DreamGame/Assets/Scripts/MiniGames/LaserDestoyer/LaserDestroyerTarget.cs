@@ -10,14 +10,13 @@ public class LaserDestroyerTarget : MiniGameElement, IProgressionAdder
     //////////////////////////////State
     public bool isScoreAdding;
     //////////////////////////////Cached Component References
-    public  ParticleSystem ps;
+    public  ParticleSystem ps;  //vgiu
 
 
 
     void Start()
     {
         isScoreAdding = false;
-        ps = parentMiniGame.GetComponentInChildren<ParticleSystem>();
 
     }
 
